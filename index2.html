@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>biratori-widget</title>
+<style>
+/* 全体のレイアウト設定 - 余白を詰めて1ページに収まりやすく */
+body{font-family:"Segoe UI","Hiragino Sans","Noto Sans JP",sans-serif;background:linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.75)),url("background.jpg") center/cover no-repeat fixed;padding:15px;color:#333;margin:0;}
+h1{margin:5px 0 15px;font-size:22px;font-weight:600;text-align:center;}
+.widgets{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px;max-width:1400px;margin:0 auto;}
+.widget{background:rgba(255,255,255,.9);padding:15px;border-radius:18px;box-shadow:0 10px 25px rgba(0,0,0,.08);display:flex;flex-direction:column;}
+.widget h2{margin:0 0 10px;font-size:15px;border-bottom:1px solid #eee;padding-bottom:5px;}
+
+/* YouTube動画エリア */
+.video-container {position: relative;padding-bottom: 56.25%;height: 0;overflow: hidden;border-radius: 12px;background: #000;}
+.video-container iframe {position: absolute;top: 0;left: 0;width: 100%; height: 100%; border: 0;}
+
+/* パーツデザイン */
+.today{display:flex;justify-content:space-between;gap:12px}
+#clock{font-size:16px;line-height:1.5}
+.weather{text-align:right}.weather-icon{font-size:28px}.temp{font-size:20px;font-weight:600}.muted{color:#666;font-size:12px}
+.anniversary-box{margin-top:10px;padding-top:8px;border-top:1px dashed #ccc;}
+.anniversary-tag{display:inline-block;background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;margin-bottom:4px;}
+#anniversaryTitle{font-weight:bold;font-size:14px;color:#d97706;margin-bottom:3px;}
+#anniversaryDescription{font-size:12px;line-height:1.4;color:#444;max-height:60px;overflow-y:auto;}
+.news-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;}
+.news-tabs button{padding:4px 2px;font-size:10px;background:#e5e7eb;border:0;border-radius:999px;cursor:pointer;}
+.news-tabs button.active{background:#2563eb;color:#fff}
+.news-list{list-style:none;padding:0;margin:0;min-height:130px;}
+.news-list li{background:#f8fafc;border-radius:10px;padding:8px 10px;margin-top:6px;}
+.news-list a{text-decoration:none;color:#333;font-size:13px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.news-more{text-align:right;margin-top:6px}.news-more a{font-size:12px;color:#2563eb;text-decoration:none}
+.garbage-list{list-style:none;padding:0;margin:0;}.garbage-list li{background:#fefce8;border-radius:10px;padding:8px;margin-top:5px;font-size:13px;}
+.links{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px;}.links a{display:block;padding:8px;border-radius:10px;background:#f3f4f6;text-decoration:none;color:#333;text-align:center;font-size:12px;}
+
+/* カレンダー（1ページに収まるよう高さを調整） */
+.calendar{grid-column: 1 / -1;} 
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.cal-btn{border:0;border-radius:8px;padding:5px 12px;background:#f3f4f6;cursor:pointer;font-size:13px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-cell{background:#f8fafc;border-radius:10px;padding:6px;min-height:55px;display:flex;flex-direction:column;justify-content:flex-start;border:1px solid rgba(0,0,0,0.03);}
+.cal-num{font-weight:700;font-size:14px}.cal-dim{opacity:.3}.cal-today{outline:2px solid #2563eb;background:#eff6ff}.sun{color:#ef4444}.sat{color:#3b82f6}.holiday-text{font-size:10px;color:#ef4444;margin-top:2px;line-height:1.1;}
+</style>
+</head>
+<body>
+
+<h1>biratori-widget</h1>
+
+<div class="widgets">
+  <div class="widget">
+    <h2>📅 今日（平取）</h2>
+    <div class="today">
+      <div id="clock">--</div>
+      <div class="weather">
+        <div id="weatherIcon" class="weather-icon">--</div>
+        <div id="temp" class="temp">--℃</div>
+        <div id="weatherText" class="muted"></div>
+      </div>
+    </div>
+    <div class="anniversary-box">
+      <span class="anniversary-tag">今日は何の日？</span>
+      <div id="anniversaryTitle">読み込み中...</div>
+      <div id="anniversaryDescription"></div>
+    </div>
+  </div>
+
+  <div class="widget">
+    <h2>📺 HTBニュースLIVE</h2>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/tvgbZZYS4Nk?si=Jo8QiLlkOc8-ar7z" 
+              title="YouTube video player" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin" 
+              allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <div class="widget">
+    <h2>📰 ニュース</h2>
+    <div class="news-tabs">
+      <button data-type="nhk" class="active">NHK</button>
+      <button data-type="hidaka">日高報知</button>
+      <button data-type="tomakomai">苫小牧</button>
+      <button data-type="doshin">道新</button>
+    </div>
+    <ul id="news" class="news-list"><li class="muted">読み込み中…</li></ul>
+    <div class="news-more"><a id="newsMore" href="https://www.nhk.or.jp/news/" target="_blank">もっと見る</a></div>
+  </div>
+
+  <div class="widget">
+    <h2>🔗 リンク集</h2>
+    <ul class="links">
+      <li><a href="https://www.youtube.com/" target="_blank">YouTube</a></li>
+      <li><a href="https://www.twitch.tv" target="_blank">Twitch</a></li>
+      <li><a href="https://www.amazon.co.jp/" target="_blank">Amazon</a></li>
+      <li><a href="https://x.com" target="_blank">X</a></li>
+      <li><a href="https://www.instagram.com/" target="_blank">Instagram</a></li>
+      <li><a href="https://mail.google.com/" target="_blank">Gmail</a></li>
+    </ul>
+  </div>
+
+  <div class="widget">
+    <h2>🗑 ゴミ捨て（平取）</h2>
+    <ul class="garbage-list">
+      <li>🔥 燃えるゴミ：月・木</li>
+      <li>♻️ 資源ごみ：水（祝日除）</li>
+    </ul>
+    <div class="news-more">
+      <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r7biratori.pdf" target="_blank">📄 PDF</a>
+    </div>
+  </div>
+
+  <div class="widget calendar">
+    <div class="cal-top">
+      <div id="calTitle" style="font-weight:bold; font-size: 16px;"></div>
+      <div>
+        <button class="cal-btn" id="prev">◀</button>
+        <button class="cal-btn" id="todayBtn">今日</button>
+        <button class="cal-btn" id="next">▶</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+</div>
+
+<script>
+/* 基本機能（時計、天気、ニュース、記念日、カレンダー）を維持 */
+const clockEl=document.getElementById("clock");
+function clock(){const n=new Date();clockEl.innerHTML=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日<br>${String(n.getHours()).padStart(2,"0")}時${String(n.getMinutes()).padStart(2,"0")}分`;}
+clock();setInterval(clock,60000);
+
+const weatherIcons={0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",53:"🌦️",55:"🌦️",61:"🌧️",63:"🌧️",65:"🌧️",71:"❄️",73:"❄️",75:"❄️",77:"❄️",80:"🌧️",81:"🌧️",82:"🌧️",95:"⛈️"};
+(async()=>{try{const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true");const w=(await r.json()).current_weather;document.getElementById("temp").textContent=Math.round(w.temperature)+"℃";document.getElementById("weatherIcon").textContent=weatherIcons[w.weathercode]||"🌡️";document.getElementById("weatherText").textContent="風 "+w.windspeed+"m/s";}catch(e){}})();
+
+let newsReqId=0;
+async function rss(url){const r=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);return(await r.json()).items||[];}
+function setNews(items){const ul=document.getElementById("news");ul.innerHTML="";items.slice(0,3).forEach(i=>{ul.innerHTML+=`<li><a href="${i.link}" target="_blank">${i.title}</a></li>`;});}
+
+async function loadHidakaHochi(){
+  const target="https://hokkaido-nl.jp/member/6";const KEY="hidaka_hochi_cache_v3";
+  const cached=JSON.parse(localStorage.getItem(KEY)||"null");
+  if(cached&&(Date.now()-cached.ts)<1200000)return cached.items;
+  try{
+    const r=await fetch("https://api.allorigins.win/raw?url="+encodeURIComponent(target));
+    const h=await r.text();const doc=new DOMParser().parseFromString(h,"text/html");
+    const links=Array.from(doc.querySelectorAll("a[href*='/article/']")).filter(a=>a.textContent.trim().length>8).slice(0,3);
+    const items=links.map(a=>{let l=a.getAttribute("href");return {title:"【日高報知】"+a.textContent.trim().replace(/\s+/g," "),link:l.startsWith("/")?"https://hokkaido-nl.jp"+l:l}});
+    localStorage.setItem(KEY,JSON.stringify({ts:Date.now(),items}));return items;
+  }catch(e){return[];}
+}
+
+async function loadDoshin(){
+  const target="https://www.hokkaido-np.co.jp/hokkaido/area_tomakomai/";const KEY="doshin_cache_v1";
+  const cached=JSON.parse(localStorage.getItem(KEY)||"null");
+  if(cached&&(Date.now()-cached.ts)<1200000)return cached.items;
+  try{
+    const r=await fetch("https://api.allorigins.win/raw?url="+encodeURIComponent(target));
+    const h=await r.text();const doc=new DOMParser().parseFromString(h,"text/html");
+    const links=Array.from(doc.querySelectorAll("a[href*='/article/']")).filter(a=>a.textContent.trim().length>10).slice(0,3);
+    const items=links.map(a=>{let l=a.getAttribute("href");return {title:"【道新】"+a.textContent.trim().replace(/\s+/g," "),link:l.startsWith("/")?"https://www.hokkaido-np.co.jp"+l:l}});
+    localStorage.setItem(KEY,JSON.stringify({ts:Date.now(),items}));return items;
+  }catch(e){return[];}
+}
+
+const NEWS_CFG={nhk:{rss:"https://www.nhk.or.jp/rss/news/cat0.xml",more:"https://www.nhk.or.jp/news/"},tomakomai:{rss:"https://tomakomai.goguynet.jp/feed/",more:"https://tomakomai.goguynet.jp/"},hidaka:{more:"https://hokkaido-nl.jp/member/6"},doshin:{more:"https://www.hokkaido-np.co.jp/hokkaido/area_tomakomai/"}};
+async function loadNews(type){
+  const myId=++newsReqId;const ul=document.getElementById("news");ul.innerHTML=`<li class="muted">読み込み中…</li>`;
+  try{
+    let items=[];if(type==='hidaka')items=await loadHidakaHochi();else if(type==='doshin')items=await loadDoshin();else items=await rss(NEWS_CFG[type].rss);
+    if(myId!==newsReqId)return;
+    if(!items.length)ul.innerHTML=`<li class="muted">取得失敗</li>`;else setNews(items);
+    document.getElementById("newsMore").href=NEWS_CFG[type].more;
+  }catch(e){ul.innerHTML=`<li class="muted">エラー</li>`;}
+}
+
+document.querySelectorAll(".news-tabs button").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".news-tabs button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");loadNews(b.dataset.type);
+  };
+});
+
+async function fetchAnniversary(){
+  const tE=document.getElementById("anniversaryTitle"),dE=document.getElementById("anniversaryDescription");
+  try{
+    const r=await fetch("https://api.allorigins.win/get?url="+encodeURIComponent("https://kids.yahoo.co.jp/today"));
+    const j=await r.json(),d=new DOMParser().parseFromString(j.contents,"text/html"),box=d.querySelector(".is-today");
+    if(box){
+      const tT=(box.querySelector(".today-date-text")||box.querySelector("h3")).textContent.trim();
+      tE.textContent=tT;
+      let cD=(box.innerText||box.textContent).replace(/\d+月\d+日/g,"").replace(tT,"").replace(/\(.*\)/g,"").trim();
+      dE.textContent=cD.length>5?cD:"記念日をお楽しみください。";
+    }
+  }catch(e){tE.textContent="記念日";dE.textContent="読み込み中...";}
+}
+
+const calGrid=document.getElementById("calGrid"),calTitle=document.getElementById("calTitle");
+function nthMon(y,m,n){const f=new Date(y,m,1);return new Date(y,m,1+((8-f.getDay())%7)+(n-1)*7);}
+function ae(y){return Math.floor(23.2488+0.242194*(y-1980)-Math.floor((y-1980)/4));}
+function ve(y){return Math.floor(20.8431+0.242194*(y-1980)-Math.floor((y-1980)/4));}
+function holidays(y){
+  const H=new Map();const a=(d,n)=>H.set(d.toDateString(),n);
+  a(new Date(y,0,1),"元日");a(nthMon(y,0,2),"成人の日");a(new Date(y,1,11),"建国記念");a(new Date(y,1,23),"天皇誕生日");
+  a(new Date(y,2,ve(y)),"春分の日");a(new Date(y,3,29),"昭和の日");a(new Date(y,4,3),"憲法記念");a(new Date(y,4,4),"みどりの日");
+  a(new Date(y,4,5),"こどもの日");a(nthMon(y,6,3),"海の日");a(new Date(y,7,11),"山の日");a(nthMon(y,8,3),"敬老の日");
+  a(new Date(y,8,ae(y)),"秋分の日");a(nthMon(y,9,2),"スポーツの日");a(new Date(y,10,3),"文化の日");a(new Date(y,10,23),"勤労感謝");
+  return H;
+}
+let view=new Date();view.setDate(1);
+function draw(){
+  calTitle.textContent=`${view.getFullYear()}年 ${view.getMonth()+1}月`;calGrid.innerHTML="";
+  const start=new Date(view);start.setDate(1-start.getDay());const today=new Date();const hol=holidays(view.getFullYear());
+  for(let i=0;i<42;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);const hN=hol.get(d.toDateString());
+    calGrid.innerHTML+=`<div class="cal-cell ${d.getMonth()!=view.getMonth()?"cal-dim":""} ${d.toDateString()==today.toDateString()?"cal-today":""}"><div class="cal-num ${d.getDay()==0||hN?"sun":d.getDay()==6?"sat":""}">${d.getDate()}</div>${hN?`<div class="holiday-text">${hN}</div>`:""}</div>`;
+  }
+}
+document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);draw()};
+document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);draw()};
+document.getElementById("todayBtn").onclick=()=>{const n=new Date();view=new Date(n.getFullYear(),n.getMonth(),1);draw()};
+
+loadNews("nhk");fetchAnniversary();draw();
+</script>
+</body>
+</html>
