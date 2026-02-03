@@ -5,48 +5,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>biratori-widget</title>
 <style>
-body{font-family:"Segoe UI","Hiragino Sans","Noto Sans JP",sans-serif;background:linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.75)),url("background.jpg") center/cover no-repeat fixed;padding:15px;color:#333;margin:0;}
-h1{margin:5px 0 10px;font-size:20px;font-weight:600;text-align:center;}
-.widgets{display:flex;flex-direction:column;gap:15px;max-width:900px;margin:0 auto;}
-.widget{background:rgba(255,255,255,.9);padding:15px;border-radius:18px;box-shadow:0 10px 25px rgba(0,0,0,.08);display:flex;flex-direction:column;box-sizing:border-box;}
+/* 背景を動的に設定するためのベーススタイル */
+body {
+  font-family: "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background-color: #f0f0f0;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out;
+  padding: 15px;
+  color: #333;
+  margin: 0;
+}
 
-/* 1段目：時計・天気・ごみボタン */
-.top-row{display:grid;grid-template-columns:1fr 200px;gap:12px;align-items:stretch;}
-.clock-weather-line{display:flex;justify-content:space-between;align-items:center;}
-#clock{font-size:20px;font-weight:700;font-family:monospace;}
-.weather-area{display:flex;align-items:center;gap:8px;}
-.weather-label{font-size:12px;color:#666;font-weight:bold;background:#eee;padding:2px 6px;border-radius:4px;text-decoration:none;}
-.weather{font-size:18px;font-weight:700;}
-.garbage-button{background:#fef3c7;border-radius:12px;padding:10px;font-size:13px;border:1px solid #f59e0b;text-align:center;display:flex;flex-direction:column;justify-content:center;cursor:pointer;font-weight:bold;text-decoration:none;color:#92400e;min-height:70px;}
-.garbage-button span{font-size:10px;font-weight:normal;margin-top:4px;}
+/* 背景の上に薄い膜を張って文字を読みやすくする */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.4); /* 背景画像の透過度を調整 */
+  z-index: -1;
+}
 
-/* 2段目：YouTubeライブ */
-.video-container {position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;background:#000;}
-.video-container iframe {position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; text-shadow: 1px 1px 2px white; }
+.widgets { display: flex; flex-direction: column; gap: 15px; max-width: 900px; margin: 0 auto; }
+.widget { background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,.1); display: flex; flex-direction: column; box-sizing: border-box; }
 
-/* 3段目：ニュース・カレンダー */
-.bottom-row{display:grid;grid-template-columns:1fr 280px;gap:12px;}
-.news-tabs{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:8px;}
-.news-tabs button{padding:6px 14px;font-size:11px;background:#e5e7eb;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;}
-.news-tabs button.active{background:#2563eb;color:#fff}
-.news-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;}
-.news-list li{background:#fff;border-radius:10px;padding:10px;border:1px solid #eee;}
-.news-list a{text-decoration:none;color:#1a1a1a;font-size:13px;line-height:1.4;font-weight:600;}
+.top-row { display: grid; grid-template-columns: 1fr 200px; gap: 12px; align-items: stretch; }
+.info-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#clock { font-size: 22px; font-weight: 700; font-family: monospace; white-space: nowrap; }
+.weather-area { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.weather-label { font-size: 12px; color: #666; font-weight: bold; background: #eee; padding: 2px 6px; border-radius: 4px; text-decoration: none; }
+.weather { font-size: 20px; font-weight: 700; }
 
-/* カレンダー */
-.cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.cal-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:0 10px;color:#2563eb;font-weight:bold;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.cal-header{font-size:10px;font-weight:bold;text-align:center;padding-bottom:4px;color:#666;}
-.cal-cell{background:#f8fafc;border-radius:5px;padding:4px;min-height:40px;text-align:center;font-size:11px;display:flex;flex-direction:column;justify-content:flex-start;}
-.cal-num{font-weight:700;} 
-.sun, .holiday-num{color:#ef4444} 
-.sat{color:#3b82f6} 
-.cal-today{outline:2px solid #2563eb;background:#eff6ff}
-.cal-dim{opacity:0.4;}
-.holiday-name{font-size:8px;color:#ef4444;margin-top:2px;line-height:1;}
+.extra-info { display: flex; gap: 15px; flex-grow: 1; justify-content: center; border-left: 1px solid #ddd; border-right: 1px solid #ddd; padding: 0 15px; margin: 0 5px; overflow: hidden; }
+.info-item { text-align: center; min-width: 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.info-item .label { font-size: 10px; color: #888; display: block; margin-bottom: 3px; font-weight: bold; }
+.info-item .content { font-size: 15px; font-weight: 700; color: #222; line-height: 1.3; word-break: break-all; }
+.info-item .content span { display: block; font-size: 11px; color: #555; font-weight: normal; margin-top: 2px; }
 
-@media(max-width:750px){ .top-row, .bottom-row{grid-template-columns:1fr;} }
+.garbage-button { background: #fef3c7; border-radius: 12px; padding: 10px; font-size: 13px; border: 1px solid #f59e0b; text-align: center; display: flex; flex-direction: column; justify-content: center; cursor: pointer; font-weight: bold; text-decoration: none; color: #92400e; min-height: 70px; transition: transform 0.2s; }
+.garbage-button:hover { transform: scale(1.02); }
+.garbage-button span { font-size: 10px; font-weight: normal; margin-top: 4px; }
+
+/* YouTube切り替え用スタイル */
+.video-tabs { display: flex; gap: 10px; margin-bottom: 10px; }
+.video-tabs button { flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 12px; background: #eee; color: #666; transition: 0.2s; }
+.video-tabs button.active { background: #ff0000; color: #fff; }
+
+.video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000; }
+.video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+.bottom-row { display: grid; grid-template-columns: 1fr 280px; gap: 12px; }
+.news-tabs { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 8px; }
+.news-tabs button { padding: 6px 14px; font-size: 11px; background: #e5e7eb; border: 0; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.news-tabs button.active { background: #2563eb; color: #fff; }
+.news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.news-list li { background: #fff; border-radius: 10px; padding: 10px; border: 1px solid #eee; }
+.news-list a { text-decoration: none; color: #1a1a1a; font-size: 13px; line-height: 1.4; font-weight: 600; }
+
+.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.cal-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 0 10px; color: #2563eb; font-weight: bold; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-header { font-size: 10px; font-weight: bold; text-align: center; padding-bottom: 4px; color: #666; }
+.cal-cell { background: #f8fafc; border-radius: 5px; padding: 4px; min-height: 40px; text-align: center; font-size: 11px; display: flex; flex-direction: column; justify-content: flex-start; }
+.cal-num { font-weight: 700; } 
+.sun { color: #ef4444; } 
+.sat { color: #3b82f6; } 
+.cal-today { outline: 2px solid #2563eb; background: #eff6ff; }
+.cal-dim { opacity: 0.4; }
+.holiday-name { font-size: 8px; color: #ef4444; margin-top: 2px; line-height: 1; }
+
+@media(max-width:850px){ .info-bar { flex-wrap: wrap; justify-content: center; } .extra-info { border: 0; padding: 10px 0; width: 100%; } }
+@media(max-width:750px){ .top-row, .bottom-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -56,8 +88,12 @@ h1{margin:5px 0 10px;font-size:20px;font-weight:600;text-align:center;}
 <div class="widgets">
   <div class="top-row">
     <div class="widget">
-      <div class="clock-weather-line">
+      <div class="info-bar">
         <div id="clock">--:--:--</div>
+        <div class="extra-info">
+          <div class="info-item"><span class="label">今日の運勢</span><div id="fortune" class="content">...</div></div>
+          <div class="info-item"><span class="label">平取アイヌ語</span><div id="ainu" class="content">...</div></div>
+        </div>
         <div class="weather-area">
           <a href="https://tenki.jp/forecast/1/2/2110/1601/" target="_blank" class="weather-label">平取</a>
           <div id="weather" class="weather">--℃</div>
@@ -65,14 +101,17 @@ h1{margin:5px 0 10px;font-size:20px;font-weight:600;text-align:center;}
       </div>
     </div>
     <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r7biratori.pdf" target="_blank" class="garbage-button">
-      🗑 R7年度ごみ収集PDF
-      <span>🔥月木 / ♻水</span>
+      🗑 R7年度ごみ収集PDF<span>🔥月木 / ♻水</span>
     </a>
   </div>
 
   <div class="widget">
+    <div class="video-tabs">
+      <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">北海道ニュース</button>
+      <button id="btn-v2" onclick="switchVideo('c6Gqe6L_xZg', 'btn-v2')">ライブカメラ</button>
+    </div>
     <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&mute=1&rel=0" frameborder="0" allowfullscreen></iframe>
+      <iframe id="main-video" src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&mute=1&rel=0" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -83,9 +122,9 @@ h1{margin:5px 0 10px;font-size:20px;font-weight:600;text-align:center;}
         <button data-type="doshin">道新</button>
         <button data-type="nl">北海道NL</button>
         <button data-type="tomakomai">苫小牧</button>
-        <button data-type="gigazine">GIGAZINE</button>
         <button data-type="omocoro">オモコロ</button>
         <button data-type="rocket">ロケットニュース24</button>
+        <button data-type="v4jp">VALORANTニュース</button>
       </div>
       <ul id="news" class="news-list"></ul>
     </div>
@@ -101,15 +140,59 @@ h1{margin:5px 0 10px;font-size:20px;font-weight:600;text-align:center;}
 </div>
 
 <script>
+// 背景画像をランダムに設定
+function setRandomBackground() {
+  const images = [
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e',
+    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05',
+    'https://images.unsplash.com/photo-1444090542259-0af8fa96557e',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
+    'https://images.unsplash.com/photo-1426604966848-d7adac402bff',
+    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef'
+  ];
+  const selected = images[Math.floor(Math.random() * images.length)];
+  document.body.style.backgroundImage = `url('${selected}?auto=format&fit=crop&w=1600&q=80')`;
+}
+setRandomBackground();
+
+// YouTube切り替え関数
+function switchVideo(id, btnId) {
+  document.getElementById('main-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&rel=0`;
+  document.querySelectorAll('.video-tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById(btnId).classList.add('active');
+}
+
 let currentViewDate = new Date();
 
 function clock(){
   const n=new Date();
   const m=n.getMonth()+1, d=n.getDate(), w=['日','月','火','水','木','金','土'][n.getDay()];
   const h=String(n.getHours()).padStart(2,"0"), i=String(n.getMinutes()).padStart(2,"0"), s=String(n.getSeconds()).padStart(2,"0");
-  document.getElementById("clock").innerHTML=`<span style="font-size:13px">${m}/${d}(${w})</span> ${h}:${i}:${s}`;
+  document.getElementById("clock").innerHTML=`<span style="font-size:14px">${m}/${d}(${w})</span> ${h}:${i}:${s}`;
 }
 setInterval(clock, 1000); clock();
+
+function loadExtraInfo() {
+  const fortunes = ["大吉 🌟","中吉 😊","小吉 ✨","吉 🍀","末吉 🕊️","平取吉 🍅"];
+  const ainuWords = [
+    ["イランカラㇷ゚テ", "こんにちは"], ["イヤイライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
+    ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
+    ["アトゥイ", "海"], ["ナイ", "川"], ["ペッ", "川"], ["ヌプリ", "山"], ["キムン", "山のほう"], ["ピラ", "崖"], ["サル", "湿原"], ["ニタイ", "森"], ["ニ", "木"], ["ノンノ", "花"],
+    ["アパポ", "花"], ["トニ", "ナラ"], ["タッニ", "カンバ"], ["チカㇷ゚", "鳥"], ["ユㇰ", "鹿"], ["キムンカムイ", "熊"], ["チェㇷ゚", "魚"], ["カムイチェㇷ゚", "鮭"], ["ホロケウ", "狼"], ["レプンカムイ", "シャチ"],
+    ["チロンヌㇷ゚", "キツネ"], ["イセポ", "ウサギ"], ["モユㇰ", "タヌキ"], ["カパッ", "皮"], ["アットゥㇱ", "樹皮衣"], ["テポッパ", "入れ墨"], ["イタンキ", "椀"], ["ニマ", "盆"], ["マキリ", "小刀"], ["イナウ", "木幣"],
+    ["ウパㇱ", "雪"], ["ル", "道"], ["ク", "弓"], ["アイ", "矢"], ["カヤ", "帆"], ["チップ", "舟"], ["ラッチャコ", "灯明"], ["サランパ", "さようなら"], ["ウェン", "悪い"], ["エカシ", "長老/祖父"],
+    ["フチ", "祖母"], ["オキクルミ", "文化神"], ["コロポックル", "蕗の下の人"], ["ニブタニ", "二風谷"], ["シシリムカ", "沙流川"], ["エトゥ", "鼻/岬"], ["キキリ", "虫"], ["ケマ", "足"], ["テケ", "手"], ["シキ", "目"],
+    ["パラ", "口"], ["レㇷ゚", "沖"], ["ヤ", "陸"], ["ノッ", "あご"], ["ルル", "汁"], ["アマム", "穀物/ご飯"], ["トカㇷ゚", "昼"], ["クンネ", "黒/夜"], ["レラ", "風"], ["セタ", "犬"],
+    ["チャッピ", "雨"], ["ルー", "道"], ["ウェンペ", "悪い奴"], ["コンカニ", "金"], ["シロカニ", "銀"], ["ハポ", "母"], ["ミチ", "父"], ["アシリ", "新しい"], ["ニサッタ", "明日"], ["ヘカッティ", "子供"],
+    ["マッネ", "女"], ["ピンネ", "男"], ["クッチャロ", "喉"], ["ト", "湖"], ["サッ", "乾いた"], ["ヤㇺ", "冷たい"], ["セセㇰ", "熱い"], ["レラコロ", "風がある"], ["ウポポイ", "民族共生象徴空間"], ["ピリカレ", "美しくする"]
+  ];
+  const pickedAinu = ainuWords[Math.floor(Math.random() * ainuWords.length)];
+  document.getElementById("fortune").textContent = fortunes[Math.floor(Math.random() * fortunes.length)];
+  document.getElementById("ainu").innerHTML = `${pickedAinu[0]}<span>(${pickedAinu[1]})</span>`;
+}
+loadExtraInfo();
 
 (async()=>{
   try{
@@ -127,26 +210,18 @@ async function loadNews(t){
     doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml",
     nl: "https://hokkaido-nl.jp/index.xml",
     tomakomai: "https://tomakomai.goguynet.jp/feed/",
-    gigazine: "https://gigazine.net/news/rss_2.0/",
     omocoro: "https://omocoro.jp/feed",
-    rocket: "https://rocketnews24.com/feed/"
+    rocket: "https://rocketnews24.com/feed/",
+    v4jp: "https://valorantnews.jp/feed"
   };
   ul.innerHTML="<li>読み込み中...</li>";
-
   try {
     const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(urls[t])}`);
     const data = await response.json();
-    
-    if (data.status === 'ok' && data.items.length > 0) {
-      ul.innerHTML = data.items.slice(0, 5).map(item => `
-        <li><a href="${item.link}" target="_blank">${item.title}</a></li>
-      `).join('');
-    } else {
-      throw new Error();
-    }
-  } catch (e) {
-    ul.innerHTML = "<li>情報の取得に失敗しました</li>";
-  }
+    if (data.status === 'ok') {
+      ul.innerHTML = data.items.slice(0, 5).map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('');
+    } else { throw new Error(); }
+  } catch (e) { ul.innerHTML = "<li>取得に失敗しました。</li>"; }
 }
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
@@ -164,8 +239,7 @@ function draw(){
   const today = new Date();
   document.getElementById("calTitle").textContent=`${year}年 ${month+1}月`;
   let html = ['日','月','火','水','木','金','土'].map(h => `<div class="cal-header">${h}</div>`).join('');
-  const start=new Date(year, month, 1);
-  start.setDate(1 - start.getDay());
+  const start=new Date(year, month, 1); start.setDate(1 - start.getDay());
   for(let i=0; i<42; i++){
     const d=new Date(start); d.setDate(start.getDate()+i);
     const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
