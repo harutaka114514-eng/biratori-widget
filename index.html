@@ -77,8 +77,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .cal-dim { opacity: 0.3; }
 .holiday-name { font-size: 8px; color: #ef4444; line-height: 1; margin-top: 2px; }
 
-#win-player-container { position: absolute; left: -9999px; }
-
 @media(max-width:900px){ .bottom-row { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -96,8 +94,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <div class="info-item"><span class="label">平取アイヌ語</span><div id="ainu" class="content">...</div></div>
         </div>
         <div style="text-align:right;">
-            <a href="https://tenki.jp/forecast/1/2/2110/1601/" target="_blank" style="font-size:12px; color:#666; font-weight:bold; background:#eee; padding:2px 6px; border-radius:4px; text-decoration:none;">平取</a>
-            <div id="weather" style="font-size:20px; font-weight:700;">--℃</div>
+            <a href="https://tenki.jp/forecast/1/4/2200/1602/10days.html" target="_blank" style="font-size:12px; color:#666; font-weight:bold; background:#eee; padding:2px 6px; border-radius:4px; text-decoration:none;">平取</a>
+            <div id="weather" style="font-size:20px; font-weight:700; cursor:pointer;" onclick="window.open('https://tenki.jp/forecast/1/4/2200/1602/10days.html', '_blank')">--℃</div>
         </div>
       </div>
       <div id="weekly-weather" class="weekly-weather"></div>
@@ -132,7 +130,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 
     <div class="widget slot-widget">
       <div style="font-weight:bold; font-size:13px;">🎰 LUCKY SLOT</div>
-      <div id="play-count" style="font-size:10px; color:#888;">本日残り: 3回</div>
+      <div id="slot-timer-msg" style="font-size:10px; color:#e67e22;">READY</div>
       <div class="slot-reels">
         <div id="reel0" class="slot-reel">?</div>
         <div id="reel1" class="slot-reel">?</div>
@@ -158,14 +156,15 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
   </div>
 </div>
 
-<div id="win-player-container"><div id="win-player"></div></div>
+<audio id="win-sound" src="pachinko.mp3"></audio>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-/* --- 基本設定 & オーディオ --- */
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const winSound = document.getElementById('win-sound');
+
 function playStopSound(f, d) {
     if (audioCtx.state === 'suspended') audioCtx.resume();
     const o = audioCtx.createOscillator();
@@ -177,15 +176,6 @@ function playStopSound(f, d) {
     o.start(); o.stop(audioCtx.currentTime + d);
 }
 
-let winPlayer;
-function onYouTubeIframeAPIReady() {
-    winPlayer = new YT.Player('win-player', {
-        height: '1', width: '1', videoId: 'GF4bCyltSHw',
-        events: { 'onReady': (e) => e.target.setVolume(100) }
-    });
-}
-
-/* --- 背景ランダム機能 --- */
 function setRandomBackground() {
   const images = [
     'https://images.unsplash.com/photo-1441974231531-c6227db76b6e',
@@ -199,7 +189,6 @@ function setRandomBackground() {
 }
 setRandomBackground();
 
-/* --- 天気予報 (API) --- */
 async function loadWeather() {
   try {
     const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo");
@@ -217,29 +206,42 @@ async function loadWeather() {
   } catch(e){}
 }
 
-/* --- スロット制御 (3回制限・連続プレイ対応) --- */
+/* --- スロット制御 (10分インターバル・爆音) --- */
 const slotSymbols = ["7", "🍒", "🍅", "🍇", "💎"];
 let slotTimers = [null, null, null], slotStatus = [false, false, false];
 let isWin = false, targetSym = "";
 
-function getPlayCount() {
-    const d = JSON.parse(localStorage.getItem('slot_limit_vfinal') || '{}');
-    return d.date === new Date().toDateString() ? d.count : 0;
+function checkSlotCooldown() {
+    const lastTime = localStorage.getItem('last_slot_time');
+    if (!lastTime) return true;
+    const diff = (Date.now() - parseInt(lastTime)) / 1000;
+    return diff >= 600; // 10分
 }
-function updatePlayCount() {
-    const c = getPlayCount() + 1;
-    localStorage.setItem('slot_limit_vfinal', JSON.stringify({date: new Date().toDateString(), count: c}));
-    displayPlayCount();
-}
-function displayPlayCount() {
-    const r = 3 - getPlayCount();
-    document.getElementById("play-count").innerText = `本日残り: ${Math.max(0, r)}回`;
-    document.getElementById("startBtn").disabled = (r <= 0);
+
+function updateSlotCooldownDisplay() {
+    const lastTime = localStorage.getItem('last_slot_time');
+    if (!lastTime) {
+        document.getElementById("slot-timer-msg").innerText = "READY";
+        document.getElementById("startBtn").disabled = false;
+        return;
+    }
+    const diff = Math.floor((Date.now() - parseInt(lastTime)) / 1000);
+    const remain = 600 - diff;
+    if (remain <= 0) {
+        document.getElementById("slot-timer-msg").innerText = "READY";
+        document.getElementById("startBtn").disabled = false;
+    } else {
+        const m = Math.floor(remain / 60);
+        const s = remain % 60;
+        document.getElementById("slot-timer-msg").innerText = `チャージ中: ${m}:${String(s).padStart(2, '0')}`;
+        document.getElementById("startBtn").disabled = true;
+    }
 }
 
 function startSlot() {
-  if (getPlayCount() >= 3) return;
-  if (winPlayer) winPlayer.stopVideo();
+  if (!checkSlotCooldown()) return;
+  winSound.pause();
+  winSound.currentTime = 0;
   
   document.getElementById("startBtn").disabled = true;
   document.getElementById("slot-msg").innerText = "回転中...";
@@ -265,21 +267,20 @@ function stopReel(i) {
   if (isWin) document.getElementById(`reel${i}`).innerText = targetSym;
   
   if (!slotStatus.includes(true)) {
-    updatePlayCount();
+    localStorage.setItem('last_slot_time', Date.now());
     const r = [document.getElementById("reel0").innerText, document.getElementById("reel1").innerText, document.getElementById("reel2").innerText];
     if (r[0] === r[1] && r[1] === r[2]) {
       document.getElementById("slot-msg").innerHTML = "<span style='color:red;'>🎉 大当たり！！ 🎉</span>";
-      if (winPlayer) { winPlayer.seekTo(0); winPlayer.playVideo(); }
+      winSound.volume = 1.0; 
+      winSound.play();
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     } else {
       document.getElementById("slot-msg").innerText = "ハズレ...";
     }
-    // 3回以内なら再度STARTを有効化
-    displayPlayCount();
+    updateSlotCooldownDisplay();
   }
 }
 
-/* --- アイヌ語100語 --- */
 const ainuWords = [
     ["イランカラㇷ゚テ", "こんにちは"], ["イヤイライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
     ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
@@ -293,15 +294,14 @@ const ainuWords = [
     ["マッネ", "女"], ["ピンネ", "男"], ["クッチャロ", "喉"], ["ト", "湖"], ["サッ", "乾いた"], ["ヤㇺ", "冷たい"], ["セセㇰ", "熱い"], ["レラコロ", "風がある"], ["ウポポイ", "民族共生象徴空間"], ["ピリカレ", "美しくする"]
 ];
 
-/* --- 時計機能 --- */
 function clock(){
   const n=new Date();
   const m=n.getMonth()+1, d=n.getDate(), w=['日','月','火','水','木','金','土'][n.getDay()];
   const h=String(n.getHours()).padStart(2,"0"), i=String(n.getMinutes()).padStart(2,"0"), s=String(n.getSeconds()).padStart(2,"0");
   document.getElementById("clock").innerHTML=`<span style="font-size:14px">${m}/${d}(${w})</span> ${h}:${i}:${s}`;
+  updateSlotCooldownDisplay(); // 毎秒タイマー更新
 }
 
-/* --- ニュース (5種類) --- */
 async function loadNews(t){
   const ul=document.getElementById("news");
   const urls={ nhk:"https://www.nhk.or.jp/rss/news/cat0.xml", doshin:"https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", nl:"https://hokkaido-nl.jp/index.xml", tomakomai:"https://tomakomai.goguynet.jp/feed/", v4jp:"https://valorantnews.jp/feed" };
@@ -313,7 +313,6 @@ async function loadNews(t){
   } catch(e){ ul.innerHTML="<li>取得失敗</li>"; }
 }
 
-/* --- カレンダー (2026年祝日リスト) --- */
 let currentViewDate = new Date();
 const HOLIDAYS_2026 = {"2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日"};
 
@@ -341,13 +340,11 @@ function switchVideo(id, btnId) {
   document.getElementById(btnId).classList.add('active');
 }
 
-// 占い機能のランダム化
 function setFortune() {
   const fortunes = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"];
   document.getElementById("fortune").textContent = fortunes[Math.floor(Math.random() * fortunes.length)];
 }
 
-// 初期化実行
 setInterval(clock, 1000); clock();
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
@@ -355,7 +352,6 @@ setFortune();
 loadWeather();
 loadNews("nhk");
 drawCal();
-displayPlayCount();
 document.querySelectorAll(".news-tabs button").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".news-tabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active"); loadNews(b.dataset.type);};});
 </script>
 </body>
