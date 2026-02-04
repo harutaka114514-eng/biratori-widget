@@ -109,7 +109,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 
   <div class="widget">
     <div class="video-tabs">
-      <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">北海道ニュース</button>
+      <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
+      <button id="btn-v3" onclick="switchVideo('hA46WfBYdgo', 'btn-v3')">STV</button>
       <button id="btn-v2" onclick="switchVideo('c6Gqe6L_xZg', 'btn-v2')">ライブカメラ</button>
     </div>
     <div class="video-container">
@@ -340,11 +341,17 @@ function switchVideo(id, btnId) {
   document.getElementById(btnId).classList.add('active');
 }
 
+// 占い機能のランダム化
+function setFortune() {
+  const fortunes = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"];
+  document.getElementById("fortune").textContent = fortunes[Math.floor(Math.random() * fortunes.length)];
+}
+
 // 初期化実行
 setInterval(clock, 1000); clock();
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
-document.getElementById("fortune").textContent = "平取吉 🍅";
+setFortune();
 loadWeather();
 loadNews("nhk");
 drawCal();
