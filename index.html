@@ -63,7 +63,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .news-list li { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #eee; }
 .news-list a { text-decoration: none; color: #1a1a1a; font-size: 12px; font-weight: 600; line-height: 1.4; }
 
-/* カレンダー */
+/* カレンダー（大きく表示） */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .cal-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #2563eb; font-weight: bold; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -140,7 +140,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="news-tabs">
         <button data-type="nhk" class="active">NHK</button>
         <button data-type="doshin">道新</button>
-        <button data-type="tvh">TVH</button>
         <button data-type="hre">HRE</button>
         <button data-type="nl">道NL</button>
         <button data-type="tomakomai">苫小牧</button>
@@ -178,7 +177,7 @@ const ainuWords = [
     ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
     ["アトゥイ", "海"], ["ナイ", "川"], ["ペッ", "川"], ["ヌプリ", "山"], ["キムン", "山のほう"], ["ピラ", "崖"], ["サル", "湿原"], ["ニタイ", "森"], ["ニ", "木"], ["ノンノ", "花"],
     ["アパポ", "花"], ["トニ", "ナラ"], ["タッニ", "カンバ"], ["チカㇷ゚", "鳥"], ["ユㇰ", "鹿"], ["キムンカムイ", "熊"], ["チェㇷ゚", "魚"], ["カムイチェㇷ゚", "鮭"], ["ホロケウ", "狼"], ["レプンカムイ", "シャチ"],
-    ["チロンヌㇷ゚", "キヌネ"], ["イセポ", "ウサギ"], ["モゆㇰ", "タヌキ"], ["カパッ", "皮"], ["アットゥㇱ", "樹皮衣"], ["テポッパ", "入れ墨"], ["イタンキ", "椀"], ["ニマ", "盆"], ["マキリ", "小刀"], ["イナウ", "木幣"],
+    ["チロンヌㇷ゚", "キツネ"], ["イセポ", "ウサギ"], ["モゆㇰ", "タヌキ"], ["カパッ", "皮"], ["アットゥㇱ", "樹皮衣"], ["テポッパ", "入れ墨"], ["イタンキ", "椀"], ["ニマ", "盆"], ["マキリ", "小刀"], ["イナウ", "木幣"],
     ["ウパㇱ", "雪"], ["ル", "道"], ["ク", "弓"], ["アイ", "矢"], ["カヤ", "帆"], ["チップ", "舟"], ["ラッチャコ", "灯明"], ["サランパ", "さようなら"], ["ウェン", "悪い"], ["エカシ", "長老/祖父"],
     ["フチ", "祖母"], ["オキクルミ", "文化神"], ["コロポックル", "蕗の下の人"], ["ニブタニ", "二風谷"], ["シシリムカ", "沙流川"], ["エトゥ", "鼻/岬"], ["キキリ", "虫"], ["ケマ", "足"], ["テケ", "手"], ["シキ", "目"],
     ["パラ", "口"], ["レㇷ゚", "沖"], ["ヤ", "陸"], ["ノッ", "あご"], ["ルル", "汁"], ["アマム", "穀物/ご飯"], ["トカㇷ゚", "昼"], ["クンネ", "黒/夜"], ["レラ", "風"], ["セタ", "犬"],
@@ -192,7 +191,6 @@ async function loadNews(t){
   const urls = { 
     nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
     doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
-    tvh: "https://news.yahoo.co.jp/rss/media/tvh/all.xml",
     hre: "https://hre-net.com/feed/",
     nl: "https://hokkaido-nl.jp/index.xml", 
     tomakomai: "https://tomakomai.goguynet.jp/feed/", 
