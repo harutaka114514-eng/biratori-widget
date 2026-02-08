@@ -142,6 +142,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="news-tabs">
         <button data-type="nhk" class="active">NHK</button>
         <button data-type="doshin">道新</button>
+        <button data-type="sakei">札経</button>
         <button data-type="hre">HRE</button>
         <button data-type="nl">道NL</button>
         <button data-type="tomakomai">苫小牧</button>
@@ -193,6 +194,7 @@ async function loadNews(t){
   const urls = { 
     nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
     doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
+    sakei: "https://sapporo.keizai.biz/rss.xml",
     hre: "https://hre-net.com/feed/",
     nl: "https://hokkaido-nl.jp/index.xml", 
     tomakomai: "https://tomakomai.goguynet.jp/feed/", 
