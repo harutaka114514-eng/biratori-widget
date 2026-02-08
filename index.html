@@ -52,6 +52,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .link-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.1s; border: 1px solid rgba(0,0,0,0.1); }
 .link-btn:active { transform: scale(0.98); }
 .btn-domingo { background-color: #dcfce7; color: #166534; border-color: #bbf7d0; }
+.btn-sitakke { background-color: #fffbeb; color: #92400e; border-color: #fef3c7; } /* Sitakke用に追加 */
 .btn-gmail { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 
@@ -121,6 +122,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         <div class="widget">
           <div class="link-box">
             <a href="https://domingo.ne.jp/" target="_blank" class="link-btn btn-domingo">📰 Domingo</a>
+            <a href="https://sitakke.jp/" target="_blank" class="link-btn btn-sitakke">🍄 Sitakke</a>
             <a href="https://mail.google.com/mail/u/0/#unread" target="_blank" class="link-btn btn-gmail">✉ Gメール</a>
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
           </div>
@@ -173,7 +175,7 @@ async function loadWeather() {
 }
 
 const ainuWords = [
-    ["イランカラㇷ゚テ", "こんにちは"], ["イヤイライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
+    ["イランカラㇷ゚テ", "こんにちは"], ["イヤイライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
     ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
     ["アトゥイ", "海"], ["ナイ", "川"], ["ペッ", "川"], ["ヌプリ", "山"], ["キムン", "山のほう"], ["ピラ", "崖"], ["サル", "湿原"], ["ニタイ", "森"], ["ニ", "木"], ["ノンノ", "花"],
     ["アパポ", "花"], ["トニ", "ナラ"], ["タッニ", "カンバ"], ["チカㇷ゚", "鳥"], ["ユㇰ", "鹿"], ["キムンカムイ", "熊"], ["チェㇷ゚", "魚"], ["カムイチェㇷ゚", "鮭"], ["ホロケウ", "狼"], ["レプンカムイ", "シャチ"],
