@@ -45,16 +45,22 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .video-tabs button { flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 12px; background: #eee; color: #666; }
 .video-tabs button.active { background: #ff0000; color: #fff; }
 
-/* 下段：リンクとカレンダーを1:2の比率で配置 */
+/* 下段：リンクとカレンダー */
 .bottom-widgets { display: grid; grid-template-columns: 220px 1fr; gap: 12px; margin-top: 15px; }
 
 .link-box { display: flex; flex-direction: column; gap: 8px; justify-content: center; height: 100%; }
-.link-box a { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.1s; border: 1px solid rgba(0,0,0,0.1); }
+.link-box a { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 13px; transition: transform 0.1s; border: 1px solid rgba(0,0,0,0.1); }
 .link-box a:active { transform: scale(0.98); }
 .btn-domingo { background-color: #dcfce7; color: #166534; border-color: #bbf7d0; }
 .btn-sitakke { background-color: #fffbeb; color: #92400e; border-color: #fef3c7; }
 .btn-gmail { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
+.btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
+
+/* 新着通知バッジ */
+.badge { position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; display: none; }
+.badge.show { display: block; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
 /* ニュース スタイル */
 .news-tabs { display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap; }
@@ -64,7 +70,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .news-list li { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #eee; }
 .news-list a { text-decoration: none; color: #1a1a1a; font-size: 12px; font-weight: 600; line-height: 1.4; }
 
-/* カレンダー（大きく表示） */
+/* カレンダー */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .cal-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #2563eb; font-weight: bold; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -123,6 +129,9 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <div class="link-box">
             <a href="https://domingo.ne.jp/" target="_blank" class="link-btn btn-domingo">📰 Domingo</a>
             <a href="https://sitakke.jp/" target="_blank" class="link-btn btn-sitakke">🍄 Sitakke</a>
+            <a href="https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
+                🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
+            </a>
             <a href="https://mail.google.com/mail/u/0/#unread" target="_blank" class="link-btn btn-gmail">✉ Gメール</a>
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
           </div>
@@ -143,7 +152,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         <button data-type="nhk" class="active">NHK</button>
         <button data-type="doshin">道新</button>
         <button data-type="sakei">地域/食</button>
-        <button data-type="hre">HRE</button>
         <button data-type="nl">道NL</button>
         <button data-type="v4jp">VALO</button>
       </div>
@@ -153,18 +161,22 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 </div>
 
 <script>
-// ニュースのURL定義
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
   doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
   sakei: [
     "https://sapporo.keizai.biz/rss.xml",
     "https://tomakomai.goguynet.jp/feed/",
-    "https://meshitabi-hokkaido.com/feed/"
+    "https://meshitabi-hokkaido.com/feed/",
+    "https://hre-net.com/feed/" // 地域/食にHREを追加
   ],
-  hre: "https://hre-net.com/feed/",
   nl: "https://hokkaido-nl.jp/index.xml", 
   v4jp: "https://valorantnews.jp/feed" 
+};
+
+// ニュースキャッシュ用
+let newsCache = {
+  nhk: [], doshin: [], sakei: [], nl: [], v4jp: []
 };
 
 function setRandomBackground() {
@@ -172,6 +184,33 @@ function setRandomBackground() {
   document.body.style.backgroundImage = `url('${images[Math.floor(Math.random()*images.length)]}?auto=format&fit=crop&w=1600&q=80')`;
 }
 setRandomBackground();
+
+async function checkOkuyami() {
+  try {
+    const targetUrl = "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/";
+    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
+    const d = await r.json();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(d.contents, 'text/html');
+    const updatedText = doc.body.innerText.match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/);
+    if (updatedText) {
+      const latestUpdate = updatedText[0];
+      const lastRead = localStorage.getItem('okuyami_last_update');
+      if (lastRead !== latestUpdate) {
+        document.getElementById('okuyami-badge').classList.add('show');
+        localStorage.setItem('okuyami_temp_latest', latestUpdate);
+      }
+    }
+  } catch(e) { console.error("Okuyami Check Error"); }
+}
+
+function markOkuyamiRead() {
+  const latest = localStorage.getItem('okuyami_temp_latest');
+  if (latest) {
+    localStorage.setItem('okuyami_last_update', latest);
+    document.getElementById('okuyami-badge').classList.remove('show');
+  }
+}
 
 async function loadWeather() {
   try {
@@ -189,7 +228,7 @@ async function loadWeather() {
 }
 
 const ainuWords = [
-    ["イランカラㇷ゚テ", "こんにちは"], ["イヤイライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
+    ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
     ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
     ["アトゥイ", "海"], ["ナイ", "川"], ["ペッ", "川"], ["ヌプリ", "山"], ["キムン", "山のほう"], ["ピラ", "崖"], ["サル", "湿原"], ["ニタイ", "森"], ["ニ", "木"], ["ノンノ", "花"],
     ["アパポ", "花"], ["トニ", "ナラ"], ["タッニ", "カンバ"], ["チカㇷ゚", "鳥"], ["ユㇰ", "鹿"], ["キムンカムイ", "熊"], ["チェㇷ゚", "魚"], ["カムイチェㇷ゚", "鮭"], ["ホロケウ", "狼"], ["レプンカムイ", "シャチ"],
@@ -201,38 +240,43 @@ const ainuWords = [
     ["マッネ", "女"], ["ピンネ", "男"], ["クッチャロ", "喉"], ["ト", "湖"], ["サッ", "乾いた"], ["ヤㇺ", "冷たい"], ["セセㇰ", "熱い"], ["レラコロ", "風がある"], ["ウポポイ", "民族共生象徴空間"], ["ピリカレ", "美しくする"]
 ];
 
-async function loadNews(t){
-  const ul = document.getElementById("news");
-  if (!ul) return;
+// 全ニュースを並列でバックグラウンド取得する関数
+async function preloadAllNews() {
   const rss2json = "https://api.rss2json.com/v1/api.json?rss_url=";
   
-  ul.innerHTML = "<li>取得中...</li>";
-  
-  try {
-    let combinedItems = [];
-    const targetUrls = Array.isArray(urls[t]) ? urls[t] : [urls[t]];
-
-    for (const url of targetUrls) {
-      const r = await fetch(rss2json + encodeURIComponent(url));
-      const d = await r.json();
-      if (d.status === 'ok') {
-        combinedItems = combinedItems.concat(d.items);
+  const fetchPromises = Object.keys(urls).map(async (key) => {
+    try {
+      let items = [];
+      const targetUrls = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
+      for (const url of targetUrls) {
+        const r = await fetch(rss2json + encodeURIComponent(url));
+        const d = await r.json();
+        if (d.status === 'ok') items = items.concat(d.items);
       }
-    }
+      const seen = new Set();
+      newsCache[key] = items.filter(item => !seen.has(item.link) && seen.add(item.link))
+                            .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+      
+      const activeTab = document.querySelector(".news-tabs button.active");
+      if (activeTab && activeTab.dataset.type === key) {
+        renderNews(key);
+      }
+    } catch(e) { console.error(`Failed to load ${key}`); }
+  });
 
-    const seen = new Set();
-    combinedItems = combinedItems.filter(item => !seen.has(item.link) && seen.add(item.link));
+  await Promise.all(fetchPromises);
+}
 
-    combinedItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-
-    ul.innerHTML = combinedItems.slice(0, 12).map(i => 
-      `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`
-    ).join('');
-
-  } catch(e) { 
-    ul.innerHTML = "<li>取得失敗</li>"; 
-    console.error("News Load Error:", e);
+function renderNews(type) {
+  const ul = document.getElementById("news");
+  const items = newsCache[type] || [];
+  if (items.length === 0) {
+    ul.innerHTML = "<li>ロード中...</li>";
+    return;
   }
+  ul.innerHTML = items.slice(0, 15).map(i => 
+    `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`
+  ).join('');
 }
 
 let currentViewDate = new Date();
@@ -271,8 +315,15 @@ setInterval(clock, 1000); clock();
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
-loadWeather(); loadNews("nhk"); drawCal();
-document.querySelectorAll(".news-tabs button").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".news-tabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active"); loadNews(b.dataset.type);};});
+loadWeather(); drawCal(); checkOkuyami(); preloadAllNews();
+
+document.querySelectorAll(".news-tabs button").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".news-tabs button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active"); 
+    renderNews(b.dataset.type);
+  };
+});
 </script>
 </body>
 </html>
