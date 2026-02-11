@@ -41,8 +41,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .main-layout { display: grid; grid-template-columns: 1fr 350px; gap: 15px; }
 .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000; }
 .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-.video-tabs { display: flex; gap: 10px; margin-bottom: 10px; }
-.video-tabs button { flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 12px; background: #eee; color: #666; }
+.video-tabs { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
+.video-tabs button { flex: 1; min-width: 70px; padding: 8px 5px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 11px; background: #eee; color: #666; }
 .video-tabs button.active { background: #ff0000; color: #fff; }
 
 /* 下段：リンクとカレンダー */
@@ -69,15 +69,13 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .news-list li { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #eee; display: flex; align-items: flex-start; gap: 8px; transition: background 0.2s; }
 
-/* ニュースリンクのスタイル（太さを統一、既読を紫色に） */
 .news-list a { text-decoration: none; color: #2563eb; font-size: 12px; font-weight: 700; line-height: 1.4; flex: 1; }
 .news-list li.is-read { background: #fdfdfd; }
-.news-list li.is-read a { color: #800080 !important; } /* 指定の既読カラー（紫） */
+.news-list li.is-read a { color: #800080 !important; }
 
 .unread-dot { width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
 .is-read .unread-dot { display: none; }
 
-/* おくやみ等の新着通知バッジ */
 .badge { position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; display: none; }
 .badge.show { display: block; animation: pulse 2s infinite; }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
@@ -130,6 +128,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
           <button id="btn-v3" onclick="switchVideo('hA46WfBYdgo', 'btn-v3')">STV</button>
           <button id="btn-v2" onclick="switchVideo('c6Gqe6L_xZg', 'btn-v2')">ライブカメラ</button>
+          <button id="btn-v4" onclick="switchVideo('c7_kqMFDE8c', 'btn-v4')">地震ライブ</button>
         </div>
         <div class="video-container">
           <iframe id="main-video" src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&mute=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>
@@ -179,12 +178,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
   doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
-  sakei: [
-    "https://sapporo.keizai.biz/rss.xml",
-    "https://tomakomai.goguynet.jp/feed/",
-    "https://meshitabi-hokkaido.com/feed/",
-    "https://hre-net.com/feed/"
-  ],
+  sakei: ["https://sapporo.keizai.biz/rss.xml","https://tomakomai.goguynet.jp/feed/","https://meshitabi-hokkaido.com/feed/","https://hre-net.com/feed/"],
   nl: "https://hokkaido-nl.jp/index.xml", 
   v4jp: "https://valorantnews.jp/feed" 
 };
@@ -290,7 +284,9 @@ function markOkuyamiRead() {
   }
 }
 
-const ainuWords = [ ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"] ];
+const ainuWords = [
+  ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い/きれい"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"], ["ケラアン", "味が良い"], ["ウェン", "悪い"], ["オソンゲ", "嘘"], ["ウェンプレイ", "いたずらっ子"], ["アチャ", "おじさん"], ["フチ", "おばあさん"], ["エカシ", "おじいさん"], ["ハポ", "お母さん"], ["ミチ", "お父さん"], ["ヌプリ", "山"], ["ナイ", "沢/川"], ["ト", "湖"], ["レタㇻ", "白い"], ["クンネ", "黒い"], ["フレ", "赤い"], ["シニンケッ", "青い"], ["シワンケ", "黄色い"], ["シウン", "緑"], ["トマッ", "湿地"], ["ニ", "木"], ["ハム", "葉"], ["ノンノ", "花"], ["セッ", "巣"], ["テッパ", "包丁"], ["イタマッ", "お椀"], ["パラテ", "お皿"], ["ポン", "小さい"], ["ポロ", "大きい"], ["モシㇼ", "国/島"], ["ヤ", "陸"], ["サㇻ", "湿原"], ["キムンカムイ", "山の神(熊)"], ["レプンカムイ", "沖の神(シャチ)"], ["コタンコㇿカムイ", "村を守る神(シマフクロウ)"], ["アペフチカムイ", "火の婆様神"], ["チェㇷ゚", "魚/食べ物"], ["サモン", "鮭"], ["カムイチェㇷ゚", "神の魚(鮭)"], ["ユㇰ", "鹿"], ["イセポ", "ウサギ"], ["ホユㇷ゚", "走る"], ["アヌ", "聞く"], ["ヌカル", "見る"], ["イペ", "食べる"], ["イク", "飲む"], ["ミ", "着る"], ["アニ", "持つ"], ["キ", "する"], ["エカッポ", "子供"], ["ヘカチ", "男の子"], ["マッネポ", "女の子"], ["マッネク", "女性"], ["アイヌ", "人間"], ["シサㇺ", "日本人"], ["ウトマキ", "枕"], ["セ", "背負う"], ["ニシ", "雲"], ["クンネチュㇷ゚", "月"], ["シ", "本当の"], ["エトゥ", "鼻"], ["シキ", "目"], ["パル", "口"], ["テッ", "手"], ["ケマ", "足"], ["ル", "道"], ["ヤイ", "自分"], ["エルム", "ネズミ"], ["シタ", "犬"], ["チャッペ", "猫"], ["チカㇷ゚", "鳥"], ["オンネ", "老いた"], ["テケ", "手"], ["コイキ", "獲る"], ["キサㇻ", "耳"], ["マトパ", "冬を越す"], ["パイカㇽ", "春"], ["サㇰ", "夏"], ["チュッパ", "秋"], ["マタ", "冬"], ["シリウェン", "天気が悪い"], ["シリピリカ", "天気が良い"], ["ココ", "叔父"], ["レ", "名前"], ["ウェンペ", "悪いもの"], ["イキ", "〜する"]
+];
 
 let currentViewDate = new Date();
 const HOLIDAYS_2026 = {"2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日"};
