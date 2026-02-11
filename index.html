@@ -57,6 +57,9 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 .btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 
+/* ★追加：熊情報ボタン */
+.btn-bear { background-color: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+
 /* ニュース スタイル */
 .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 5px; }
 .news-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
@@ -140,6 +143,16 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <div class="link-box">
             <a href="https://domingo.ne.jp/" target="_blank" class="link-btn btn-domingo">📰 Domingo</a>
             <a href="https://sitakke.jp/" target="_blank" class="link-btn btn-sitakke">🍄 Sitakke</a>
+
+            <!-- ★追加：熊情報（更新があれば赤丸） -->
+            <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
+               target="_blank"
+               class="link-btn btn-bear"
+               id="bear-btn"
+               onclick="markBearRead()">
+              🐻 熊情報 <span id="bear-badge" class="badge"></span>
+            </a>
+
             <a href="https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
                 🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
             </a>
@@ -284,6 +297,42 @@ function markOkuyamiRead() {
   }
 }
 
+/* ★追加：熊情報の更新チェック（平取町ページの「更新日：YYYY年M月D日」を見る） */
+async function checkBearInfo() {
+  try {
+    const targetUrl = "https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html";
+    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
+    const d = await r.json();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(d.contents, 'text/html');
+
+    const text = (doc.body && doc.body.innerText) ? doc.body.innerText : "";
+
+    // 例: "更新日：2025年11月17日"
+    const m = text.match(/更新日：\s*(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
+    if (m) {
+      const yyyy = m[1];
+      const mm = String(m[2]).padStart(2, '0');
+      const dd = String(m[3]).padStart(2, '0');
+      const latestUpdate = `${yyyy}-${mm}-${dd}`;
+
+      const lastRead = localStorage.getItem('bear_last_update');
+      if (lastRead !== latestUpdate) {
+        document.getElementById('bear-badge').classList.add('show');
+        localStorage.setItem('bear_temp_latest', latestUpdate);
+      }
+    }
+  } catch(e) {}
+}
+
+function markBearRead() {
+  const latest = localStorage.getItem('bear_temp_latest');
+  if (latest) {
+    localStorage.setItem('bear_last_update', latest);
+    document.getElementById('bear-badge').classList.remove('show');
+  }
+}
+
 const ainuWords = [
   ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い/きれい"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"], ["ケラアン", "味が良い"], ["ウェン", "悪い"], ["オソンゲ", "嘘"], ["ウェンプレイ", "いたずらっ子"], ["アチャ", "おじさん"], ["フチ", "おばあさん"], ["エカシ", "おじいさん"], ["ハポ", "お母さん"], ["ミチ", "お父さん"], ["ヌプリ", "山"], ["ナイ", "沢/川"], ["ト", "湖"], ["レタㇻ", "白い"], ["クンネ", "黒い"], ["フレ", "赤い"], ["シニンケッ", "青い"], ["シワンケ", "黄色い"], ["シウン", "緑"], ["トマッ", "湿地"], ["ニ", "木"], ["ハム", "葉"], ["ノンノ", "花"], ["セッ", "巣"], ["テッパ", "包丁"], ["イタマッ", "お椀"], ["パラテ", "お皿"], ["ポン", "小さい"], ["ポロ", "大きい"], ["モシㇼ", "国/島"], ["ヤ", "陸"], ["サㇻ", "湿原"], ["キムンカムイ", "山の神(熊)"], ["レプンカムイ", "沖の神(シャチ)"], ["コタンコㇿカムイ", "村を守る神(シマフクロウ)"], ["アペフチカムイ", "火の婆様神"], ["チェㇷ゚", "魚/食べ物"], ["サモン", "鮭"], ["カムイチェㇷ゚", "神の魚(鮭)"], ["ユㇰ", "鹿"], ["イセポ", "ウサギ"], ["ホユㇷ゚", "走る"], ["アヌ", "聞く"], ["ヌカル", "見る"], ["イペ", "食べる"], ["イク", "飲む"], ["ミ", "着る"], ["アニ", "持つ"], ["キ", "する"], ["エカッポ", "子供"], ["ヘカチ", "男の子"], ["マッネポ", "女の子"], ["マッネク", "女性"], ["アイヌ", "人間"], ["シサㇺ", "日本人"], ["ウトマキ", "枕"], ["セ", "背負う"], ["ニシ", "雲"], ["クンネチュㇷ゚", "月"], ["シ", "本当の"], ["エトゥ", "鼻"], ["シキ", "目"], ["パル", "口"], ["テッ", "手"], ["ケマ", "足"], ["ル", "道"], ["ヤイ", "自分"], ["エルム", "ネズミ"], ["シタ", "犬"], ["チャッペ", "猫"], ["チカㇷ゚", "鳥"], ["オンネ", "老いた"], ["テケ", "手"], ["コイキ", "獲る"], ["キサㇻ", "耳"], ["マトパ", "冬を越す"], ["パイカㇽ", "春"], ["サㇰ", "夏"], ["チュッパ", "秋"], ["マタ", "冬"], ["シリウェン", "天気が悪い"], ["シリピリカ", "天気が良い"], ["ココ", "叔父"], ["レ", "名前"], ["ウェンペ", "悪いもの"], ["イキ", "〜する"]
 ];
@@ -324,7 +373,7 @@ setInterval(clock, 1000); clock();
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
-loadWeather(); drawCal(); checkOkuyami(); preloadAllNews();
+loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews();
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
   b.onclick=()=>{
