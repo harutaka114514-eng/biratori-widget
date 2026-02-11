@@ -49,10 +49,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .bottom-widgets { display: grid; grid-template-columns: 220px 1fr; gap: 12px; margin-top: 15px; }
 
 .link-box { display: flex; flex-direction: column; gap: 8px; justify-content: center; height: 100%; }
-.link-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.1s; border: 1px solid rgba(0,0,0,0.1); }
-.link-btn:active { transform: scale(0.98); }
+.link-box a { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.1s; border: 1px solid rgba(0,0,0,0.1); }
+.link-box a:active { transform: scale(0.98); }
 .btn-domingo { background-color: #dcfce7; color: #166534; border-color: #bbf7d0; }
-.btn-sitakke { background-color: #fffbeb; color: #92400e; border-color: #fef3c7; } /* Sitakke用に追加 */
+.btn-sitakke { background-color: #fffbeb; color: #92400e; border-color: #fef3c7; }
 .btn-gmail { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 
@@ -142,10 +142,9 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="news-tabs">
         <button data-type="nhk" class="active">NHK</button>
         <button data-type="doshin">道新</button>
-        <button data-type="sakei">札経</button>
+        <button data-type="sakei">地域/食</button>
         <button data-type="hre">HRE</button>
         <button data-type="nl">道NL</button>
-        <button data-type="tomakomai">苫小牧</button>
         <button data-type="v4jp">VALO</button>
       </div>
       <ul id="news" class="news-list"></ul>
@@ -154,6 +153,20 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 </div>
 
 <script>
+// ニュースのURL定義
+const urls = { 
+  nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
+  doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
+  sakei: [
+    "https://sapporo.keizai.biz/rss.xml",
+    "https://tomakomai.goguynet.jp/feed/",
+    "https://meshitabi-hokkaido.com/feed/"
+  ],
+  hre: "https://hre-net.com/feed/",
+  nl: "https://hokkaido-nl.jp/index.xml", 
+  v4jp: "https://valorantnews.jp/feed" 
+};
+
 function setRandomBackground() {
   const images = ['https://images.unsplash.com/photo-1441974231531-c6227db76b6e','https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05','https://images.unsplash.com/photo-1501785888041-af3ef285b470','https://images.unsplash.com/photo-1464822759023-fed622ff2c3b','https://images.unsplash.com/photo-1506744038136-46273834b3fb'];
   document.body.style.backgroundImage = `url('${images[Math.floor(Math.random()*images.length)]}?auto=format&fit=crop&w=1600&q=80')`;
@@ -180,7 +193,7 @@ const ainuWords = [
     ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
     ["アトゥイ", "海"], ["ナイ", "川"], ["ペッ", "川"], ["ヌプリ", "山"], ["キムン", "山のほう"], ["ピラ", "崖"], ["サル", "湿原"], ["ニタイ", "森"], ["ニ", "木"], ["ノンノ", "花"],
     ["アパポ", "花"], ["トニ", "ナラ"], ["タッニ", "カンバ"], ["チカㇷ゚", "鳥"], ["ユㇰ", "鹿"], ["キムンカムイ", "熊"], ["チェㇷ゚", "魚"], ["カムイチェㇷ゚", "鮭"], ["ホロケウ", "狼"], ["レプンカムイ", "シャチ"],
-    ["チロンヌㇷ゚", "キツネ"], ["イセポ", "ウサギ"], ["モゆㇰ", "タヌキ"], ["カパッ", "皮"], ["アットゥㇱ", "樹皮衣"], ["テポッパ", "入れ墨"], ["イタンキ", "椀"], ["ニマ", "盆"], ["マキリ", "小刀"], ["イナウ", "木幣"],
+    ["チロンヌㇷ゚", "キツネ"], ["イセポ", "ウサギ"], ["モゆㇰ", "タヌキ"], ["カパッ", "皮"], ["アットゥㇱ", "樹皮衣"], ["テポッパ", "入れ墨"], ["イタンキ", "椀"], ["ニマ", "盆"], ["マキリ", "小刀"], ["イヌ", "木幣"],
     ["ウパㇱ", "雪"], ["ル", "道"], ["ク", "弓"], ["アイ", "矢"], ["カヤ", "帆"], ["チップ", "舟"], ["ラッチャコ", "灯明"], ["サランパ", "さようなら"], ["ウェン", "悪い"], ["エカシ", "長老/祖父"],
     ["フチ", "祖母"], ["オキクルミ", "文化神"], ["コロポックル", "蕗の下の人"], ["ニブタニ", "二風谷"], ["シシリムカ", "沙流川"], ["エトゥ", "鼻/岬"], ["キキリ", "虫"], ["ケマ", "足"], ["テケ", "手"], ["シキ", "目"],
     ["パラ", "口"], ["レㇷ゚", "沖"], ["ヤ", "陸"], ["ノッ", "あご"], ["ルル", "汁"], ["アマム", "穀物/ご飯"], ["トカㇷ゚", "昼"], ["クンネ", "黒/夜"], ["レラ", "風"], ["セタ", "犬"],
@@ -190,36 +203,36 @@ const ainuWords = [
 
 async function loadNews(t){
   const ul = document.getElementById("news");
+  if (!ul) return;
   const rss2json = "https://api.rss2json.com/v1/api.json?rss_url=";
-  const urls = { 
-    nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-    doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
-    sakei: "https://sapporo.keizai.biz/rss.xml",
-    hre: "https://hre-net.com/feed/",
-    nl: "https://hokkaido-nl.jp/index.xml", 
-    tomakomai: "https://tomakomai.goguynet.jp/feed/", 
-    v4jp: "https://valorantnews.jp/feed" 
-  };
-
+  
   ul.innerHTML = "<li>取得中...</li>";
+  
   try {
     let combinedItems = [];
-    if (t === 'nhk') {
-      for (const url of urls.nhk) {
-        const r = await fetch(rss2json + encodeURIComponent(url));
-        const d = await r.json();
-        if (d.status === 'ok') combinedItems = combinedItems.concat(d.items);
-      }
-      const seen = new Set();
-      combinedItems = combinedItems.filter(item => !seen.has(item.link) && seen.add(item.link));
-      combinedItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-    } else {
-      const r = await fetch(rss2json + encodeURIComponent(urls[t]));
+    const targetUrls = Array.isArray(urls[t]) ? urls[t] : [urls[t]];
+
+    for (const url of targetUrls) {
+      const r = await fetch(rss2json + encodeURIComponent(url));
       const d = await r.json();
-      if (d.status === 'ok') combinedItems = d.items;
+      if (d.status === 'ok') {
+        combinedItems = combinedItems.concat(d.items);
+      }
     }
-    ul.innerHTML = combinedItems.slice(0, 12).map(i => `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
-  } catch(e) { ul.innerHTML = "<li>取得失敗</li>"; }
+
+    const seen = new Set();
+    combinedItems = combinedItems.filter(item => !seen.has(item.link) && seen.add(item.link));
+
+    combinedItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    ul.innerHTML = combinedItems.slice(0, 12).map(i => 
+      `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`
+    ).join('');
+
+  } catch(e) { 
+    ul.innerHTML = "<li>取得失敗</li>"; 
+    console.error("News Load Error:", e);
+  }
 }
 
 let currentViewDate = new Date();
@@ -228,7 +241,7 @@ function changeMonth(diff) { currentViewDate.setMonth(currentViewDate.getMonth()
 function drawCal(){
   const year=currentViewDate.getFullYear(), month=currentViewDate.getMonth(), today = new Date();
   document.getElementById("calTitle").textContent=`${year}年 ${month+1}月`;
-  let html = ['日','月','火','水','木','金','土'].map(h => `<div class="cal-header">${h}</div>`).join('');
+  let html = ['日','月','火','水','木','金','土'].map(h => `<div class=\"cal-header\">${h}</div>`).join('');
   const start=new Date(year, month, 1); start.setDate(1 - start.getDay());
   for(let i=0; i<42; i++){
     const d=new Date(start); d.setDate(start.getDate()+i);
@@ -237,7 +250,7 @@ function drawCal(){
     let colorClass = (d.getDay() === 0 || hName) ? "sun" : (d.getDay() === 6 ? "sat" : "");
     const isToday = d.toDateString() === today.toDateString() ? "cal-today" : "";
     const isOtherMonth = d.getMonth() !== month ? "cal-dim" : "";
-    html += `<div class="cal-cell ${isOtherMonth} ${isToday}"><div class="cal-num ${colorClass}">${d.getDate()}</div>${hName ? `<div class="holiday-name">${hName}</div>` : ""}</div>`;
+    html += `<div class=\"cal-cell ${isOtherMonth} ${isToday}\"><div class=\"cal-num ${colorClass}\">${d.getDate()}</div>${hName ? `<div class=\"holiday-name\">${hName}</div>` : ""}</div>`;
   }
   document.getElementById("calGrid").innerHTML=html;
 }
@@ -245,7 +258,7 @@ function drawCal(){
 function clock(){
   const n=new Date(); const m=n.getMonth()+1, d=n.getDate(), w=['日','月','火','水','木','金','土'][n.getDay()];
   const h=String(n.getHours()).padStart(2,"0"), i=String(n.getMinutes()).padStart(2,"0"), s=String(n.getSeconds()).padStart(2,"0");
-  document.getElementById("clock").innerHTML=`<span style="font-size:14px">${m}/${d}(${w})</span> ${h}:${i}:${s}`;
+  document.getElementById("clock").innerHTML=`<span style=\"font-size:14px\">${m}/${d}(${w})</span> ${h}:${i}:${s}`;
 }
 
 function switchVideo(id, btnId) {
