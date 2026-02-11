@@ -57,18 +57,30 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 .btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 
-/* 新着通知バッジ */
+/* ニュース スタイル */
+.news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 5px; }
+.news-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.news-tabs button { padding: 4px 8px; font-size: 10px; background: #e5e7eb; border: 0; border-radius: 999px; cursor: pointer; }
+.news-tabs button.active { background: #2563eb; color: #fff; }
+
+.read-all-btn { padding: 4px 8px; font-size: 9px; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; color: #666; white-space: nowrap; }
+.read-all-btn:hover { background: #f0f0f0; }
+
+.news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.news-list li { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #eee; display: flex; align-items: flex-start; gap: 8px; transition: background 0.2s; }
+
+/* ニュースリンクのスタイル（太さを統一、既読を紫色に） */
+.news-list a { text-decoration: none; color: #2563eb; font-size: 12px; font-weight: 700; line-height: 1.4; flex: 1; }
+.news-list li.is-read { background: #fdfdfd; }
+.news-list li.is-read a { color: #800080 !important; } /* 指定の既読カラー（紫） */
+
+.unread-dot { width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.is-read .unread-dot { display: none; }
+
+/* おくやみ等の新着通知バッジ */
 .badge { position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; display: none; }
 .badge.show { display: block; animation: pulse 2s infinite; }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-/* ニュース スタイル */
-.news-tabs { display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap; }
-.news-tabs button { padding: 4px 8px; font-size: 10px; background: #e5e7eb; border: 0; border-radius: 999px; cursor: pointer; }
-.news-tabs button.active { background: #2563eb; color: #fff; }
-.news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.news-list li { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #eee; }
-.news-list a { text-decoration: none; color: #1a1a1a; font-size: 12px; font-weight: 600; line-height: 1.4; }
 
 /* カレンダー */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -148,12 +160,15 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
     </div>
 
     <div class="widget">
-      <div class="news-tabs">
-        <button data-type="nhk" class="active">NHK</button>
-        <button data-type="doshin">道新</button>
-        <button data-type="sakei">地域/食</button>
-        <button data-type="nl">道NL</button>
-        <button data-type="v4jp">VALO</button>
+      <div class="news-header">
+        <div class="news-tabs">
+          <button data-type="nhk" class="active">NHK</button>
+          <button data-type="doshin">道新</button>
+          <button data-type="sakei">地域/食</button>
+          <button data-type="nl">道NL</button>
+          <button data-type="v4jp">VALO</button>
+        </div>
+        <button class="read-all-btn" onclick="markCurrentTabAllRead()">すべて既読</button>
       </div>
       <ul id="news" class="news-list"></ul>
     </div>
@@ -168,16 +183,14 @@ const urls = {
     "https://sapporo.keizai.biz/rss.xml",
     "https://tomakomai.goguynet.jp/feed/",
     "https://meshitabi-hokkaido.com/feed/",
-    "https://hre-net.com/feed/" // 地域/食にHREを追加
+    "https://hre-net.com/feed/"
   ],
   nl: "https://hokkaido-nl.jp/index.xml", 
   v4jp: "https://valorantnews.jp/feed" 
 };
 
-// ニュースキャッシュ用
-let newsCache = {
-  nhk: [], doshin: [], sakei: [], nl: [], v4jp: []
-};
+let newsCache = { nhk: [], doshin: [], sakei: [], nl: [], v4jp: [] };
+let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
   const images = ['https://images.unsplash.com/photo-1441974231531-c6227db76b6e','https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05','https://images.unsplash.com/photo-1501785888041-af3ef285b470','https://images.unsplash.com/photo-1464822759023-fed622ff2c3b','https://images.unsplash.com/photo-1506744038136-46273834b3fb'];
@@ -185,31 +198,54 @@ function setRandomBackground() {
 }
 setRandomBackground();
 
-async function checkOkuyami() {
-  try {
-    const targetUrl = "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/";
-    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
-    const d = await r.json();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(d.contents, 'text/html');
-    const updatedText = doc.body.innerText.match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/);
-    if (updatedText) {
-      const latestUpdate = updatedText[0];
-      const lastRead = localStorage.getItem('okuyami_last_update');
-      if (lastRead !== latestUpdate) {
-        document.getElementById('okuyami-badge').classList.add('show');
-        localStorage.setItem('okuyami_temp_latest', latestUpdate);
+async function preloadAllNews() {
+  const rss2json = "https://api.rss2json.com/v1/api.json?rss_url=";
+  const fetchPromises = Object.keys(urls).map(async (key) => {
+    try {
+      let items = [];
+      const targetUrls = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
+      for (const url of targetUrls) {
+        const r = await fetch(rss2json + encodeURIComponent(url));
+        const d = await r.json();
+        if (d.status === 'ok') items = items.concat(d.items);
       }
-    }
-  } catch(e) { console.error("Okuyami Check Error"); }
+      const seen = new Set();
+      newsCache[key] = items.filter(item => !seen.has(item.link) && seen.add(item.link))
+                            .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+      const activeTab = document.querySelector(".news-tabs button.active");
+      if (activeTab && activeTab.dataset.type === key) renderNews(key);
+    } catch(e) {}
+  });
+  await Promise.all(fetchPromises);
 }
 
-function markOkuyamiRead() {
-  const latest = localStorage.getItem('okuyami_temp_latest');
-  if (latest) {
-    localStorage.setItem('okuyami_last_update', latest);
-    document.getElementById('okuyami-badge').classList.remove('show');
-  }
+function renderNews(type) {
+  const ul = document.getElementById("news");
+  const items = newsCache[type] || [];
+  if (items.length === 0) { ul.innerHTML = "<li>ロード中...</li>"; return; }
+  ul.innerHTML = items.slice(0, 15).map(i => {
+    const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
+    return `<li class="${isRead}">
+      <span class="unread-dot"></span>
+      <a href="${i.link}" target="_blank" onclick="markAsRead('${i.link}', this)">${i.title}</a>
+    </li>`;
+  }).join('');
+}
+
+function markAsRead(link, element) {
+  readNewsLinks.add(link);
+  localStorage.setItem('read_news_links', JSON.stringify(Array.from(readNewsLinks)));
+  if(element) element.closest('li').classList.add('is-read');
+}
+
+function markCurrentTabAllRead() {
+  const activeTab = document.querySelector(".news-tabs button.active");
+  if (!activeTab) return;
+  const type = activeTab.dataset.type;
+  const items = newsCache[type] || [];
+  items.forEach(i => readNewsLinks.add(i.link));
+  localStorage.setItem('read_news_links', JSON.stringify(Array.from(readNewsLinks)));
+  renderNews(type);
 }
 
 async function loadWeather() {
@@ -227,57 +263,34 @@ async function loadWeather() {
   } catch(e){}
 }
 
-const ainuWords = [
-    ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい/感謝"], ["ピリカ", "良い/きれい"], ["カムイ", "神/霊的存在"], ["コタン", "村/集集落"], ["イタㇰ", "言葉/話す"], ["チセ", "家"], ["アペ", "火"],
-    ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽/月"], ["シリ", "大地"], ["ウポポ", "歌"], ["リムセ", "踊り"], ["ムックリ", "口琴"], ["トンコリ", "五弦琴"], ["イオマンテ", "儀式"],
-    ["アトゥイ", "海"], ["ナイ", "川"], ["ペッ", "川"], ["ヌプリ", "山"], ["キムン", "山のほう"], ["ピラ", "崖"], ["サル", "湿原"], ["ニタイ", "森"], ["ニ", "木"], ["ノンノ", "花"],
-    ["アパポ", "花"], ["トニ", "ナラ"], ["タッニ", "カンバ"], ["チカㇷ゚", "鳥"], ["ユㇰ", "鹿"], ["キムンカムイ", "熊"], ["チェㇷ゚", "魚"], ["カムイチェㇷ゚", "鮭"], ["ホロケウ", "狼"], ["レプンカムイ", "シャチ"],
-    ["チロンヌㇷ゚", "キツネ"], ["イセポ", "ウサギ"], ["モゆㇰ", "タヌキ"], ["カパッ", "皮"], ["アットゥㇱ", "樹皮衣"], ["テポッパ", "入れ墨"], ["イタンキ", "椀"], ["ニマ", "盆"], ["マキリ", "小刀"], ["イヌ", "木幣"],
-    ["ウパㇱ", "雪"], ["ル", "道"], ["ク", "弓"], ["アイ", "矢"], ["カヤ", "帆"], ["チップ", "舟"], ["ラッチャコ", "灯明"], ["サランパ", "さようなら"], ["ウェン", "悪い"], ["エカシ", "長老/祖父"],
-    ["フチ", "祖母"], ["オキクルミ", "文化神"], ["コロポックル", "蕗の下の人"], ["ニブタニ", "二風谷"], ["シシリムカ", "沙流川"], ["エトゥ", "鼻/岬"], ["キキリ", "虫"], ["ケマ", "足"], ["テケ", "手"], ["シキ", "目"],
-    ["パラ", "口"], ["レㇷ゚", "沖"], ["ヤ", "陸"], ["ノッ", "あご"], ["ルル", "汁"], ["アマム", "穀物/ご飯"], ["トカㇷ゚", "昼"], ["クンネ", "黒/夜"], ["レラ", "風"], ["セタ", "犬"],
-    ["チャッピ", "雨"], ["ルー", "道"], ["ウェンペ", "悪い奴"], ["コンカニ", "金"], ["シロカニ", "銀"], ["ハポ", "母"], ["ミチ", "父"], ["アシリ", "新しい"], ["ニサッタ", "明日"], ["ヘカッティ", "子供"],
-    ["マッネ", "女"], ["ピンネ", "男"], ["クッチャロ", "喉"], ["ト", "湖"], ["サッ", "乾いた"], ["ヤㇺ", "冷たい"], ["セセㇰ", "熱い"], ["レラコロ", "風がある"], ["ウポポイ", "民族共生象徴空間"], ["ピリカレ", "美しくする"]
-];
-
-// 全ニュースを並列でバックグラウンド取得する関数
-async function preloadAllNews() {
-  const rss2json = "https://api.rss2json.com/v1/api.json?rss_url=";
-  
-  const fetchPromises = Object.keys(urls).map(async (key) => {
-    try {
-      let items = [];
-      const targetUrls = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
-      for (const url of targetUrls) {
-        const r = await fetch(rss2json + encodeURIComponent(url));
-        const d = await r.json();
-        if (d.status === 'ok') items = items.concat(d.items);
+async function checkOkuyami() {
+  try {
+    const targetUrl = "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/";
+    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
+    const d = await r.json();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(d.contents, 'text/html');
+    const updatedText = doc.body.innerText.match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/);
+    if (updatedText) {
+      const latestUpdate = updatedText[0];
+      const lastRead = localStorage.getItem('okuyami_last_update');
+      if (lastRead !== latestUpdate) {
+        document.getElementById('okuyami-badge').classList.add('show');
+        localStorage.setItem('okuyami_temp_latest', latestUpdate);
       }
-      const seen = new Set();
-      newsCache[key] = items.filter(item => !seen.has(item.link) && seen.add(item.link))
-                            .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-      
-      const activeTab = document.querySelector(".news-tabs button.active");
-      if (activeTab && activeTab.dataset.type === key) {
-        renderNews(key);
-      }
-    } catch(e) { console.error(`Failed to load ${key}`); }
-  });
-
-  await Promise.all(fetchPromises);
+    }
+  } catch(e) {}
 }
 
-function renderNews(type) {
-  const ul = document.getElementById("news");
-  const items = newsCache[type] || [];
-  if (items.length === 0) {
-    ul.innerHTML = "<li>ロード中...</li>";
-    return;
+function markOkuyamiRead() {
+  const latest = localStorage.getItem('okuyami_temp_latest');
+  if (latest) {
+    localStorage.setItem('okuyami_last_update', latest);
+    document.getElementById('okuyami-badge').classList.remove('show');
   }
-  ul.innerHTML = items.slice(0, 15).map(i => 
-    `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`
-  ).join('');
 }
+
+const ainuWords = [ ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"] ];
 
 let currentViewDate = new Date();
 const HOLIDAYS_2026 = {"2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日"};
@@ -320,8 +333,7 @@ loadWeather(); drawCal(); checkOkuyami(); preloadAllNews();
 document.querySelectorAll(".news-tabs button").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll(".news-tabs button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active"); 
-    renderNews(b.dataset.type);
+    b.classList.add("active"); renderNews(b.dataset.type);
   };
 });
 </script>
