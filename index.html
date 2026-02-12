@@ -51,13 +51,9 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .link-box { display: flex; flex-direction: column; gap: 8px; justify-content: center; height: 100%; }
 .link-box a { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 13px; transition: transform 0.1s; border: 1px solid rgba(0,0,0,0.1); }
 .link-box a:active { transform: scale(0.98); }
-.btn-domingo { background-color: #dcfce7; color: #166534; border-color: #bbf7d0; }
-.btn-sitakke { background-color: #fffbeb; color: #92400e; border-color: #fef3c7; }
 .btn-gmail { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 .btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
-
-/* ★追加：熊情報ボタン */
 .btn-bear { background-color: #fff7ed; color: #9a3412; border-color: #fed7aa; }
 
 /* ニュース スタイル */
@@ -66,8 +62,9 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .news-tabs button { padding: 4px 8px; font-size: 10px; background: #e5e7eb; border: 0; border-radius: 999px; cursor: pointer; }
 .news-tabs button.active { background: #2563eb; color: #fff; }
 
-.read-all-btn { padding: 4px 8px; font-size: 9px; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; color: #666; white-space: nowrap; }
-.read-all-btn:hover { background: #f0f0f0; }
+.news-controls { display: flex; gap: 5px; align-items: center; }
+.refresh-btn { padding: 4px 8px; font-size: 9px; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; color: #666; white-space: nowrap; }
+.refresh-btn:hover { background: #f0f0f0; }
 
 .news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .news-list li { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #eee; display: flex; align-items: flex-start; gap: 8px; transition: background 0.2s; }
@@ -141,10 +138,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="bottom-widgets">
         <div class="widget">
           <div class="link-box">
-            <a href="https://domingo.ne.jp/" target="_blank" class="link-btn btn-domingo">📰 Domingo</a>
-            <a href="https://sitakke.jp/" target="_blank" class="link-btn btn-sitakke">🍄 Sitakke</a>
-
-            <!-- ★追加：熊情報（更新があれば赤丸） -->
             <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
                target="_blank"
                class="link-btn btn-bear"
@@ -180,7 +173,9 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button data-type="nl">道NL</button>
           <button data-type="v4jp">VALO</button>
         </div>
-        <button class="read-all-btn" onclick="markCurrentTabAllRead()">すべて既読</button>
+        <div class="news-controls">
+          <button class="refresh-btn" onclick="preloadAllNews()" title="記事を更新">🔄 更新</button>
+        </div>
       </div>
       <ul id="news" class="news-list"></ul>
     </div>
@@ -191,8 +186,15 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
   doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
-  sakei: ["https://sapporo.keizai.biz/rss.xml","https://tomakomai.goguynet.jp/feed/","https://meshitabi-hokkaido.com/feed/","https://hre-net.com/feed/"],
-  nl: "https://hokkaido-nl.jp/index.xml", 
+  sakei: [
+    "https://rss.app/feeds/T4ZyIejkCwoCzTq3.xml",
+    "https://rss.app/feeds/Aw8UuUaHEoEIegfM.xml",
+    "https://sapporo.keizai.biz/rss.xml",
+    "https://tomakomai.goguynet.jp/feed/",
+    "https://meshitabi-hokkaido.com/feed/",
+    "https://hre-net.com/feed/"
+  ],
+  nl: "https://hokkaido-nl.jp/index.xml",
   v4jp: "https://valorantnews.jp/feed" 
 };
 
@@ -206,6 +208,9 @@ function setRandomBackground() {
 setRandomBackground();
 
 async function preloadAllNews() {
+  const refreshBtn = document.querySelector('.refresh-btn');
+  if(refreshBtn) refreshBtn.textContent = "⏳ 更新中...";
+  
   const rss2json = "https://api.rss2json.com/v1/api.json?rss_url=";
   const fetchPromises = Object.keys(urls).map(async (key) => {
     try {
@@ -214,7 +219,13 @@ async function preloadAllNews() {
       for (const url of targetUrls) {
         const r = await fetch(rss2json + encodeURIComponent(url));
         const d = await r.json();
-        if (d.status === 'ok') items = items.concat(d.items);
+        if (d.status === 'ok') {
+            const filteredItems = d.items.filter(item => {
+                const t = item.title;
+                return t !== "Domingo 記事" && !t.includes("新着記事一覧") && !t.includes("記事一覧");
+            });
+            items = items.concat(filteredItems);
+        }
       }
       const seen = new Set();
       newsCache[key] = items.filter(item => !seen.has(item.link) && seen.add(item.link))
@@ -224,6 +235,7 @@ async function preloadAllNews() {
     } catch(e) {}
   });
   await Promise.all(fetchPromises);
+  if(refreshBtn) refreshBtn.textContent = "🔄 更新";
 }
 
 function renderNews(type) {
@@ -243,16 +255,6 @@ function markAsRead(link, element) {
   readNewsLinks.add(link);
   localStorage.setItem('read_news_links', JSON.stringify(Array.from(readNewsLinks)));
   if(element) element.closest('li').classList.add('is-read');
-}
-
-function markCurrentTabAllRead() {
-  const activeTab = document.querySelector(".news-tabs button.active");
-  if (!activeTab) return;
-  const type = activeTab.dataset.type;
-  const items = newsCache[type] || [];
-  items.forEach(i => readNewsLinks.add(i.link));
-  localStorage.setItem('read_news_links', JSON.stringify(Array.from(readNewsLinks)));
-  renderNews(type);
 }
 
 async function loadWeather() {
@@ -297,7 +299,7 @@ function markOkuyamiRead() {
   }
 }
 
-/* ★追加：熊情報の更新チェック（平取町ページの「更新日：YYYY年M月D日」を見る） */
+// 熊情報の更新日を抽出してチェックする修正版
 async function checkBearInfo() {
   try {
     const targetUrl = "https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html";
@@ -305,17 +307,16 @@ async function checkBearInfo() {
     const d = await r.json();
     const parser = new DOMParser();
     const doc = parser.parseFromString(d.contents, 'text/html');
-
+    
+    // ページ全体ではなく「更新日：XXXX年XX月XX日」というテキストのみを探す
     const text = (doc.body && doc.body.innerText) ? doc.body.innerText : "";
-
-    // 例: "更新日：2025年11月17日"
     const m = text.match(/更新日：\s*(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
+    
     if (m) {
-      const yyyy = m[1];
-      const mm = String(m[2]).padStart(2, '0');
-      const dd = String(m[3]).padStart(2, '0');
+      // 見つけた日付（例: 2024-05-20）を比較用文字列にする
+      const yyyy = m[1], mm = String(m[2]).padStart(2, '0'), dd = String(m[3]).padStart(2, '0');
       const latestUpdate = `${yyyy}-${mm}-${dd}`;
-
+      
       const lastRead = localStorage.getItem('bear_last_update');
       if (lastRead !== latestUpdate) {
         document.getElementById('bear-badge').classList.add('show');
