@@ -55,6 +55,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 .btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 .btn-bear { background-color: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+/* 防災ボタンのスタイル */
+.btn-bosai { background-color: #fffbeb; color: #b45309; border-color: #f59e0b; }
+/* 広報ボタンのスタイル（追加） */
+.btn-koho { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 
 /* ニュース スタイル */
 .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 5px; }
@@ -138,6 +142,20 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="bottom-widgets">
         <div class="widget">
           <div class="link-box">
+            <a href="https://s.n-kishou.co.jp/w/charge/bosai/bosaid?ba=01&code=0160200" 
+               target="_blank" 
+               class="link-btn btn-bosai" 
+               id="bosai-btn">
+              ⚠️ 平取町 防災情報 <span id="bosai-badge" class="badge"></span>
+            </a>
+
+            <a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
+               target="_blank"
+               class="link-btn btn-koho"
+               id="koho-btn">
+              📖 広報びらとり 
+            </a>
+
             <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
                target="_blank"
                class="link-btn btn-bear"
@@ -299,7 +317,6 @@ function markOkuyamiRead() {
   }
 }
 
-// 熊情報の更新日を抽出してチェックする修正版
 async function checkBearInfo() {
   try {
     const targetUrl = "https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html";
@@ -307,16 +324,11 @@ async function checkBearInfo() {
     const d = await r.json();
     const parser = new DOMParser();
     const doc = parser.parseFromString(d.contents, 'text/html');
-    
-    // ページ全体ではなく「更新日：XXXX年XX月XX日」というテキストのみを探す
     const text = (doc.body && doc.body.innerText) ? doc.body.innerText : "";
     const m = text.match(/更新日：\s*(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
-    
     if (m) {
-      // 見つけた日付（例: 2024-05-20）を比較用文字列にする
       const yyyy = m[1], mm = String(m[2]).padStart(2, '0'), dd = String(m[3]).padStart(2, '0');
       const latestUpdate = `${yyyy}-${mm}-${dd}`;
-      
       const lastRead = localStorage.getItem('bear_last_update');
       if (lastRead !== latestUpdate) {
         document.getElementById('bear-badge').classList.add('show');
@@ -334,8 +346,30 @@ function markBearRead() {
   }
 }
 
+// 防災警報のチェック機能を追加
+async function checkWarning() {
+  try {
+    // 気象庁の公開JSON (日高地方) を取得
+    const r = await fetch("https://www.jma.go.jp/bosai/warning/data/warning/016000.json");
+    const data = await r.json();
+    // 平取町 (areaCode: 0160200) の情報を探す
+    const biratoriData = data.find(item => item.areaCode === "0160200");
+    if (biratoriData && biratoriData.warnings) {
+      // 解除されていない警報・注意報があるか確認
+      const activeWarnings = biratoriData.warnings.filter(w => !w.status.includes("解除"));
+      if (activeWarnings.length > 0) {
+        document.getElementById('bosai-badge').classList.add('show');
+      } else {
+        document.getElementById('bosai-badge').classList.remove('show');
+      }
+    }
+  } catch(e) {
+    console.error("警報情報の取得に失敗しました", e);
+  }
+}
+
 const ainuWords = [
-  ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い/きれい"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"], ["ケラアン", "味が良い"], ["ウェン", "悪い"], ["オソンゲ", "嘘"], ["ウェンプレイ", "いたずらっ子"], ["アチャ", "おじさん"], ["フチ", "おばあさん"], ["エカシ", "おじいさん"], ["ハポ", "お母さん"], ["ミチ", "お父さん"], ["ヌプリ", "山"], ["ナイ", "沢/川"], ["ト", "湖"], ["レタㇻ", "白い"], ["クンネ", "黒い"], ["フレ", "赤い"], ["シニンケッ", "青い"], ["シワンケ", "黄色い"], ["シウン", "緑"], ["トマッ", "湿地"], ["ニ", "木"], ["ハム", "葉"], ["ノンノ", "花"], ["セッ", "巣"], ["テッパ", "包丁"], ["イタマッ", "お椀"], ["パラテ", "お皿"], ["ポン", "小さい"], ["ポロ", "大きい"], ["モシㇼ", "国/島"], ["ヤ", "陸"], ["サㇻ", "湿原"], ["キムンカムイ", "山の神(熊)"], ["レプンカムイ", "沖の神(シャチ)"], ["コタンコㇿカムイ", "村を守る神(シマフクロウ)"], ["アペフチカムイ", "火の婆様神"], ["チェㇷ゚", "魚/食べ物"], ["サモン", "鮭"], ["カムイチェㇷ゚", "神の魚(鮭)"], ["ユㇰ", "鹿"], ["イセポ", "ウサギ"], ["ホユㇷ゚", "走る"], ["アヌ", "聞く"], ["ヌカル", "見る"], ["イペ", "食べる"], ["イク", "飲む"], ["ミ", "着る"], ["アニ", "持つ"], ["キ", "する"], ["エカッポ", "子供"], ["ヘカチ", "男の子"], ["マッネポ", "女の子"], ["マッネク", "女性"], ["アイヌ", "人間"], ["シサㇺ", "日本人"], ["ウトマキ", "枕"], ["セ", "背負う"], ["ニシ", "雲"], ["クンネチュㇷ゚", "月"], ["シ", "本当の"], ["エトゥ", "鼻"], ["シキ", "目"], ["パル", "口"], ["テッ", "手"], ["ケマ", "足"], ["ル", "道"], ["ヤイ", "自分"], ["エルム", "ネズミ"], ["シタ", "犬"], ["チャッペ", "猫"], ["チカㇷ゚", "鳥"], ["オンネ", "老いた"], ["テケ", "手"], ["コイキ", "獲る"], ["キサㇻ", "耳"], ["マトパ", "冬を越す"], ["パイカㇽ", "春"], ["サㇰ", "夏"], ["チュッパ", "秋"], ["マタ", "冬"], ["シリウェン", "天気が悪い"], ["シリピリカ", "天気が良い"], ["ココ", "叔父"], ["レ", "名前"], ["ウェンペ", "悪いもの"], ["イキ", "〜する"]
+  ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い/きれい"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"], ["ケラアン", "味が良い"], ["ウェン", "悪い"], ["オソンゲ", "嘘"], ["ウェンプレイ", "いたずらっ子"], ["アチャ", "おじさん"], ["フチ", "おばあさん"], ["エカシ", "おじいさん"], ["ハポ", "お母さん"], ["ミチ", "お父さん"], ["ヌプリ", "山"], ["ナイ", "沢/川"], ["ト", "湖"], ["レタㇻ", "白い"], ["クンネ", "黒い"], ["フレ", "赤い"], ["シニンケッ", "青い"], ["シワンケ", "黄色い"], ["シウン", "緑"], ["トマッ", "湿地"], ["ニ", "木"], ["ハム", "葉"], ["ノンノ", "花"], ["セㇿ", "巣"], ["テッパ", "包丁"], ["イタマッ", "お椀"], ["パラテ", "お皿"], ["ポン", "小さい"], ["ポロ", "大きい"], ["モシㇼ", "国/島"], ["ヤ", "陸"], ["サㇻ", "湿原"], ["キムンカムイ", "山の神(熊)"], ["レプンカムイ", "沖の神(シャチ)"], ["コタンコㇿカムイ", "村を守る神(シマフクロウ)"], ["アペフチカムイ", "火の婆様神"], ["チェㇷ゚", "魚/食べ物"], ["サモン", "鮭"], ["カムイチェㇷ゚", "神の魚(鮭)"], ["ユㇰ", "鹿"], ["イセポ", "ウサギ"], ["ホユㇷ゚", "走る"], ["アヌ", "聞く"], ["ヌカル", "見る"], ["イペ", "食べる"], ["イク", "飲む"], ["ミ", "着る"], ["アニ", "持つ"], ["キ", "する"], ["エカッポ", "子供"], ["ヘカチ", "男の子"], ["マッネポ", "女の子"], ["マッネク", "女性"], ["アイヌ", "人間"], ["シサㇺ", "日本人"], ["ウトマキ", "枕"], ["セ", "背負う"], ["ニシ", "雲"], ["クンネチュㇷ゚", "月"], ["シ", "本当の"], ["エトゥ", "鼻"], ["シキ", "目"], ["パル", "口"], ["テッ", "手"], ["ケマ", "足"], ["ル", "道"], ["ヤイ", "自分"], ["エルム", "ネズミ"], ["シタ", "犬"], ["チャッペ", "猫"], ["チカㇷ゚", "鳥"], ["オンネ", "老いた"], ["テケ", "手"], ["コイキ", "獲る"], ["キサㇻ", "耳"], ["マトパ", "冬を越す"], ["パイカㇽ", "春"], ["サㇰ", "夏"], ["チュッパ", "秋"], ["マタ", "冬"], ["シリウェン", "天気が悪い"], ["シリピリカ", "天気が良い"], ["ココ", "叔父"], ["レ", "名前"], ["ウェンペ", "悪いもの"], ["イキ", "〜する"]
 ];
 
 let currentViewDate = new Date();
@@ -375,6 +409,8 @@ const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews();
+// 防災チェックを開始
+checkWarning(); setInterval(checkWarning, 600000);
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
   b.onclick=()=>{
