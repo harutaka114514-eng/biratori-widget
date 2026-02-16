@@ -164,7 +164,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
               🐻 熊情報 <span id="bear-badge" class="badge"></span>
             </a>
 
-            <a href="https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
+            <a href="https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
                 🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
             </a>
             <a href="https://mail.google.com/mail/u/0/#unread" target="_blank" class="link-btn btn-gmail">✉ Gメール</a>
@@ -296,18 +296,19 @@ async function loadWeather() {
 
 async function checkOkuyami() {
   try {
-    const targetUrl = "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/";
+    const targetUrl = "https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/";
     const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
     const d = await r.json();
     const parser = new DOMParser();
     const doc = parser.parseFromString(d.contents, 'text/html');
-    const updatedText = doc.body.innerText.match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}/);
-    if (updatedText) {
-      const latestUpdate = updatedText[0];
-      const lastRead = localStorage.getItem('okuyami_last_update');
-      if (lastRead !== latestUpdate) {
+    // 最新の記事タイトルを取得して更新キーとする
+    const latestEntry = doc.querySelector('.entry-title a');
+    if (latestEntry) {
+      const latestTitle = latestEntry.innerText.trim();
+      const lastRead = localStorage.getItem('okuyami_last_title');
+      if (lastRead !== latestTitle) {
         document.getElementById('okuyami-badge').classList.add('show');
-        localStorage.setItem('okuyami_temp_latest', latestUpdate);
+        localStorage.setItem('okuyami_temp_latest', latestTitle);
       }
     }
   } catch(e) {}
@@ -316,7 +317,7 @@ async function checkOkuyami() {
 function markOkuyamiRead() {
   const latest = localStorage.getItem('okuyami_temp_latest');
   if (latest) {
-    localStorage.setItem('okuyami_last_update', latest);
+    localStorage.setItem('okuyami_last_title', latest);
     document.getElementById('okuyami-badge').classList.remove('show');
   }
 }
@@ -350,16 +351,12 @@ function markBearRead() {
   }
 }
 
-// 防災警報のチェック機能を追加
 async function checkWarning() {
   try {
-    // 気象庁の公開JSON (日高地方) を取得
     const r = await fetch("https://www.jma.go.jp/bosai/warning/data/warning/016000.json");
     const data = await r.json();
-    // 平取町 (areaCode: 0160200) の情報を探す
     const biratoriData = data.find(item => item.areaCode === "0160200");
     if (biratoriData && biratoriData.warnings) {
-      // 解除されていない警報・注意報があるか確認
       const activeWarnings = biratoriData.warnings.filter(w => !w.status.includes("解除"));
       if (activeWarnings.length > 0) {
         document.getElementById('bosai-badge').classList.add('show');
@@ -413,7 +410,6 @@ const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews();
-// 防災チェックを開始
 checkWarning(); setInterval(checkWarning, 600000);
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
