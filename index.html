@@ -55,10 +55,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 .btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 .btn-bear { background-color: #fff7ed; color: #9a3412; border-color: #fed7aa; }
-/* 防災ボタンのスタイル */
 .btn-bosai { background-color: #fffbeb; color: #b45309; border-color: #f59e0b; }
-/* 広報ボタンのスタイル（追加） */
 .btn-koho { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+/* 追加：北海道新聞ボタン */
+.btn-doshin { background-color: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
 
 /* ニュース スタイル */
 .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 5px; }
@@ -156,6 +156,12 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
               📖 広報びらとり 
             </a>
 
+            <a href="https://www.hokkaido-np.co.jp/hokkaido/area_tomakomai/"
+               target="_blank"
+               class="link-btn btn-doshin">
+              📰 道新 (苫小牧・日高)
+            </a>
+
             <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
                target="_blank"
                class="link-btn btn-bear"
@@ -186,10 +192,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="nhk" class="active">NHK</button>
-          <button data-type="doshin">道新</button>
+          <button data-type="nippon">nippon</button>
           <button data-type="sakei">地域/食</button>
           <button data-type="nl">道NL</button>
-          <button data-type="v4jp">VALO</button>
+          <button data-type="hobby">趣味</button>
         </div>
         <div class="news-controls">
           <button class="refresh-btn" onclick="preloadAllNews()" title="記事を更新">🔄 更新</button>
@@ -203,7 +209,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 <script>
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-  doshin: "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml", 
+  nippon: "https://www.nippon.com/ja/rss-all/", 
   sakei: [
     "https://rss.app/feeds/T4ZyIejkCwoCzTq3.xml",
     "https://rss.app/feeds/Aw8UuUaHEoEIegfM.xml",
@@ -217,10 +223,14 @@ const urls = {
     "https://rss.app/feeds/RCpEJHOBUfr8islj.xml"
   ],
   nl: "https://hokkaido-nl.jp/index.xml",
-  v4jp: "https://valorantnews.jp/feed" 
+  hobby: [
+    "https://kyoko-np.net/index.xml",
+    "https://valorantnews.jp/feed",
+    "https://rss.app/feeds/7doRnikQK3r21cpW.xml"
+  ] 
 };
 
-let newsCache = { nhk: [], doshin: [], sakei: [], nl: [], v4jp: [] };
+let newsCache = { nhk: [], nippon: [], sakei: [], nl: [], hobby: [] };
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
@@ -264,7 +274,11 @@ function renderNews(type) {
   const ul = document.getElementById("news");
   const items = newsCache[type] || [];
   if (items.length === 0) { ul.innerHTML = "<li>ロード中...</li>"; return; }
-  ul.innerHTML = items.slice(0, 15).map(i => {
+  
+  // 読み込み件数の設定: 趣味は13件、それ以外（日本含む）は15件
+  const count = (type === 'hobby') ? 13 : 15;
+  
+  ul.innerHTML = items.slice(0, count).map(i => {
     const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
     return `<li class="${isRead}">
       <span class="unread-dot"></span>
@@ -301,7 +315,6 @@ async function checkOkuyami() {
     const d = await r.json();
     const parser = new DOMParser();
     const doc = parser.parseFromString(d.contents, 'text/html');
-    // 最新の記事タイトルを取得して更新キーとする
     const latestEntry = doc.querySelector('.entry-title a');
     if (latestEntry) {
       const latestTitle = latestEntry.innerText.trim();
