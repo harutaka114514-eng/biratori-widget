@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>biratori-widget-fixed</title>
 <style>
-/* 既存のベーススタイル */
+/* 既存のスタイルを維持（変更なし） */
 body {
   font-family: "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
   background-color: #f0f0f0;
@@ -37,7 +37,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 
 .garbage-button { background: #fef3c7; border-radius: 12px; padding: 10px; font-size: 13px; border: 1px solid #f59e0b; text-align: center; display: flex; flex-direction: column; justify-content: center; cursor: pointer; font-weight: bold; text-decoration: none; color: #92400e; min-height: 70px; }
 
-/* レイアウト構成 */
 .main-layout { display: grid; grid-template-columns: 1fr 350px; gap: 15px; }
 .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000; }
 .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
@@ -45,7 +44,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .video-tabs button { flex: 1; min-width: 70px; padding: 8px 5px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 11px; background: #eee; color: #666; }
 .video-tabs button.active { background: #ff0000; color: #fff; }
 
-/* 下段：リンクとカレンダー */
 .bottom-widgets { display: grid; grid-template-columns: 220px 1fr; gap: 12px; margin-top: 15px; }
 
 .link-box { display: flex; flex-direction: column; gap: 8px; justify-content: center; height: 100%; }
@@ -58,10 +56,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-bosai { background-color: #fffbeb; color: #b45309; border-color: #f59e0b; }
 .btn-koho { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 .btn-doshin { background-color: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
-/* NHKラジオボタン用スタイル */
 .btn-radio { background-color: #006eb1; color: #ffffff; border-color: #004d7c; }
 
-/* ニュース スタイル */
 .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 5px; }
 .news-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
 .news-tabs button { padding: 4px 8px; font-size: 10px; background: #e5e7eb; border: 0; border-radius: 999px; cursor: pointer; }
@@ -83,9 +79,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 
 .badge { position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; display: none; }
 .badge.show { display: block; animation: pulse 2s infinite; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-/* カレンダー */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .cal-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #2563eb; font-weight: bold; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -214,11 +208,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 <script>
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-  // 経済に ITmedia の RSS を追加しました
-  keizai: [
-    "https://diamond.jp/list/feed/rss/dol",
-    "https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml"
-  ], 
+  keizai: "https://diamond.jp/list/feed/rss/dol", 
   sakei: [
      "https://sapporo.keizai.biz/rss.xml",
     "https://tomakomai.goguynet.jp/feed/",
@@ -229,7 +219,8 @@ const urls = {
   hobby: [
     "https://kyoko-np.net/index.xml",
     "https://valorantnews.jp/feed",
-     ] 
+    "https://www.valorant4jp.com/rss.xml" // VALORANT4JPを追加
+  ] 
 };
 
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
@@ -256,14 +247,33 @@ async function preloadAllNews() {
         if (d.status === 'ok') {
             const filteredItems = d.items.filter(item => {
                 const t = item.title;
-                return t !== "Domingo 記事" && !t.includes("新着記事一覧") && !t.includes("記事一覧");
+                // 一般的な除外ワード
+                if (t === "Domingo 記事" || t.includes("新着記事一覧") || t.includes("記事一覧")) return false;
+                
+                // VALORANT4JPの「大会」タグを除外
+                if (url.includes("valorant4jp.com")) {
+                    const categories = item.categories || [];
+                    if (categories.includes("大会")) return false;
+                }
+                
+                return true;
             });
             items = items.concat(filteredItems);
         }
       }
-      const seen = new Set();
-      newsCache[key] = items.filter(item => !seen.has(item.link) && seen.add(item.link))
-                            .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+      
+      // 重複対策: タイトルとURLの両方でチェック
+      const seenLinks = new Set();
+      const seenTitles = new Set();
+      newsCache[key] = items.filter(item => {
+          const isDuplicate = seenLinks.has(item.link) || seenTitles.has(item.title);
+          if (!isDuplicate) {
+              seenLinks.add(item.link);
+              seenTitles.add(item.title);
+          }
+          return !isDuplicate;
+      }).sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
       const activeTab = document.querySelector(".news-tabs button.active");
       if (activeTab && activeTab.dataset.type === key) renderNews(key);
     } catch(e) {}
@@ -277,7 +287,6 @@ function renderNews(type) {
   const items = newsCache[type] || [];
   if (items.length === 0) { ul.innerHTML = "<li>ロード中...</li>"; return; }
   
-  // 読み込み件数の設定: 趣味は13件、それ以外（日本含む）は15件
   const count = (type === 'hobby') ? 13 : 15;
   
   ul.innerHTML = items.slice(0, count).map(i => {
