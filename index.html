@@ -214,7 +214,11 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 <script>
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-  keizai: "https://diamond.jp/list/feed/rss/dol", 
+  // 経済に ITmedia の RSS を追加しました
+  keizai: [
+    "https://diamond.jp/list/feed/rss/dol",
+    "https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml"
+  ], 
   sakei: [
      "https://sapporo.keizai.biz/rss.xml",
     "https://tomakomai.goguynet.jp/feed/",
