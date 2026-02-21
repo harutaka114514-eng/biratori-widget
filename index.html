@@ -197,7 +197,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="nhk" class="active">NHK</button>
-          <button data-type="nippon">nippon</button>
+          <button data-type="keizai">経済</button>
           <button data-type="sakei">地域/食</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
@@ -214,7 +214,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 <script>
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-  nippon: "https://www.nippon.com/ja/rss-all/", 
+  keizai: "https://diamond.jp/list/feed/rss/dol", 
   sakei: [
      "https://sapporo.keizai.biz/rss.xml",
     "https://tomakomai.goguynet.jp/feed/",
@@ -228,7 +228,7 @@ const urls = {
      ] 
 };
 
-let newsCache = { nhk: [], nippon: [], sakei: [], nl: [], hobby: [] };
+let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
