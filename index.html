@@ -58,7 +58,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-bosai { background-color: #fffbeb; color: #b45309; border-color: #f59e0b; }
 .btn-koho { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 .btn-doshin { background-color: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
-/* NHKラジオボタン用スタイル */
 .btn-radio { background-color: #006eb1; color: #ffffff; border-color: #004d7c; }
 
 /* ニュース スタイル */
@@ -83,7 +82,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 
 .badge { position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; display: none; }
 .badge.show { display: block; animation: pulse 2s infinite; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
 /* カレンダー */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -201,12 +199,12 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button data-type="sakei">地域/食</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
+          <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
-        <div class="news-controls">
-          <button class="refresh-btn" onclick="preloadAllNews()" title="記事を更新">🔄 更新</button>
-        </div>
+
       </div>
       <ul id="news" class="news-list"></ul>
+      <div id="meshi-panel" style="display:none;"></div>
     </div>
   </div>
 </div>
@@ -220,13 +218,13 @@ const urls = {
     "https://tomakomai.goguynet.jp/feed/",
     "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
-    "https://biratori-shokokai.com/feed" // 平取町商工会を追加
+    "https://biratori-shokokai.com/feed"
   ],
   nl: "https://hokkaido-nl.jp/index.xml",
   hobby: [
     "https://kyoko-np.net/index.xml",
     "https://valorantnews.jp/feed",
-    "https://www.valorant4jp.com/rss.xml" // VALORANT4JPを追加
+    "https://www.valorant4jp.com/rss.xml"
   ] 
 };
 
@@ -254,13 +252,13 @@ async function preloadAllNews() {
         if (d.status === 'ok') {
             const filteredItems = d.items.filter(item => {
                 const t = item.title;
-                // 一般的な除外ワード
+                const c = (item.categories || []).map(cat => cat.toLowerCase());
+                
                 if (t === "Domingo 記事" || t.includes("新着記事一覧") || t.includes("記事一覧")) return false;
                 
                 // VALORANT4JPの「大会」タグを除外
                 if (url.includes("valorant4jp.com")) {
-                    const categories = item.categories || [];
-                    if (categories.includes("大会")) return false;
+                    if (c.includes("大会")) return false;
                 }
                 
                 return true;
@@ -269,7 +267,6 @@ async function preloadAllNews() {
         }
       }
       
-      // 重複対策: タイトル(title)またはURL(link)が重複しているものを除外
       const seenLinks = new Set();
       const seenTitles = new Set();
       newsCache[key] = items.filter(item => {
@@ -449,6 +446,95 @@ document.querySelectorAll(".news-tabs button").forEach(b=>{
     b.classList.add("active"); renderNews(b.dataset.type);
   };
 });
+
+// ===== 近所めし：今開いてるお店 =====
+const nearbyShops = [
+  { name: 'いこい', hours: [null,{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:00'}] },
+  { name: 'さかえ', hours: [{open:'11:30',close:'14:30'},null,null,null,{open:'17:00',close:'22:00'},{open:'11:30',close:'14:30',open2:'17:00',close2:'22:00'},{open:'11:30',close:'14:30',open2:'17:00',close2:'22:00'}] },
+  { name: 'とり天', hours: [{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},null,{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'}] },
+  { name: 'ドライブインユーカラ', hours: [{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'}] },
+  { name: 'ゆから温泉', hours: [{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'}] },
+  { name: 'くろべこ', hours: [{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:00'},null,{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'}] },
+  { name: '五行山', hours: [null,{open:'11:00',close:'14:00'},{open:'11:00',close:'14:00'},{open:'11:00',close:'14:00'},{open:'11:00',close:'14:00'},{open:'11:00',close:'14:00'},{open:'11:00',close:'14:00'}] },
+  { name: '萃龍', hours: [{open:'10:30',close:'19:30'},{open:'10:30',close:'19:30'},{open:'10:30',close:'19:30'},{open:'10:30',close:'19:30'},{open:'10:30',close:'19:30'},{open:'10:30',close:'19:30'},{open:'10:30',close:'19:30'}] },
+  { name: 'ルンビニ', hours: [{open:'11:00',close:'21:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'21:00'}] },
+  { name: '真鳥', hours: [{open:'11:30',close:'15:00',open2:'18:00',close2:'23:00'},null,{open:'11:30',close:'15:00',open2:'18:00',close2:'22:30'},{open:'11:30',close:'15:00',open2:'18:00',close2:'22:30'},{open:'11:30',close:'15:00',open2:'18:00',close2:'22:30'},{open:'11:30',close:'15:00',open2:'18:00',close2:'22:30'},{open:'11:30',close:'15:00',open2:'18:00',close2:'22:30'}] },
+  { name: 'いずみ食堂', hours: [{open:'11:00',close:'19:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'19:00'}] },
+];
+function shopToMin(t){ if(!t) return null; const [h,m]=t.split(':').map(Number); return h*60+m; }
+function isShopOpen(shop){
+  const d=new Date(), cur=d.getHours()*60+d.getMinutes(), h=shop.hours[d.getDay()];
+  if(!h) return false;
+  if(cur>=shopToMin(h.open)&&cur<shopToMin(h.close)) return true;
+  if(h.open2&&h.close2&&cur>=shopToMin(h.open2)&&cur<shopToMin(h.close2)) return true;
+  return false;
+}
+function renderOpenShops(){
+  const el = document.getElementById('open-shops');
+  if(!el) return;
+  const open = nearbyShops.filter(isShopOpen);
+  if(open.length===0){
+    el.innerHTML = '<div style="font-size:11px;color:#999;padding:6px 0 2px;">🍽️ 今開いてるお店：なし</div>';
+  } else {
+    const tags = open.map(s=>`<span style="display:inline-block;background:#dcfce7;color:#166534;border:1px solid #bbf7d0;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:bold;margin:2px 3px 2px 0;">${s.name}</span>`).join('');
+    el.innerHTML = `<div style="padding:6px 0 4px;"><span style="font-size:10px;color:#888;font-weight:bold;">🍽️ 今開いてるお店</span><div style="margin-top:4px;">${tags}</div></div>`;
+  }
+}
+renderOpenShops();
+setInterval(renderOpenShops, 60000);
+
+// ===== 近所めし タブ =====
+function renderMeshiPanel(){
+  const el = document.getElementById('meshi-panel');
+  if(!el) return;
+  const d = new Date();
+  const cur = d.getHours()*60+d.getMinutes();
+  const dayNames = ['日','月','火','水','木','金','土'];
+
+  const rows = nearbyShops.map(shop => {
+    const h = shop.hours[d.getDay()];
+    const open = isShopOpen(shop);
+    let timeStr = '定休日';
+    if(h) {
+      timeStr = h.open + '〜' + h.close;
+      if(h.open2) timeStr += ' / ' + h.open2 + '〜' + h.close2;
+    }
+    return `
+      <li style="background:#fff;border-radius:8px;padding:8px 10px;border:1px solid #eee;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${open?'#22c55e':'#d1d5db'};flex-shrink:0;${open?'box-shadow:0 0 5px #22c55e;':''}"></span>
+          <span style="font-size:13px;font-weight:${open?'700':'400'};color:${open?'#111':'#888'};">${shop.name}</span>
+        </div>
+        <span style="font-size:10px;color:${open?'#16a34a':'#aaa'};font-family:monospace;white-space:nowrap;">${open?timeStr:'<span style=color:#bbb>'+timeStr+'</span>'}</span>
+      </li>`;
+  }).join('');
+
+  const openCount = nearbyShops.filter(isShopOpen).length;
+  el.innerHTML = `
+    <div style="font-size:10px;color:#888;margin-bottom:6px;padding:2px 0;">${dayNames[d.getDay()]}曜日 ／ 営業中 <strong style="color:#16a34a;">${openCount}</strong> 店</div>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">${rows}</ul>`;
+}
+
+// タブ切り替えに近所めし対応を追加
+const origTabClick = document.querySelectorAll(".news-tabs button");
+origTabClick.forEach(b => {
+  b.addEventListener('click', () => {
+    origTabClick.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    const type = b.dataset.type;
+    if(type === 'meshi'){
+      document.getElementById('news').style.display = 'none';
+      document.getElementById('meshi-panel').style.display = 'block';
+      renderMeshiPanel();
+    } else {
+      document.getElementById('news').style.display = '';
+      document.getElementById('meshi-panel').style.display = 'none';
+      loadNews(type);
+    }
+  });
+});
+setInterval(()=>{ if(document.getElementById('meshi-panel').style.display!=='none') renderMeshiPanel(); }, 60000);
+
 </script>
 </body>
 </html>
