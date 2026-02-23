@@ -395,64 +395,42 @@ const WARNING_LEVEL = { // 警報=2, 注意報=1
 };
 
 async function checkWarning() {
+  const bar = document.getElementById('warning-bar');
+  const badge = document.getElementById('bosai-badge');
   try {
     const targetUrl = "https://www.jma.go.jp/bosai/warning/data/warning/016000.json";
-    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
-    const raw = await r.json();
-    const data = JSON.parse(raw.contents);
-    // 平取町のコード 0160200
-    const biratoriData = data.find(item => item.areaCode === "0160200");
-    const bar = document.getElementById('warning-bar');
-    const badge = document.getElementById('bosai-badge');
+    const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(targetUrl)}`);
+    const data = await r.json();
 
-    if (biratoriData && biratoriData.warnings) {
-      const activeWarnings = biratoriData.warnings.filter(w => w.status !== "解除");
-      if (activeWarnings.length > 0) {
-        badge.classList.add('show');
-
-        // 警報と注意報に分ける
-        const alerts = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 2);
-        const advisories = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 1);
-
-        let html = '⚠️ <strong>平取町 防災情報</strong>　';
-        if (alerts.length > 0) {
-          html += alerts.map(w => {
-            const name = WARNING_NAMES[w.code] || `警報(${w.code})`;
-            return `<span style="background:#dc2626;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${name}</span>`;
-          }).join('');
+    // data.areaTypes[].areas[] の中から平取町（0160200）を探す
+    let activeWarnings = [];
+    for (const areaType of (data.areaTypes || [])) {
+      for (const area of (areaType.areas || [])) {
+        if (area.areaCode === "0160200") {
+          activeWarnings = (area.warnings || []).filter(w => w.status !== "解除");
+          break;
         }
-        if (advisories.length > 0) {
-          html += advisories.map(w => {
-            const name = WARNING_NAMES[w.code] || `注意報(${w.code})`;
-            return `<span style="background:#f59e0b;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${name}</span>`;
-          }).join('');
-        }
-        bar.innerHTML = html;
-        bar.style.display = 'block';
-      } else {
-        badge.classList.remove('show');
-        bar.style.background = '#f0fdf4';
-        bar.style.border = '1px solid #86efac';
-        bar.style.color = '#166534';
-        bar.innerHTML = '✅ 平取町：現在、警報・注意報は発令されていません';
-        bar.style.display = 'block';
       }
+    }
+
+    if (activeWarnings.length > 0) {
+      badge.classList.add('show');
+      const alerts = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 2);
+      const advisories = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 1);
+      let html = '⚠️ <strong>平取町 防災情報</strong>　';
+      html += alerts.map(w => `<span style="background:#dc2626;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${WARNING_NAMES[w.code] || '警報'}</span>`).join('');
+      html += advisories.map(w => `<span style="background:#f59e0b;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${WARNING_NAMES[w.code] || '注意報'}</span>`).join('');
+      bar.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;font-size:12px;font-weight:bold;line-height:1.6;';
+      bar.innerHTML = html;
     } else {
       badge.classList.remove('show');
-      bar.style.background = '#f1f5f9';
-      bar.style.border = '1px solid #94a3b8';
-      bar.style.color = '#475569';
-      bar.innerHTML = '❓ 防災情報を取得しましたが、平取町のデータが見つかりませんでした';
-      bar.style.display = 'block';
+      bar.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:12px;font-weight:bold;line-height:1.6;';
+      bar.innerHTML = '✅ 平取町：現在、警報・注意報は発令されていません';
     }
   } catch(e) {
-    console.error("警報情報の取得に失敗しました", e);
-    const bar = document.getElementById('warning-bar');
-    bar.style.background = '#f1f5f9';
-    bar.style.border = '1px solid #94a3b8';
-    bar.style.color = '#475569';
-    bar.innerHTML = '⚠️ 防災情報の取得に失敗しました（通信エラー）';
-    bar.style.display = 'block';
+    badge.classList.remove('show');
+    bar.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#f1f5f9;border:1px solid #94a3b8;color:#475569;font-size:12px;font-weight:bold;line-height:1.6;';
+    bar.innerHTML = `⚠️ 防災情報の取得に失敗しました：${e.message || e}`;
   }
 }
 
