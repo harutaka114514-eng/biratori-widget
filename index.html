@@ -118,6 +118,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         </div>
       </div>
       <div id="weekly-weather" class="weekly-weather"></div>
+      <div id="warning-bar" style="display:none; margin-top:10px; padding:8px 12px; border-radius:10px; background:#fef2f2; border:1px solid #fca5a5; color:#991b1b; font-size:12px; font-weight:bold; line-height:1.6;"></div>
     </div>
     <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r7biratori.pdf" target="_blank" class="garbage-button">
       🗑 R7年度ごみ収集PDF<span>🔥月木 / ♻水</span>
@@ -379,21 +380,77 @@ function markBearRead() {
   }
 }
 
+// 警報・注意報の種別→表示名マッピング
+const WARNING_NAMES = {
+  "33": "大雨警報", "03": "大雪警報", "04": "暴風警報", "05": "暴風雪警報",
+  "06": "波浪警報", "07": "高潮警報", "10": "大雨注意報", "12": "大雪注意報",
+  "13": "強風注意報", "14": "風雪注意報", "15": "波浪注意報", "16": "高潮注意報",
+  "17": "雷注意報", "18": "融雪注意報", "19": "濃霧注意報", "20": "乾燥注意報",
+  "21": "なだれ注意報", "22": "低温注意報", "23": "霜注意報", "24": "着氷注意報",
+  "25": "着雪注意報", "32": "洪水警報", "35": "洪水注意報",
+};
+const WARNING_LEVEL = { // 警報=2, 注意報=1
+  "33":2,"03":2,"04":2,"05":2,"06":2,"07":2,"32":2,
+  "10":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"20":1,"21":1,"22":1,"23":1,"24":1,"25":1,"35":1,
+};
+
 async function checkWarning() {
   try {
     const r = await fetch("https://www.jma.go.jp/bosai/warning/data/warning/016000.json");
     const data = await r.json();
+    // 平取町のコード 0160200
     const biratoriData = data.find(item => item.areaCode === "0160200");
+    const bar = document.getElementById('warning-bar');
+    const badge = document.getElementById('bosai-badge');
+
     if (biratoriData && biratoriData.warnings) {
-      const activeWarnings = biratoriData.warnings.filter(w => !w.status.includes("解除"));
+      const activeWarnings = biratoriData.warnings.filter(w => w.status !== "解除");
       if (activeWarnings.length > 0) {
-        document.getElementById('bosai-badge').classList.add('show');
+        badge.classList.add('show');
+
+        // 警報と注意報に分ける
+        const alerts = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 2);
+        const advisories = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 1);
+
+        let html = '⚠️ <strong>平取町 防災情報</strong>　';
+        if (alerts.length > 0) {
+          html += alerts.map(w => {
+            const name = WARNING_NAMES[w.code] || `警報(${w.code})`;
+            return `<span style="background:#dc2626;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${name}</span>`;
+          }).join('');
+        }
+        if (advisories.length > 0) {
+          html += advisories.map(w => {
+            const name = WARNING_NAMES[w.code] || `注意報(${w.code})`;
+            return `<span style="background:#f59e0b;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${name}</span>`;
+          }).join('');
+        }
+        bar.innerHTML = html;
+        bar.style.display = 'block';
       } else {
-        document.getElementById('bosai-badge').classList.remove('show');
+        badge.classList.remove('show');
+        bar.style.background = '#f0fdf4';
+        bar.style.border = '1px solid #86efac';
+        bar.style.color = '#166534';
+        bar.innerHTML = '✅ 平取町：現在、警報・注意報は発令されていません';
+        bar.style.display = 'block';
       }
+    } else {
+      badge.classList.remove('show');
+      bar.style.background = '#f1f5f9';
+      bar.style.border = '1px solid #94a3b8';
+      bar.style.color = '#475569';
+      bar.innerHTML = '❓ 防災情報を取得しましたが、平取町のデータが見つかりませんでした';
+      bar.style.display = 'block';
     }
   } catch(e) {
     console.error("警報情報の取得に失敗しました", e);
+    const bar = document.getElementById('warning-bar');
+    bar.style.background = '#f1f5f9';
+    bar.style.border = '1px solid #94a3b8';
+    bar.style.color = '#475569';
+    bar.innerHTML = '⚠️ 防災情報の取得に失敗しました（通信エラー）';
+    bar.style.display = 'block';
   }
 }
 
