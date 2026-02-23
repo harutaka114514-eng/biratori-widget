@@ -396,8 +396,10 @@ const WARNING_LEVEL = { // 警報=2, 注意報=1
 
 async function checkWarning() {
   try {
-    const r = await fetch("https://www.jma.go.jp/bosai/warning/data/warning/016000.json");
-    const data = await r.json();
+    const targetUrl = "https://www.jma.go.jp/bosai/warning/data/warning/016000.json";
+    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
+    const raw = await r.json();
+    const data = JSON.parse(raw.contents);
     // 平取町のコード 0160200
     const biratoriData = data.find(item => item.areaCode === "0160200");
     const bar = document.getElementById('warning-bar');
