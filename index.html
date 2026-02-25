@@ -219,7 +219,8 @@ const urls = {
     "https://tomakomai.goguynet.jp/feed/",
     "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
-    "https://biratori-shokokai.com/feed"
+    "https://biratori-shokokai.com/feed",
+    "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
   nl: "https://hokkaido-nl.jp/index.xml",
   hobby: [
@@ -566,7 +567,7 @@ origTabClick.forEach(b => {
     } else {
       document.getElementById('news').style.display = '';
       document.getElementById('meshi-panel').style.display = 'none';
-      loadNews(type);
+      renderNews(type);
     }
   });
 });
