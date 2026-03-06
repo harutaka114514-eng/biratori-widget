@@ -253,9 +253,12 @@ async function preloadAllNews() {
     try {
       let items = [];
       const targetUrls = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
-      for (const url of targetUrls) {
-        const r = await fetch(rss2json + encodeURIComponent(url));
-        const d = await r.json();
+      const results = await Promise.all(
+        targetUrls.map(url => fetch(rss2json + encodeURIComponent(url)).then(r => r.json()).then(d => ({ d, url })).catch(() => null))
+      );
+      for (const res of results) {
+        if (!res) continue;
+        const { d, url } = res;
         if (d.status === 'ok') {
             const filteredItems = d.items.filter(item => {
                 const t = item.title;
