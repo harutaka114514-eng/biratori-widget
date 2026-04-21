@@ -38,7 +38,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .garbage-button { background: #fef3c7; border-radius: 12px; padding: 10px; font-size: 13px; border: 1px solid #f59e0b; text-align: center; display: flex; flex-direction: column; justify-content: center; cursor: pointer; font-weight: bold; text-decoration: none; color: #92400e; min-height: 70px; }
 
 /* レイアウト構成 */
-.main-layout { display: grid; grid-template-columns: 1fr 350px; gap: 15px; }
+.main-layout { display: grid; grid-template-columns: 1fr 500px; gap: 15px; }
 .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000; }
 .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 .video-tabs { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
@@ -97,6 +97,26 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .holiday-name { font-size: 9px; color: #ef4444; line-height: 1.1; margin-top: auto; }
 
 @media(max-width:900px){ .main-layout { grid-template-columns: 1fr; } .bottom-widgets { grid-template-columns: 1fr; } }
+
+/* RSS全画面モード */
+#news-expand-btn { background: none; border: 1px solid #ccc; border-radius: 6px; padding: 3px 7px; cursor: pointer; font-size: 13px; color: #666; line-height: 1; }
+#news-expand-btn:hover { background: #f0f0f0; }
+#news-fullscreen-overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.97); z-index: 9999; flex-direction: column; padding: 20px; box-sizing: border-box; }
+#news-fullscreen-overlay.active { display: flex; }
+#news-fullscreen-inner { display: flex; flex-direction: column; height: 100%; max-width: 900px; margin: 0 auto; width: 100%; }
+#news-fullscreen-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
+#news-fullscreen-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+#news-fullscreen-tabs button { padding: 6px 12px; font-size: 12px; background: #e5e7eb; border: 0; border-radius: 999px; cursor: pointer; font-weight: bold; }
+#news-fullscreen-tabs button.active { background: #2563eb; color: #fff; }
+#news-fullscreen-close { background: #ef4444; color: #fff; border: none; border-radius: 8px; padding: 6px 14px; font-size: 14px; cursor: pointer; font-weight: bold; flex-shrink: 0; }
+#news-fullscreen-close:hover { background: #dc2626; }
+#news-fullscreen-list { flex: 1; overflow-y: auto; list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+#news-fullscreen-list li { background: #fff; border-radius: 10px; padding: 12px 14px; border: 1px solid #eee; display: flex; align-items: flex-start; gap: 10px; }
+#news-fullscreen-list a { text-decoration: none; color: #2563eb; font-size: 14px; font-weight: 700; line-height: 1.5; flex: 1; }
+#news-fullscreen-list li.is-read a { color: #800080 !important; }
+#news-fullscreen-list .unread-dot { width: 9px; height: 9px; background-color: #ef4444; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+#news-fullscreen-list li.is-read .unread-dot { display: none; }
+#news-fullscreen-meshi { flex: 1; overflow-y: auto; display: none; }
 </style>
 </head>
 <body>
@@ -120,8 +140,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div id="weekly-weather" class="weekly-weather"></div>
       <div id="warning-bar" style="display:none; margin-top:10px; padding:8px 12px; border-radius:10px; background:#fef2f2; border:1px solid #fca5a5; color:#991b1b; font-size:12px; font-weight:bold; line-height:1.6;"></div>
     </div>
-    <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r7biratori.pdf" target="_blank" class="garbage-button">
-      🗑 R7年度ごみ収集PDF<span>🔥月木 / ♻水</span>
+    <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r8biratori.pdf" target="_blank" class="garbage-button">
+      🗑 R8年度ごみ収集PDF<span>🔥月木 / ♻水</span>
     </a>
   </div>
 
@@ -132,7 +152,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
           <button id="btn-v3" onclick="switchVideo('hA46WfBYdgo', 'btn-v3')">STV</button>
           <button id="btn-v2" onclick="switchVideo('c6Gqe6L_xZg', 'btn-v2')">ライブカメラ</button>
-          <button id="btn-v4" onclick="switchVideo('c7_kqMFDE8c', 'btn-v4')">地震ライブ</button>
+
         </div>
         <div class="video-container">
           <iframe id="main-video" src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&mute=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>
@@ -202,11 +222,30 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button data-type="hobby">趣味</button>
           <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
-
+        <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
       </div>
       <ul id="news" class="news-list"></ul>
       <div id="meshi-panel" style="display:none;"></div>
     </div>
+  </div>
+</div>
+
+<!-- RSS全画面オーバーレイ -->
+<div id="news-fullscreen-overlay">
+  <div id="news-fullscreen-inner">
+    <div id="news-fullscreen-header">
+      <div id="news-fullscreen-tabs">
+        <button data-type="nhk" class="active">NHK</button>
+        <button data-type="keizai">経済</button>
+        <button data-type="sakei">地域/食</button>
+        <button data-type="nl">道NL</button>
+        <button data-type="hobby">趣味</button>
+        <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
+      </div>
+      <button id="news-fullscreen-close" onclick="closeNewsFullscreen()">✕ 閉じる</button>
+    </div>
+    <ul id="news-fullscreen-list" class="news-list"></ul>
+    <div id="news-fullscreen-meshi"></div>
   </div>
 </div>
 
@@ -580,6 +619,85 @@ origTabClick.forEach(b => {
   });
 });
 setInterval(()=>{ if(document.getElementById('meshi-panel').style.display!=='none') renderMeshiPanel(); }, 60000);
+// ===== RSS全画面モード =====
+let fsCurrentType = 'nhk';
+
+function renderNewsFullscreen(type) {
+  const ul = document.getElementById('news-fullscreen-list');
+  const meshiEl = document.getElementById('news-fullscreen-meshi');
+  if (type === 'meshi') {
+    ul.style.display = 'none';
+    meshiEl.style.display = 'block';
+    meshiEl.innerHTML = document.getElementById('meshi-panel').innerHTML || '';
+    renderMeshiPanelInto(meshiEl);
+  } else {
+    ul.style.display = 'flex';
+    meshiEl.style.display = 'none';
+    const items = newsCache[type] || [];
+    const count = (type === 'hobby') ? 13 : 15;
+    ul.innerHTML = items.slice(0, count).map(i => {
+      const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
+      return `<li class="${isRead}">
+        <span class="unread-dot"></span>
+        <a href="${i.link}" target="_blank" onclick="markAsRead('${i.link}', this)">${i.title}</a>
+      </li>`;
+    }).join('') || '<li>ロード中...</li>';
+  }
+}
+
+function renderMeshiPanelInto(el) {
+  const d = new Date();
+  const cur = d.getHours()*60+d.getMinutes();
+  const dayNames = ['日','月','火','水','木','金','土'];
+  const rows = nearbyShops.map(shop => {
+    const h = shop.hours[d.getDay()];
+    const open = isShopOpen(shop);
+    let timeStr = '定休日';
+    if(h) { timeStr = h.open+'〜'+h.close; if(h.open2) timeStr+=' / '+h.open2+'〜'+h.close2; }
+    return `<li style="background:#fff;border-radius:8px;padding:8px 10px;border:1px solid #eee;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${open?'#22c55e':'#d1d5db'};flex-shrink:0;${open?'box-shadow:0 0 5px #22c55e;':''}"></span>
+        <span style="font-size:13px;font-weight:${open?'700':'400'};color:${open?'#111':'#888'};">${shop.name}</span>
+      </div>
+      <span style="font-size:10px;color:${open?'#16a34a':'#aaa'};font-family:monospace;white-space:nowrap;">${timeStr}</span>
+    </li>`;
+  }).join('');
+  const openCount = nearbyShops.filter(isShopOpen).length;
+  el.innerHTML = `<div style="font-size:10px;color:#888;margin-bottom:6px;">${dayNames[d.getDay()]}曜日 ／ 営業中 <strong style="color:#16a34a;">${openCount}</strong> 店</div>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">${rows}</ul>`;
+}
+
+function openNewsFullscreen() {
+  const activeTab = document.querySelector('.news-tabs button.active');
+  fsCurrentType = activeTab ? activeTab.dataset.type : 'nhk';
+  document.querySelectorAll('#news-fullscreen-tabs button').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === fsCurrentType);
+  });
+  renderNewsFullscreen(fsCurrentType);
+  document.getElementById('news-fullscreen-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNewsFullscreen() {
+  document.getElementById('news-fullscreen-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('#news-fullscreen-tabs button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#news-fullscreen-tabs button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    fsCurrentType = b.dataset.type;
+    renderNewsFullscreen(fsCurrentType);
+  });
+});
+
+document.getElementById('news-fullscreen-overlay').addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNewsFullscreen();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNewsFullscreen();
+});
 
 </script>
 </body>
