@@ -55,7 +55,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-deepl { background-color: #0f2d37; color: #ffffff; border-color: #000; }
 .btn-okuyami { background-color: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 .btn-bear { background-color: #fff7ed; color: #9a3412; border-color: #fed7aa; }
-.btn-bosai { background-color: #fffbeb; color: #b45309; border-color: #f59e0b; }
 .btn-koho { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 .btn-doshin { background-color: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
 .btn-radio { background-color: #006eb1; color: #ffffff; border-color: #004d7c; }
@@ -138,7 +137,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         </div>
       </div>
       <div id="weekly-weather" class="weekly-weather"></div>
-      <div id="warning-bar" style="display:none; margin-top:10px; padding:8px 12px; border-radius:10px; background:#fef2f2; border:1px solid #fca5a5; color:#991b1b; font-size:12px; font-weight:bold; line-height:1.6;"></div>
     </div>
     <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r8biratori.pdf" target="_blank" class="garbage-button">
       🗑 R8年度ごみ収集PDF<span>🔥月木 / ♻水</span>
@@ -166,24 +164,15 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
               📻 NHKラジオ第1 (R1)
             </a>
 
-            <a href="https://s.n-kishou.co.jp/w/charge/bosai/bosaid?ba=01&code=0160200" 
-               target="_blank" 
-               class="link-btn btn-bosai" 
-               id="bosai-btn">
-              ⚠️ 平取町 防災情報 <span id="bosai-badge" class="badge"></span>
-            </a>
-
-            <a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
+<a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
                target="_blank"
                class="link-btn btn-koho"
                id="koho-btn">
               📖 広報びらとり 
             </a>
 
-            <a href="https://www.hokkaido-np.co.jp/hokkaido/area_tomakomai/"
-               target="_blank"
-               class="link-btn btn-doshin">
-              📰 道新 (苫小牧・日高)
+            <a id="doshin-btn" href="#" target="_blank" class="link-btn btn-doshin">
+              🗞️ 道新 紙面ビューワー
             </a>
 
             <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
@@ -428,60 +417,6 @@ function markBearRead() {
   }
 }
 
-// 警報・注意報の種別→表示名マッピング
-const WARNING_NAMES = {
-  "33": "大雨警報", "03": "大雪警報", "04": "暴風警報", "05": "暴風雪警報",
-  "06": "波浪警報", "07": "高潮警報", "10": "大雨注意報", "12": "大雪注意報",
-  "13": "強風注意報", "14": "風雪注意報", "15": "波浪注意報", "16": "高潮注意報",
-  "17": "雷注意報", "18": "融雪注意報", "19": "濃霧注意報", "20": "乾燥注意報",
-  "21": "なだれ注意報", "22": "低温注意報", "23": "霜注意報", "24": "着氷注意報",
-  "25": "着雪注意報", "32": "洪水警報", "35": "洪水注意報",
-};
-const WARNING_LEVEL = { // 警報=2, 注意報=1
-  "33":2,"03":2,"04":2,"05":2,"06":2,"07":2,"32":2,
-  "10":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"20":1,"21":1,"22":1,"23":1,"24":1,"25":1,"35":1,
-};
-
-async function checkWarning() {
-  const bar = document.getElementById('warning-bar');
-  const badge = document.getElementById('bosai-badge');
-  try {
-    const targetUrl = "https://www.jma.go.jp/bosai/warning/data/warning/016000.json";
-    const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(targetUrl)}`);
-    const data = await r.json();
-
-    // data.areaTypes[].areas[] の中から平取町（0160200）を探す
-    let activeWarnings = [];
-    for (const areaType of (data.areaTypes || [])) {
-      for (const area of (areaType.areas || [])) {
-        if (area.areaCode === "0160200") {
-          activeWarnings = (area.warnings || []).filter(w => w.status !== "解除");
-          break;
-        }
-      }
-    }
-
-    if (activeWarnings.length > 0) {
-      badge.classList.add('show');
-      const alerts = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 2);
-      const advisories = activeWarnings.filter(w => WARNING_LEVEL[w.code] === 1);
-      let html = '⚠️ <strong>平取町 防災情報</strong>　';
-      html += alerts.map(w => `<span style="background:#dc2626;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${WARNING_NAMES[w.code] || '警報'}</span>`).join('');
-      html += advisories.map(w => `<span style="background:#f59e0b;color:#fff;border-radius:4px;padding:1px 7px;margin:0 2px;">${WARNING_NAMES[w.code] || '注意報'}</span>`).join('');
-      bar.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;font-size:12px;font-weight:bold;line-height:1.6;';
-      bar.innerHTML = html;
-    } else {
-      badge.classList.remove('show');
-      bar.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:12px;font-weight:bold;line-height:1.6;';
-      bar.innerHTML = '✅ 平取町：現在、警報・注意報は発令されていません';
-    }
-  } catch(e) {
-    badge.classList.remove('show');
-    bar.style.cssText = 'display:block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#f1f5f9;border:1px solid #94a3b8;color:#475569;font-size:12px;font-weight:bold;line-height:1.6;';
-    bar.innerHTML = `⚠️ 防災情報の取得に失敗しました：${e.message || e}`;
-  }
-}
-
 const ainuWords = [
   ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い/きれい"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"], ["ケラアン", "味が良い"], ["ウェン", "悪い"], ["オソンゲ", "嘘"], ["ウェンプレイ", "いたずらっ子"], ["アチャ", "おじさん"], ["フチ", "おばあさん"], ["エカシ", "おじいさん"], ["ハポ", "お母さん"], ["ミチ", "お父さん"], ["ヌプリ", "山"], ["ナイ", "沢/川"], ["ト", "湖"], ["レタㇻ", "白い"], ["クンネ", "黒い"], ["フレ", "赤い"], ["シニンケッ", "青い"], ["シワンケ", "黄色い"], ["シウン", "緑"], ["トマッ", "湿地"], ["ニ", "木"], ["ハム", "葉"], ["ノンノ", "花"], ["セㇿ", "巣"], ["テッパ", "包丁"], ["イタマッ", "お椀"], ["パラテ", "お皿"], ["ポン", "小さい"], ["ポロ", "大きい"], ["モシㇼ", "国/島"], ["ヤ", "陸"], ["サㇻ", "湿原"], ["キムンカムイ", "山の神(熊)"], ["レプンカムイ", "沖の神(シャチ)"], ["コタンコㇿカムイ", "村を守る神(シマフクロウ)"], ["アペフチカムイ", "火の婆様神"], ["チェㇷ゚", "魚/食べ物"], ["サモン", "鮭"], ["カムイチェㇷ゚", "神の魚(鮭)"], ["ユㇰ", "鹿"], ["イセポ", "ウサギ"], ["ホユㇷ゚", "走る"], ["アヌ", "聞く"], ["ヌカル", "見る"], ["イペ", "食べる"], ["イク", "飲む"], ["ミ", "着る"], ["アニ", "持つ"], ["キ", "する"], ["エカッポ", "子供"], ["ヘカチ", "男の子"], ["マッネポ", "女の子"], ["マッネク", "女性"], ["アイヌ", "人間"], ["シサㇺ", "日本人"], ["ウトマキ", "枕"], ["セ", "背負う"], ["ニシ", "雲"], ["クンネチュㇷ゚", "月"], ["シ", "本当の"], ["エトゥ", "鼻"], ["シキ", "目"], ["パル", "口"], ["テッ", "手"], ["ケマ", "足"], ["ル", "道"], ["ヤイ", "自分"], ["エルム", "ネズミ"], ["シタ", "犬"], ["チャッペ", "猫"], ["チカㇷ゚", "鳥"], ["オンネ", "老いた"], ["テケ", "手"], ["コイキ", "獲る"], ["キサㇻ", "耳"], ["マトパ", "冬を越す"], ["パイカㇽ", "春"], ["サㇰ", "夏"], ["チュッパ", "秋"], ["マタ", "冬"], ["シリウェン", "天気が悪い"], ["シリピリカ", "天気が良い"], ["ココ", "叔父"], ["レ", "名前"], ["ウェンペ", "悪いもの"], ["イキ", "〜する"]
 ];
@@ -519,11 +454,20 @@ function switchVideo(id, btnId) {
 }
 
 setInterval(clock, 1000); clock();
+
+// 道新 紙面ビューワー：今日の日付でURL生成
+(function() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  document.getElementById('doshin-btn').href =
+    `https://shimen.hokkaido-np.co.jp/books/viewer/app/P000023233/${yyyy}/${mm}/${dd}`;
+})();
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews();
-checkWarning(); setInterval(checkWarning, 600000);
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
   b.onclick=()=>{
