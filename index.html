@@ -171,8 +171,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
               📖 広報びらとり 
             </a>
 
-            <a id="doshin-btn" href="#" target="_blank" class="link-btn btn-doshin">
-              🗞️ 道新 紙面ビューワー
+            <a id="doshin-btn" href="https://www.hokkaido-np.co.jp/hokkaido/area_tomakomai/" target="_blank" class="link-btn btn-doshin">
+              🗞️ 道新 苫小牧・胆振
             </a>
 
             <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
@@ -455,15 +455,7 @@ function switchVideo(id, btnId) {
 
 setInterval(clock, 1000); clock();
 
-// 道新 紙面ビューワー：今日の日付でURL生成
-(function() {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  document.getElementById('doshin-btn').href =
-    `https://shimen.hokkaido-np.co.jp/books/viewer/app/P000023233/${yyyy}/${mm}/${dd}`;
-})();
+
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
