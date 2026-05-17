@@ -130,6 +130,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         <div class="extra-info">
           <div class="info-item"><span class="label">今日の運勢</span><div id="fortune" class="content">...</div></div>
           <div class="info-item" style="flex:1.6"><span class="label">📅 今日は何の日</span><div id="kinenbi" class="content" style="font-size:12px;cursor:pointer;" onclick="window.open(document.getElementById('kinenbi').dataset.url,'_blank')" title="ccnl.jpで詳細を見る">取得中...</div></div>
+          <div class="info-item"><span class="label">🌅 日の出 / 日の入り</span><div id="suntime" class="content" style="font-size:13px;">--:-- / --:--</div></div>
           <div class="info-item"><span class="label">平取アイヌ語</span><div id="ainu" class="content">...</div></div>
         </div>
         <div style="text-align:right;">
@@ -561,7 +562,42 @@ function loadKinenbi() {
   el.textContent = kinenbiData[key] || '記念日データなし';
 }
 
-loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi();
+// ===== 日の出・日の入り計算（平取町 / NOAA準拠）=====
+function calcSunTimes() {
+  const LAT = 42.5953, LNG = 142.1283;
+  const rad = Math.PI / 180, deg = 180 / Math.PI;
+  const date = new Date();
+  const JD = (date.getTime() / 86400000) + 2440587.5;
+  const JC = (JD - 2451545) / 36525;
+  const L0 = ((280.46646 + JC * (36000.76983 + JC * 0.0003032)) % 360 + 360) % 360;
+  const M  = ((357.52911 + JC * (35999.05029 - 0.0001537 * JC)) % 360 + 360) % 360;
+  const e  = 0.016708634 - JC * (0.000042037 + 0.0000001267 * JC);
+  const C  = Math.sin(M*rad)*(1.914602 - JC*(0.004817 + 0.000014*JC))
+           + Math.sin(2*M*rad)*(0.019993 - 0.000101*JC)
+           + Math.sin(3*M*rad)*0.000289;
+  const sl = L0 + C;
+  const ep = 23 + (26 + (21.448 - JC*(46.815 + JC*(0.00059 - JC*0.001813)))/60)/60
+           + 0.00256 * Math.cos((125.04 - 1934.136*JC)*rad);
+  const dec = Math.asin(Math.sin(ep*rad) * Math.sin(sl*rad)) * deg;
+  const y   = Math.tan(ep/2*rad) ** 2;
+  const EqT = 4*deg*(y*Math.sin(2*L0*rad) - 2*e*Math.sin(M*rad)
+            + 4*e*y*Math.sin(M*rad)*Math.cos(2*L0*rad)
+            - 0.5*y*y*Math.sin(4*L0*rad) - 1.25*e*e*Math.sin(2*M*rad));
+  const cosHA = (Math.cos(90.833*rad) - Math.sin(LAT*rad)*Math.sin(dec*rad))
+              / (Math.cos(LAT*rad)*Math.cos(dec*rad));
+  const el = document.getElementById('suntime');
+  if (Math.abs(cosHA) > 1) { el.textContent = '白夜 / 極夜'; return; }
+  const HA = Math.acos(cosHA) * deg;
+  const riseMin = 720 - 4*(LNG + HA) - EqT;
+  const setMin  = 720 - 4*(LNG - HA) - EqT;
+  const toJST = m => {
+    const v = ((Math.round(m + 540)) % 1440 + 1440) % 1440;
+    return Math.floor(v/60) + ':' + String(v%60).padStart(2,'0');
+  };
+  el.textContent = toJST(riseMin) + ' / ' + toJST(setMin);
+}
+
+loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
   b.onclick=()=>{
