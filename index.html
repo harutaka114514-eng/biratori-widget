@@ -221,7 +221,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
   </div>
 </div>
 
-<!-- RSS全画面オーバーレイ -->
 <div id="news-fullscreen-overlay">
   <div id="news-fullscreen-inner">
     <div id="news-fullscreen-header">
@@ -527,7 +526,7 @@ const kinenbiData = {
   "10-6":"国際協力の日","10-7":"ミステリーの日","10-8":"足の日","10-9":"世界郵便デー","10-10":"銭湯の日",
   "10-11":"ウィンクの日","10-12":"コロンブスデー","10-13":"引越しの日","10-14":"鉄道の日","10-15":"世界手洗いの日",
   "10-16":"世界食糧デー","10-17":"貯蓄の日","10-18":"冷凍食品の日","10-19":"バーゲンの日","10-20":"リサイクルの日",
-  "10-21":"国際反戦デー","10-22":"平安遷都の日","10-23":"電信電話記念日","10-24":"国連デー","10-25":"世界パスタデー",
+  "10-21":"国際反戦デー","10-22":"平安遷トの日","10-23":"電信電話記念日","10-24":"国連デー","10-25":"世界パスタデー",
   "10-26":"原子力の日","10-27":"テディベアの日","10-28":"日本のABCの日","10-29":"国際インターネットデー","10-30":"たまごかけご飯の日",
   "10-31":"ハロウィン",
   "11-1":"計量記念日","11-2":"書道の日","11-3":"文化の日","11-4":"ユネスコ創設記念日","11-5":"津波防災の日",
@@ -604,6 +603,7 @@ const nearbyShops = [
   { name: 'いこい', hours: [null,{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:00'}] },
   { name: 'さかえ', hours: [{open:'11:30',close:'14:30'},null,null,null,{open:'17:00',close:'22:00'},{open:'11:30',close:'14:30',open2:'17:00',close2:'22:00'},{open:'11:30',close:'14:30',open2:'17:00',close2:'22:00'}] },
   { name: 'とり天', hours: [{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},null,{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'},{open:'11:00',close:'14:00',open2:'17:00',close2:'21:00'}] },
+  { name: '生そば 藤', hours: [{open:'10:30',close:'19:00'},{open:'10:30',close:'20:30'},{open:'10:30',close:'20:30'},{open:'10:30',close:'20:30'},null,{open:'10:30',close:'20:30'},{open:'10:30',close:'20:30'}] },
   { name: 'ドライブインユーカラ', hours: [{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'},{open:'10:00',close:'18:00'}] },
   { name: 'ゆから温泉', hours: [{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'},{open:'11:00',close:'14:00',open2:'16:00',close2:'19:30'}] },
   { name: 'くろべこ', hours: [{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:00'},null,{open:'11:00',close:'15:00',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'},{open:'11:00',close:'14:30',open2:'17:00',close2:'19:00'}] },
@@ -635,7 +635,7 @@ function renderOpenShops(){
 renderOpenShops();
 setInterval(renderOpenShops, 60000);
 
-// ===== 近所めし タブ =====
+// ===== 近所めし：今開いてるお店 =====
 function renderMeshiPanel(){
   const el = document.getElementById('meshi-panel');
   if(!el) return;
