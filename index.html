@@ -87,13 +87,15 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .cal-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #2563eb; font-weight: bold; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .cal-header { font-size: 12px; font-weight: bold; text-align: center; color: #666; padding-bottom: 5px; }
-.cal-cell { background: #f8fafc; border-radius: 8px; padding: 5px; min-height: 55px; text-align: left; font-size: 12px; display: flex; flex-direction: column; border: 1px solid #edf2f7; }
+.cal-cell { background: #f8fafc; border-radius: 8px; padding: 5px; min-height: 55px; text-align: left; font-size: 12px; display: flex; flex-direction: column; border: 1px solid #edf2f7; cursor: pointer; position: relative; }
+.cal-cell:hover { background: #f1f5f9; }
 .cal-num { font-weight: 700; margin-bottom: 2px; }
 .sun { color: #ef4444; }
 .sat { color: #3b82f6; }
 .cal-today { outline: 3px solid #2563eb; background: #eff6ff; z-index: 1; }
 .cal-dim { opacity: 0.3; }
 .holiday-name { font-size: 9px; color: #ef4444; line-height: 1.1; margin-top: auto; }
+.cal-plan { font-size: 9px; color: #1e293b; background: #e2e8f0; border-radius: 4px; padding: 1px 3px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; box-sizing: border-box; }
 
 @media(max-width:900px){ .main-layout { grid-template-columns: 1fr; } .bottom-widgets { grid-template-columns: 1fr; } }
 
@@ -425,6 +427,7 @@ const ainuWords = [
 let currentViewDate = new Date();
 const HOLIDAYS_2026 = {"2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日"};
 function changeMonth(diff) { currentViewDate.setMonth(currentViewDate.getMonth() + diff); drawCal(); }
+
 function drawCal(){
   const year=currentViewDate.getFullYear(), month=currentViewDate.getMonth(), today = new Date();
   document.getElementById("calTitle").textContent=`${year}年 ${month+1}月`;
@@ -437,9 +440,33 @@ function drawCal(){
     let colorClass = (d.getDay() === 0 || hName) ? "sun" : (d.getDay() === 6 ? "sat" : "");
     const isToday = d.toDateString() === today.toDateString() ? "cal-today" : "";
     const isOtherMonth = d.getMonth() !== month ? "cal-dim" : "";
-    html += `<div class=\"cal-cell ${isOtherMonth} ${isToday}\"><div class=\"cal-num ${colorClass}\">${d.getDate()}</div>${hName ? `<div class=\"holiday-name\">${hName}</div>` : ""}</div>`;
+    
+    // 予定の読み込み
+    const savedPlan = localStorage.getItem(`cal_plan_${dateStr}`) || "";
+    const planHtml = savedPlan ? `<div class="cal-plan" title="${savedPlan}">${savedPlan}</div>` : "";
+
+    html += `<div class=\"cal-cell ${isOtherMonth} ${isToday}\" onclick="editPlan('${dateStr}')">
+      <div class=\"cal-num ${colorClass}\">${d.getDate()}</div>
+      ${hName ? `<div class=\"holiday-name\">${hName}</div>` : ""}
+      ${planHtml}
+    </div>`;
   }
   document.getElementById("calGrid").innerHTML=html;
+}
+
+// 予定入力・保存用の関数
+function editPlan(dateStr) {
+  const currentPlan = localStorage.getItem(`cal_plan_${dateStr}`) || "";
+  const newPlan = prompt(`${dateStr} の予定を入力してください（消去する場合は空欄にします）:`, currentPlan);
+  
+  if (newPlan === null) return; // キャンセルされたら何もしない
+  
+  if (newPlan.trim() === "") {
+    localStorage.removeItem(`cal_plan_${dateStr}`); // 空欄なら削除
+  } else {
+    localStorage.setItem(`cal_plan_${dateStr}`, newPlan.trim()); // 保存
+  }
+  drawCal(); // カレンダーを再描画して反映
 }
 
 function clock(){
