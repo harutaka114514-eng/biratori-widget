@@ -82,20 +82,19 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .badge { position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; display: none; }
 .badge.show { display: block; animation: pulse 2s infinite; }
 
-/* カレンダー */
-.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.cal-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #2563eb; font-weight: bold; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-.cal-header { font-size: 12px; font-weight: bold; text-align: center; color: #666; padding-bottom: 5px; }
-.cal-cell { background: #f8fafc; border-radius: 8px; padding: 5px; min-height: 55px; text-align: left; font-size: 12px; display: flex; flex-direction: column; border: 1px solid #edf2f7; cursor: pointer; position: relative; }
-.cal-cell:hover { background: #f1f5f9; }
-.cal-num { font-weight: 700; margin-bottom: 2px; }
-.sun { color: #ef4444; }
-.sat { color: #3b82f6; }
-.cal-today { outline: 3px solid #2563eb; background: #eff6ff; z-index: 1; }
-.cal-dim { opacity: 0.3; }
-.holiday-name { font-size: 9px; color: #ef4444; line-height: 1.1; margin-top: auto; }
-.cal-plan { font-size: 9px; color: #1e293b; background: #e2e8f0; border-radius: 4px; padding: 1px 3px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; box-sizing: border-box; }
+/* Googleカレンダー埋め込み用スタイル */
+.google-cal-container {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  position: relative;
+}
+.google-cal-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 12px;
+}
 
 @media(max-width:900px){ .main-layout { grid-template-columns: 1fr; } .bottom-widgets { grid-template-columns: 1fr; } }
 
@@ -154,7 +153,6 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
           <button id="btn-v3" onclick="switchVideo('hA46WfBYdgo', 'btn-v3')">STV</button>
           <button id="btn-v2" onclick="switchVideo('c6Gqe6L_xZg', 'btn-v2')">ライブカメラ</button>
-
         </div>
         <div class="video-container">
           <iframe id="main-video" src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&mute=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>
@@ -168,7 +166,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
               📻 NHKラジオ第1 (R1)
             </a>
 
-<a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
+            <a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
                target="_blank"
                class="link-btn btn-koho"
                id="koho-btn">
@@ -194,13 +192,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
           </div>
         </div>
-        <div class="widget">
-          <div class="cal-nav">
-            <button class="cal-btn" onclick="changeMonth(-1)">◀</button>
-            <div id="calTitle" style="font-weight:bold; font-size:16px;"></div>
-            <button class="cal-btn" onclick="changeMonth(1)">▶</button>
+        <div class="widget" style="padding:10px;">
+          <div class="google-cal-container">
+            <iframe src="https://calendar.google.com/calendar/embed?src=harutaka114514%40gmail.com&ctz=Asia%2FTokyo" style="border-width:0" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
           </div>
-          <div id="calGrid" class="cal-grid"></div>
         </div>
       </div>
     </div>
@@ -297,7 +292,6 @@ async function preloadAllNews() {
                 
                 if (t === "Domingo 記事" || t.includes("新着記事一覧") || t.includes("記事一覧")) return false;
                 
-                // VALORANT4JPの「大会」タグを除外
                 if (url.includes("valorant4jp.com")) {
                     if (c.includes("大会")) return false;
                 }
@@ -424,51 +418,6 @@ const ainuWords = [
   ["イランカラㇷ゚テ", "こんにちは"], ["イヤライケレ", "ありがとう"], ["スイ ウヌカラン ロ", "また会いましょう"], ["ヒンナ", "美味しい"], ["ピリカ", "良い/きれい"], ["カムイ", "神"], ["コタン", "村"], ["イタㇰ", "言葉"], ["チセ", "家"], ["アペ", "火"], ["ワッカ", "水"], ["レラ", "風"], ["ノチウ", "星"], ["チュㇷ゚", "太陽"], ["シリ", "大地"], ["ケラアン", "味が良い"], ["ウェン", "悪い"], ["オソンゲ", "嘘"], ["ウェンプレイ", "いたずらっ子"], ["アチャ", "おじさん"], ["フチ", "おばあさん"], ["エカシ", "おじいさん"], ["ハポ", "お母さん"], ["ミチ", "お父さん"], ["ヌプリ", "山"], ["ナイ", "沢/川"], ["ト", "湖"], ["レタㇻ", "白い"], ["クンネ", "黒い"], ["フレ", "赤い"], ["シニンケッ", "青い"], ["シワンケ", "黄色い"], ["シウン", "緑"], ["トマッ", "湿地"], ["ニ", "木"], ["ハム", "葉"], ["ノンノ", "花"], ["セㇿ", "巣"], ["テッパ", "包丁"], ["イタマッ", "お椀"], ["パラテ", "お皿"], ["ポン", "小さい"], ["ポロ", "大きい"], ["モシㇼ", "国/島"], ["ヤ", "陸"], ["サㇻ", "湿原"], ["キムンカムイ", "山の神(熊)"], ["レプンカムイ", "沖の神(シャチ)"], ["コタンコㇿカムイ", "村を守る神(シマフクロウ)"], ["アペフチカムイ", "火の婆様神"], ["チェㇷ゚", "魚/食べ物"], ["サモン", "鮭"], ["カムイチェㇷ゚", "神の魚(鮭)"], ["ユㇰ", "鹿"], ["イセポ", "ウサギ"], ["ホユㇷ゚", "走る"], ["アヌ", "聞く"], ["ヌカル", "見る"], ["イペ", "食べる"], ["イク", "飲む"], ["ミ", "着る"], ["アニ", "持つ"], ["キ", "する"], ["エカッポ", "子供"], ["ヘカチ", "男の子"], ["マッネポ", "女の子"], ["マッネク", "女性"], ["アイヌ", "人間"], ["シサㇺ", "日本人"], ["ウトマキ", "枕"], ["セ", "背負う"], ["ニシ", "雲"], ["クンネチュㇷ゚", "月"], ["シ", "本当の"], ["エトゥ", "鼻"], ["シキ", "目"], ["パル", "口"], ["テッ", "手"], ["ケマ", "足"], ["ル", "道"], ["ヤイ", "自分"], ["エルム", "ネズミ"], ["シタ", "犬"], ["チャッペ", "猫"], ["チカㇷ゚", "鳥"], ["オンネ", "老いた"], ["テケ", "手"], ["コイキ", "獲る"], ["キサㇻ", "耳"], ["マトパ", "冬を越す"], ["パイカㇽ", "春"], ["サㇰ", "夏"], ["チュッパ", "秋"], ["マタ", "冬"], ["シリウェン", "天気が悪い"], ["シリピリカ", "天気が良い"], ["ココ", "叔父"], ["レ", "名前"], ["ウェンペ", "悪いもの"], ["イキ", "〜する"]
 ];
 
-let currentViewDate = new Date();
-const HOLIDAYS_2026 = {"2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日"};
-function changeMonth(diff) { currentViewDate.setMonth(currentViewDate.getMonth() + diff); drawCal(); }
-
-function drawCal(){
-  const year=currentViewDate.getFullYear(), month=currentViewDate.getMonth(), today = new Date();
-  document.getElementById("calTitle").textContent=`${year}年 ${month+1}月`;
-  let html = ['日','月','火','水','木','金','土'].map(h => `<div class=\"cal-header\">${h}</div>`).join('');
-  const start=new Date(year, month, 1); start.setDate(1 - start.getDay());
-  for(let i=0; i<42; i++){
-    const d=new Date(start); d.setDate(start.getDate()+i);
-    const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const hName = (d.getFullYear() === 2026) ? HOLIDAYS_2026[dateStr] : "";
-    let colorClass = (d.getDay() === 0 || hName) ? "sun" : (d.getDay() === 6 ? "sat" : "");
-    const isToday = d.toDateString() === today.toDateString() ? "cal-today" : "";
-    const isOtherMonth = d.getMonth() !== month ? "cal-dim" : "";
-    
-    // 予定の読み込み
-    const savedPlan = localStorage.getItem(`cal_plan_${dateStr}`) || "";
-    const planHtml = savedPlan ? `<div class="cal-plan" title="${savedPlan}">${savedPlan}</div>` : "";
-
-    html += `<div class=\"cal-cell ${isOtherMonth} ${isToday}\" onclick="editPlan('${dateStr}')">
-      <div class=\"cal-num ${colorClass}\">${d.getDate()}</div>
-      ${hName ? `<div class=\"holiday-name\">${hName}</div>` : ""}
-      ${planHtml}
-    </div>`;
-  }
-  document.getElementById("calGrid").innerHTML=html;
-}
-
-// 予定入力・保存用の関数
-function editPlan(dateStr) {
-  const currentPlan = localStorage.getItem(`cal_plan_${dateStr}`) || "";
-  const newPlan = prompt(`${dateStr} の予定を入力してください（消去する場合は空欄にします）:`, currentPlan);
-  
-  if (newPlan === null) return; // キャンセルされたら何もしない
-  
-  if (newPlan.trim() === "") {
-    localStorage.removeItem(`cal_plan_${dateStr}`); // 空欄なら削除
-  } else {
-    localStorage.setItem(`cal_plan_${dateStr}`, newPlan.trim()); // 保存
-  }
-  drawCal(); // カレンダーを再描画して反映
-}
-
 function clock(){
   const n=new Date(); const m=n.getMonth()+1, d=n.getDate(), w=['日','月','火','水','木','金','土'][n.getDay()];
   const h=String(n.getHours()).padStart(2,"0"), i=String(n.getMinutes()).padStart(2,"0"), s=String(n.getSeconds()).padStart(2,"0");
@@ -483,12 +432,11 @@ function switchVideo(id, btnId) {
 
 setInterval(clock, 1000); clock();
 
-// 道新 紙面ビューワー
 document.getElementById('doshin-btn').href = 'https://www.hokkaido-np.co.jp/';;
 const aw = ainuWords[Math.floor(Math.random()*ainuWords.length)];
 document.getElementById("ainu").innerHTML = `${aw[0]}<span>(${aw[1]})</span>`;
 document.getElementById("fortune").textContent = ["平取吉 🍅", "大吉 🌟", "中吉 ✨", "小吉 🍀", "末吉 🍏"][Math.floor(Math.random()*5)];
-// ===== 今日は何の日（静的データ／ccnl.jp準拠）=====
+
 const kinenbiData = {
   "1-1":"元日","1-2":"初夢の日","1-3":"瞳の日","1-4":"石の日","1-5":"いちごの日",
   "1-6":"色の日","1-7":"七草の日","1-8":"勝負の日","1-9":"とんちの日","1-10":"110番の日",
@@ -581,7 +529,6 @@ function loadKinenbi() {
   el.textContent = kinenbiData[key] || '記念日データなし';
 }
 
-// ===== 日の出・日の入り計算（平取町 / NOAA準拠）=====
 function calcSunTimes() {
   const LAT = 42.5953, LNG = 142.1283;
   const rad = Math.PI / 180, deg = 180 / Math.PI;
@@ -616,7 +563,7 @@ function calcSunTimes() {
   el.textContent = toJST(riseMin) + ' / ' + toJST(setMin);
 }
 
-loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
+loadWeather(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
   b.onclick=()=>{
@@ -625,7 +572,6 @@ document.querySelectorAll(".news-tabs button").forEach(b=>{
   };
 });
 
-// ===== 近所めし：今開いてるお店 =====
 const nearbyShops = [
   { name: 'いこい', hours: [null,{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:30'},{open:'10:30',close:'15:00',open2:'17:00',close2:'19:00'}] },
   { name: 'さかえ', hours: [{open:'11:30',close:'14:30'},null,null,null,{open:'17:00',close:'22:00'},{open:'11:30',close:'14:30',open2:'17:00',close2:'22:00'},{open:'11:30',close:'14:30',open2:'17:00',close2:'22:00'}] },
@@ -662,12 +608,10 @@ function renderOpenShops(){
 renderOpenShops();
 setInterval(renderOpenShops, 60000);
 
-// ===== 近所めし：今開いてるお店 =====
 function renderMeshiPanel(){
   const el = document.getElementById('meshi-panel');
   if(!el) return;
   const d = new Date();
-  const cur = d.getHours()*60+d.getMinutes();
   const dayNames = ['日','月','火','水','木','金','土'];
 
   const rows = nearbyShops.map(shop => {
@@ -694,7 +638,6 @@ function renderMeshiPanel(){
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">${rows}</ul>`;
 }
 
-// タブ切り替えに近所めし対応を追加
 const origTabClick = document.querySelectorAll(".news-tabs button");
 origTabClick.forEach(b => {
   b.addEventListener('click', () => {
@@ -713,7 +656,7 @@ origTabClick.forEach(b => {
   });
 });
 setInterval(()=>{ if(document.getElementById('meshi-panel').style.display!=='none') renderMeshiPanel(); }, 60000);
-// ===== RSS全画面モード =====
+
 let fsCurrentType = 'nhk';
 
 function renderNewsFullscreen(type) {
@@ -741,7 +684,6 @@ function renderNewsFullscreen(type) {
 
 function renderMeshiPanelInto(el) {
   const d = new Date();
-  const cur = d.getHours()*60+d.getMinutes();
   const dayNames = ['日','月','火','水','木','金','土'];
   const rows = nearbyShops.map(shop => {
     const h = shop.hours[d.getDay()];
@@ -789,10 +731,9 @@ document.querySelectorAll('#news-fullscreen-tabs button').forEach(b => {
 document.getElementById('news-fullscreen-overlay').addEventListener('keydown', e => {
   if (e.key === 'Escape') closeNewsFullscreen();
 });
-document.addEventListener('keydown', e => {
+document.onkeydown = function(e) {
   if (e.key === 'Escape') closeNewsFullscreen();
-});
-
+};
 </script>
 </body>
 </html>
