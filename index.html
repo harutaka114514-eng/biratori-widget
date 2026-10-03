@@ -177,7 +177,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="widget">
         <div class="video-tabs">
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
-          <button id="btn-v2" onclick="switchVideo('c6Gqe6L_xZg', 'btn-v2')">ライブカメラ</button>
+          <button id="btn-stv" onclick="switchVideo('3xfwDdlulDY', 'btn-stv')">STV</button>
 
         </div>
         <div class="video-container">
@@ -315,7 +315,7 @@ function openWidgetSettings() {
   const input=(label,id,value)=>`<label for="${id}">${esc(label)}</label><input id="${id}" value="${esc(value)}">`;
   let fields='<fieldset><legend>動画</legend><p class="help">YouTubeの動画URLまたは動画IDを入力します。</p>';
   fields+=input('HTB','setting-video-1',widgetSettings.videos?.['btn-v1']||'tvgbZZYS4Nk');
-  fields+=input('ライブカメラ','setting-video-2',widgetSettings.videos?.['btn-v2']||'c6Gqe6L_xZg')+'</fieldset>';
+  fields+=input('STV','setting-video-2',widgetSettings.videos?.['btn-stv']||'3xfwDdlulDY')+'</fieldset>';
   fields+='<fieldset><legend>ごみ収集</legend><p class="help">初期値は元のページの「月木／水」です。収集表の自動読取りは行いません。地区・祝日・年末年始の例外はPDFを確認して設定してください。</p>';
   for(const [key,label,fallback] of [['burn','燃えるごみ',[1,4]],['recycle','資源ごみ',[3]]]) {
     fields+=`<div style="font-size:13px;margin-top:8px">${label}</div>`;
@@ -337,7 +337,7 @@ function saveWidgetSettings(event) {
   event.preventDefault();
   const value=id=>document.getElementById(id).value.trim(),httpURL=text=>{try{return ['https:','http:'].includes(new URL(text).protocol);}catch(e){return false;}};
   try {
-    const videos={'btn-v1':widgetVideoId(value('setting-video-1')),'btn-v2':widgetVideoId(value('setting-video-2'))};
+    const videos={'btn-v1':widgetVideoId(value('setting-video-1')),'btn-stv':widgetVideoId(value('setting-video-2'))};
     if(Object.values(videos).some(id=>!id))throw Error('動画URLまたは動画IDを確認してください。');
     const pdf=value('setting-garbage-pdf');if(!httpURL(pdf))throw Error('収集表PDFのURLを確認してください。');
     const exceptions={};
