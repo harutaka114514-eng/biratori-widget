@@ -14,12 +14,12 @@ export const FEEDS=[
 export function decodeXML(value){return value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&(#x[\da-f]+|#\d+|amp|lt|gt|quot|apos);/gi,(whole,entity)=>{if(entity[0]==='#'){const code=entity[1].toLowerCase()==='x'?parseInt(entity.slice(2),16):parseInt(entity.slice(1),10);return code>0&&code<=0x10ffff?String.fromCodePoint(code):'';}return {amp:'&',lt:'<',gt:'>',quot:'"',apos:"'"}[entity.toLowerCase()]||whole;});}
 function plain(value){return decodeXML(value).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();}
 export function safeURL(value){try{return ['https:','http:'].includes(new URL(value).protocol);}catch{return false;}}
-export function parseFeed(xml,category,now=Date.now()){
+export function parseFeed(xml,category,now=Date.now(),maxAge=48*3600000){
   if(!/<rss\b/i.test(xml))throw new DigestError('RSS形式を取得できませんでした。');
   const tag=(item,name)=>{const match=item.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${name}>`,'i'));return match?decodeXML(match[1]).trim():'';};
   return Array.from(xml.matchAll(/<item(?:\s[^>]*)?>([\s\S]*?)<\/item>/gi),match=>{
     const item=match[1],title=plain(tag(item,'title')),url=tag(item,'link'),date=Date.parse(tag(item,'pubDate'));
-    if(!title||!safeURL(url)||!Number.isFinite(date)||date>now+3600000||date<now-48*3600000)return null;
+    if(!title||!safeURL(url)||!Number.isFinite(date)||date>now+3600000||date<now-maxAge)return null;
     return {title:title.slice(0,300),url,publishedAt:new Date(date).toISOString(),source:plain(tag(item,'source'))||'Googleニュース',category,excerpt:plain(tag(item,'description')).slice(0,700)};
   }).filter(Boolean);
 }
@@ -118,4 +118,3 @@ export async function reportDigestError(error){
 if(process.argv[1]&&fileURLToPath(import.meta.url)===process.argv[1])main().catch(async error=>{
   await reportDigestError(error);process.exitCode=1;
 });
-
