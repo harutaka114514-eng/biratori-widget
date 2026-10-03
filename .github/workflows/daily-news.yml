@@ -29,6 +29,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Collect Domingo news
+        id: domingo
+        continue-on-error: true
+        run: node scripts/update-domingo-news.mjs
       - name: Generate the daily digest
         id: digest
         continue-on-error: true
@@ -40,9 +44,9 @@ jobs:
         if: steps.digest.outcome == 'failure'
         run: echo '::warning::ニュース更新に失敗しました。保存済みのまとめを使って公開します。APIキーと無料枠を確認してください。'
       - name: Save the generated digest
-        if: steps.digest.outcome == 'success'
+        if: steps.digest.outcome == 'success' || steps.domingo.outcome == 'success'
         run: |
-          git add data/daily-news.json
+          git add data/daily-news.json data/domingo-news.json
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
