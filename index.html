@@ -118,11 +118,35 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #news-fullscreen-list .unread-dot { width: 9px; height: 9px; background-color: #ef4444; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
 #news-fullscreen-list li.is-read .unread-dot { display: none; }
 #news-fullscreen-meshi { flex: 1; overflow-y: auto; display: none; }
+
+/* 設定と更新状態 */
+.widget-status {font-size:10px;color:#666;margin-top:6px;line-height:1.5;}
+#settings-open {display:block;margin:0 auto 10px;padding:5px 12px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#444;cursor:pointer;}
+#widget-settings {width:min(650px,calc(100% - 40px));max-height:85vh;border:0;border-radius:16px;padding:20px;box-sizing:border-box;color:#333;}
+#widget-settings::backdrop {background:rgba(0,0,0,.45);}
+#widget-settings label {display:block;font-size:13px;margin:10px 0 5px;}
+#widget-settings input:not([type=checkbox]),#widget-settings textarea {width:100%;box-sizing:border-box;padding:8px;border:1px solid #ccc;border-radius:6px;font:inherit;font-size:13px;}
+#widget-settings fieldset {border:1px solid #ddd;border-radius:8px;margin:12px 0;padding:12px;}
+#widget-settings legend {font-weight:bold;font-size:14px;}
+#widget-settings button {padding:8px 14px;border:1px solid #ccc;border-radius:7px;cursor:pointer;}
+#widget-settings .help {font-size:12px;color:#666;line-height:1.6;}
+#widget-settings .weekday {display:inline-flex;align-items:center;gap:4px;margin-right:8px;}
+.cal-garbage {font-size:9px;color:#92400e;background:#fef3c7;border-radius:4px;padding:1px 3px;margin-top:2px;}
 </style>
 </head>
 <body>
 
 <h1>biratori-widget</h1>
+<button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button>
+<dialog id="widget-settings" aria-labelledby="settings-title">
+  <form id="settings-form">
+    <h2 id="settings-title" style="font-size:18px;margin-top:0">設定</h2>
+    <p class="help">設定はこのブラウザに保存されます。保存しても他の端末やブラウザには反映されません。</p>
+    <div id="settings-fields"></div>
+    <p id="settings-error" role="alert" style="color:#b91c1c;font-size:13px"></p>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onclick="document.getElementById('widget-settings').close()">キャンセル</button><button type="submit" style="background:#2563eb;color:white">保存</button></div>
+  </form>
+</dialog>
 
 <div class="widgets">
   <div class="top-row">
@@ -141,9 +165,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         </div>
       </div>
       <div id="weekly-weather" class="weekly-weather"></div>
+      <div id="weather-status" class="widget-status" role="status"></div>
     </div>
     <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r8biratori.pdf" target="_blank" class="garbage-button">
-      🗑 R8年度ごみ収集PDF<span>🔥月木 / ♻水</span>
+      🗑 R8年度ごみ収集PDF<span>🔥月木 / ♻水</span><span id="garbage-summary" style="font-size:11px;font-weight:normal;margin-top:5px"></span>
     </a>
   </div>
 
@@ -216,6 +241,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         </div>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
       </div>
+      <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
       <ul id="news" class="news-list"></ul>
       <div id="meshi-panel" style="display:none;"></div>
     </div>
@@ -241,6 +267,108 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 </div>
 
 <script>
+function readWidgetStorage(key,fallback) {
+  try {const value=JSON.parse(localStorage.getItem(key));return value && typeof value==='object'?value:fallback;}catch(e){return fallback;}
+}
+function writeWidgetStorage(key,value) {try{localStorage.setItem(key,JSON.stringify(value));return true;}catch(e){return false;}}
+const widgetSettings=readWidgetStorage('biratori_settings_v1',{});
+let weatherRecord=readWidgetStorage('biratori_weather_cache_v1',null);
+const feedRecords=readWidgetStorage('biratori_news_cache_v1',{});
+function escapeWidgetHTML(value) {return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function formatWidgetTime(time) {return new Date(time).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'});}
+async function fetchWidgetJSON(url) {
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+  try {const response=await fetch(url,{signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}
+}
+function validWeather(d) {
+  return !!(d && d.current_weather && Number.isFinite(d.current_weather.temperature) && Number.isFinite(d.current_weather.weathercode) && d.daily && ['time','weathercode','temperature_2m_max','temperature_2m_min'].every(key=>Array.isArray(d.daily[key])&&d.daily[key].length>=7) && d.daily.time.slice(0,7).every(time=>/^\d{4}-\d{2}-\d{2}$/.test(time)) && ['weathercode','temperature_2m_max','temperature_2m_min'].every(key=>d.daily[key].slice(0,7).every(Number.isFinite)));
+}
+function widgetDateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function garbageForDate(d) {
+  const g=widgetSettings.garbage||{},key=widgetDateKey(d);
+  if(g.exceptions && Object.prototype.hasOwnProperty.call(g.exceptions,key))return g.exceptions[key]==='休み'?[]:[g.exceptions[key]];
+  const labels=[];
+  if((g.burn||[1,4]).includes(d.getDay()))labels.push('🔥 燃えるごみ');
+  if((g.recycle||[3]).includes(d.getDay()))labels.push('♻ 資源ごみ');
+  return labels;
+}
+function renderGarbageSummary() {
+  const el=document.getElementById('garbage-summary'),today=new Date(),tomorrow=new Date(today);tomorrow.setDate(today.getDate()+1);
+  const g=widgetSettings.garbage||{},link=el.closest('a');
+  if(g.pdf)link.href=g.pdf;
+  el.textContent='今日：'+(garbageForDate(today).join('・')||'収集なし')+' ／ 明日：'+(garbageForDate(tomorrow).join('・')||'収集なし');
+  const days=['日','月','火','水','木','金','土'];
+  link.querySelector('span').textContent='🔥'+(g.burn||[1,4]).map(d=>days[d]).join('')+' / ♻'+(g.recycle||[3]).map(d=>days[d]).join('');
+  el.title='設定した曜日から表示。祝日・年末年始などの変更は収集PDFで確認してください。';
+}
+function widgetVideoId(value) {
+  const text=value.trim();if(/^[\w-]{11}$/.test(text))return text;
+  try {
+    const u=new URL(text);let id='';
+    if(u.hostname==='youtu.be')id=u.pathname.split('/')[1];
+    else if(['youtube.com','www.youtube.com','m.youtube.com'].includes(u.hostname))id=u.searchParams.get('v')||u.pathname.match(/^\/(?:embed|live|shorts)\/([\w-]{11})/)?.[1];
+    return /^[\w-]{11}$/.test(id||'')?id:null;
+  }catch(e){return null;}
+}
+function openWidgetSettings() {
+  const esc=escapeWidgetHTML,g=widgetSettings.garbage||{},names={nhk:'NHK',keizai:'経済',sakei:'地域/食',nl:'道NL',hobby:'趣味'};
+  const input=(label,id,value)=>`<label for="${id}">${esc(label)}</label><input id="${id}" value="${esc(value)}">`;
+  let fields='<fieldset><legend>動画</legend><p class="help">YouTubeの動画URLまたは動画IDを入力します。</p>';
+  fields+=input('HTB','setting-video-1',widgetSettings.videos?.['btn-v1']||'tvgbZZYS4Nk');
+  fields+=input('ライブカメラ','setting-video-2',widgetSettings.videos?.['btn-v2']||'c6Gqe6L_xZg')+'</fieldset>';
+  fields+='<fieldset><legend>ごみ収集</legend><p class="help">初期値は元のページの「月木／水」です。収集表の自動読取りは行いません。地区・祝日・年末年始の例外はPDFを確認して設定してください。</p>';
+  for(const [key,label,fallback] of [['burn','燃えるごみ',[1,4]],['recycle','資源ごみ',[3]]]) {
+    fields+=`<div style="font-size:13px;margin-top:8px">${label}</div>`;
+    ['日','月','火','水','木','金','土'].forEach((day,i)=>{fields+=`<label class="weekday"><input type="checkbox" name="garbage-${key}" value="${i}" ${(g[key]||fallback).includes(i)?'checked':''}>${day}</label>`;});
+  }
+  fields+=input('収集表PDFのURL','setting-garbage-pdf',g.pdf||document.querySelector('.garbage-button').href);
+  fields+='<label for="setting-garbage-exceptions">日付別の変更（1行に1件）</label><textarea id="setting-garbage-exceptions" rows="4" placeholder="2026-12-31=休み&#10;2027-01-05=燃えるごみ">'+esc(Object.entries(g.exceptions||{}).map(([date,label])=>date+'='+label).join('\n'))+'</textarea><p class="help">「日付=休み」で収集なし。「日付=燃えるごみ」などで、その日の表示を置き換えます。</p></fieldset>';
+  fields+='<fieldset><legend>ニュースの取得元</legend><p class="help">RSSのURLを1行に1つ入力します。空欄にするとその分類の取得を停止します。</p>';
+  for(const key of Object.keys(urls))fields+=`<label for="setting-news-${key}">${names[key]}</label><textarea id="setting-news-${key}" rows="3">${esc((Array.isArray(urls[key])?urls[key]:[urls[key]]).join('\n'))}</textarea>`;
+  fields+='</fieldset><fieldset><legend>お店の営業時間</legend><p class="help">「10:30-15:00 / 17:00-19:30」の形式で入力。定休日は空欄にします。通常の営業時間に基づく目安です。</p>';
+  nearbyShops.forEach((shop,i)=>{
+    fields+=`<details><summary style="cursor:pointer;padding:8px 0">${esc(shop.name)}</summary>`;
+    shop.hours.forEach((h,day)=>{const value=h?h.open+'-'+h.close+(h.open2?' / '+h.open2+'-'+h.close2:''):'';fields+=input(['日','月','火','水','木','金','土'][day]+'曜日',`setting-shop-${i}-${day}`,value);});fields+='</details>';
+  });
+  fields+='</fieldset>';
+  document.getElementById('settings-fields').innerHTML=fields;document.getElementById('settings-error').textContent='';document.getElementById('widget-settings').showModal();
+}
+function saveWidgetSettings(event) {
+  event.preventDefault();
+  const value=id=>document.getElementById(id).value.trim(),httpURL=text=>{try{return ['https:','http:'].includes(new URL(text).protocol);}catch(e){return false;}};
+  try {
+    const videos={'btn-v1':widgetVideoId(value('setting-video-1')),'btn-v2':widgetVideoId(value('setting-video-2'))};
+    if(Object.values(videos).some(id=>!id))throw Error('動画URLまたは動画IDを確認してください。');
+    const pdf=value('setting-garbage-pdf');if(!httpURL(pdf))throw Error('収集表PDFのURLを確認してください。');
+    const exceptions={};
+    for(const line of value('setting-garbage-exceptions').split('\n').map(s=>s.trim()).filter(Boolean)) {
+      const match=line.match(/^(\d{4}-\d{2}-\d{2})\s*=\s*(.+)$/);
+      if(!match || widgetDateKey(new Date(match[1]+'T12:00:00'))!==match[1])throw Error('日付別の変更は「2026-12-31=休み」の形式で入力してください。');
+      exceptions[match[1]]=match[2].trim();
+    }
+    const news={};for(const key of Object.keys(urls)){news[key]=value('setting-news-'+key).split('\n').map(s=>s.trim()).filter(Boolean);if(news[key].some(url=>!httpURL(url)))throw Error('ニュースのURLを確認してください。');}
+    const shops=nearbyShops.map((shop,i)=>shop.hours.map((h,day)=>{
+      const text=value(`setting-shop-${i}-${day}`);if(!text)return null;
+      const parts=text.split('/').map(s=>s.trim());if(parts.length>2)throw Error(shop.name+'の営業時間は2区間までです。');
+      const result={};let previous=-1;
+      parts.forEach((part,j)=>{
+        const m=part.match(/^([0-2]\d:[0-5]\d)\s*-\s*([0-2]\d:[0-5]\d)$/);
+        if(!m||Number(m[1].slice(0,2))>23||Number(m[2].slice(0,2))>23||shopToMin(m[1])>=shopToMin(m[2])||shopToMin(m[1])<previous)throw Error(shop.name+'の営業時間を確認してください（例：10:30-15:00 / 17:00-19:30）。');
+        previous=shopToMin(m[2]);result[j?'open2':'open']=m[1];result[j?'close2':'close']=m[2];
+      });return result;
+    }));
+    const checked=key=>Array.from(document.querySelectorAll(`[name="garbage-${key}"]:checked`),el=>Number(el.value));
+    const next={videos,news,shops,garbage:{pdf,exceptions,burn:checked('burn'),recycle:checked('recycle')}};
+    if(!writeWidgetStorage('biratori_settings_v1',next))throw Error('設定を保存できませんでした。ブラウザの保存設定や空き容量を確認してください。');
+    Object.assign(widgetSettings,next);Object.assign(urls,news);nearbyShops.forEach((shop,i)=>shop.hours=shops[i]);
+    const active=document.querySelector('.video-tabs button.active')?.id||'btn-v1';switchVideo(videos[active],active);
+    drawCal();renderGarbageSummary();renderMeshiPanel();renderOpenShops();
+    document.getElementById('widget-settings').close();
+    if(newsLoading) { document.getElementById('news-status').textContent='設定を保存しました。現在の更新が終わり次第、新しい取得元で更新します。';const timer=setInterval(()=>{if(!newsLoading){clearInterval(timer);preloadAllNews();}},250); }
+    else preloadAllNews();
+  }catch(e){document.getElementById('settings-error').textContent=e.message;}
+}
+
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
   keizai: "https://diamond.jp/list/feed/rss/dol", 
@@ -265,7 +393,11 @@ const urls = {
   ] 
 };
 
+const defaultNewsUrls = JSON.parse(JSON.stringify(urls));
+if (widgetSettings.news) Object.keys(urls).forEach(key => { if(Array.isArray(widgetSettings.news[key])) urls[key] = widgetSettings.news[key]; });
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
+const newsStates = {};
+let newsLoading = false;
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
@@ -274,62 +406,72 @@ function setRandomBackground() {
 }
 setRandomBackground();
 
+function restoreNewsCache() {
+  for(const key of Object.keys(urls)) {
+    const feeds = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
+    const records = feeds.map(url => feedRecords[url]).filter(record => record && Array.isArray(record.items));
+    newsCache[key] = mergeWidgetNews(records.flatMap(record => record.items));
+    if(records.length) newsStates[key] = {time:Math.min(...records.map(record => record.time)), failed:true, loading:true};
+  }
+  renderNews('nhk');
+}
+function mergeWidgetNews(items) {
+  const links=new Set(), titles=new Set();
+  return items.filter(item => {
+    if(!item || typeof item.title!=='string' || typeof item.link!=='string' || !/^https?:\/\//i.test(item.link)) return false;
+    if(links.has(item.link)||titles.has(item.title)) return false;
+    links.add(item.link);titles.add(item.title);return true;
+  }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
+}
+function renderNewsStatus(type) {
+  const el=document.getElementById('news-status');
+  if(type==='meshi'){el.textContent='';return;}
+  const state=newsStates[type];
+  el.replaceChildren();
+  const message=document.createElement('span');
+  message.textContent=!state?'取得中…':state.loading?'前回の記事を表示／更新中':state.failed?'一部または全部を取得できませんでした。保存済み記事があれば表示しています。':'更新済み';
+  if(state && state.time) message.textContent+='（最終取得：'+formatWidgetTime(state.time)+'）';
+  if(state && state.unsaved) message.textContent+='／保存できませんでした';
+  el.append(message);
+  const button=document.createElement('button');button.type='button';button.className='refresh-btn';button.textContent='再取得';button.disabled=newsLoading;button.onclick=()=>{loadWeather();preloadAllNews();};el.append(' ',button);
+}
 async function preloadAllNews() {
-  const refreshBtn = document.querySelector('.refresh-btn');
-  if(refreshBtn) refreshBtn.textContent = "⏳ 更新中...";
-  
-  const rss2json = "https://api.rss2json.com/v1/api.json?rss_url=";
-  const fetchPromises = Object.keys(urls).map(async (key) => {
-    try {
-      let items = [];
-      const targetUrls = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
-      const results = await Promise.all(
-        targetUrls.map(url => fetch(rss2json + encodeURIComponent(url)).then(r => r.json()).then(d => ({ d, url })).catch(() => null))
-      );
-      for (const res of results) {
-        if (!res) continue;
-        const { d, url } = res;
-        if (d.status === 'ok') {
-            const filteredItems = d.items.filter(item => {
-                const t = item.title;
-                const c = (item.categories || []).map(cat => cat.toLowerCase());
-                
-                if (t === "Domingo 記事" || t.includes("新着記事一覧") || t.includes("記事一覧")) return false;
-                
-                // VALORANT4JPの「大会」タグを除外
-                if (url.includes("valorant4jp.com")) {
-                    if (c.includes("大会")) return false;
-                }
-                
-                return true;
-            });
-            items = items.concat(filteredItems);
-        }
-      }
-      
-      const seenLinks = new Set();
-      const seenTitles = new Set();
-      newsCache[key] = items.filter(item => {
-          const isDuplicate = seenLinks.has(item.link) || seenTitles.has(item.title);
-          if (!isDuplicate) {
-              seenLinks.add(item.link);
-              seenTitles.add(item.title);
-          }
-          return !isDuplicate;
-      }).sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-
-      const activeTab = document.querySelector(".news-tabs button.active");
-      if (activeTab && activeTab.dataset.type === key) renderNews(key);
-    } catch(e) {}
-  });
-  await Promise.all(fetchPromises);
-  if(refreshBtn) refreshBtn.textContent = "🔄 更新";
+  if(newsLoading)return;
+  newsLoading=true;
+  const active=()=>document.querySelector('.news-tabs button.active')?.dataset.type || 'nhk';
+  renderNewsStatus(active());
+  await Promise.all(Object.keys(urls).map(async key => {
+    const feeds=Array.isArray(urls[key])?urls[key]:[urls[key]];
+    let failed=false;
+    const records=await Promise.all(feeds.map(async url => {
+      try {
+        const d=await fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
+        if(d.status!=='ok'||!Array.isArray(d.items))throw Error('Invalid feed');
+        const items=d.items.filter(item => {
+          if(typeof item.title!=='string')return false;
+          const t=item.title,c=(item.categories||[]).map(cat=>String(cat).toLowerCase());
+          if(t==='Domingo 記事'||t.includes('新着記事一覧')||t.includes('記事一覧'))return false;
+          return !(url.includes('valorant4jp.com') && c.includes('大会'));
+        });
+        const record={items:mergeWidgetNews(items),time:Date.now()};feedRecords[url]=record;return record;
+      } catch(e) {failed=true;return feedRecords[url]||null;}
+    }));
+    const available=records.filter(record=>record && Array.isArray(record.items));
+    newsCache[key]=mergeWidgetNews(available.flatMap(record=>record.items));
+    newsStates[key]={failed,time:available.length?Math.min(...available.map(record=>record.time)):null};
+  }));
+  const stored=writeWidgetStorage('biratori_news_cache_v1',feedRecords);
+  Object.values(newsStates).forEach(state=>state.unsaved=!stored);
+  newsLoading=false;
+  if(active()!=='meshi')renderNews(active()); else renderNewsStatus('meshi');
+  if(document.getElementById('news-fullscreen-overlay').classList.contains('active'))renderNewsFullscreen(fsCurrentType);
 }
 
 function renderNews(type) {
+  renderNewsStatus(type);
   const ul = document.getElementById("news");
   const items = newsCache[type] || [];
-  if (items.length === 0) { ul.innerHTML = "<li>ロード中...</li>"; return; }
+  if (items.length === 0) { ul.innerHTML = newsStates[type] ? "<li>表示できる記事がありません。</li>" : "<li>ロード中...</li>"; return; }
   
   const count = (type === 'hobby') ? 13 : 15;
   
@@ -350,8 +492,19 @@ function markAsRead(link, element) {
 
 async function loadWeather() {
   try {
-    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo");
-    const d = await r.json();
+    const d = await fetchWidgetJSON("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo");
+    if(!validWeather(d)) throw Error('Invalid weather');
+    renderWeatherData(d);
+    const record = {data:d, time:Date.now()};
+    weatherRecord = record;
+    const stored = writeWidgetStorage('biratori_weather_cache_v1',record);
+    document.getElementById('weather-status').textContent = '最終更新：'+formatWidgetTime(record.time)+(stored?'':'（保存できませんでした）');
+  } catch(e) {
+    if(weatherRecord && validWeather(weatherRecord.data)) renderWeatherData(weatherRecord.data);
+    document.getElementById('weather-status').textContent = weatherRecord ? '取得できませんでした。前回の天気を表示（'+formatWidgetTime(weatherRecord.time)+'）' : '天気を取得できませんでした。再取得してください。';
+  }
+}
+function renderWeatherData(d) {
     const icons = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",61:"🌧️",71:"❄️",95:"⛈️"};
     document.getElementById("weather").textContent = `${icons[d.current_weather.weathercode]||"☁️"} ${Math.round(d.current_weather.temperature)}℃`;
     let wHtml = "";
@@ -360,7 +513,6 @@ async function loadWeather() {
         wHtml += `<div class="weather-day"><div>${dt.getMonth()+1}/${dt.getDate()}</div><div style="font-size:14px;">${icons[d.daily.weathercode[i]]||"☁️"}</div><div><span class="temp-max">${Math.round(d.daily.temperature_2m_max[i])}</span>/<span class="temp-min">${Math.round(d.daily.temperature_2m_min[i])}</span></div></div>`;
     }
     document.getElementById("weekly-weather").innerHTML = wHtml;
-  } catch(e){}
 }
 
 async function checkOkuyami() {
@@ -448,6 +600,7 @@ function drawCal(){
       <div class=\"cal-num ${colorClass}\">${d.getDate()}</div>
       ${hName ? `<div class=\"holiday-name\">${hName}</div>` : ""}
       ${planHtml}
+      ${garbageForDate(d).map(label => `<div class="cal-garbage">${escapeWidgetHTML(label)}</div>`).join('')}
     </div>`;
   }
   document.getElementById("calGrid").innerHTML=html;
@@ -475,6 +628,7 @@ function clock(){
 }
 
 function switchVideo(id, btnId) {
+  id = (widgetSettings.videos && widgetSettings.videos[btnId]) || id;
   document.getElementById('main-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&enablejsapi=1`;
   document.querySelectorAll('.video-tabs button').forEach(b => b.classList.remove('active'));
   document.getElementById(btnId).classList.add('active');
@@ -615,6 +769,8 @@ function calcSunTimes() {
   el.textContent = toJST(riseMin) + ' / ' + toJST(setMin);
 }
 
+if(weatherRecord && validWeather(weatherRecord.data)) { renderWeatherData(weatherRecord.data); document.getElementById('weather-status').textContent='前回の天気（'+formatWidgetTime(weatherRecord.time)+'）／更新中'; }
+restoreNewsCache();
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
 
 document.querySelectorAll(".news-tabs button").forEach(b=>{
@@ -792,6 +948,12 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeNewsFullscreen();
 });
 
+const defaultShopHours = nearbyShops.map(shop => JSON.parse(JSON.stringify(shop.hours)));
+if(widgetSettings.shops) nearbyShops.forEach((shop,i) => { if(Array.isArray(widgetSettings.shops[i])) shop.hours=widgetSettings.shops[i]; });
+switchVideo('tvgbZZYS4Nk','btn-v1');
+renderGarbageSummary();
+setInterval(renderGarbageSummary,60000);
+document.getElementById('settings-form').addEventListener('submit',saveWidgetSettings);
 </script>
 </body>
 </html>
