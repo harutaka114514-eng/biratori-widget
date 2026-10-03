@@ -382,6 +382,7 @@ const urls = {
     "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
     "https://biratori-shokokai.com/feed",
+    "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja",
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
   nl: ["https://hokkaido-nl.jp/index.xml",
@@ -438,6 +439,13 @@ function renderNewsStatus(type) {
   el.append(message);
   const button=document.createElement('button');button.type='button';button.className='refresh-btn';button.textContent='再取得';button.disabled=newsLoading;button.onclick=()=>{loadWeather();preloadAllNews();};el.append(' ',button);
 }
+function isDomingoFeed(url){
+  try{const parsed=new URL(url);return parsed.hostname==='news.google.com' && parsed.searchParams.get('q')?.trim()==='site:domingo.ne.jp';}catch{return false;}
+}
+async function fetchWidgetFeed(url){
+  if(isDomingoFeed(url))return fetchWidgetJSON('./data/domingo-news.json?check='+Date.now());
+  return fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
+}
 async function preloadAllNews() {
   if(newsLoading)return;
   newsLoading=true;
@@ -448,7 +456,7 @@ async function preloadAllNews() {
     let failed=false;
     const records=await Promise.all(feeds.map(async url => {
       try {
-        const d=await fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
+        const d=await fetchWidgetFeed(url);
         if(d.status!=='ok'||!Array.isArray(d.items))throw Error('Invalid feed');
         const items=d.items.filter(item => {
           if(typeof item.title!=='string')return false;
@@ -456,7 +464,7 @@ async function preloadAllNews() {
           if(t==='Domingo 記事'||t.includes('新着記事一覧')||t.includes('記事一覧'))return false;
           return !(url.includes('valorant4jp.com') && c.includes('大会'));
         });
-        const record={items:mergeWidgetNews(items),time:Date.now()};feedRecords[url]=record;return record;
+        const record={items:mergeWidgetNews(items),time:isDomingoFeed(url)&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
       } catch(e) {failed=true;return feedRecords[url]||null;}
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
