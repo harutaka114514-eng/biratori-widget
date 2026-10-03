@@ -237,6 +237,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
           <button data-type="sakei">地域/食</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
+          <button data-type="daily">🤖 今日のまとめ</button>
           <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
@@ -257,6 +258,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
         <button data-type="sakei">地域/食</button>
         <button data-type="nl">道NL</button>
         <button data-type="hobby">趣味</button>
+          <button data-type="daily">🤖 今日のまとめ</button>
         <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
       </div>
       <button id="news-fullscreen-close" onclick="closeNewsFullscreen()">✕ 閉じる</button>
@@ -424,6 +426,7 @@ function mergeWidgetNews(items) {
   }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
 }
 function renderNewsStatus(type) {
+  if(type==='daily'){renderDailyDigest();return;}
   const el=document.getElementById('news-status');
   if(type==='meshi'){el.textContent='';return;}
   const state=newsStates[type];
@@ -468,6 +471,7 @@ async function preloadAllNews() {
 }
 
 function renderNews(type) {
+  if(type==='daily'){renderDailyDigest();return;}
   renderNewsStatus(type);
   const ul = document.getElementById("news");
   const items = newsCache[type] || [];
@@ -874,6 +878,9 @@ let fsCurrentType = 'nhk';
 function renderNewsFullscreen(type) {
   const ul = document.getElementById('news-fullscreen-list');
   const meshiEl = document.getElementById('news-fullscreen-meshi');
+  const dailyStatus=document.getElementById('daily-fullscreen-status');
+  if(dailyStatus)dailyStatus.style.display='none';
+  if(type==='daily'){ul.style.display='flex';meshiEl.style.display='none';renderDailyDigest(true);return;}
   if (type === 'meshi') {
     ul.style.display = 'none';
     meshiEl.style.display = 'block';
@@ -954,6 +961,56 @@ switchVideo('tvgbZZYS4Nk','btn-v1');
 renderGarbageSummary();
 setInterval(renderGarbageSummary,60000);
 document.getElementById('settings-form').addEventListener('submit',saveWidgetSettings);
+// 毎日のAIまとめ：公開済みJSONを読むだけ。ブラウザからAIのAPIは呼びません。
+let dailyDigest=readWidgetStorage('biratori_daily_digest_v1',null);
+let dailyDigestError=false,dailyDigestLoading=false;
+function validDailyDigest(value){
+  return value && value.version===1 && Array.isArray(value.items) && value.items.length<=8 &&
+    (value.items.length===0 || (typeof value.generatedAt==='string' && Number.isFinite(Date.parse(value.generatedAt)))) &&
+    value.items.every(item=>item && typeof item.title==='string' && typeof item.summary==='string' && typeof item.source==='string' && typeof item.url==='string' && /^https?:\/\//i.test(item.url) && Number.isFinite(Date.parse(item.publishedAt)));
+}
+function dailyDigestHTML(){
+  const esc=escapeWidgetHTML;
+  if(!dailyDigest || !validDailyDigest(dailyDigest) || !dailyDigest.items.length)return '<li>今日のまとめはまだありません。初回の自動更新が終わると表示されます。</li>';
+  return dailyDigest.items.map(item=>`<li class="${readNewsLinks.has(item.url)?'is-read':''}"><span class="unread-dot"></span><div style="flex:1;min-width:0"><a class="daily-story" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)}</a><p style="font-size:12px;line-height:1.7;margin:5px 0;color:#333">${esc(item.summary)}</p><div style="font-size:10px;color:#888">${esc(item.category||'北海道')} ／ ${esc(item.source)} ／ 記事日時：${esc(formatWidgetTime(item.publishedAt))}</div></div></li>`).join('');
+}
+function dailyDigestStatusHTML(){
+  let text=dailyDigestLoading?'更新を確認中…':dailyDigestError?'更新を確認できませんでした。保存済みのまとめがあれば表示しています。':'毎朝6:17ごろ更新（混雑により遅れる場合があります）';
+  if(dailyDigest?.generatedAt && Number.isFinite(Date.parse(dailyDigest.generatedAt))){
+    text+=' ／ 作成：'+formatWidgetTime(dailyDigest.generatedAt);
+    if(new Date(dailyDigest.generatedAt).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})!==new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}))text+=' ／ 本日分はまだ更新されていません';
+  }
+  if(dailyDigest?.partialSources)text+=' ／ 一部の取得元を取得できませんでした';
+  return `<div>${escapeWidgetHTML(text)}</div><div style="margin:3px 0">RSSの見出し・概要をGeminiが整理しています。詳しい内容は元記事で確認できます。</div><button type="button" class="refresh-btn" onclick="loadDailyDigest()" ${dailyDigestLoading?'disabled':''}>更新を確認</button>`;
+}
+function bindDailyDigestLinks(container){
+  container.querySelectorAll('.daily-story').forEach(link=>link.addEventListener('click',()=>{markAsRead(link.href,link);document.querySelectorAll('.daily-story').forEach(other=>{if(other.href===link.href)other.closest('li').classList.add('is-read');});}));
+}
+function renderDailyDigest(fullscreen=false){
+  const list=document.getElementById(fullscreen?'news-fullscreen-list':'news');
+  const status=document.getElementById(fullscreen?'daily-fullscreen-status':'news-status');
+  status.style.display='';status.innerHTML=dailyDigestStatusHTML();list.innerHTML=dailyDigestHTML();bindDailyDigestLinks(list);
+}
+function refreshVisibleDailyDigest(){
+  if(document.querySelector('.news-tabs button.active')?.dataset.type==='daily')renderDailyDigest();
+  if(document.getElementById('news-fullscreen-overlay').classList.contains('active') && fsCurrentType==='daily')renderDailyDigest(true);
+}
+async function loadDailyDigest(){
+  if(dailyDigestLoading)return;
+  dailyDigestLoading=true;refreshVisibleDailyDigest();
+  try{
+    const next=await fetchWidgetJSON('./data/daily-news.json?check='+Date.now());
+    if(!validDailyDigest(next))throw Error('Invalid digest');
+    if(next.items.length || !dailyDigest?.items?.length){dailyDigest=next;writeWidgetStorage('biratori_daily_digest_v1',next);}
+    dailyDigestError=false;
+  }catch(e){dailyDigestError=true;}
+  finally{dailyDigestLoading=false;refreshVisibleDailyDigest();}
+}
+document.getElementById('news-fullscreen-inner').insertBefore(Object.assign(document.createElement('div'),{id:'daily-fullscreen-status',className:'widget-status'}),document.getElementById('news-fullscreen-list'));
+document.getElementById('daily-fullscreen-status').style.display='none';
+loadDailyDigest();
+setInterval(loadDailyDigest,30*60*1000);
+
 </script>
 </body>
 </html>

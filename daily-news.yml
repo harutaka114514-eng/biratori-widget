@@ -1,0 +1,74 @@
+name: Daily news and Pages
+
+on:
+  schedule:
+    # 毎朝6:17ごろ（日本時間）。混雑で遅れる場合があります。
+    - cron: '17 21 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/daily-news.json'
+      - '*.md'
+
+concurrency:
+  group: biratori-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update-and-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate the daily digest
+        id: digest
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.8-flash' }}
+        run: node scripts/update-daily-news.mjs
+      - name: Report preserved digest
+        if: steps.digest.outcome == 'failure'
+        run: echo '::warning::ニュース更新に失敗しました。保存済みのまとめを使って公開します。APIキーと無料枠を確認してください。'
+      - name: Save the generated digest
+        if: steps.digest.outcome == 'success'
+        run: |
+          git add data/daily-news.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Update daily news digest'
+            git push
+          fi
+      - name: Prepare public site
+        run: |
+          mkdir _site
+          cp index.html _site/
+          cp -R data _site/data
+          if [ -f background.jpg ]; then cp background.jpg _site/; fi
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: update-and-package
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
