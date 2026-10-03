@@ -3,7 +3,9 @@ import {fileURLToPath} from 'node:url';
 
 export const DEFAULT_MODEL='gemini-3.8-flash';
 let updateStage='準備';
-export class DigestError extends Error {}
+export class DigestError extends Error {
+  constructor(message,status=null){super(message);this.status=status;}
+}
 export const FEEDS=[
   {name:'平取町',url:'https://news.google.com/rss/search?q=%E5%B9%B3%E5%8F%96%E7%94%BA&hl=ja&gl=JP&ceid=JP:ja'},
   {name:'日高地方',url:'https://news.google.com/rss/search?q=%E6%97%A5%E9%AB%98%20%E5%8C%97%E6%B5%B7%E9%81%93&hl=ja&gl=JP&ceid=JP:ja'},
@@ -58,10 +60,20 @@ export async function fetchText(url,options={},limit=1500000){
       const hints={400:'APIキーまたは生成リクエストの設定を確認してください。',401:'APIキーの認証を確認してください。',403:'APIキーの権限・利用制限・対象サービスを確認してください。',404:'指定モデルが利用できない可能性があります。GEMINI_MODELを確認してください。',429:'無料枠の上限または混雑です。時間を置いて確認してください。',500:'取得先のサーバーエラーです。',503:'取得先が一時的に利用できません。'};
       let status='';
       try{const code=JSON.parse(body)?.error?.status;if(['INVALID_ARGUMENT','RESOURCE_EXHAUSTED','PERMISSION_DENIED','NOT_FOUND','UNAUTHENTICATED','UNAVAILABLE','FAILED_PRECONDITION'].includes(code))status=' / '+code;}catch{}
-      throw new DigestError('HTTP '+response.status+status+'：'+(hints[response.status]||'取得先の応答を確認してください。'));
+      throw new DigestError('HTTP '+response.status+status+'：'+(hints[response.status]||'取得先の応答を確認してください。'),response.status);
     }
     return body;
   }finally{clearTimeout(timer);}
+}
+export async function requestGemini(url,options,wait=ms=>new Promise(resolve=>setTimeout(resolve,ms))){
+  for(let attempt=0;attempt<3;attempt++){
+    try{return await fetchText(url,options);}catch(error){
+      if(!(error instanceof DigestError)||error.status!==503||attempt===2)throw error;
+      const delay=(attempt===0?15000:30000)+Math.floor(Math.random()*1000);
+      console.log('Geminiが一時的に利用できません。'+Math.ceil(delay/1000)+'秒後に再試行します（'+(attempt+1)+'/2）。');
+      await wait(delay);
+    }
+  }
 }
 export async function main(){
   updateStage='APIキーの確認';
@@ -78,8 +90,8 @@ export async function main(){
   console.log('ニュース候補：'+candidates.length+'件／取得成功：'+successful.length+'/'+FEEDS.length+'元');
   if(!candidates.length)throw new DigestError('過去48時間のニュースを取得できませんでした。RSS取得元の応答を確認してください。');
   updateStage='Geminiによる要約';
-  // 1回の更新につき生成APIは1回だけ。検索・有料モデルへの切替や自動再試行は行わない。
-  const response=JSON.parse(await fetchText('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent',{
+  // 503だけを最大2回再試行する。無料枠上限・請求エラーや有料モデルへの切替は行わない。
+  const response=JSON.parse(await requestGemini('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent',{
     method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify(buildRequest(candidates,now))
   }));
   const text=response.candidates?.[0]?.content?.parts?.filter(part=>!part.thought&&typeof part.text==='string').map(part=>part.text).join('');
@@ -106,3 +118,4 @@ export async function reportDigestError(error){
 if(process.argv[1]&&fileURLToPath(import.meta.url)===process.argv[1])main().catch(async error=>{
   await reportDigestError(error);process.exitCode=1;
 });
+
