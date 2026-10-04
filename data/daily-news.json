@@ -1,72 +1,72 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-04T01:17:04.284Z",
+  "generatedAt": "2026-10-04T12:12:55.005Z",
   "model": "gemini-3.8-flash",
   "method": "RSSの見出し・概要をGeminiが整理",
   "partialSources": false,
   "items": [
     {
-      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
-      "summary": "10月2日、北海道日高町福満でクマが出没しました。",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
-      "source": "ｄメニューニュース",
-      "publishedAt": "2026-10-03T06:01:00.000Z",
+      "title": "胆振・日高（１０月５日付）おくやみ - 北海道新聞デジタル",
+      "summary": "胆振・日高地方における10月5日付のおくやみ情報です。",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE43enNHTklLelBEdjVVUEtmVFNzRXNIeEczcW5tdnVRRExQVDh6aHpzZ00xbXR1Q2ZzSC14b0pVbmlRbUlRYzBIYzV3UjJNOTJJbUc0V0NwQ3RvZw?oc=5",
+      "source": "北海道新聞デジタル",
+      "publishedAt": "2026-10-04T11:30:00.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "【北海道(胆振・日高地方)】10/5の天気予報 - fnn.jp",
+      "summary": "胆振・日高地方を対象とした10月5日の天気予報です。",
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1hRWY0MldReEhlZ2xkcE5tMEljdGdIdWZyeUwwRExxUVYxTGZPSThCVWJwZ2RCbjJJYkx3NUUxRGRFWkNITWVMSURGV290Zw?oc=5",
+      "source": "fnn.jp",
+      "publishedAt": "2026-10-04T10:30:00.000Z",
       "category": "日高地方"
     },
     {
       "title": "ヒグマと目が合い、息をのむ 北海道・日高山脈を撮り続けて40年 [北海道] - 朝日新聞",
-      "summary": "北海道の日高山脈を40年にわたり撮影し続けている写真家の話題です。",
+      "summary": "北海道の日高山脈を40年間にわたって撮影し続けている記録や、ヒグマと対面したエピソードが取り上げられています。",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV2FGRzdjNFZsWElQd2Fodm1pWTB4V1dSdHhDLVA1b05LOTBMMjJ2d1lTNkx2WjBKajVBaU9xSjNZZ3VzM0VlbnhqcmQ3MWUzbVBHcWF0OTc0MVBuX3JZeHJweWs1VmdWT19JS29uallzUjB1SzhhT19PU1ZPUHBrNDRjS3VfaXd4bVpfS1hxTDFIR3M?oc=5",
       "source": "朝日新聞",
       "publishedAt": "2026-10-03T21:00:00.000Z",
       "category": "日高地方"
     },
     {
-      "title": "【北海道(胆振・日高地方)】10/4の天気予報 - FNNプライムオンライン",
-      "summary": "北海道の胆振・日高地方における10月4日の天気予報です。",
-      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBlbGJQakpyNkY5V01tM0g2bE9JQlc1WC1SLWtfNmViTEJzMDVhM283cUtrLUxzQmRGcGdYUXJldkJNUjYwd2pNSDMtT0VKQQ?oc=5",
-      "source": "FNNプライムオンライン",
-      "publishedAt": "2026-10-03T10:30:00.000Z",
+      "title": "（北海道）日高町福満でクマ出没 １０月２日 - topics.smt.docomo.ne.jp",
+      "summary": "10月2日に日高町福満でクマが出没しました。",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
+      "source": "topics.smt.docomo.ne.jp",
+      "publishedAt": "2026-10-03T06:01:00.000Z",
       "category": "日高地方"
     },
     {
-      "title": "胆振・日高（１０月４日付）おくやみ - 北海道新聞デジタル",
-      "summary": "10月4日付の胆振・日高地方のおくやみ情報です。",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9NYTJJMzhVWTc1VzlBVVVWdk5naUZDR3VnckdYeFRqdEEtdk1LMEV0enpiVDlybWZSRXM4SXFZd0RPalZOX3dYZ3JmWVRNRlZpWl82dkpMa2NsZw?oc=5",
-      "source": "北海道新聞デジタル",
-      "publishedAt": "2026-10-03T11:30:00.000Z",
-      "category": "日高地方"
-    },
-    {
-      "title": "車3台衝突で高齢男性死亡 勾配カーブで正面衝突 後続巻き込み男女2人もけが 北海道室蘭市 国道37号 - Yahoo!ニュース",
-      "summary": "北海道室蘭市の国道37号で車3台が衝突する事故があり、高齢男性が死亡し、男女2人がけがをしました。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1XRHFxdGJYSWZVWXpST3VadzBrTTJIUWlWMUlBWllVa0VnR0toMGVBaHhnWlJxYjJHT2p0d0wzVXZUd2h4TmlkMTJGVV82TTQ2SlNkUFlGRXZFNzBUNkM1UTJfVVFsZTNpVE90cE1XaVU2OUJ3SU03bzdaOUpxVXM?oc=5",
+      "title": "北海道ガスが2大会連続の本大会へ 社会人野球日本選手権（毎日新聞） - Yahoo!ニュース",
+      "summary": "社会人野球日本選手権において、北海道ガスが2大会連続となる本大会出場を決めました。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1JTjg4UVdHRHcwZmNudnJ2d3lhREp1SnlKWnNxVDZ4ODh1LUJSQmFpNm5ENEVfUTBTSkdKRnJRZ05icExkWWM5N0pzbjRzb3NBLUthRU5xVk91N0xCMzR2b3V5SUZ0NW40NWNORFlaaU1BdFFjcFR5dXpqTEo2RDA?oc=5",
       "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T00:47:14.000Z",
+      "publishedAt": "2026-10-04T11:01:06.000Z",
       "category": "北海道"
     },
     {
-      "title": "【クマ出没】自転車で帰宅中の10代女性の目の前に\"うなり声\"あげるクマ…その距離わずか10メートル…自転車でそのまま通り過ぎ無事＜北海道砂川市＞ - Yahoo!ニュース",
-      "summary": "北海道砂川市で、自転車で帰宅していた10代女性の至近距離にクマが出没しました。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE05VnFZYU55TDlnaVlEVXdmNWVHWGRpMWx1ZmF3eGhtNm5zRVA2bDFTTS1wdDNYdGZFR050WFpONFBEb2Jjc1pSeVB1c3NKc1FoRGVqY0NpRFpPWUdnZVVNSGxCWHljZU9xR2NuVDFZbUs0bW1tQ3U4YmlYeGVtOEU?oc=5",
-      "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T00:30:02.000Z",
+      "title": "パレスチナの平和願い 函館で市民らたこ揚げ - topics.smt.docomo.ne.jp",
+      "summary": "函館市で、市民らがパレスチナの平和を願ってたこ揚げを行いました。",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9XeUVmSDkzWS04bFNKbkZuOEpJNHNMSFI1S2RGTkhSczRKMFloWDVvdHJMSVBlbVkwYXFBVmoyNVY0Tk9yUktfTGcxd3NUYm5CN2ZhaWdWTHkyenhaenhUdVEwZnVLbHpnZzJMQXNFaTFJUFhkQzRfWklXMUrSAYIBQVVfeXFMUEQ2LTh1cVgxNllJZ01qMmJEVjJ6Z2JoQzgtT3hKanNLaHhkS1ppd3BjZnljUUJGZ3VJTng2NldWb1poWmFOMWNabl9lQXk5STJiQ2dnQWJmdzBpLTdrcmJsYnY2b3ZVbUpDRGFZNzBiTW5RYTdxUTVOWFdXdDZxbXZ5dw?oc=5",
+      "source": "topics.smt.docomo.ne.jp",
+      "publishedAt": "2026-10-04T10:52:00.000Z",
       "category": "北海道"
     },
     {
-      "title": "1室あたり約26万円から 高級ホテル「ハイアット」 北海道らしさ詰め込み…札幌初上陸 北海道 - ｄメニューニュース",
-      "summary": "高級ホテル「ハイアット」が札幌に初進出することが報じられています。",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFAtRVlUeS1ObnRadFZvNzZiRkJ1RkIwWnl2NXpvU3pQSWJWTFQwRjJPYXJsMW1Pc3NIWEhWVTRQWHQyNFFBX2x4T1dpZHhNRDYxLUhxVVFFNjVWZE9SbVBEeWxBcWI2Vm9NQjhTSlotYjdQd2tZVWV1S2tuUdIBgAFBVV95cUxNLUhFMmVfX0tHUVF1TDZDMUxfbmdqTU9mNlIwVWU5N0ItOFdSWnhuQ1R3Q2VlV25OOUVzaWloRTQxekRycFRtd3Y5eWI3SEM5Y0hPcjNlRG0xMzRSal9IMWZEQmtFWkQ0VzVjcWNRdVZJbnlGMU83UFgzMXNXMEtqUQ?oc=5",
-      "source": "ｄメニューニュース",
-      "publishedAt": "2026-10-03T23:08:27.000Z",
+      "title": "「この日のために生きている」待望のワイン祭り 名産の十勝ワインと牛肉料理を楽しむ 北海道 - Yahoo!ニュース",
+      "summary": "名産の十勝ワインと牛肉料理を楽しむワイン祭りが北海道で開催されました。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9ZSndNS1VUZEdzZTRCMU05My1jdkJYVE9oRkVyRGthR1llWW4xQzhQQlRkVERzbWQxeVNSbEdCeE1qMUV3YzVqb3JYWC13RDNrcFRVMDVxUmJ5OFNLYWhxVmVfRHJIZ1MzaV9QVzNVa003WFNoTEh0TWF2X0hFd0k?oc=5",
+      "source": "Yahoo!ニュース",
+      "publishedAt": "2026-10-04T10:23:00.000Z",
       "category": "北海道"
     },
     {
-      "title": "アルテミス北海道が「推し勝つ」で新シーズンへ ファン・選手・フロントが一体に（バレーボールキング） - Yahoo!ニュース",
-      "summary": "バレーボールのアルテミス北海道が「推し勝つ」を掲げ、ファンや選手が一体となって新シーズンを迎えます。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE00b0tmZ0xsODFmOEFmOTVqRWt6M0xJV1R1S283RURsSlhfMHpXRTFLRm04b1RNZkJDSjVldWhKNU1FVDAwNmZxN1dwOG42X0dXSU5zR0xOMWd2b2Y3SlI4cUpmVXVKQm9iRmF0QzI4QW1ScnpDczdybmt0ek5IdU0?oc=5",
-      "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T01:05:00.000Z",
+      "title": "仏国籍の夫と登山のドイツ人死亡 北海道・北見 - nippon.com",
+      "summary": "北海道北見市で、フランス国籍の夫と登山をしていたドイツ人が死亡しました。",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1aS1pGYS1SclQwTFQ5M3JnMXEyV1NOS2hzQVlNQURtNW92Z2h4eHJVT085Q0tTSEZnNjlXNkZtcVlhT2hCMG1VMlhZZmVZY1JHSzd1dHlEdl9VTUN0eWFUTHNvWQ?oc=5",
+      "source": "nippon.com",
+      "publishedAt": "2026-10-04T10:08:33.000Z",
       "category": "北海道"
     }
   ]
