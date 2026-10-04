@@ -420,6 +420,7 @@ const urls = {
     "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
     "https://biratori-shokokai.com/feed",
+    "https://hokkaido-hidaka-kankonavi.com/feed/",
     "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja",
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
@@ -439,6 +440,12 @@ if(widgetSettings.news?.keizai?.length===1 && widgetSettings.news.keizai[0]==='h
   widgetSettings.news.keizai=[urls.keizai];writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
 if (widgetSettings.news) Object.keys(urls).forEach(key => { if(Array.isArray(widgetSettings.news[key])) urls[key] = widgetSettings.news[key]; });
+// 既存の取得元設定を維持して日高観光ナビを追加します。
+const hidakaFeedURL='https://hokkaido-hidaka-kankonavi.com/feed/';
+if(Array.isArray(widgetSettings.news?.sakei) && !widgetSettings.news.sakei.includes(hidakaFeedURL)){
+  widgetSettings.news.sakei.push(hidakaFeedURL);
+  writeWidgetStorage('biratori_settings_v1',widgetSettings);
+}
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
 const newsStates = {};
 let newsLoading = false;
@@ -459,9 +466,28 @@ function restoreNewsCache() {
   }
   renderNews('nhk');
 }
+// RSSの表示用データを整形。本文・コメント・投稿者情報は表示に使いません。
+function cleanWidgetNewsItem(item){
+  if(!item || typeof item.title!=='string' || typeof item.link!=='string')return null;
+  const doc=new DOMParser().parseFromString(item.title,'text/html');
+  doc.querySelectorAll('script,style').forEach(el=>el.remove());
+  const title=(doc.body.textContent||'').replace(/\s+/g,' ').trim();
+  if(!title)return null;
+  if(isHidakaFeed(item.link))return {title,link:item.link,pubDate:item.pubDate||''};
+  return {...item,title};
+}
+function isHidakaFeed(url){
+  try{return new URL(url).hostname==='hokkaido-hidaka-kankonavi.com';}catch{return false;}
+}
+function widgetNewsLinkHTML(item){
+  const date=new Date(item.pubDate);
+  const label=isHidakaFeed(item.link)&&Number.isFinite(date.getTime())
+    ? '<small style="display:block;font-size:11px;font-weight:400;opacity:.7">日高観光ナビ・公開日 '+date.toLocaleDateString('ja-JP',{timeZone:'Asia/Tokyo'})+'</small>' : '';
+  return '<a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer" onclick="markAsRead(this.href, this)">'+escapeWidgetHTML(item.title)+label+'</a>';
+}
 function mergeWidgetNews(items) {
   const links=new Set(), titles=new Set();
-  return items.filter(item => {
+  return items.map(cleanWidgetNewsItem).filter(item => {
     if(!item || typeof item.title!=='string' || typeof item.link!=='string' || !/^https?:\/\//i.test(item.link)) return false;
     if(links.has(item.link)||titles.has(item.title)) return false;
     links.add(item.link);titles.add(item.title);return true;
@@ -541,7 +567,7 @@ function renderNews(type) {
     const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
     return `<li class="${isRead}">
       <span class="unread-dot"></span>
-      <a href="${i.link}" target="_blank" onclick="markAsRead('${i.link}', this)">${i.title}</a>
+      ${widgetNewsLinkHTML(i)}
     </li>`;
   }).join('');
 }
@@ -995,7 +1021,7 @@ function renderNewsFullscreen(type) {
       const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
       return `<li class="${isRead}">
         <span class="unread-dot"></span>
-        <a href="${i.link}" target="_blank" onclick="markAsRead('${i.link}', this)">${i.title}</a>
+        ${widgetNewsLinkHTML(i)}
       </li>`;
     }).join('') || '<li>ロード中...</li>';
   }
