@@ -1,72 +1,72 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-04T12:12:55.005Z",
+  "generatedAt": "2026-10-04T14:19:14.856Z",
   "model": "gemini-3.8-flash",
   "method": "RSSの見出し・概要をGeminiが整理",
   "partialSources": false,
   "items": [
     {
-      "title": "胆振・日高（１０月５日付）おくやみ - 北海道新聞デジタル",
-      "summary": "胆振・日高地方における10月5日付のおくやみ情報です。",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE43enNHTklLelBEdjVVUEtmVFNzRXNIeEczcW5tdnVRRExQVDh6aHpzZ00xbXR1Q2ZzSC14b0pVbmlRbUlRYzBIYzV3UjJNOTJJbUc0V0NwQ3RvZw?oc=5",
-      "source": "北海道新聞デジタル",
-      "publishedAt": "2026-10-04T11:30:00.000Z",
-      "category": "日高地方"
-    },
-    {
-      "title": "【北海道(胆振・日高地方)】10/5の天気予報 - fnn.jp",
-      "summary": "胆振・日高地方を対象とした10月5日の天気予報です。",
-      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1hRWY0MldReEhlZ2xkcE5tMEljdGdIdWZyeUwwRExxUVYxTGZPSThCVWJwZ2RCbjJJYkx3NUUxRGRFWkNITWVMSURGV290Zw?oc=5",
-      "source": "fnn.jp",
-      "publishedAt": "2026-10-04T10:30:00.000Z",
+      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
+      "summary": "北海道日高町福満で10月2日にクマが出没しました。",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
+      "source": "ｄメニューニュース",
+      "publishedAt": "2026-10-03T06:01:00.000Z",
       "category": "日高地方"
     },
     {
       "title": "ヒグマと目が合い、息をのむ 北海道・日高山脈を撮り続けて40年 [北海道] - 朝日新聞",
-      "summary": "北海道の日高山脈を40年間にわたって撮影し続けている記録や、ヒグマと対面したエピソードが取り上げられています。",
+      "summary": "北海道の日高山脈を40年にわたり撮り続けている写真に関する記事です。",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV2FGRzdjNFZsWElQd2Fodm1pWTB4V1dSdHhDLVA1b05LOTBMMjJ2d1lTNkx2WjBKajVBaU9xSjNZZ3VzM0VlbnhqcmQ3MWUzbVBHcWF0OTc0MVBuX3JZeHJweWs1VmdWT19JS29uallzUjB1SzhhT19PU1ZPUHBrNDRjS3VfaXd4bVpfS1hxTDFIR3M?oc=5",
       "source": "朝日新聞",
       "publishedAt": "2026-10-03T21:00:00.000Z",
       "category": "日高地方"
     },
     {
-      "title": "（北海道）日高町福満でクマ出没 １０月２日 - topics.smt.docomo.ne.jp",
-      "summary": "10月2日に日高町福満でクマが出没しました。",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
-      "source": "topics.smt.docomo.ne.jp",
-      "publishedAt": "2026-10-03T06:01:00.000Z",
+      "title": "【北海道(胆振・日高地方)】10/5の天気予報 - FNNプライムオンライン",
+      "summary": "北海道の胆振・日高地方における10月5日の天気予報です。",
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1hRWY0MldReEhlZ2xkcE5tMEljdGdIdWZyeUwwRExxUVYxTGZPSThCVWJwZ2RCbjJJYkx3NUUxRGRFWkNITWVMSURGV290Zw?oc=5",
+      "source": "FNNプライムオンライン",
+      "publishedAt": "2026-10-04T10:30:00.000Z",
       "category": "日高地方"
     },
     {
-      "title": "北海道ガスが2大会連続の本大会へ 社会人野球日本選手権（毎日新聞） - Yahoo!ニュース",
-      "summary": "社会人野球日本選手権において、北海道ガスが2大会連続となる本大会出場を決めました。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1JTjg4UVdHRHcwZmNudnJ2d3lhREp1SnlKWnNxVDZ4ODh1LUJSQmFpNm5ENEVfUTBTSkdKRnJRZ05icExkWWM5N0pzbjRzb3NBLUthRU5xVk91N0xCMzR2b3V5SUZ0NW40NWNORFlaaU1BdFFjcFR5dXpqTEo2RDA?oc=5",
+      "title": "胆振・日高（１０月５日付）おくやみ - 北海道新聞デジタル",
+      "summary": "胆振・日高地方の10月5日付のおくやみ情報です。",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE43enNHTklLelBEdjVVUEtmVFNzRXNIeEczcW5tdnVRRExQVDh6aHpzZ00xbXR1Q2ZzSC14b0pVbmlRbUlRYzBIYzV3UjJNOTJJbUc0V0NwQ3RvZw?oc=5",
+      "source": "北海道新聞デジタル",
+      "publishedAt": "2026-10-04T11:30:00.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "北海道ガスが2年連続で日本選手権へ 社会人野球北海道予選 - 北海道新聞デジタル",
+      "summary": "社会人野球北海道予選で、北海道ガスが2年連続となる日本選手権への出場を決めました。",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1SNjJ0Mzd4c25OUldHUzg0ekRyX2hCOWdBRUZoSlhIcmdCYkdqMU5tNDZGdTR1X1AwT09rV0sweHpxdVhBUU9pdWtiVi1IZktLdHg5akR2ZE1HUQ?oc=5",
+      "source": "北海道新聞デジタル",
+      "publishedAt": "2026-10-04T14:09:55.000Z",
+      "category": "北海道"
+    },
+    {
+      "title": "北海道の立憲出身議員ら、道内で独自に「地域政党立ち上げへ準備」（朝日新聞） - Yahoo!ニュース",
+      "summary": "北海道内の立憲民主党出身議員らが、道内で独自に地域政党を立ち上げる準備を進めています。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5ITXdfMGdwRmFBd1NkcjBlVXlTVzRlblY3eWV2RU9GdmN3dG1YTTY2RmNQb3A3ekdMdVo4aW5xQ0R1c2xjU2JWY2xHdGJXaVZWT1VyTmhRUVhCVUI0TnZXRUVKb0NESU1CYWM5UlVjejN2UERFcVo4b1pwTUZBcUE?oc=5",
       "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T11:01:06.000Z",
+      "publishedAt": "2026-10-04T13:00:00.000Z",
       "category": "北海道"
     },
     {
-      "title": "パレスチナの平和願い 函館で市民らたこ揚げ - topics.smt.docomo.ne.jp",
-      "summary": "函館市で、市民らがパレスチナの平和を願ってたこ揚げを行いました。",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9XeUVmSDkzWS04bFNKbkZuOEpJNHNMSFI1S2RGTkhSczRKMFloWDVvdHJMSVBlbVkwYXFBVmoyNVY0Tk9yUktfTGcxd3NUYm5CN2ZhaWdWTHkyenhaenhUdVEwZnVLbHpnZzJMQXNFaTFJUFhkQzRfWklXMUrSAYIBQVVfeXFMUEQ2LTh1cVgxNllJZ01qMmJEVjJ6Z2JoQzgtT3hKanNLaHhkS1ppd3BjZnljUUJGZ3VJTng2NldWb1poWmFOMWNabl9lQXk5STJiQ2dnQWJmdzBpLTdrcmJsYnY2b3ZVbUpDRGFZNzBiTW5RYTdxUTVOWFdXdDZxbXZ5dw?oc=5",
-      "source": "topics.smt.docomo.ne.jp",
-      "publishedAt": "2026-10-04T10:52:00.000Z",
-      "category": "北海道"
-    },
-    {
-      "title": "「この日のために生きている」待望のワイン祭り 名産の十勝ワインと牛肉料理を楽しむ 北海道 - Yahoo!ニュース",
-      "summary": "名産の十勝ワインと牛肉料理を楽しむワイン祭りが北海道で開催されました。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9ZSndNS1VUZEdzZTRCMU05My1jdkJYVE9oRkVyRGthR1llWW4xQzhQQlRkVERzbWQxeVNSbEdCeE1qMUV3YzVqb3JYWC13RDNrcFRVMDVxUmJ5OFNLYWhxVmVfRHJIZ1MzaV9QVzNVa003WFNoTEh0TWF2X0hFd0k?oc=5",
+      "title": "【レバンガ北海道】ホームで仙台に勝利し連勝！富永チーム最多22得点…クラーク＆ハーラーがダブルダブル達成 - Yahoo!ニュース",
+      "summary": "プロバスケットボールのレバンガ北海道がホームで仙台に勝利し、連勝を飾りました。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE12dEZDOUpvN3ZCSE5WMkpDbW9oQ0k4N0EtS3RSVjJtaDZhQUZ1UVQxUDZfdzg5M25mTUl1VXNTVk1HV2xzQUxMX3FHQ2RqaVRqa3hCNDVvZDcyWVVjUE1rYnRpZnVLSHlJYTZLWS1sbWlGbV9wMHZpUWZmd3ZzeE0?oc=5",
       "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T10:23:00.000Z",
+      "publishedAt": "2026-10-04T12:39:01.000Z",
       "category": "北海道"
     },
     {
-      "title": "仏国籍の夫と登山のドイツ人死亡 北海道・北見 - nippon.com",
-      "summary": "北海道北見市で、フランス国籍の夫と登山をしていたドイツ人が死亡しました。",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1aS1pGYS1SclQwTFQ5M3JnMXEyV1NOS2hzQVlNQURtNW92Z2h4eHJVT085Q0tTSEZnNjlXNkZtcVlhT2hCMG1VMlhZZmVZY1JHSzd1dHlEdl9VTUN0eWFUTHNvWQ?oc=5",
-      "source": "nippon.com",
-      "publishedAt": "2026-10-04T10:08:33.000Z",
+      "title": "北海道、大阪市で観光情報交換会 13地域・団体がＰＲ - 観光経済新聞",
+      "summary": "大阪市で北海道の観光情報交換会が開催され、13の地域や団体がPRを行いました。",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9FSzFzUFVnZ1FpYkhjN0UwVmdLNG1qMEJRc2h2aFptTU1DM216UnF6QVUtUUlHUWxwXzFGZUZiMThyTElfNV94Tks3YklvRG5WQ3J5WEItdw?oc=5",
+      "source": "観光経済新聞",
+      "publishedAt": "2026-10-04T12:21:15.000Z",
       "category": "北海道"
     }
   ]
