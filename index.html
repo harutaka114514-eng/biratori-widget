@@ -1191,7 +1191,7 @@ setInterval(loadDailyDigest,30*60*1000);
     if(Date.now()>=expires){clearSession();status('認証の期限が切れました。「Gmailに接続」で再接続してください。');return;}
     busy=true;const current=session,access=token;el('gmail-refresh').disabled=true;
     try{
-      const [list,label]=await Promise.all([request('messages?maxResults=5&q=is%3Aunread%20in%3Ainbox',access),request('labels/INBOX',access)]);
+      const [list,label]=await Promise.all([request('messages?maxResults=10&q=is%3Aunread%20in%3Ainbox',access),request('labels/INBOX',access)]);
       const messages=await Promise.all((list.messages||[]).map(async ({id})=>{
         if(cache.has(id))return cache.get(id);
         const message=await request('messages/'+encodeURIComponent(id)+'?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date',access);
@@ -1206,7 +1206,7 @@ setInterval(loadDailyDigest,30*60*1000);
         from.textContent=header('From');preview.textContent=message.snippet||'';li.append(from,a,preview);return li;
       });
       if(!nodes.length){const li=document.createElement('li');li.textContent='受信トレイに未読メールはありません。';nodes.push(li);}
-      el('gmail-list').replaceChildren(...nodes);el('gmail-count').textContent='（'+(label.messagesUnread||0)+'件）';failures=0;status('更新：'+new Date().toLocaleTimeString('ja-JP')+' ／ 最新5件・1分ごとに確認');
+      el('gmail-list').replaceChildren(...nodes);el('gmail-count').textContent='（'+(label.messagesUnread||0)+'件）';failures=0;status('更新：'+new Date().toLocaleTimeString('ja-JP')+' ／ 最新10件・1分ごとに確認');
     }catch(error){
       if(current!==session)return;
       if(error.status===401){clearSession();status('Google認証が切れました。「Gmailに接続」で再接続してください。');}
