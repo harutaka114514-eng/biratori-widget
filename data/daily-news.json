@@ -1,72 +1,72 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-03T23:51:31.971Z",
+  "generatedAt": "2026-10-04T00:23:25.190Z",
   "model": "gemini-3.8-flash",
   "method": "RSSの見出し・概要をGeminiが整理",
   "partialSources": false,
   "items": [
     {
-      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
-      "summary": "10月2日に日高町福満でクマが出没しました。",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
-      "source": "ｄメニューニュース",
-      "publishedAt": "2026-10-03T06:01:00.000Z",
-      "category": "日高地方"
-    },
-    {
       "title": "ヒグマと目が合い、息をのむ 北海道・日高山脈を撮り続けて40年 [北海道] - 朝日新聞",
-      "summary": "北海道の日高山脈を40年にわたり撮影し続けている写真に関する話題です。",
+      "summary": "日高山脈を40年にわたり撮影し続けている人物による、ヒグマとの遭遇などの記録が伝えられています。",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV2FGRzdjNFZsWElQd2Fodm1pWTB4V1dSdHhDLVA1b05LOTBMMjJ2d1lTNkx2WjBKajVBaU9xSjNZZ3VzM0VlbnhqcmQ3MWUzbVBHcWF0OTc0MVBuX3JZeHJweWs1VmdWT19JS29uallzUjB1SzhhT19PU1ZPUHBrNDRjS3VfaXd4bVpfS1hxTDFIR3M?oc=5",
       "source": "朝日新聞",
       "publishedAt": "2026-10-03T21:00:00.000Z",
       "category": "日高地方"
     },
     {
-      "title": "【北海道(胆振・日高地方)】10/4の天気予報 - FNNプライムオンライン",
-      "summary": "北海道の胆振・日高地方における10月4日の天気予報です。",
-      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBlbGJQakpyNkY5V01tM0g2bE9JQlc1WC1SLWtfNmViTEJzMDVhM283cUtrLUxzQmRGcGdYUXJldkJNUjYwd2pNSDMtT0VKQQ?oc=5",
-      "source": "FNNプライムオンライン",
-      "publishedAt": "2026-10-03T10:30:00.000Z",
-      "category": "日高地方"
-    },
-    {
       "title": "胆振・日高（１０月４日付）おくやみ - 北海道新聞デジタル",
-      "summary": "胆振・日高地方の10月4日付のおくやみ情報です。",
+      "summary": "北海道新聞デジタルによる、胆振・日高地方の10月4日付おくやみ情報です。",
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9NYTJJMzhVWTc1VzlBVVVWdk5naUZDR3VnckdYeFRqdEEtdk1LMEV0enpiVDlybWZSRXM4SXFZd0RPalZOX3dYZ3JmWVRNRlZpWl82dkpMa2NsZw?oc=5",
       "source": "北海道新聞デジタル",
       "publishedAt": "2026-10-03T11:30:00.000Z",
       "category": "日高地方"
     },
     {
+      "title": "【北海道(胆振・日高地方)】10/4の天気予報 - FNNプライムオンライン",
+      "summary": "胆振・日高地方における10月4日の天気予報が報じられています。",
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBlbGJQakpyNkY5V01tM0g2bE9JQlc1WC1SLWtfNmViTEJzMDVhM283cUtrLUxzQmRGcGdYUXJldkJNUjYwd2pNSDMtT0VKQQ?oc=5",
+      "source": "FNNプライムオンライン",
+      "publishedAt": "2026-10-03T10:30:00.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
+      "summary": "10月2日に日高町福満でクマが出没したことが報じられています。",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
+      "source": "ｄメニューニュース",
+      "publishedAt": "2026-10-03T06:01:00.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "「凧を揚げ、顔をあげて空を見る」梅谷先生の凧、母校の空へ 旧函館東高卒業生有志が凧揚げ会＜北海道函館市＞ - news.yahoo.co.jp",
+      "summary": "函館市にて、旧函館東高校の卒業生有志による凧揚げ会が開催されました。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE0xTDZMdXZObGFVcDUyOEFleG5pNTcwdUNQZXVBTl9QX3RJbkJjRjVmRXBOZHpUaXNkR3dVVV9oeUE3ekJGaTNDaXM1bEZGYzFLcDVwa3MyQlVDa3FJOFUzNER1eFZJeURwbHd2ZXlHMWI4Y0U4X0RZQmJLbzQyMUE?oc=5",
+      "source": "news.yahoo.co.jp",
+      "publishedAt": "2026-10-03T23:05:23.000Z",
+      "category": "北海道"
+    },
+    {
       "title": "1室あたり約26万円から 高級ホテル「ハイアット」 北海道らしさ詰め込み…札幌初上陸 北海道 - 日テレNEWS NNN",
-      "summary": "高級ホテル「ハイアット」が札幌に初上陸し、1室あたり約26万円から提供されます。",
+      "summary": "札幌に高級ホテル「ハイアット」が初進出しました。1室あたり約26万円からの設定となっています。",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQUmYwbVM5YmtYYnlvU250LUFuanpQU1AyX1J2aHN2ZnNHNVhKeGJTaEw3a01WcFl6OU50SUhqeTFhd2JIcFNqajJLd0M2dFdVUUg2amp5bkMwLXp6WWxQRUZ6TjRVM0luVW85S0RwNm1Lak9NclFWUG15Y2o5MXBtWm9lN3EtSnc?oc=5",
       "source": "日テレNEWS NNN",
       "publishedAt": "2026-10-03T23:00:00.000Z",
       "category": "北海道"
     },
     {
-      "title": "北海道 １８年連続１位 鳥取４２位、島根３８位、兵庫１２位 魅力度ランキング - nnn.co.jp",
-      "summary": "魅力度ランキングにおいて、北海道が18年連続で1位となりました。",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBPb0lzb3lzdWJuRXFPZElCdDNkUmM5UW1qUkszajBMQlVCbDVtT2RadFFqbS01X3lseXVrdm5wSUFleGctWEhyMDZabHZZQWZK?oc=5",
-      "source": "nnn.co.jp",
-      "publishedAt": "2026-10-03T20:00:00.000Z",
+      "title": "【プリンス北海道】プリンス北海道Vの札幌U-18、無敗のままリーグを終える 全日程が終了（高校サッカードットコム） - news.yahoo.co.jp",
+      "summary": "サッカーのプリンスリーグ北海道で、札幌U-18が無敗のまま優勝を飾り全日程を終了しました。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9pWUZoNklyRXlPRXZpZlluOHI5LUpsT1pWTVRhcEw4UEc2NUlkSDZ4ZWptUnhlendfNXRlOTAwdjJVbmhELTJGdjh1Sk11LTNZV0RmWW9CTGhmbmtSLVBjLTFpbU9sZjhpYnNpQnhHY2JpanNHRXNDOTdQRzZkSlU?oc=5",
+      "source": "news.yahoo.co.jp",
+      "publishedAt": "2026-10-03T21:36:32.000Z",
       "category": "北海道"
     },
     {
       "title": "北海道・十勝でメープルシロップ生産「海外に打って出たい」 - 日本経済新聞",
-      "summary": "北海道十勝でメープルシロップが生産され、海外展開を目指しています。",
+      "summary": "北海道十勝地方でメープルシロップが生産されており、海外進出を目指す取り組みが進められています。",
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFB4SHpkYmp6SldSdEFBdzdCWDc2TUIxTG91Y0plY1NuYzRFcjFEeU14RlE3LXRBR0J2ZHEyUDg5bE5EdzctSnVjQzhXZlZMcm1Uc0ZHaTYxT01aWW1raVprWkg0ZFpySTRnMGFlUQ?oc=5",
       "source": "日本経済新聞",
       "publishedAt": "2026-10-03T20:00:00.000Z",
-      "category": "北海道"
-    },
-    {
-      "title": "「凧を揚げ、顔をあげて空を見る」梅谷先生の凧、母校の空へ 旧函館東高卒業生有志が凧揚げ会＜北海道函館市＞ - Yahoo!ニュース",
-      "summary": "函館市で旧函館東高校の卒業生有志による凧揚げ会が開催されました。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE0xTDZMdXZObGFVcDUyOEFleG5pNTcwdUNQZXVBTl9QX3RJbkJjRjVmRXBOZHpUaXNkR3dVVV9oeUE3ekJGaTNDaXM1bEZGYzFLcDVwa3MyQlVDa3FJOFUzNER1eFZJeURwbHd2ZXlHMWI4Y0U4X0RZQmJLbzQyMUE?oc=5",
-      "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-03T23:05:23.000Z",
       "category": "北海道"
     }
   ]
