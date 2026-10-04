@@ -441,7 +441,7 @@ setRandomBackground();
 function restoreNewsCache() {
   for(const key of Object.keys(urls)) {
     const feeds = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
-    const records = feeds.map(url => feedRecords[url]).filter(record => record && Array.isArray(record.items));
+    const records = feeds.map(url => {const record=feedRecords[url];return record&&isDomingoFeed(url)?{...record,items:filterDomingoArticles(record.items||[])}:record;}).filter(record => record && Array.isArray(record.items));
     newsCache[key] = mergeWidgetNews(records.flatMap(record => record.items));
     if(records.length) newsStates[key] = {time:Math.min(...records.map(record => record.time)), failed:true, loading:true};
   }
@@ -473,8 +473,15 @@ function isDomingoFeed(url){
   try{const parsed=new URL(url);return parsed.hostname==='news.google.com' && parsed.searchParams.get('q')?.trim()==='site:domingo.ne.jp';}catch{return false;}
 }
 async function fetchWidgetFeed(url){
-  if(isDomingoFeed(url))return fetchWidgetJSON('./data/domingo-news.json?check='+Date.now());
+  if(isDomingoFeed(url)){
+    const data=await fetchWidgetJSON('./data/domingo-news.json?check='+Date.now());
+    if(Array.isArray(data.items))data.items=filterDomingoArticles(data.items);
+    return data;
+  }
   return fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
+}
+function filterDomingoArticles(items){
+  const now=Date.now();return items.filter(item=>/^https:\/\/domingo\.ne\.jp\/article\/\d+$/.test(item.link)&&Number.isFinite(Date.parse(item.pubDate))&&Date.parse(item.pubDate)>=now-14*86400000&&Date.parse(item.pubDate)<=now);
 }
 async function preloadAllNews() {
   if(newsLoading)return;
@@ -495,7 +502,7 @@ async function preloadAllNews() {
           return !(url.includes('valorant4jp.com') && c.includes('大会'));
         });
         const record={items:mergeWidgetNews(items),time:isDomingoFeed(url)&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
-      } catch(e) {failed=true;return feedRecords[url]||null;}
+      } catch(e) {failed=true;const saved=feedRecords[url];return saved&&isDomingoFeed(url)?{...saved,items:filterDomingoArticles(saved.items||[])}:saved||null;}
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
     newsCache[key]=mergeWidgetNews(available.flatMap(record=>record.items));
