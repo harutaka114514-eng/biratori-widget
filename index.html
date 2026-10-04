@@ -146,6 +146,15 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #gmail-list a {display:block;color:#2563eb;font-weight:bold;}
 #gmail-list p {margin:4px 0;color:#555;}
 #gmail-client-id {width:100%;box-sizing:border-box;padding:7px;}
+/* ニュース欄の下端を左側のカレンダーに揃え、記事だけをスクロール */
+.main-layout { align-items: start; }
+.left-content, #news-widget { min-width: 0; }
+#news-widget { min-height: 0; overflow: hidden; }
+#news-widget > .news-header, #news-widget > #news-status { flex-shrink: 0; }
+#news-widget > #news { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-gutter: stable; }
+#news-widget > #news > li { flex-shrink: 0; }
+#news-widget > #meshi-panel, #news-widget > #gmail-panel { min-height: 0; overflow-y: auto; }
+@media(max-width:900px){ #news-widget { max-height: 75vh; } }
 </style>
 </head>
 <body>
@@ -247,7 +256,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       </div>
     </div>
 
-    <div class="widget">
+    <div class="widget" id="news-widget">
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="nhk" class="active">NHK</button>
@@ -1225,6 +1234,24 @@ setInterval(loadDailyDigest,30*60*1000);
   el('gmail-disconnect').onclick=()=>{const access=token;clearSession();status('接続を解除しました。');if(access&&window.google?.accounts?.oauth2)google.accounts.oauth2.revoke(access,()=>{});};
   document.addEventListener('visibilitychange',()=>{clearTimeout(timer);if(!document.hidden)refresh();});
   if(clientId)loadIdentity().catch(error=>status(error.message));
+})();
+</script>
+<script>
+// カレンダーの月変更、文字サイズ、画面幅の変更にも高さを追従します。
+(function setupNewsWidgetHeight(){
+  const left=document.querySelector('.left-content');
+  const news=document.getElementById('news-widget');
+  if(!left||!news)return;
+  function alignNewsHeight(){
+    if(window.matchMedia('(max-width:900px)').matches){
+      news.style.height='';
+    }else{
+      news.style.height=left.getBoundingClientRect().height+'px';
+    }
+  }
+  if(typeof ResizeObserver!=='undefined')new ResizeObserver(alignNewsHeight).observe(left);
+  window.addEventListener('resize',alignNewsHeight);
+  alignNewsHeight();
 })();
 </script>
 </body>
