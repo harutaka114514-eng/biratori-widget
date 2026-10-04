@@ -502,12 +502,27 @@ function widgetNewsLinkHTML(item){
     ? '<small style="display:block;font-size:11px;font-weight:400;opacity:.7">日高観光ナビ・公開日 '+date.toLocaleDateString('ja-JP',{timeZone:'Asia/Tokyo'})+'</small>' : '';
   return '<a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer" onclick="markAsRead(this.href, this)">'+escapeWidgetHTML(item.title)+label+'</a>';
 }
+// 計測用パラメーター・末尾スラッシュの違いを同じ記事として扱います。
+function widgetNewsURLKey(link){
+  const url=new URL(link);
+  url.hash='';
+  for(const key of [...url.searchParams.keys()]){
+    if(/^utm_/i.test(key)||/^(fbclid|gclid|dclid|msclkid|mc_cid|mc_eid)$/i.test(key))url.searchParams.delete(key);
+  }
+  url.searchParams.sort();
+  url.pathname=url.pathname.replace(/\/+$/,'')||'/';
+  return url.href;
+}
+function widgetNewsTitleKey(title){
+  return title.normalize('NFKC').replace(/\s+/g,'').toLocaleLowerCase('ja-JP');
+}
 function mergeWidgetNews(items) {
   const links=new Set(), titles=new Set();
   return items.map(cleanWidgetNewsItem).filter(item => {
     if(!item || typeof item.title!=='string' || typeof item.link!=='string' || !/^https?:\/\//i.test(item.link)) return false;
-    if(links.has(item.link)||titles.has(item.title)) return false;
-    links.add(item.link);titles.add(item.title);return true;
+    const linkKey=widgetNewsURLKey(item.link),titleKey=widgetNewsTitleKey(item.title);
+    if(links.has(linkKey)||titles.has(titleKey)) return false;
+    links.add(linkKey);titles.add(titleKey);return true;
   }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
 }
 function renderNewsStatus(type) {
@@ -584,9 +599,9 @@ function renderNews(type) {
   const items = newsCache[type] || [];
   if (items.length === 0) { ul.innerHTML = newsStates[type] ? "<li>表示できる記事がありません。</li>" : "<li>ロード中...</li>"; return; }
   
-  const count = (type === 'sakei' || type === 'keizai') ? items.length : (type === 'hobby' ? 13 : 15);
+
   
-  ul.innerHTML = items.slice(0, count).map(i => {
+  ul.innerHTML = items.map(i => {
     const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
     return `<li class="${isRead}">
       <span class="unread-dot"></span>
@@ -1039,8 +1054,8 @@ function renderNewsFullscreen(type) {
     ul.style.display = 'flex';
     meshiEl.style.display = 'none';
     const items = newsCache[type] || [];
-    const count = (type === 'sakei' || type === 'keizai') ? items.length : (type === 'hobby' ? 13 : 15);
-    ul.innerHTML = items.slice(0, count).map(i => {
+  
+    ul.innerHTML = items.map(i => {
       const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
       return `<li class="${isRead}">
         <span class="unread-dot"></span>
