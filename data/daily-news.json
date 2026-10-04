@@ -1,40 +1,40 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-04T14:19:14.856Z",
+  "generatedAt": "2026-10-04T14:36:50.554Z",
   "model": "gemini-3.8-flash",
   "method": "RSSの見出し・概要をGeminiが整理",
   "partialSources": false,
   "items": [
     {
-      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
-      "summary": "北海道日高町福満で10月2日にクマが出没しました。",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
-      "source": "ｄメニューニュース",
-      "publishedAt": "2026-10-03T06:01:00.000Z",
-      "category": "日高地方"
-    },
-    {
-      "title": "ヒグマと目が合い、息をのむ 北海道・日高山脈を撮り続けて40年 [北海道] - 朝日新聞",
-      "summary": "北海道の日高山脈を40年にわたり撮り続けている写真に関する記事です。",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV2FGRzdjNFZsWElQd2Fodm1pWTB4V1dSdHhDLVA1b05LOTBMMjJ2d1lTNkx2WjBKajVBaU9xSjNZZ3VzM0VlbnhqcmQ3MWUzbVBHcWF0OTc0MVBuX3JZeHJweWs1VmdWT19JS29uallzUjB1SzhhT19PU1ZPUHBrNDRjS3VfaXd4bVpfS1hxTDFIR3M?oc=5",
-      "source": "朝日新聞",
-      "publishedAt": "2026-10-03T21:00:00.000Z",
+      "title": "胆振・日高（１０月５日付）おくやみ - 北海道新聞デジタル",
+      "summary": "10月5日付の胆振・日高地方のおくやみ情報です。",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE43enNHTklLelBEdjVVUEtmVFNzRXNIeEczcW5tdnVRRExQVDh6aHpzZ00xbXR1Q2ZzSC14b0pVbmlRbUlRYzBIYzV3UjJNOTJJbUc0V0NwQ3RvZw?oc=5",
+      "source": "北海道新聞デジタル",
+      "publishedAt": "2026-10-04T11:30:00.000Z",
       "category": "日高地方"
     },
     {
       "title": "【北海道(胆振・日高地方)】10/5の天気予報 - FNNプライムオンライン",
-      "summary": "北海道の胆振・日高地方における10月5日の天気予報です。",
+      "summary": "胆振・日高地方における10月5日の天気予報です。",
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1hRWY0MldReEhlZ2xkcE5tMEljdGdIdWZyeUwwRExxUVYxTGZPSThCVWJwZ2RCbjJJYkx3NUUxRGRFWkNITWVMSURGV290Zw?oc=5",
       "source": "FNNプライムオンライン",
       "publishedAt": "2026-10-04T10:30:00.000Z",
       "category": "日高地方"
     },
     {
-      "title": "胆振・日高（１０月５日付）おくやみ - 北海道新聞デジタル",
-      "summary": "胆振・日高地方の10月5日付のおくやみ情報です。",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE43enNHTklLelBEdjVVUEtmVFNzRXNIeEczcW5tdnVRRExQVDh6aHpzZ00xbXR1Q2ZzSC14b0pVbmlRbUlRYzBIYzV3UjJNOTJJbUc0V0NwQ3RvZw?oc=5",
-      "source": "北海道新聞デジタル",
-      "publishedAt": "2026-10-04T11:30:00.000Z",
+      "title": "ヒグマと目が合い、息をのむ 北海道・日高山脈を撮り続けて40年 [北海道] - 朝日新聞",
+      "summary": "北海道の日高山脈を40年にわたって撮影し続けている取り組みが紹介されています。",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV2FGRzdjNFZsWElQd2Fodm1pWTB4V1dSdHhDLVA1b05LOTBMMjJ2d1lTNkx2WjBKajVBaU9xSjNZZ3VzM0VlbnhqcmQ3MWUzbVBHcWF0OTc0MVBuX3JZeHJweWs1VmdWT19JS29uallzUjB1SzhhT19PU1ZPUHBrNDRjS3VfaXd4bVpfS1hxTDFIR3M?oc=5",
+      "source": "朝日新聞",
+      "publishedAt": "2026-10-03T21:00:00.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
+      "summary": "10月2日、北海道日高町福満でクマが出没しました。",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
+      "source": "ｄメニューニュース",
+      "publishedAt": "2026-10-03T06:01:00.000Z",
       "category": "日高地方"
     },
     {
@@ -46,19 +46,19 @@
       "category": "北海道"
     },
     {
-      "title": "北海道の立憲出身議員ら、道内で独自に「地域政党立ち上げへ準備」（朝日新聞） - Yahoo!ニュース",
-      "summary": "北海道内の立憲民主党出身議員らが、道内で独自に地域政党を立ち上げる準備を進めています。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5ITXdfMGdwRmFBd1NkcjBlVXlTVzRlblY3eWV2RU9GdmN3dG1YTTY2RmNQb3A3ekdMdVo4aW5xQ0R1c2xjU2JWY2xHdGJXaVZWT1VyTmhRUVhCVUI0TnZXRUVKb0NESU1CYWM5UlVjejN2UERFcVo4b1pwTUZBcUE?oc=5",
-      "source": "Yahoo!ニュース",
+      "title": "北海道合唱コンクール、4団体が全国大会へ [北海道] - 朝日新聞",
+      "summary": "北海道合唱コンクールが開催され、4団体が全国大会への進出を決めました。",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1lLTNkcEV0WXI1alVoZGVucG1kbmtxQlYzWlRjWGVZSjZ2OFpQRUQ3Q3hMTW05OXctNFVQQzA5ajZEWjd0by05enRDdkl5cC1yakZsNDV2ZmZWSk1tY1Y5ZTN0eS1ROHM?oc=5",
+      "source": "朝日新聞",
       "publishedAt": "2026-10-04T13:00:00.000Z",
       "category": "北海道"
     },
     {
-      "title": "【レバンガ北海道】ホームで仙台に勝利し連勝！富永チーム最多22得点…クラーク＆ハーラーがダブルダブル達成 - Yahoo!ニュース",
-      "summary": "プロバスケットボールのレバンガ北海道がホームで仙台に勝利し、連勝を飾りました。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE12dEZDOUpvN3ZCSE5WMkpDbW9oQ0k4N0EtS3RSVjJtaDZhQUZ1UVQxUDZfdzg5M25mTUl1VXNTVk1HV2xzQUxMX3FHQ2RqaVRqa3hCNDVvZDcyWVVjUE1rYnRpZnVLSHlJYTZLWS1sbWlGbV9wMHZpUWZmd3ZzeE0?oc=5",
+      "title": "北海道の立憲出身議員ら、道内で独自に「地域政党立ち上げへ準備」（朝日新聞） - Yahoo!ニュース",
+      "summary": "北海道内の立憲民主党出身の議員らが、道内で独自に地域政党を立ち上げる準備を進めています。",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5ITXdfMGdwRmFBd1NkcjBlVXlTVzRlblY3eWV2RU9GdmN3dG1YTTY2RmNQb3A3ekdMdVo4aW5xQ0R1c2xjU2JWY2xHdGJXaVZWT1VyTmhRUVhCVUI0TnZXRUVKb0NESU1CYWM5UlVjejN2UERFcVo4b1pwTUZBcUE?oc=5",
       "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T12:39:01.000Z",
+      "publishedAt": "2026-10-04T13:00:00.000Z",
       "category": "北海道"
     },
     {
