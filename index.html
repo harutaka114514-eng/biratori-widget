@@ -132,6 +132,14 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #widget-settings .help {font-size:12px;color:#666;line-height:1.6;}
 #widget-settings .weekday {display:inline-flex;align-items:center;gap:4px;margin-right:8px;}
 .cal-garbage {font-size:9px;color:#92400e;background:#fef3c7;border-radius:4px;padding:1px 3px;margin-top:2px;}
+#gmail-panel {margin-top:16px;padding:14px;border-top:1px solid #ddd;}
+#gmail-panel h2 {font-size:15px;margin:0 0 8px;}
+#gmail-panel button {border:1px solid #ccc;background:white;border-radius:6px;padding:5px 9px;cursor:pointer;margin:3px;}
+#gmail-list {list-style:none;padding:0;margin:8px 0;}
+#gmail-list li {padding:8px 0;border-bottom:1px solid #eee;overflow-wrap:anywhere;font-size:12px;}
+#gmail-list a {display:block;color:#2563eb;font-weight:bold;}
+#gmail-list p {margin:4px 0;color:#555;}
+#gmail-client-id {width:100%;box-sizing:border-box;padding:7px;}
 </style>
 </head>
 <body>
@@ -245,6 +253,21 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
       <ul id="news" class="news-list"></ul>
       <div id="meshi-panel" style="display:none;"></div>
+      <section id="gmail-panel" aria-labelledby="gmail-title">
+        <h2 id="gmail-title">📩 未読メール <span id="gmail-count"></span></h2>
+        <button id="gmail-connect" type="button">Gmailに接続</button>
+        <button id="gmail-refresh" type="button" hidden>更新</button>
+        <button id="gmail-disconnect" type="button" hidden>接続を解除</button>
+        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer" style="font-size:12px">Gmailを開く</a>
+        <div id="gmail-status" class="widget-status" role="status">未接続です。接続後、表示中は1分ごとに確認します。</div>
+        <ul id="gmail-list"></ul>
+        <details id="gmail-setup"><summary style="font-size:12px;cursor:pointer">Gmailの接続設定</summary>
+          <label for="gmail-client-id" style="font-size:12px;display:block;margin-top:8px">OAuthクライアントID</label>
+          <input id="gmail-client-id" type="text" placeholder="…apps.googleusercontent.com" autocomplete="off" spellcheck="false">
+          <button id="gmail-save" type="button">接続設定を保存</button>
+          <p style="font-size:11px;line-height:1.6">Google CloudでGmail APIを有効にし、ウェブアプリ用のOAuthクライアントを作成してください。承認済みJavaScript生成元：<code>https://harutaka114514-eng.github.io</code>。テストユーザーには自分のGmailを追加します。APIキーやクライアントシークレットは入力しません。</p>
+        </details>
+      </section>
     </div>
   </div>
 </div>
@@ -1019,6 +1042,78 @@ document.getElementById('daily-fullscreen-status').style.display='none';
 loadDailyDigest();
 setInterval(loadDailyDigest,30*60*1000);
 
+</script>
+<script>
+(() => {
+  const el=id=>document.getElementById(id),status=text=>{el('gmail-status').textContent=text;};
+  const storageKey='biratori_gmail_client_id_v1';
+  let clientId='',token='',expires=0,session=0,busy=false,timer=null,failures=0,cache=new Map(),identityLoad=null;
+  try{clientId=localStorage.getItem(storageKey)||'';}catch{}
+  el('gmail-client-id').value=clientId;
+  if(!clientId){el('gmail-setup').open=true;status('接続設定が必要です。OAuthクライアントIDを設定してください。');}
+  function controls(){const connected=!!token;el('gmail-connect').textContent=connected?'Google認証を更新':'Gmailに接続';el('gmail-refresh').hidden=!connected;el('gmail-disconnect').hidden=!connected;}
+  function clearSession(){session++;token='';expires=0;failures=0;cache.clear();clearTimeout(timer);el('gmail-list').replaceChildren();el('gmail-count').textContent='';controls();}
+  function schedule(){clearTimeout(timer);if(token&&!document.hidden)timer=setTimeout(refresh,Math.min(60000*2**failures,900000));}
+  function loadIdentity(){
+    if(window.google?.accounts?.oauth2)return Promise.resolve();
+    if(identityLoad)return identityLoad;
+    identityLoad=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://accounts.google.com/gsi/client';script.async=true;script.onload=resolve;script.onerror=()=>{identityLoad=null;script.remove();reject(Error('Google接続機能を読み込めませんでした。もう一度接続してください。'));};document.head.append(script);});
+    return identityLoad;
+  }
+  async function request(path,access){
+    const response=await fetch('https://gmail.googleapis.com/gmail/v1/users/me/'+path,{headers:{Authorization:'Bearer '+access},cache:'no-store',signal:AbortSignal.timeout(15000)});
+    if(!response.ok){const error=Error('HTTP '+response.status);error.status=response.status;throw error;}
+    return response.json();
+  }
+  async function refresh(){
+    if(busy||!token||document.hidden)return;
+    if(Date.now()>=expires){clearSession();status('認証の期限が切れました。「Gmailに接続」で再接続してください。');return;}
+    busy=true;const current=session,access=token;el('gmail-refresh').disabled=true;
+    try{
+      const [list,label]=await Promise.all([request('messages?maxResults=5&q=is%3Aunread%20in%3Ainbox',access),request('labels/INBOX',access)]);
+      const messages=await Promise.all((list.messages||[]).map(async ({id})=>{
+        if(cache.has(id))return cache.get(id);
+        const message=await request('messages/'+encodeURIComponent(id)+'?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date',access);
+        return message;
+      }));
+      if(current!==session)return;
+      cache=new Map(messages.map(message=>[message.id,message]));
+      const nodes=messages.map(message=>{
+        const header=name=>message.payload?.headers?.find(h=>h.name.toLowerCase()===name.toLowerCase())?.value||'';
+        const li=document.createElement('li'),a=document.createElement('a'),from=document.createElement('div'),preview=document.createElement('p');
+        a.href='https://mail.google.com/mail/u/0/#search/'+encodeURIComponent(header('Subject')||header('From'));a.target='_blank';a.rel='noopener noreferrer';a.textContent=header('Subject')||'（件名なし）';
+        from.textContent=header('From');preview.textContent=message.snippet||'';li.append(from,a,preview);return li;
+      });
+      if(!nodes.length){const li=document.createElement('li');li.textContent='受信トレイに未読メールはありません。';nodes.push(li);}
+      el('gmail-list').replaceChildren(...nodes);el('gmail-count').textContent='（'+(label.messagesUnread||0)+'件）';failures=0;status('更新：'+new Date().toLocaleTimeString('ja-JP')+' ／ 最新5件・1分ごとに確認');
+    }catch(error){
+      if(current!==session)return;
+      if(error.status===401){clearSession();status('Google認証が切れました。「Gmailに接続」で再接続してください。');}
+      else{failures++;status(error.status===403?'Gmailを取得できません。Gmail APIの有効化と読み取り許可を確認してください。':'メールを取得できませんでした。表示中のメールを保持し、間隔を延ばして再確認します。');}
+    }finally{busy=false;el('gmail-refresh').disabled=false;schedule();}
+  }
+  el('gmail-save').onclick=()=>{
+    const value=el('gmail-client-id').value.trim();
+    if(!/^[\w.-]+\.apps\.googleusercontent\.com$/.test(value)){status('OAuthクライアントIDを入力してください。APIキーでは接続できません。');return;}
+    clearSession();clientId=value;try{localStorage.setItem(storageKey,value);}catch{}status('設定を保存しました。「Gmailに接続」を押してください。');el('gmail-setup').open=false;loadIdentity().catch(error=>status(error.message));
+  };
+  el('gmail-connect').onclick=()=>{
+    if(!clientId){el('gmail-setup').open=true;el('gmail-client-id').focus();status('先にOAuthクライアントIDを設定してください。');return;}
+    if(!window.google?.accounts?.oauth2){status('Google接続機能を準備しています。読み込み後、もう一度接続を押してください。');loadIdentity().then(()=>status('準備できました。「Gmailに接続」を押してください。')).catch(error=>status(error.message));return;}
+    const current=session;
+    google.accounts.oauth2.initTokenClient({client_id:clientId,scope:'https://www.googleapis.com/auth/gmail.readonly',include_granted_scopes:false,
+      callback:response=>{
+        if(current!==session)return;
+        if(response.error||!response.access_token){status('接続を完了できませんでした。Googleの許可画面と設定を確認してください。');return;}
+        if(!google.accounts.oauth2.hasGrantedAllScopes(response,'https://www.googleapis.com/auth/gmail.readonly')){status('メールの読み取り許可が必要です。');return;}
+        clearSession();token=response.access_token;expires=Date.now()+Math.max(0,Number(response.expires_in||3600)-30)*1000;controls();refresh();
+      },error_callback:()=>status('Googleの接続画面を完了できませんでした。もう一度接続してください。')}).requestAccessToken({prompt:token?'':'consent'});
+  };
+  el('gmail-refresh').onclick=()=>{failures=0;refresh();};
+  el('gmail-disconnect').onclick=()=>{const access=token;clearSession();status('接続を解除しました。');if(access&&window.google?.accounts?.oauth2)google.accounts.oauth2.revoke(access,()=>{});};
+  document.addEventListener('visibilitychange',()=>{clearTimeout(timer);if(!document.hidden)refresh();});
+  if(clientId)loadIdentity().catch(error=>status(error.message));
+})();
 </script>
 </body>
 </html>
