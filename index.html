@@ -132,7 +132,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #widget-settings .help {font-size:12px;color:#666;line-height:1.6;}
 #widget-settings .weekday {display:inline-flex;align-items:center;gap:4px;margin-right:8px;}
 .cal-garbage {font-size:9px;color:#92400e;background:#fef3c7;border-radius:4px;padding:1px 3px;margin-top:2px;}
-#gmail-panel {margin-top:16px;padding:14px;border-top:1px solid #ddd;}
+#gmail-panel {margin-top:8px;padding:0;}
 #gmail-panel h2 {font-size:15px;margin:0 0 8px;}
 #gmail-panel button {border:1px solid #ccc;background:white;border-radius:6px;padding:5px 9px;cursor:pointer;margin:3px;}
 #gmail-list {list-style:none;padding:0;margin:8px 0;}
@@ -241,11 +241,12 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="nhk" class="active">NHK</button>
-          <button data-type="keizai">経済</button>
+          <button data-type="keizai">旅行</button>
           <button data-type="sakei">地域/食</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
           <button data-type="daily">🤖 今日のまとめ</button>
+          <button data-type="gmail">📩 Gmail</button>
           <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
@@ -253,7 +254,8 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
       <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
       <ul id="news" class="news-list"></ul>
       <div id="meshi-panel" style="display:none;"></div>
-      <section id="gmail-panel" aria-labelledby="gmail-title">
+      <div id="gmail-panel-home"></div>
+      <section id="gmail-panel" aria-labelledby="gmail-title" style="display:none">
         <h2 id="gmail-title">📩 未読メール <span id="gmail-count"></span></h2>
         <button id="gmail-connect" type="button">Gmailに接続</button>
         <button id="gmail-refresh" type="button" hidden>更新</button>
@@ -277,11 +279,12 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
     <div id="news-fullscreen-header">
       <div id="news-fullscreen-tabs">
         <button data-type="nhk" class="active">NHK</button>
-        <button data-type="keizai">経済</button>
+        <button data-type="keizai">旅行</button>
         <button data-type="sakei">地域/食</button>
         <button data-type="nl">道NL</button>
         <button data-type="hobby">趣味</button>
           <button data-type="daily">🤖 今日のまとめ</button>
+          <button data-type="gmail">📩 Gmail</button>
         <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
       </div>
       <button id="news-fullscreen-close" onclick="closeNewsFullscreen()">✕ 閉じる</button>
@@ -336,7 +339,7 @@ function widgetVideoId(value) {
   }catch(e){return null;}
 }
 function openWidgetSettings() {
-  const esc=escapeWidgetHTML,g=widgetSettings.garbage||{},names={nhk:'NHK',keizai:'経済',sakei:'地域/食',nl:'道NL',hobby:'趣味'};
+  const esc=escapeWidgetHTML,g=widgetSettings.garbage||{},names={nhk:'NHK',keizai:'旅行',sakei:'地域/食',nl:'道NL',hobby:'趣味'};
   const input=(label,id,value)=>`<label for="${id}">${esc(label)}</label><input id="${id}" value="${esc(value)}">`;
   let fields='<fieldset><legend>動画</legend><p class="help">YouTubeの動画URLまたは動画IDを入力します。</p>';
   fields+=input('HTB','setting-video-1',widgetSettings.videos?.['btn-v1']||'tvgbZZYS4Nk');
@@ -396,7 +399,7 @@ function saveWidgetSettings(event) {
 
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-  keizai: "https://diamond.jp/list/feed/rss/dol", 
+  keizai: "https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf", 
   sakei: [
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja",
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja",
@@ -420,6 +423,9 @@ const urls = {
 };
 
 const defaultNewsUrls = JSON.parse(JSON.stringify(urls));
+if(widgetSettings.news?.keizai?.length===1 && widgetSettings.news.keizai[0]==='https://diamond.jp/list/feed/rss/dol'){
+  widgetSettings.news.keizai=[urls.keizai];writeWidgetStorage('biratori_settings_v1',widgetSettings);
+}
 if (widgetSettings.news) Object.keys(urls).forEach(key => { if(Array.isArray(widgetSettings.news[key])) urls[key] = widgetSettings.news[key]; });
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
 const newsStates = {};
@@ -450,6 +456,7 @@ function mergeWidgetNews(items) {
   }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
 }
 function renderNewsStatus(type) {
+  if(type==='gmail'){document.getElementById('news-status').textContent='';return;}
   if(type==='daily'){renderDailyDigest();return;}
   const el=document.getElementById('news-status');
   if(type==='meshi'){el.textContent='';return;}
@@ -502,6 +509,7 @@ async function preloadAllNews() {
 }
 
 function renderNews(type) {
+  if(type==='gmail'){renderNewsStatus(type);return;}
   if(type==='daily'){renderDailyDigest();return;}
   renderNewsStatus(type);
   const ul = document.getElementById("news");
@@ -891,6 +899,13 @@ origTabClick.forEach(b => {
     origTabClick.forEach(x => x.classList.remove('active'));
     b.classList.add('active');
     const type = b.dataset.type;
+    const gmailPanel=document.getElementById('gmail-panel');
+    gmailPanel.style.display=type==='gmail'?'block':'none';
+    if(type==='gmail'){
+      document.getElementById('news').style.display='none';
+      document.getElementById('meshi-panel').style.display='none';
+      renderNewsStatus(type);return;
+    }
     if(type === 'meshi'){
       document.getElementById('news').style.display = 'none';
       document.getElementById('meshi-panel').style.display = 'block';
@@ -911,6 +926,14 @@ function renderNewsFullscreen(type) {
   const meshiEl = document.getElementById('news-fullscreen-meshi');
   const dailyStatus=document.getElementById('daily-fullscreen-status');
   if(dailyStatus)dailyStatus.style.display='none';
+  const gmailPanel=document.getElementById('gmail-panel');
+  if(type==='gmail'){
+    document.getElementById('news-fullscreen-inner').append(gmailPanel);
+    gmailPanel.style.display='block';gmailPanel.style.overflowY='auto';
+    ul.style.display='none';meshiEl.style.display='none';return;
+  }
+  document.getElementById('gmail-panel-home').after(gmailPanel);
+  gmailPanel.style.display=document.querySelector('.news-tabs button.active')?.dataset.type==='gmail'?'block':'none';
   if(type==='daily'){ul.style.display='flex';meshiEl.style.display='none';renderDailyDigest(true);return;}
   if (type === 'meshi') {
     ul.style.display = 'none';
@@ -966,6 +989,9 @@ function openNewsFullscreen() {
 }
 
 function closeNewsFullscreen() {
+  const gmailPanel=document.getElementById('gmail-panel');
+  document.getElementById('gmail-panel-home').after(gmailPanel);
+  gmailPanel.style.display=document.querySelector('.news-tabs button.active')?.dataset.type==='gmail'?'block':'none';
   document.getElementById('news-fullscreen-overlay').classList.remove('active');
   document.body.style.overflow = '';
 }
