@@ -31,6 +31,12 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .info-item .content { font-size: 15px; font-weight: 700; color: #222; line-height: 1.3; }
 
 .weekly-weather { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+.weather-switch {display:flex;gap:6px;margin-top:10px;}
+.weather-switch button {padding:5px 12px;border:0;border-radius:999px;background:#e5e7eb;color:#555;font-size:12px;cursor:pointer;}
+.weather-switch button.active {background:#2563eb;color:#fff;font-weight:bold;}
+.weekly-weather.hourly-weather {grid-template-columns:repeat(8,minmax(0,1fr));}
+.weather-rain {color:#2563eb;margin-top:3px;}
+@media(max-width:600px){.weekly-weather.hourly-weather {grid-template-columns:repeat(4,minmax(0,1fr));row-gap:12px;}}
 .weather-day { text-align: center; font-size: 10px; }
 .temp-max { color: #ef4444; font-weight: bold; }
 .temp-min { color: #3b82f6; font-weight: bold; }
@@ -172,7 +178,11 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
             <div id="weather" style="font-size:20px; font-weight:700; cursor:pointer;" onclick="window.open('https://tenki.jp/forecast/1/4/2200/1602/10days.html', '_blank')">--℃</div>
         </div>
       </div>
-      <div id="weekly-weather" class="weekly-weather"></div>
+      <div class="weather-switch" role="group" aria-label="天気の表示切り替え">
+        <button type="button" id="weather-day-btn" class="active" aria-pressed="true" onclick="switchWeatherView('day')">一日の天気</button>
+        <button type="button" id="weather-week-btn" aria-pressed="false" onclick="switchWeatherView('week')">一週間の天気</button>
+      </div>
+      <div id="weekly-weather" class="weekly-weather hourly-weather" aria-live="polite"></div>
       <div id="weather-status" class="widget-status" role="status"></div>
     </div>
     <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r8biratori.pdf" target="_blank" class="garbage-button">
@@ -300,6 +310,8 @@ function readWidgetStorage(key,fallback) {
 }
 function writeWidgetStorage(key,value) {try{localStorage.setItem(key,JSON.stringify(value));return true;}catch(e){return false;}}
 const widgetSettings=readWidgetStorage('biratori_settings_v1',{});
+let weatherView='day';
+let displayedWeather=null;
 let weatherRecord=readWidgetStorage('biratori_weather_cache_v1',null);
 const feedRecords=readWidgetStorage('biratori_news_cache_v1',{});
 function escapeWidgetHTML(value) {return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -542,7 +554,7 @@ function markAsRead(link, element) {
 
 async function loadWeather() {
   try {
-    const d = await fetchWidgetJSON("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo");
+    const d = await fetchWidgetJSON("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&hourly=temperature_2m,weathercode,precipitation_probability&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo");
     if(!validWeather(d)) throw Error('Invalid weather');
     renderWeatherData(d);
     const record = {data:d, time:Date.now()};
@@ -554,9 +566,36 @@ async function loadWeather() {
     document.getElementById('weather-status').textContent = weatherRecord ? '取得できませんでした。前回の天気を表示（'+formatWidgetTime(weatherRecord.time)+'）' : '天気を取得できませんでした。再取得してください。';
   }
 }
+function switchWeatherView(view){
+    weatherView=view==='week'?'week':'day';
+    ['day','week'].forEach(mode=>{
+      const button=document.getElementById('weather-'+mode+'-btn');
+      button.classList.toggle('active',weatherView===mode);
+      button.setAttribute('aria-pressed',String(weatherView===mode));
+    });
+    if(displayedWeather)renderWeatherData(displayedWeather);
+}
 function renderWeatherData(d) {
+    displayedWeather=d;
     const icons = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",61:"🌧️",71:"❄️",95:"⛈️"};
     document.getElementById("weather").textContent = `${icons[d.current_weather.weathercode]||"☁️"} ${Math.round(d.current_weather.temperature)}℃`;
+    const grid=document.getElementById("weekly-weather");
+    grid.classList.toggle('hourly-weather',weatherView==='day');
+    if(weatherView==='day'){
+      const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+      const h=d.hourly;
+      if(!h || !['time','temperature_2m','weathercode','precipitation_probability'].every(key=>Array.isArray(h[key]))){
+        grid.innerHTML='<div style="grid-column:1/-1;font-size:12px;color:#666">一日の天気を取得中です。一週間の天気は切り替えて確認できます。</div>';
+        return;
+      }
+      const indices=h.time.map((time,i)=>({time,i})).filter(({time})=>typeof time==='string' && time.startsWith(today+'T') && Number(time.slice(11,13))%3===0);
+      grid.innerHTML=indices.map(({time,i})=>{
+        const temp=Number.isFinite(h.temperature_2m[i])?Math.round(h.temperature_2m[i])+'℃':'--℃';
+        const rain=Number.isFinite(h.precipitation_probability[i])?h.precipitation_probability[i]+'%':'--%';
+        return `<div class="weather-day"><div>${Number(time.slice(11,13))}時</div><div style="font-size:16px;">${icons[h.weathercode[i]]||"☁️"}</div><div style="font-weight:bold">${temp}</div><div class="weather-rain" title="降水確率">☔ ${rain}</div></div>`;
+      }).join('') || '<div style="grid-column:1/-1;font-size:12px;color:#666">本日の時間別予報がありません。一週間の天気をご確認ください。</div>';
+      return;
+    }
     let wHtml = "";
     for(let i=0; i<7; i++){
         const dt = new Date(d.daily.time[i]);
