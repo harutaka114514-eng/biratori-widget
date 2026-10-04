@@ -411,7 +411,9 @@ function saveWidgetSettings(event) {
 
 const urls = { 
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
-  keizai: "https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf", 
+  keizai: ["https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf",
+    "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja",
+    "https://hokkaido-hidaka-kankonavi.com/feed/"], 
   sakei: [
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja",
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja",
@@ -420,8 +422,6 @@ const urls = {
     "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
     "https://biratori-shokokai.com/feed",
-    "https://hokkaido-hidaka-kankonavi.com/feed/",
-    "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja",
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
   nl: ["https://hokkaido-nl.jp/index.xml",
@@ -437,13 +437,21 @@ const urls = {
 
 const defaultNewsUrls = JSON.parse(JSON.stringify(urls));
 if(widgetSettings.news?.keizai?.length===1 && widgetSettings.news.keizai[0]==='https://diamond.jp/list/feed/rss/dol'){
-  widgetSettings.news.keizai=[urls.keizai];writeWidgetStorage('biratori_settings_v1',widgetSettings);
+  widgetSettings.news.keizai=[...urls.keizai];writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
 if (widgetSettings.news) Object.keys(urls).forEach(key => { if(Array.isArray(widgetSettings.news[key])) urls[key] = widgetSettings.news[key]; });
-// 既存の取得元設定を維持して日高観光ナビを追加します。
-const hidakaFeedURL='https://hokkaido-hidaka-kankonavi.com/feed/';
-if(Array.isArray(widgetSettings.news?.sakei) && !widgetSettings.news.sakei.includes(hidakaFeedURL)){
-  widgetSettings.news.sakei.push(hidakaFeedURL);
+// 保存済み設定でもDomingoと日高観光ナビを「旅行」へ移動します。
+const travelFeedURLs=[
+  'https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja',
+  'https://hokkaido-hidaka-kankonavi.com/feed/'
+];
+if(widgetSettings.news){
+  const travel=Array.isArray(urls.keizai)?[...urls.keizai]:[urls.keizai];
+  travelFeedURLs.forEach(url=>{if(!travel.includes(url))travel.push(url);});
+  urls.keizai=travel;
+  urls.sakei=(Array.isArray(urls.sakei)?urls.sakei:[urls.sakei]).filter(url=>!travelFeedURLs.includes(url));
+  widgetSettings.news.keizai=[...urls.keizai];
+  widgetSettings.news.sakei=[...urls.sakei];
   writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
@@ -512,14 +520,20 @@ function isDomingoFeed(url){
 }
 async function fetchWidgetFeed(url){
   if(isDomingoFeed(url)){
-    const data=await fetchWidgetJSON('./data/domingo-news.json?check='+Date.now());
+    let data;
+    try{
+      data=await fetchWidgetJSON('./data/domingo-news.json?check='+Date.now());
+      if(data.status!=='ok'||!Array.isArray(data.items))throw Error('Invalid Domingo data');
+    }catch(e){
+      data=await fetchWidgetJSON('https://harutaka114514-eng.github.io/biratori-widget/data/domingo-news.json?check='+Date.now());
+    }
     if(Array.isArray(data.items))data.items=filterDomingoArticles(data.items);
     return data;
   }
   return fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
 }
 function filterDomingoArticles(items){
-  const now=Date.now();return items.filter(item=>/^https:\/\/domingo\.ne\.jp\/article\/\d+$/.test(item.link)&&Number.isFinite(Date.parse(item.pubDate))&&Date.parse(item.pubDate)>=now-14*86400000&&Date.parse(item.pubDate)<=now);
+  const now=Date.now();return items.filter(item=>item&&/^https:\/\/domingo\.ne\.jp\/article\/\d+\/?(?:[?#].*)?$/.test(item.link)&&Number.isFinite(Date.parse(item.pubDate))&&Date.parse(item.pubDate)>=now-14*86400000&&Date.parse(item.pubDate)<=now);
 }
 async function preloadAllNews() {
   if(newsLoading)return;
@@ -561,7 +575,7 @@ function renderNews(type) {
   const items = newsCache[type] || [];
   if (items.length === 0) { ul.innerHTML = newsStates[type] ? "<li>表示できる記事がありません。</li>" : "<li>ロード中...</li>"; return; }
   
-  const count = (type === 'hobby') ? 13 : 15;
+  const count = (type === 'sakei' || type === 'keizai') ? items.length : (type === 'hobby' ? 13 : 15);
   
   ul.innerHTML = items.slice(0, count).map(i => {
     const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
@@ -1016,7 +1030,7 @@ function renderNewsFullscreen(type) {
     ul.style.display = 'flex';
     meshiEl.style.display = 'none';
     const items = newsCache[type] || [];
-    const count = (type === 'hobby') ? 13 : 15;
+    const count = (type === 'sakei' || type === 'keizai') ? items.length : (type === 'hobby' ? 13 : 15);
     ul.innerHTML = items.slice(0, count).map(i => {
       const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
       return `<li class="${isRead}">
