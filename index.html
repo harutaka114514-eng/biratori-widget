@@ -516,11 +516,33 @@ function widgetNewsURLKey(link){
 function widgetNewsTitleKey(title){
   return title.normalize('NFKC').replace(/\s+/g,'').toLocaleLowerCase('ja-JP');
 }
+// Googleニュースなどが見出しの末尾に付ける配信元名を比較時に除きます。
+function widgetNewsBaseTitle(item,fullTitles){
+  const title=item.title.normalize('NFKC').trim();
+  const match=title.match(/^(.*?)(?:\s+[-–—]\s+|\s*[|｜＋+]\s*)([^|｜＋+]+)$/);
+  if(!match)return widgetNewsTitleKey(title);
+  const base=widgetNewsTitleKey(match[1]),source=match[2].trim();
+  let googleNews=false;
+  try{googleNews=new URL(item.link).hostname==='news.google.com';}catch{}
+  const knownSource=/^(?:.*\.(?:jp|com|net)|47NEWS|Domingo|NHK(?:ニュース)?|北海道新聞(?:デジタル)?|日テレNEWS(?:\s*NNN)?|ライブドアニュース|毎日新聞|日本経済新聞|Yahoo!ニュース|旅行Watch|グルメWatch|北海道ひだか観光ナビ)$/i.test(source);
+  return googleNews||knownSource||fullTitles.has(base)?base:widgetNewsTitleKey(title);
+}
 function mergeWidgetNews(items) {
   const links=new Set(), titles=new Set();
-  return items.map(cleanWidgetNewsItem).filter(item => {
-    if(!item || typeof item.title!=='string' || typeof item.link!=='string' || !/^https?:\/\//i.test(item.link)) return false;
-    const linkKey=widgetNewsURLKey(item.link),titleKey=widgetNewsTitleKey(item.title);
+  const cleaned=items.map(cleanWidgetNewsItem).filter(item =>
+    item && typeof item.title==='string' && typeof item.link==='string' && /^https?:\/\//i.test(item.link)
+  );
+  const fullTitles=new Set(cleaned.map(item=>widgetNewsTitleKey(item.title)));
+  // 配信元名の付かない見出しを優先して残します。
+  cleaned.sort((a,b)=>{
+    const aSuffix=widgetNewsBaseTitle(a,fullTitles)!==widgetNewsTitleKey(a.title);
+    const bSuffix=widgetNewsBaseTitle(b,fullTitles)!==widgetNewsTitleKey(b.title);
+    return Number(aSuffix)-Number(bSuffix);
+  });
+  return cleaned.filter(item => {
+    let linkKey;
+    try{linkKey=widgetNewsURLKey(item.link);}catch{return false;}
+    const titleKey=widgetNewsBaseTitle(item,fullTitles);
     if(links.has(linkKey)||titles.has(titleKey)) return false;
     links.add(linkKey);titles.add(titleKey);return true;
   }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
