@@ -1,73 +1,73 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-04T14:36:50.554Z",
+  "generatedAt": "2026-10-06T01:46:53.373Z",
   "model": "gemini-3.8-flash",
   "method": "RSSの見出し・概要をGeminiが整理",
   "partialSources": false,
   "items": [
     {
-      "title": "胆振・日高（１０月５日付）おくやみ - 北海道新聞デジタル",
-      "summary": "10月5日付の胆振・日高地方のおくやみ情報です。",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE43enNHTklLelBEdjVVUEtmVFNzRXNIeEczcW5tdnVRRExQVDh6aHpzZ00xbXR1Q2ZzSC14b0pVbmlRbUlRYzBIYzV3UjJNOTJJbUc0V0NwQ3RvZw?oc=5",
+      "title": "人柄や功績振り返る 萱野茂生誕100年記念講座【平取】 - 北海道ニュースリンク",
+      "summary": "平取町で萱野茂生誕100年記念講座が開催され、その人柄や功績が振り返られました。",
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFB5QjRvdHNvaFlYbkVFelBQMDBMSlJNdEZZQzBDUm8td212dkUxZVJwRGNiY2k3RmdWdWdKb3RZTlZwU1U4ZVB0QkpfOTE?oc=5",
+      "source": "北海道ニュースリンク",
+      "publishedAt": "2026-10-05T09:14:28.000Z",
+      "category": "平取町"
+    },
+    {
+      "title": "道南バスの富内線廃止受け、日高町と平取町が代替バスを実証運行 - 北海道新聞デジタル",
+      "summary": "道南バスの富内線廃止を受け、日高町と平取町が代替バスの実証運行を行っています。",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5wNGdTZGRUX3V1aXpoamtva3doUmd3dWFkOHo2LWlidHN6SW9YVm1mLU5uZlRZZ0pnaFh4N2UwYmdOc3ZSOVBEWnlvaV95aXlpWkVzWHZCSWVaQkdMeXl1TFNGd1E?oc=5",
       "source": "北海道新聞デジタル",
-      "publishedAt": "2026-10-04T11:30:00.000Z",
-      "category": "日高地方"
+      "publishedAt": "2026-10-05T08:15:01.000Z",
+      "category": "平取町"
     },
     {
-      "title": "【北海道(胆振・日高地方)】10/5の天気予報 - FNNプライムオンライン",
-      "summary": "胆振・日高地方における10月5日の天気予報です。",
-      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1hRWY0MldReEhlZ2xkcE5tMEljdGdIdWZyeUwwRExxUVYxTGZPSThCVWJwZ2RCbjJJYkx3NUUxRGRFWkNITWVMSURGV290Zw?oc=5",
-      "source": "FNNプライムオンライン",
-      "publishedAt": "2026-10-04T10:30:00.000Z",
-      "category": "日高地方"
+      "title": "＜画像4 / 5＞アイヌ工芸の今昔に触れる 平取町二風谷の匠の道へ（前編） - walkerplus.com",
+      "summary": "平取町二風谷の匠の道を取り上げ、アイヌ工芸の今昔に触れる内容が紹介されています。",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE42RHNKYVp3TE9BWTFJX0k2SWREdUZBb0tXNndDakdhX3lhN3J2dG5kSVJKM0prX3FNMEY1VmYxb0pvek5ibktZb1oyazNaTWFMdkZYUExwREpKRHVqODN3dGhNVElJNVdLb1E?oc=5",
+      "source": "walkerplus.com",
+      "publishedAt": "2026-10-04T12:16:45.000Z",
+      "category": "平取町"
     },
     {
-      "title": "ヒグマと目が合い、息をのむ 北海道・日高山脈を撮り続けて40年 [北海道] - 朝日新聞",
-      "summary": "北海道の日高山脈を40年にわたって撮影し続けている取り組みが紹介されています。",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV2FGRzdjNFZsWElQd2Fodm1pWTB4V1dSdHhDLVA1b05LOTBMMjJ2d1lTNkx2WjBKajVBaU9xSjNZZ3VzM0VlbnhqcmQ3MWUzbVBHcWF0OTc0MVBuX3JZeHJweWs1VmdWT19JS29uallzUjB1SzhhT19PU1ZPUHBrNDRjS3VfaXd4bVpfS1hxTDFIR3M?oc=5",
-      "source": "朝日新聞",
-      "publishedAt": "2026-10-03T21:00:00.000Z",
-      "category": "日高地方"
-    },
-    {
-      "title": "（北海道）日高町福満でクマ出没 １０月２日 - ｄメニューニュース",
-      "summary": "10月2日、北海道日高町福満でクマが出没しました。",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQNkc0QVVLSVpWQ09IeGtpWkQ5ZmhyTzB4YUphU2VaZmZtdHdoNURtZm5mS2dJbjFsR05SVWJpY2V6TWRBMFVjNnVESXAycXdWa1J0MWFBS1pJc212RUFhSGkxbVpKeVQxbklkdm9rT0kwQmNiTjZPTnZha3FyMHJ6NjU3aHpQcngxWHYxa3I5SkZtSEtabktOYjdVdmHSAaIBQVVfeXFMTkIzZk93ZXBhMU9IRmRtc3pSeXlhOU9kbjJsdHozVHJpSHdyZUlQZVBtdXZiazRxSC1ZUDgzU1U3bWFaamxCSmNyZG51TTZhVHRHcHh5LXlzamMtYVdvejVZZWg5WTRocFgycHZjMHJmWHNDR0ZNOTljSmRuOTdZckI2Z3NlTmNDa0JsX2ZnN3l4ZHNGTTlZaUIxTnNGeVZGczlB?oc=5",
+      "title": "【独自】子馬に殴る蹴るの虐待疑い 日高のサラブレット牧場と従業員書類送検 - ｄメニューニュース",
+      "summary": "子馬に殴る蹴るの暴行を加えた疑いで、日高のサラブレッド牧場と従業員が書類送検されました。",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOSTZNcEhjS1FXa3RaOEU0b09fY0VmMERLSTFBbGR3dTJzdkhZRjM4cjBtdVpHT0tneUJWdVZOX2E0V2dfd1pMQTdPZl9DVGI1d2Z0NkZQUzJ2aGxFbGxQS2dxYWtvZmZQa1lSQkkxOV9aa09BaXlYMkJOeFhrN05ubHAtYUNtZFZlRDVkQlE5b9IBggFBVV95cUxNcXNzb1FsMEdNV05pMlh6NDk0WHFIcjRoSldHbXdqUXdvdVh2ZmFyTTRRbUZTczE1M25mdHBvZV9vcE5yWTdmWTZxczVrWVdHUTBXSmx0eld5SllBdnEweFpxT05xdk92ZjQwQVFrREQ5b05pUUJDUjlQaHZxMkNJbXdR?oc=5",
       "source": "ｄメニューニュース",
-      "publishedAt": "2026-10-03T06:01:00.000Z",
+      "publishedAt": "2026-10-05T21:06:47.000Z",
       "category": "日高地方"
     },
     {
-      "title": "北海道ガスが2年連続で日本選手権へ 社会人野球北海道予選 - 北海道新聞デジタル",
-      "summary": "社会人野球北海道予選で、北海道ガスが2年連続となる日本選手権への出場を決めました。",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1SNjJ0Mzd4c25OUldHUzg0ekRyX2hCOWdBRUZoSlhIcmdCYkdqMU5tNDZGdTR1X1AwT09rV0sweHpxdVhBUU9pdWtiVi1IZktLdHg5akR2ZE1HUQ?oc=5",
+      "title": "（北海道）日高町富川北３丁目付近で盗撮 １０月５日 - ｄメニューニュース",
+      "summary": "10月5日、日高町富川北3丁目付近で盗撮が発生しました。",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQUk9iVElmLTFKdWxzQjhOTUp5Y1hBRUhEbjNNNlk4Z3lHbjR4MVd6clJUb1NsS1c5UXlvUnI0aVhHN1VtLWVBQm5WQkRRTDhJUHZwNklPMlAzTTJfby1ta09JMGRYM05Kdi04UUxYRThtRXF0U3M2bjVuUnlmYkZtclc2b3I2eUM1YVc3Q082R1Q4VGJfOXFRdFRJRldzRjdZOUHSAaIBQVVfeXFMUFJPYlRJZi0xSnVsc0I4Tk1KeWNYQUVIRG4zTTZZOGd5R240eDFXenJSVG9TbEtXOVF5b1JyNGlYRzdVbS1lQUJuVkJEUUw4SVB2cDZJTzJQM00yX28tbWtPSTBkWDNOSnYtOFFMWEU4bUVxdFNzNm41blJ5ZmJGbXJXNm9yNnlDNWFXN0NPNkdUOFRiXzlxUXRUSUZXc0Y3WTlB?oc=5",
+      "source": "ｄメニューニュース",
+      "publishedAt": "2026-10-05T13:21:00.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "果敢に難コースを疾走 ２０２６日高ツーデイズエンデューロ【日高】 - 北海道ニュースリンク",
+      "summary": "日高で「2026日高ツーデイズエンデューロ」が開催され、ライダーが難コースを疾走しました。",
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9lUTdJQ1FoMWYwZDBDNEVmeEEtcV9RVUVFWnZiYTVieFEzc3gzZzBlRGw3NDBjQWVrRkdlM05TSnRMSTFiRWFjV0p6SHU?oc=5",
+      "source": "北海道ニュースリンク",
+      "publishedAt": "2026-10-05T09:14:28.000Z",
+      "category": "日高地方"
+    },
+    {
+      "title": "「ザ・ロイヤルファミリー」原作者の早見和真さんが日高町で講演 - 北海道新聞デジタル",
+      "summary": "小説「ザ・ロイヤルファミリー」の原作者である早見和真さんが日高町で講演を行いました。",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBCdEdJZUVIZ0R4aXNCLWFnY3Q3S29VNHhpSmlCWEFtY2sySWhaU0txazFTdUt6MFRldVhTUURTcHZYOEQ5RmZ5b1BrS1pOYVdhX1ZFSDM3NjdOTmxVVndidlZhNlY?oc=5",
       "source": "北海道新聞デジタル",
-      "publishedAt": "2026-10-04T14:09:55.000Z",
-      "category": "北海道"
+      "publishedAt": "2026-10-05T08:12:33.000Z",
+      "category": "日高地方"
     },
     {
-      "title": "北海道合唱コンクール、4団体が全国大会へ [北海道] - 朝日新聞",
-      "summary": "北海道合唱コンクールが開催され、4団体が全国大会への進出を決めました。",
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1lLTNkcEV0WXI1alVoZGVucG1kbmtxQlYzWlRjWGVZSjZ2OFpQRUQ3Q3hMTW05OXctNFVQQzA5ajZEWjd0by05enRDdkl5cC1yakZsNDV2ZmZWSk1tY1Y5ZTN0eS1ROHM?oc=5",
-      "source": "朝日新聞",
-      "publishedAt": "2026-10-04T13:00:00.000Z",
-      "category": "北海道"
-    },
-    {
-      "title": "北海道の立憲出身議員ら、道内で独自に「地域政党立ち上げへ準備」（朝日新聞） - Yahoo!ニュース",
-      "summary": "北海道内の立憲民主党出身の議員らが、道内で独自に地域政党を立ち上げる準備を進めています。",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5ITXdfMGdwRmFBd1NkcjBlVXlTVzRlblY3eWV2RU9GdmN3dG1YTTY2RmNQb3A3ekdMdVo4aW5xQ0R1c2xjU2JWY2xHdGJXaVZWT1VyTmhRUVhCVUI0TnZXRUVKb0NESU1CYWM5UlVjejN2UERFcVo4b1pwTUZBcUE?oc=5",
-      "source": "Yahoo!ニュース",
-      "publishedAt": "2026-10-04T13:00:00.000Z",
-      "category": "北海道"
-    },
-    {
-      "title": "北海道、大阪市で観光情報交換会 13地域・団体がＰＲ - 観光経済新聞",
-      "summary": "大阪市で北海道の観光情報交換会が開催され、13の地域や団体がPRを行いました。",
-      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9FSzFzUFVnZ1FpYkhjN0UwVmdLNG1qMEJRc2h2aFptTU1DM216UnF6QVUtUUlHUWxwXzFGZUZiMThyTElfNV94Tks3YklvRG5WQ3J5WEItdw?oc=5",
-      "source": "観光経済新聞",
-      "publishedAt": "2026-10-04T12:21:15.000Z",
-      "category": "北海道"
+      "title": "大津波警報時の救助手順など確認 日高振興局が一斉訓練 - 北海道新聞デジタル",
+      "summary": "日高振興局が大津波警報を想定し、救助手順などを確認する一斉訓練を実施しました。",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1YTmZkY0ZTdXdONDgxejdkMDZaYnM2WDdjdmVIaTZfY0I2S1BIT29SUVdRZi0zVVl5MzZpTFF0aHB1WUlmSndXUTZwbW85T0lOY3ZxVlNyamh3Ul9jQUxTTUMtYTM?oc=5",
+      "source": "北海道新聞デジタル",
+      "publishedAt": "2026-10-05T03:20:09.000Z",
+      "category": "日高地方"
     }
   ]
 }
