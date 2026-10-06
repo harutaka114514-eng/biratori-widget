@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths-ignore:
       - 'data/daily-news.json'
+      - 'data/walker-news.json'
       - '*.md'
 
 concurrency:
@@ -33,6 +34,10 @@ jobs:
         id: domingo
         continue-on-error: true
         run: node scripts/update-domingo-news.mjs
+      - name: Collect Walker Hokkaido outings
+        id: walker
+        continue-on-error: true
+        run: node scripts/update-walker-news.mjs
       - name: Generate the daily digest
         id: digest
         continue-on-error: true
@@ -44,9 +49,10 @@ jobs:
         if: steps.digest.outcome == 'failure'
         run: echo '::warning::ニュース更新に失敗しました。保存済みのまとめを使って公開します。APIキーと無料枠を確認してください。'
       - name: Save the generated digest
-        if: steps.digest.outcome == 'success' || steps.domingo.outcome == 'success'
+        if: steps.digest.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success'
         run: |
           git add data/daily-news.json data/domingo-news.json
+          if [ -f data/walker-news.json ]; then git add data/walker-news.json; fi
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

@@ -595,9 +595,9 @@ function parseWalkerHokkaidoArticles(html){
   return {status:'ok',items};
 }
 async function fetchWalkerHokkaidoArticles(){
-  // 静的HTMLでのCORS制限を避けるため、既存ページでも使用している中継を利用。
-  const data=await fetchWidgetJSON('https://api.allorigins.win/get?url='+encodeURIComponent(walkerHokkaidoURL));
-  return parseWalkerHokkaidoArticles(data.contents);
+  const data=await fetchWidgetJSON('./data/walker-news.json?check='+Date.now());
+  if(data.status!=='ok'||!Array.isArray(data.items)||!data.items.length)throw Error('Invalid Walker data');
+  return data;
 }
 async function fetchWidgetFeed(url){
   if(url===walkerHokkaidoURL)return fetchWalkerHokkaidoArticles();
@@ -635,7 +635,7 @@ async function preloadAllNews() {
           if(t==='Domingo 記事'||t.includes('新着記事一覧')||t.includes('記事一覧'))return false;
           return !(url.includes('valorant4jp.com') && c.includes('大会'));
         });
-        const record={items:mergeWidgetNews(items),time:isDomingoFeed(url)&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
+        const record={items:mergeWidgetNews(items),time:(isDomingoFeed(url)||url===walkerHokkaidoURL)&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
       } catch(e) {failed=true;const saved=feedRecords[url];return saved&&isDomingoFeed(url)?{...saved,items:filterDomingoArticles(saved.items||[])}:saved||null;}
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
