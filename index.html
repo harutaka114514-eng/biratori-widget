@@ -499,10 +499,7 @@ function isHidakaFeed(url){
   try{return new URL(url).hostname==='hokkaido-hidaka-kankonavi.com';}catch{return false;}
 }
 function widgetNewsLinkHTML(item){
-  const date=new Date(item.pubDate);
-  const label=isHidakaFeed(item.link)&&Number.isFinite(date.getTime())
-    ? '<small style="display:block;font-size:11px;font-weight:400;opacity:.7">日高観光ナビ・公開日 '+date.toLocaleDateString('ja-JP',{timeZone:'Asia/Tokyo'})+'</small>' : '';
-  return '<a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer" onclick="markAsRead(this.href, this)">'+escapeWidgetHTML(item.title)+label+'</a>';
+  return '<a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer" onclick="markAsRead(this.href, this)">'+escapeWidgetHTML(item.title)+'</a>';
 }
 // 計測用パラメーター・末尾スラッシュの違いを同じ記事として扱います。
 function widgetNewsURLKey(link){
