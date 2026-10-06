@@ -422,7 +422,8 @@ const urls = {
   nhk: ["https://www.nhk.or.jp/rss/news/cat0.xml", "https://news.web.nhk/n-data/conf/na/rss/cat6.xml"],
   keizai: ["https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf",
     "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja",
-    "https://hokkaido-hidaka-kankonavi.com/feed/"], 
+    "https://hokkaido-hidaka-kankonavi.com/feed/",
+    "https://www.walkerplus.com/article_list/ar0101/ag0007/"], 
   sakei: [
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja",
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja",
@@ -449,10 +450,11 @@ if(widgetSettings.news?.keizai?.length===1 && widgetSettings.news.keizai[0]==='h
   widgetSettings.news.keizai=[...urls.keizai];writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
 if (widgetSettings.news) Object.keys(urls).forEach(key => { if(Array.isArray(widgetSettings.news[key])) urls[key] = widgetSettings.news[key]; });
-// 保存済み設定でもDomingoと日高観光ナビを「旅行」へ移動します。
+// 保存済み設定でも旅行の取得元を追加し、地域/食から移動します。
 const travelFeedURLs=[
   'https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja',
-  'https://hokkaido-hidaka-kankonavi.com/feed/'
+  'https://hokkaido-hidaka-kankonavi.com/feed/',
+  'https://www.walkerplus.com/article_list/ar0101/ag0007/'
 ];
 if(widgetSettings.news){
   const travel=Array.isArray(urls.keizai)?[...urls.keizai]:[urls.keizai];
@@ -564,7 +566,41 @@ function renderNewsStatus(type) {
 function isDomingoFeed(url){
   try{const parsed=new URL(url);return parsed.hostname==='news.google.com' && parsed.searchParams.get('q')?.trim()==='site:domingo.ne.jp';}catch{return false;}
 }
+// RSSを介さず、北海道・おでかけに絞った記事一覧のHTMLを読み取ります。
+const walkerHokkaidoURL='https://www.walkerplus.com/article_list/ar0101/ag0007/';
+function parseWalkerHokkaidoArticles(html){
+  if(typeof html!=='string'||!html.trim())throw Error('Walker HTML missing');
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const heading=Array.from(doc.querySelectorAll('h1')).find(el=>el.textContent.includes('北海道')&&el.textContent.includes('おでかけ'));
+  if(!heading)throw Error('Walker page did not match Hokkaido outings');
+  const seen=new Set(),items=[];
+  for(const a of doc.querySelectorAll('a[href*="/article/"]')){
+    let link;try{link=new URL(a.getAttribute('href'),walkerHokkaidoURL);}catch{continue;}
+    if(link.hostname!=='www.walkerplus.com'||!/^\/article\/\d+\/?$/.test(link.pathname))continue;
+    const title=a.textContent.replace(/\s+/g,' ').trim();
+    if(title.length<8||seen.has(link.href))continue;
+    // 同じ記事の画像リンクと見出しを含む行から掲載日を探します。
+    let row=a.parentElement,date=null;
+    for(let depth=0;row&&depth<6;depth++,row=row.parentElement){
+      const links=new Set(Array.from(row.querySelectorAll('a[href*="/article/"]')).map(el=>el.getAttribute('href')));
+      if(links.size>1)break;
+      date=row.textContent.match(/(20\d{2})年\s*(\d{1,2})月\s*(\d{1,2})日/);
+      if(date)break;
+    }
+    if(!date)continue;
+    seen.add(link.href);
+    items.push({title,link:link.href,pubDate:`${date[1]}-${date[2].padStart(2,'0')}-${date[3].padStart(2,'0')}T00:00:00+09:00`,author:'ウォーカープラス',categories:['北海道','おでかけ']});
+  }
+  if(!items.length)throw Error('Walker article list could not be read');
+  return {status:'ok',items};
+}
+async function fetchWalkerHokkaidoArticles(){
+  // 静的HTMLでのCORS制限を避けるため、既存ページでも使用している中継を利用。
+  const data=await fetchWidgetJSON('https://api.allorigins.win/get?url='+encodeURIComponent(walkerHokkaidoURL));
+  return parseWalkerHokkaidoArticles(data.contents);
+}
 async function fetchWidgetFeed(url){
+  if(url===walkerHokkaidoURL)return fetchWalkerHokkaidoArticles();
   if(isDomingoFeed(url)){
     let data;
     try{
