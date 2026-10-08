@@ -430,6 +430,7 @@ const urls = {
     "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
     "https://biratori-shokokai.com/feed",
+    "https://www.hi-mag.jp/feed/",
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
   nl: ["https://hokkaido-nl.jp/index.xml",
@@ -462,6 +463,13 @@ if(widgetSettings.news){
   widgetSettings.news.keizai=[...urls.keizai];
   widgetSettings.news.sakei=[...urls.sakei];
   writeWidgetStorage('biratori_settings_v1',widgetSettings);
+}
+// 既存の保存済み設定にもHi-MAGを一度追加します。
+if(widgetSettings.news && !widgetSettings.hiMagFeedAdded){
+  const regional=Array.isArray(urls.sakei)?[...urls.sakei]:[urls.sakei];
+  if(!regional.includes('https://www.hi-mag.jp/feed/'))regional.push('https://www.hi-mag.jp/feed/');
+  urls.sakei=regional;widgetSettings.news.sakei=[...regional];
+  widgetSettings.hiMagFeedAdded=true;writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
 const newsStates = {};
