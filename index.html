@@ -504,6 +504,9 @@ function cleanWidgetNewsItem(item){
 function isHidakaFeed(url){
   try{return new URL(url).hostname==='hokkaido-hidaka-kankonavi.com';}catch{return false;}
 }
+function isHiMagURL(value){
+  try{return ['www.hi-mag.jp','hi-mag.jp'].includes(new URL(value).hostname);}catch{return false;}
+}
 function widgetNewsLinkHTML(item){
   return '<a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer" onclick="markAsRead(this.href, this)">'+escapeWidgetHTML(item.title)+'</a>';
 }
@@ -548,8 +551,8 @@ function mergeWidgetNews(items) {
     let linkKey;
     try{linkKey=widgetNewsURLKey(item.link);}catch{return false;}
     const titleKey=widgetNewsBaseTitle(item,fullTitles);
-    if(links.has(linkKey)||titles.has(titleKey)) return false;
-    links.add(linkKey);titles.add(titleKey);return true;
+    if(links.has(linkKey)||(!isHiMagURL(item.link)&&titles.has(titleKey))) return false;
+    links.add(linkKey);if(!isHiMagURL(item.link))titles.add(titleKey);return true;
   }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
 }
 function renderNewsStatus(type) {
@@ -633,6 +636,7 @@ async function preloadAllNews() {
         if(d.status!=='ok'||!Array.isArray(d.items))throw Error('Invalid feed');
         const items=d.items.filter(item => {
           if(typeof item.title!=='string')return false;
+          if(isHiMagURL(url))return true;
           const t=item.title,c=(item.categories||[]).map(cat=>String(cat).toLowerCase());
           if(t==='Domingo 記事'||t.includes('新着記事一覧')||t.includes('記事一覧'))return false;
           return !(url.includes('valorant4jp.com') && c.includes('大会'));
