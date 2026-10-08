@@ -421,7 +421,8 @@ const urls = {
   keizai: ["https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf",
     "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp&hl=ja&gl=JP&ceid=JP%3Aja",
     "https://hokkaido-hidaka-kankonavi.com/feed/",
-    "https://www.walkerplus.com/article_list/ar0101/ag0007/"], 
+    "https://www.walkerplus.com/article_list/ar0101/ag0007/",
+    "https://sasaru.media/category/index.html?id=weather"],
   sakei: [
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja",
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja",
@@ -432,6 +433,9 @@ const urls = {
     "https://biratori-shokokai.com/feed",
     "https://www.hi-mag.jp/feed/",
     "https://hokkaidolikers.com/feed/",
+    "https://sasaru.media/category/index.html?id=gourmet",
+    "https://sasaru.media/category/index.html?id=money",
+    "https://sasaru.media/category/index.html?id=media",
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
   nl: ["https://hokkaido-nl.jp/index.xml",
@@ -478,6 +482,15 @@ if(widgetSettings.news && !widgetSettings.hokkaidoLikersFeedAdded){
   if(!regional.includes('https://hokkaidolikers.com/feed/'))regional.push('https://hokkaidolikers.com/feed/');
   urls.sakei=regional;widgetSettings.news.sakei=[...regional];
   widgetSettings.hokkaidoLikersFeedAdded=true;writeWidgetStorage('biratori_settings_v1',widgetSettings);
+}
+// SASARUを公式カテゴリごとに一度追加します。
+if(widgetSettings.news && !widgetSettings.sasaruCategoriesAdded){
+  for(const [key,categories] of Object.entries({keizai:['weather'],sakei:['gourmet','money','media']})){
+    const feeds=Array.isArray(urls[key])?[...urls[key]]:[urls[key]];
+    categories.forEach(category=>{const url='https://sasaru.media/category/index.html?id='+category;if(!feeds.includes(url))feeds.push(url);});
+    urls[key]=feeds;widgetSettings.news[key]=[...feeds];
+  }
+  widgetSettings.sasaruCategoriesAdded=true;writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
 let newsCache = { nhk: [], keizai: [], sakei: [], nl: [], hobby: [] };
 const newsStates = {};
@@ -612,7 +625,18 @@ async function fetchWalkerHokkaidoArticles(){
   if(data.status!=='ok'||!Array.isArray(data.items)||!data.items.length)throw Error('Invalid Walker data');
   return data;
 }
+let sasaruDataRequest=null;
+function sasaruCategory(url){
+  try{const parsed=new URL(url);const category=parsed.searchParams.get('id');return parsed.hostname==='sasaru.media'&&parsed.pathname==='/category/index.html'&&['gourmet','money','media','weather'].includes(category)?category:null;}catch{return null;}
+}
+async function fetchSasaruCategory(category){
+  if(!sasaruDataRequest)sasaruDataRequest=fetchWidgetJSON('./data/sasaru-news.json?check='+Date.now()).then(data=>{
+    if(data.status!=='ok'||!Array.isArray(data.items))throw Error('Invalid SASARU data');return data;
+  }).catch(error=>{sasaruDataRequest=null;throw error;});
+  const data=await sasaruDataRequest;return {...data,items:data.items.filter(item=>item.category===category)};
+}
 async function fetchWidgetFeed(url){
+  const category=sasaruCategory(url);if(category)return fetchSasaruCategory(category);
   if(url===walkerHokkaidoURL)return fetchWalkerHokkaidoArticles();
   if(isDomingoFeed(url)){
     let data;
@@ -632,7 +656,7 @@ function filterDomingoArticles(items){
 }
 async function preloadAllNews() {
   if(newsLoading)return;
-  newsLoading=true;
+  newsLoading=true;sasaruDataRequest=null;
   const active=()=>document.querySelector('.news-tabs button.active')?.dataset.type || 'nhk';
   renderNewsStatus(active());
   await Promise.all(Object.keys(urls).map(async key => {
@@ -649,7 +673,7 @@ async function preloadAllNews() {
           if(t==='Domingo 記事'||t.includes('新着記事一覧')||t.includes('記事一覧'))return false;
           return !(url.includes('valorant4jp.com') && c.includes('大会'));
         });
-        const record={items:mergeWidgetNews(items),time:(isDomingoFeed(url)||url===walkerHokkaidoURL)&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
+        const record={items:mergeWidgetNews(items),time:(isDomingoFeed(url)||url===walkerHokkaidoURL||sasaruCategory(url))&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
       } catch(e) {failed=true;const saved=feedRecords[url];return saved&&isDomingoFeed(url)?{...saved,items:filterDomingoArticles(saved.items||[])}:saved||null;}
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
