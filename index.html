@@ -212,6 +212,10 @@ button:active,.link-box a:active {transform:translateY(1px);}
 .seasonal-events {border-top:1px solid #b8d9c0;margin-top:14px;padding-top:12px;}.seasonal-events h3 {font-size:15px;color:#315c42;margin:0 0 9px;}.seasonal-event-list {list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}.seasonal-event-list li {padding:11px 12px;background:#ffffffbf;border:1px solid #c4dfc7;border-radius:10px;overflow-wrap:anywhere;}.seasonal-event-list a {font-size:13px;font-weight:bold;color:#225c49;line-height:1.6;text-decoration:none;}.seasonal-event-list a:hover {text-decoration:underline;}.seasonal-event-meta {font-size:12px;line-height:1.7;margin:6px 0 0;color:#45644e;}.seasonal-event-state {display:inline-block;padding:1px 6px;margin-right:5px;border-radius:5px;background:#e1f0da;color:#3d612e;font-size:11px;}.seasonal-event-source {font-size:11px;line-height:1.7;color:#476452;margin:9px 0 0;}.seasonal-event-source a {color:#245941;}
 @media(max-width:900px){.seasonal-event-list {grid-template-columns:1fr;}}
 
+
+.seasonal-lifestyle {margin-top:14px;padding-top:12px;border-top:1px solid #b8d9c0;}.seasonal-lifestyle h3 {font-size:15px;margin:0 0 9px;color:#315c42;}.seasonal-lifestyle-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}.seasonal-lifestyle-card {background:rgba(255,255,255,.8);border:1px solid #c4dfc7;border-radius:10px;padding:12px;}.seasonal-lifestyle-card:nth-child(1) {background:#fffbefdb;border-color:#e0dbb7;}.seasonal-lifestyle-card:nth-child(3) {background:#f0f8ffdb;border-color:#c6dce7;}.seasonal-lifestyle-label {font-size:12px;color:#49624c;margin:0 0 6px;}.seasonal-lifestyle-card h4 {margin:0 0 5px;font-size:14px;color:#284c38;}.seasonal-lifestyle-card p:last-child {font-size:13px;line-height:1.8;color:#345141;margin:0;}.seasonal-lifestyle-note {font-size:11px;line-height:1.7;color:#476452;margin:8px 0 0;}
+@media(max-width:900px){.seasonal-lifestyle-grid {grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -259,6 +263,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
     <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
     <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
+    <section class="seasonal-lifestyle" aria-labelledby="seasonal-lifestyle-title"><h3 id="seasonal-lifestyle-title">季節の暮らしノート</h3><div id="seasonal-lifestyle-grid" class="seasonal-lifestyle-grid"></div><p class="seasonal-lifestyle-note">北海道の一般的な季節の目安を紹介しています。食材の出回りや自然の様子は、地域・天候によって異なります。</p></section>
     <div class="seasonal-events"><h3>📅 近くの催し ― 平取・日高周辺</h3><ul id="seasonal-events-list" class="seasonal-event-list" aria-live="polite"></ul><p id="seasonal-events-status" class="seasonal-event-source" role="status">催し情報を読み込んでいます。</p></div>
     <div class="seasonal-footer"><p id="seasonal-status" role="status"></p><a href="https://www.town.biratori.hokkaido.jp/" target="_blank" rel="noopener noreferrer">町のお知らせ・イベント ↗</a></div>
   </section>
@@ -839,7 +844,48 @@ function seasonalGuidance(data,recordTime,now=Date.now()) {
   if(notices.length===1)notices.push({title:'📅 町の季節を楽しむ',text:'季節の催しや町のお知らせは、平取町の公式サイトで確認できます。'});
   return {season:general.name,notices:notices.slice(0,2),fresh:!!data&&fresh};
 }
+
+const seasonalFoodNotes=[
+  [['保存じゃがいも','冬は貯蔵されたじゃがいもを楽しむ時期。温かいポタージュや煮物に。'],['保存たまねぎ','貯蔵たまねぎをじっくり炒めてスープに。甘みを生かした温かい一品を。']],
+  [['保存にんじん','貯蔵にんじんを使って、温かいシチューに。薄切りなら炒め物にも便利です。'],['保存じゃがいも','じゃがいもを蒸して、バターを添えて。冬の食卓に、ほっとする一品を。']],
+  [['春を待つキャベツ料理','地元の収穫が本格化する前は、売り場のキャベツをスープや蒸し料理に。'],['保存たまねぎ','貯蔵たまねぎをくし切りにして、ゆっくり焼くと甘みを楽しめます。']],
+  [['春の葉もの','売り場に出回る葉ものを、おひたしや卵炒めに。産地も見比べてみましょう。'],['春を待つじゃがいも','春先も貯蔵じゃがいもが活躍。ゆでてつぶし、いももちにしても。']],
+  [['アスパラガス','北海道のアスパラガスが出回り始める季節。さっとゆでて、素材の甘みを。'],['春の葉もの','ほうれん草などの葉ものを、スープや和え物に。売り場で旬を探してみて。']],
+  [['アスパラガス','アスパラガスを短時間で焼いて、塩と少しの油で。太さに合わせて火を通しましょう。'],['初夏のいちご','北海道の露地いちごが出回る頃。洗ってそのまま、ヨーグルトに添えても。']],
+  [['夏のトマト','平取でも親しまれるトマトの季節。冷やして切り、塩とオリーブ油を少し。'],['夏のきゅうり','きゅうりを薄切りにして、酢の物やサラダに。暑い日にさっぱり食べられます。']],
+  [['とうもろこし','とうもろこしが楽しみな季節。ゆでたり蒸したりして、甘みを味わいましょう。'],['夏のトマト','完熟トマトは軽く煮てソースに。パスタや卵料理に合わせても。']],
+  [['かぼちゃ','北海道のかぼちゃが出回る季節。煮物やポタージュで、甘みを楽しめます。'],['新じゃがいも','秋の収穫期のじゃがいもを、蒸し料理やグラタンに。売り場の品種にも注目。']],
+  [['秋鮭','秋鮭が出回る季節。きのこや野菜と一緒に、ホイル焼きにしてみては。'],['かぼちゃ','かぼちゃをひと口大に切って、煮物やスープに。秋の食卓に合う一品です。']],
+  [['大根','寒くなる時期は大根を煮物やおでんに。だしを含ませて、温かくいただきましょう。'],['保存じゃがいも','秋に収穫されたじゃがいもを、シチューや肉じゃがに。寒い日の食卓に。']],
+  [['保存たまねぎ','貯蔵野菜が活躍する季節。たまねぎを炒め、具だくさんのスープに。'],['冬の大根料理','大根を厚めに切って、じっくり煮込んだおでんに。食卓で温まりましょう。']]
+];
+const seasonalNatureNotes={
+  spring:[['雪解けの景色','雪が解けた場所と残る場所の違いを見てみましょう。芽吹きの進み方も、場所によって違います。'],['春の鳥の声','外に出たら、少し立ち止まって鳥の声に耳を澄ませて。姿が見えなくても、季節の変化を楽しめます。']],
+  summer:[['木陰の緑','同じ緑でも、葉の形や光の透け方はいろいろ。木陰を歩きながら見比べてみましょう。'],['朝の自然観察','涼しい時間に鳥や草花を眺めてみては。生きものには近づきすぎず、静かに観察を。']],
+  autumn:[['紅葉の色さがし','赤・黄・茶色の葉を、いつもの道で探してみましょう。色づき具合は現地の様子で確認を。'],['秋の空と鳥','空の高さや雲の形、見かける鳥の変化に注目。渡りの季節も、場所や年によって様子が変わります。']],
+  winter:[['雪の上の足跡','雪が積もったら、安全な道から足跡を探してみては。形や歩幅を比べると、観察が楽しくなります。'],['冬の木の姿','葉の落ちた木は、枝の形や冬芽がよく見えます。遠くから眺めるだけでも、木ごとの違いが分かります。']]
+};
+const seasonalHomeNotes={
+  spring:[['脱ぎ着できる服装に','昼と朝晩の気温差に合わせ、薄手の服を重ねて。上着を一枚持つと調整しやすくなります。'],['雪解け時期の玄関','濡れた靴の置き場所を決め、玄関の水分はこまめに拭き取りましょう。']],
+  summer:[['朝のうちに用事を','買い物や外の作業は、できれば涼しい時間に。飲み物と日差しへの備えも忘れずに。'],['夏の寝具を整える','寝具を軽くし、室温に合わせて調整を。暑さを感じる夜は、無理せず冷房なども活用しましょう。']],
+  autumn:[['冬支度を少しずつ','冬物の上着や靴を出し、暖房器具は取扱説明書に沿って点検。早めに準備しておくと安心です。'],['衣替えは一気にしない','薄手の服も少し残し、気温に合わせて重ね着を。手袋や首元を温める物も用意しておくと便利です。']],
+  winter:[['玄関に滑り対策を','靴の雪を落とし、濡れた玄関を拭き取りましょう。外出には滑りにくい靴を。'],['移動の準備を早めに','雪の日は交通情報を確認し、時間に余裕を。車で出かけるときは、雪下ろしの時間も見込んでおきましょう。']]
+};
+function seasonalLifestyle(now=Date.now()){
+  const date=new Date(now).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),month=Number(date.slice(5,7));
+  const season=month>=3&&month<=5?'spring':month>=6&&month<=8?'summer':month>=9&&month<=11?'autumn':'winter';
+  const day=Math.floor(Date.parse(date+'T00:00:00Z')/86400000);
+  const categories=[['🍅 旬の食べもの',seasonalFoodNotes[month-1]],['🌿 自然の見どころ',seasonalNatureNotes[season]],['🏡 暮らしの小ネタ',seasonalHomeNotes[season]]];
+  return {month,cards:categories.map(([label,notes],i)=>{const [title,text]=notes[(day+i)%notes.length];return {label,title,text};})};
+}
+function renderSeasonalLifestyle(){
+  const result=seasonalLifestyle();
+  document.getElementById('seasonal-lifestyle-title').textContent=result.month+'月の暮らしノート · 日替わり';
+  document.getElementById('seasonal-lifestyle-grid').innerHTML=result.cards.map(card=>'<article class="seasonal-lifestyle-card"><p class="seasonal-lifestyle-label">'+escapeWidgetHTML(card.label)+'</p><h4>'+escapeWidgetHTML(card.title)+'</h4><p>'+escapeWidgetHTML(card.text)+'</p></article>').join('');
+}
+
 function renderSeasonalInfo(){
+  renderSeasonalLifestyle();
   const result=seasonalGuidance(weatherRecord?.data,weatherRecord?.time);
   document.getElementById('seasonal-season').textContent=result.season;
   document.getElementById('seasonal-list').innerHTML=result.notices.map(item=>'<li><strong>'+escapeWidgetHTML(item.title)+'</strong>'+escapeWidgetHTML(item.text)+'</li>').join('');
