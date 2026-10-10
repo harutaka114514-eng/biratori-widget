@@ -216,6 +216,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
 .seasonal-lifestyle {margin-top:14px;padding-top:12px;border-top:1px solid #b8d9c0;}.seasonal-lifestyle h3 {font-size:15px;margin:0 0 9px;color:#315c42;}.seasonal-lifestyle-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}.seasonal-lifestyle-card {background:rgba(255,255,255,.8);border:1px solid #c4dfc7;border-radius:10px;padding:12px;}.seasonal-lifestyle-card:nth-child(1) {background:#fffbefdb;border-color:#e0dbb7;}.seasonal-lifestyle-card:nth-child(3) {background:#f0f8ffdb;border-color:#c6dce7;}.seasonal-lifestyle-label {font-size:12px;color:#49624c;margin:0 0 6px;}.seasonal-lifestyle-card h4 {margin:0 0 5px;font-size:14px;color:#284c38;}.seasonal-lifestyle-card p:last-child {font-size:13px;line-height:1.8;color:#345141;margin:0;}.seasonal-lifestyle-note {font-size:11px;line-height:1.7;color:#476452;margin:8px 0 0;}
 @media(max-width:900px){.seasonal-lifestyle-grid {grid-template-columns:1fr;}}
 
+.seasonal-list li:only-child {grid-column:1/-1;}
 </style>
 </head>
 <body>
@@ -841,7 +842,6 @@ function seasonalGuidance(data,recordTime,now=Date.now()) {
   }
   if(!notices.length)notices.push({title:general.title,text:general.text});
   if(notices.length===1&&notices[0].title!==general.title)notices.push({title:general.title,text:general.text});
-  if(notices.length===1)notices.push({title:'📅 町の季節を楽しむ',text:'季節の催しや町のお知らせは、平取町の公式サイトで確認できます。'});
   return {season:general.name,notices:notices.slice(0,2),fresh:!!data&&fresh};
 }
 
@@ -871,19 +871,27 @@ const seasonalHomeNotes={
   autumn:[['冬支度を少しずつ','冬物の上着や靴を出し、暖房器具は取扱説明書に沿って点検。早めに準備しておくと安心です。'],['衣替えは一気にしない','薄手の服も少し残し、気温に合わせて重ね着を。手袋や首元を温める物も用意しておくと便利です。']],
   winter:[['玄関に滑り対策を','靴の雪を落とし、濡れた玄関を拭き取りましょう。外出には滑りにくい靴を。'],['移動の準備を早めに','雪の日は交通情報を確認し、時間に余裕を。車で出かけるときは、雪下ろしの時間も見込んでおきましょう。']]
 };
-function seasonalLifestyle(now=Date.now()){
+function seasonalLifestyle(now=Date.now(),random=Math.random){
   const date=new Date(now).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),month=Number(date.slice(5,7));
   const season=month>=3&&month<=5?'spring':month>=6&&month<=8?'summer':month>=9&&month<=11?'autumn':'winter';
-  const day=Math.floor(Date.parse(date+'T00:00:00Z')/86400000);
   const categories=[['🍅 旬の食べもの',seasonalFoodNotes[month-1]],['🌿 自然の見どころ',seasonalNatureNotes[season]],['🏡 暮らしの小ネタ',seasonalHomeNotes[season]]];
-  return {month,cards:categories.map(([label,notes],i)=>{const [title,text]=notes[(day+i)%notes.length];return {label,title,text};})};
+  const cards=categories.flatMap(([label,notes])=>{
+    const available=(Array.isArray(notes)?notes:[]).filter(note=>Array.isArray(note)&&typeof note[0]==='string'&&note[0].trim()&&typeof note[1]==='string'&&note[1].trim());
+    if(!available.length)return [];
+    const [title,text]=available[Math.min(available.length-1,Math.max(0,Math.floor(random()*available.length)))];
+    return [{label,title,text}];
+  });
+  return {month,key:date.slice(0,7),cards};
 }
+let seasonalLifestyleSelection=null;
 function renderSeasonalLifestyle(){
-  const result=seasonalLifestyle();
-  document.getElementById('seasonal-lifestyle-title').textContent=result.month+'月の暮らしノート · 日替わり';
+  const key=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}).slice(0,7);
+  if(!seasonalLifestyleSelection||seasonalLifestyleSelection.key!==key)seasonalLifestyleSelection=seasonalLifestyle();
+  const result=seasonalLifestyleSelection;
+  document.getElementById('seasonal-lifestyle-title').textContent=result.month+'月の暮らしノート';
   document.getElementById('seasonal-lifestyle-grid').innerHTML=result.cards.map(card=>'<article class="seasonal-lifestyle-card"><p class="seasonal-lifestyle-label">'+escapeWidgetHTML(card.label)+'</p><h4>'+escapeWidgetHTML(card.title)+'</h4><p>'+escapeWidgetHTML(card.text)+'</p></article>').join('');
+  document.querySelector('.seasonal-lifestyle').hidden=!result.cards.length;
 }
-
 function renderSeasonalInfo(){
   renderSeasonalLifestyle();
   const result=seasonalGuidance(weatherRecord?.data,weatherRecord?.time);
