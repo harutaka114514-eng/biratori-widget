@@ -200,6 +200,14 @@ button:active,.link-box a:active {transform:translateY(1px);}
 @media(max-width:600px) {body {padding:20px 12px 32px;}h1 {font-size:23px;}.top-row {grid-template-columns:1fr;gap:12px;}.garbage-button {min-height:64px;}.widget {padding:13px;border-radius:15px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}.extra-info {display:grid;grid-template-columns:1fr 1fr;gap:12px;}.info-item {min-height:36px;}.news-header {align-items:flex-start;}.cal-cell {min-height:53px;padding:4px 2px;}.cal-plan,.cal-garbage {font-size:8px;}.news-list a {overflow-wrap:anywhere;}#news-fullscreen-overlay {padding:14px;}}
 @media(prefers-reduced-motion:reduce) {*,*::before,*::after {animation:none !important;transition:none !important;}}
 
+
+/* Seasonal guidance uses the existing Biratori weather forecast. */
+.seasonal-widget {background:linear-gradient(135deg,rgba(250,255,245,.94),rgba(219,244,215,.86));}
+.seasonal-heading {display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;}.seasonal-heading h2 {font-size:16px;color:#315c42;margin:0;}.seasonal-heading span {font-size:12px;color:#41674a;}
+.seasonal-list {list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:0;margin:0;}.seasonal-list li {background:rgba(255,255,255,.72);border:1px solid #c4dfc7;border-radius:10px;padding:11px 12px;color:#284c38;font-size:13px;line-height:1.7;}.seasonal-list strong {display:block;font-size:14px;margin-bottom:2px;}
+.seasonal-footer {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-top:10px;}.seasonal-footer p {font-size:11px;color:#476452;line-height:1.7;margin:0;}.seasonal-footer a {font-size:12px;color:#245941;text-underline-offset:3px;white-space:nowrap;}
+@media(max-width:600px){.seasonal-list {grid-template-columns:1fr;}.seasonal-heading {align-items:flex-start;}.seasonal-heading span {white-space:nowrap;}}
+
 </style>
 </head>
 <body>
@@ -243,6 +251,12 @@ button:active,.link-box a:active {transform:translateY(1px);}
       🗑 R8年度ごみ収集PDF<span>🔥月木 / ♻水</span><span id="garbage-summary" style="font-size:11px;font-weight:normal;margin-top:5px"></span>
     </a>
   </div>
+
+  <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
+    <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
+    <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
+    <div class="seasonal-footer"><p id="seasonal-status" role="status"></p><a href="https://www.town.biratori.hokkaido.jp/" target="_blank" rel="noopener noreferrer">町のお知らせ・イベント ↗</a></div>
+  </section>
 
   <div class="main-layout">
     <div class="left-content">
@@ -755,13 +769,65 @@ function markAsRead(link, element) {
   if(element) element.closest('li').classList.add('is-read');
 }
 
+
+function seasonalGuidance(data,recordTime,now=Date.now()) {
+  const jst=new Date(now).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+  const month=Number(jst.slice(5,7));
+  const season=month>=3&&month<=5?'spring':month>=6&&month<=8?'summer':month>=9&&month<=11?'autumn':'winter';
+  const seasons={
+    spring:{name:'🌸 春',title:'🌸 春の暮らし',text:'雪解けの時期は足元に気をつけて。気温差に備え、脱ぎ着できる上着が便利です。'},
+    summer:{name:'☀️ 夏',title:'🌿 夏の暮らし',text:'外出時は水分と日陰での休憩を。帽子などで日差しへの備えも。'},
+    autumn:{name:'🍂 秋',title:'🧥 秋の暮らし',text:'朝晩の冷え込みに備えて上着を。紅葉や秋の催しは、町のお知らせから探せます。'},
+    winter:{name:'❄️ 冬',title:'🥾 冬の暮らし',text:'滑りにくい靴で、足元に注意。雪や凍結の日は移動時間に余裕を持ちましょう。'}
+  };
+  const general=seasons[season],notices=[];
+  const fresh=Number.isFinite(recordTime)&&now-recordTime>=0&&now-recordTime<=3*60*60*1000;
+  if(data&&fresh){
+    const daily=data.daily||{};
+    const dayIndices=(daily.time||[]).map((date,i)=>({date,i})).filter(x=>x.date>=jst).slice(0,2).map(x=>x.i);
+    let temps=[],codes=[],probabilities=[],period='今日・明日';
+    const h=data.hourly;
+    if(h&&Array.isArray(h.time)){
+      const start=new Date(now).toLocaleString('sv-SE',{timeZone:'Asia/Tokyo'}).replace(' ','T').slice(0,16);
+      const end=new Date(now+24*60*60*1000).toLocaleString('sv-SE',{timeZone:'Asia/Tokyo'}).replace(' ','T').slice(0,16);
+      const indices=h.time.map((time,i)=>({time,i})).filter(x=>typeof x.time==='string'&&x.time>=start&&x.time<=end).map(x=>x.i);
+      temps=indices.map(i=>h.temperature_2m?.[i]).filter(Number.isFinite);
+      codes=indices.map(i=>h.weathercode?.[i]).filter(Number.isFinite);
+      probabilities=indices.map(i=>h.precipitation_probability?.[i]).filter(Number.isFinite);
+      if(temps.length)period='今後24時間';
+    }
+    if(!temps.length){temps=dayIndices.flatMap(i=>[daily.temperature_2m_min?.[i],daily.temperature_2m_max?.[i]]).filter(Number.isFinite);codes=dayIndices.map(i=>daily.weathercode?.[i]).filter(Number.isFinite);}
+    if(temps.length){
+      const low=Math.min(...temps),high=Math.max(...temps);
+      if(codes.some(c=>[71,73,75,77,85,86].includes(c)))notices.push({title:'❄️ 雪の予報',text:period+'に雪の予報があります。足元と交通情報を確認し、移動は余裕を持って。'});
+      if(codes.some(c=>[95,96,99].includes(c)))notices.push({title:'⛈️ 雷雨の予報',text:period+'に雷雨の予報があります。外出前に最新の天気・注意報を確認しましょう。'});
+      if(high>=28)notices.push({title:'☀️ 暑さに備えて',text:period+'の予想最高気温は'+Math.round(high)+'℃。水分補給と涼しい場所での休憩を。'});
+      if(low<=0)notices.push({title:'🧊 氷点下の予報',text:period+'の予想最低気温は'+Math.round(low)+'℃。濡れた路面などの凍結に注意してください。'});
+      else if(low<=5)notices.push({title:'🧥 冷え込みに備えて',text:period+'の予想最低気温は'+Math.round(low)+'℃。暖かい上着があると安心です。'});
+      if(!notices.length&&(probabilities.some(p=>p>=60)||codes.some(c=>[51,53,55,56,57,61,63,65,66,67,80,81,82].includes(c))))notices.push({title:'☔ 雨への備え',text:period+'は雨の予報、または降水確率60%以上の時間帯があります。雨具を用意しておくと安心です。'});
+    }
+  }
+  if(!notices.length)notices.push({title:general.title,text:general.text});
+  if(notices.length===1&&notices[0].title!==general.title)notices.push({title:general.title,text:general.text});
+  if(notices.length===1)notices.push({title:'📅 町の季節を楽しむ',text:'季節の催しや町のお知らせは、平取町の公式サイトで確認できます。'});
+  return {season:general.name,notices:notices.slice(0,2),fresh:!!data&&fresh};
+}
+function renderSeasonalInfo(){
+  const result=seasonalGuidance(weatherRecord?.data,weatherRecord?.time);
+  document.getElementById('seasonal-season').textContent=result.season;
+  document.getElementById('seasonal-list').innerHTML=result.notices.map(item=>'<li><strong>'+escapeWidgetHTML(item.title)+'</strong>'+escapeWidgetHTML(item.text)+'</li>').join('');
+  document.getElementById('seasonal-status').textContent=result.fresh
+    ?'天気の取得：'+formatWidgetTime(weatherRecord.time)+'｜予報：Open-Meteo。季節の案内は一般的な目安です。'
+    :'最新の天気が未取得のため、一般的な季節の案内を表示しています。';
+}
+
 async function loadWeather() {
   try {
     const d = await fetchWidgetJSON("https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&hourly=temperature_2m,weathercode,precipitation_probability&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo");
     if(!validWeather(d)) throw Error('Invalid weather');
-    renderWeatherData(d);
     const record = {data:d, time:Date.now()};
     weatherRecord = record;
+    renderWeatherData(d);
     const stored = writeWidgetStorage('biratori_weather_cache_v1',record);
     document.getElementById('weather-status').textContent = '最終更新：'+formatWidgetTime(record.time)+(stored?'':'（保存できませんでした）');
   } catch(e) {
@@ -780,6 +846,7 @@ function switchWeatherView(view){
 }
 function renderWeatherData(d) {
     displayedWeather=d;
+    renderSeasonalInfo();
     const icons = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",61:"🌧️",71:"❄️",95:"⛈️"};
     document.getElementById("weather").textContent = `${icons[d.current_weather.weathercode]||"☁️"} ${Math.round(d.current_weather.temperature)}℃`;
     const grid=document.getElementById("weekly-weather");
@@ -1061,6 +1128,8 @@ function calcSunTimes() {
   el.textContent = toJST(riseMin) + ' / ' + toJST(setMin);
 }
 
+renderSeasonalInfo();
+setInterval(renderSeasonalInfo,60000);
 if(weatherRecord && validWeather(weatherRecord.data)) { renderWeatherData(weatherRecord.data); document.getElementById('weather-status').textContent='前回の天気（'+formatWidgetTime(weatherRecord.time)+'）／更新中'; }
 restoreNewsCache();
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
