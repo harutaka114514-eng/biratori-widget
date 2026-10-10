@@ -213,10 +213,10 @@ button:active,.link-box a:active {transform:translateY(1px);}
 @media(max-width:900px){.seasonal-event-list {grid-template-columns:1fr;}}
 
 
-.seasonal-lifestyle {margin-top:14px;padding-top:12px;border-top:1px solid #b8d9c0;}.seasonal-lifestyle h3 {font-size:15px;margin:0 0 9px;color:#315c42;}.seasonal-lifestyle-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}.seasonal-lifestyle-card {background:rgba(255,255,255,.8);border:1px solid #c4dfc7;border-radius:10px;padding:12px;}.seasonal-lifestyle-card:nth-child(1) {background:#fffbefdb;border-color:#e0dbb7;}.seasonal-lifestyle-card:nth-child(3) {background:#f0f8ffdb;border-color:#c6dce7;}.seasonal-lifestyle-label {font-size:12px;color:#49624c;margin:0 0 6px;}.seasonal-lifestyle-card h4 {margin:0 0 5px;font-size:14px;color:#284c38;}.seasonal-lifestyle-card p:last-child {font-size:13px;line-height:1.8;color:#345141;margin:0;}.seasonal-lifestyle-note {font-size:11px;line-height:1.7;color:#476452;margin:8px 0 0;}
-@media(max-width:900px){.seasonal-lifestyle-grid {grid-template-columns:1fr;}}
 
 .seasonal-list li:only-child {grid-column:1/-1;}
+.seasonal-list.seasonal-three-cards {grid-template-columns:repeat(3,minmax(0,1fr));}.seasonal-list li[data-lifestyle] {background:#fffcf0d9;}.seasonal-note-label {display:block;font-size:11px;margin-bottom:4px;color:#49624c;}
+@media(max-width:900px){.seasonal-list.seasonal-three-cards {grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -264,7 +264,6 @@ button:active,.link-box a:active {transform:translateY(1px);}
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
     <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
     <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
-    <section class="seasonal-lifestyle" aria-labelledby="seasonal-lifestyle-title"><h3 id="seasonal-lifestyle-title">季節の暮らしノート</h3><div id="seasonal-lifestyle-grid" class="seasonal-lifestyle-grid"></div><p class="seasonal-lifestyle-note">北海道の一般的な季節の目安を紹介しています。食材の出回りや自然の様子は、地域・天候によって異なります。</p></section>
     <div class="seasonal-events"><h3>📅 近くの催し ― 平取・日高周辺</h3><ul id="seasonal-events-list" class="seasonal-event-list" aria-live="polite"></ul><p id="seasonal-events-status" class="seasonal-event-source" role="status">催し情報を読み込んでいます。</p></div>
     <div class="seasonal-footer"><p id="seasonal-status" role="status"></p><a href="https://www.town.biratori.hokkaido.jp/" target="_blank" rel="noopener noreferrer">町のお知らせ・イベント ↗</a></div>
   </section>
@@ -878,27 +877,28 @@ function seasonalLifestyle(now=Date.now(),random=Math.random){
   const cards=categories.flatMap(([label,notes])=>{
     const available=(Array.isArray(notes)?notes:[]).filter(note=>Array.isArray(note)&&typeof note[0]==='string'&&note[0].trim()&&typeof note[1]==='string'&&note[1].trim());
     if(!available.length)return [];
-    const [title,text]=available[Math.min(available.length-1,Math.max(0,Math.floor(random()*available.length)))];
-    return [{label,title,text}];
+    return available.map(([title,text])=>({label,title,text}));
   });
-  return {month,key:date.slice(0,7),cards};
+  const chosen=cards.length?cards[Math.min(cards.length-1,Math.max(0,Math.floor(random()*cards.length)))]:null;
+  return {month,key:date.slice(0,7),cards:chosen?[chosen]:[]};
 }
 let seasonalLifestyleSelection=null;
-function renderSeasonalLifestyle(){
+function selectedSeasonalLifestyle(){
   const key=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}).slice(0,7);
   if(!seasonalLifestyleSelection||seasonalLifestyleSelection.key!==key)seasonalLifestyleSelection=seasonalLifestyle();
-  const result=seasonalLifestyleSelection;
-  document.getElementById('seasonal-lifestyle-title').textContent=result.month+'月の暮らしノート';
-  document.getElementById('seasonal-lifestyle-grid').innerHTML=result.cards.map(card=>'<article class="seasonal-lifestyle-card"><p class="seasonal-lifestyle-label">'+escapeWidgetHTML(card.label)+'</p><h4>'+escapeWidgetHTML(card.title)+'</h4><p>'+escapeWidgetHTML(card.text)+'</p></article>').join('');
-  document.querySelector('.seasonal-lifestyle').hidden=!result.cards.length;
+  return seasonalLifestyleSelection.cards[0]||null;
 }
+
 function renderSeasonalInfo(){
-  renderSeasonalLifestyle();
   const result=seasonalGuidance(weatherRecord?.data,weatherRecord?.time);
   document.getElementById('seasonal-season').textContent=result.season;
-  document.getElementById('seasonal-list').innerHTML=result.notices.map(item=>'<li><strong>'+escapeWidgetHTML(item.title)+'</strong>'+escapeWidgetHTML(item.text)+'</li>').join('');
+  const note=selectedSeasonalLifestyle();
+  const cards=[...result.notices,...(note?[{title:note.title,text:note.text,label:note.label}]:[])];
+  const list=document.getElementById('seasonal-list');
+  list.classList.toggle('seasonal-three-cards',cards.length===3);
+  list.innerHTML=cards.map(item=>'<li'+(item.label?' data-lifestyle="true"':'')+'>'+(item.label?'<span class="seasonal-note-label">'+escapeWidgetHTML(item.label)+'</span>':'')+'<strong>'+escapeWidgetHTML(item.title)+'</strong>'+escapeWidgetHTML(item.text)+'</li>').join('');
   document.getElementById('seasonal-status').textContent=result.fresh
-    ?'天気の取得：'+formatWidgetTime(weatherRecord.time)+'｜予報：Open-Meteo。季節の案内は一般的な目安です。'
+    ?'天気の取得：'+formatWidgetTime(weatherRecord.time)+'｜予報：Open-Meteo。暮らしノートは北海道の一般的な季節の目安です。'
     :'最新の天気が未取得のため、一般的な季節の案内を表示しています。';
 }
 
