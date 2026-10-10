@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>biratori-widget · XP Desktop</title>
+<title>びらとりメモ帳 · biratori-widget</title>
 <style>
 /* 既存のベーススタイル */
 body {
@@ -156,68 +156,48 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #news-widget > #meshi-panel, #news-widget > #gmail-panel { min-height: 0; overflow-y: auto; }
 @media(max-width:900px){ #news-widget { max-height: 75vh; } }
 
-/* Windows XP Luna-inspired desktop, windows and taskbar. */
-:root {color-scheme:light;--xp-blue:#0054e3;--xp-face:#ece9d8;--xp-ink:#222;}
-body {margin:0;min-height:100vh;box-sizing:border-box;padding:24px 20px 68px;font-family:Tahoma,"MS PGothic",Meiryo,sans-serif;font-size:12px;line-height:1.5;color:var(--xp-ink);background:#3b85c6 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%221000%22%20viewBox%3D%220%200%201600%201000%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sky%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23247bc4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%239ed5f4%22/%3E%3C/linearGradient%3E%3ClinearGradient%20id%3D%22hill%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2382c136%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23549d21%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23277b18%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22cloud%22%3E%3CfeGaussianBlur%20stdDeviation%3D%2212%22/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20fill%3D%22url%28%23sky%29%22%20d%3D%22M0%200h1600v1000H0z%22/%3E%3Cg%20fill%3D%22white%22%20opacity%3D%22.83%22%20filter%3D%22url%28%23cloud%29%22%3E%3Cellipse%20cx%3D%22230%22%20cy%3D%22170%22%20rx%3D%22200%22%20ry%3D%2238%22/%3E%3Cellipse%20cx%3D%22280%22%20cy%3D%22145%22%20rx%3D%2285%22%20ry%3D%2244%22/%3E%3Cellipse%20cx%3D%22970%22%20cy%3D%22260%22%20rx%3D%22240%22%20ry%3D%2235%22/%3E%3Cellipse%20cx%3D%221040%22%20cy%3D%22225%22%20rx%3D%22105%22%20ry%3D%2255%22/%3E%3Cellipse%20cx%3D%221490%22%20cy%3D%2290%22%20rx%3D%22150%22%20ry%3D%2230%22/%3E%3C/g%3E%3Cpath%20d%3D%22M0%20720Q500%20550%20950%20690T1600%20675V1000H0Z%22%20fill%3D%22%2380b943%22/%3E%3Cpath%20d%3D%22M0%20750Q620%20490%201170%20700T1600%20740V1000H0Z%22%20fill%3D%22url%28%23hill%29%22/%3E%3Cpath%20d%3D%22M0%20810Q540%20595%201060%20750%22%20stroke%3D%22%2395cf49%22%20stroke-width%3D%225%22%20fill%3D%22none%22%20opacity%3D%22.3%22/%3E%3C/svg%3E") center / cover fixed no-repeat;}
+/* Heisei retro: pastel stationery, gingham and sticker-like headings. */
+:root {color-scheme:light;--ink:#383647;--pink:#ed94ba;--blue:#a6dce9;--paper:#fffefb;}
+body {margin:0;min-height:100vh;box-sizing:border-box;padding:28px 20px 32px;font-family:"Hiragino Maru Gothic ProN",Meiryo,sans-serif;font-size:15px;line-height:1.7;color:var(--ink);background-color:#fff5f8;background-image:linear-gradient(90deg,#efabc329 50%,transparent 50%),linear-gradient(#efabc329 50%,transparent 50%);background-size:24px 24px;}
 body::before {display:none;}
-a {color:#003399;}a:visited {color:#663399;}a:hover {color:#0755db;}
-.blog-masthead {max-width:1240px;margin:0 auto 20px;color:white;text-shadow:1px 2px 2px #174d8b;}
-.blog-kicker {font-size:11px;margin:0 0 4px;color:#e4f4ff;letter-spacing:1px;}
-h1 {font-size:28px;font-weight:bold;margin:0;text-align:left;color:white;text-shadow:1px 2px 2px #174d8b;letter-spacing:-.5px;}
-h1::before {content:"▦";display:inline-block;margin-right:10px;color:#fff7c0;font-size:32px;vertical-align:-2px;}
-.blog-intro {font-size:12px;margin:8px 0 12px;}.blog-nav {display:flex;flex-wrap:wrap;gap:16px;font-size:11px;}.blog-nav a {color:white;text-decoration:none;}.blog-nav a:hover {text-decoration:underline;}
-.widgets {max-width:1240px;gap:18px;}.widget {padding:12px;background:var(--xp-face);border:3px solid #0855d9;border-top:0;border-radius:8px 8px 0 0;box-shadow:2px 4px 8px #12356d55;overflow:hidden;}
-.top-row {grid-template-columns:minmax(0,1fr) 200px;gap:18px;}.main-layout {grid-template-columns:minmax(0,1fr) minmax(0,470px);gap:18px;}.bottom-widgets {grid-template-columns:190px minmax(0,1fr);gap:14px;margin-top:18px;}
-.blog-section {background:linear-gradient(#4091ff 0%,#0764ec 12%,#0055e5 65%,#0346c5 95%,#083db3);color:white;font-size:12px;font-weight:bold;line-height:20px;text-shadow:1px 1px #003c98;margin:-12px -12px 12px;padding:5px 9px;box-shadow:inset 0 1px 0 #79adff;border-radius:5px 5px 0 0;}
-.blog-section::before {content:"▣";color:#f9edb5;margin-right:7px;text-shadow:1px 1px #4675a0;}
-#clock {font-family:Tahoma,"MS PGothic",sans-serif;font-size:21px;font-weight:bold;color:#183660;white-space:normal;}.extra-info {border-color:#c4c0ae;gap:10px;padding:0 10px;}.info-item .label {color:#66624f;font-size:9px;}.info-item .content {color:#222;font-size:13px;}.weekly-weather {border-color:#c4c0ae;gap:5px;padding-top:10px;}.weather-day {background:#fff;border:1px solid #b5b5ac;padding:7px 2px;border-radius:0;font-size:10px;}.widget-status {color:#676454;font-size:10px;}
+a {color:#305e8e;}a:visited {color:#79537b;}a:hover {color:#ac4270;}
+.blog-masthead {position:relative;max-width:1320px;margin:0 auto 24px;padding:28px 24px 18px;text-align:center;background:#fffefb;border:2px solid #6b5d75;border-radius:22px;box-shadow:6px 6px 0 #eab2c7;}
+.blog-masthead::before {content:"★";position:absolute;left:24px;top:20px;color:#e3a12d;font-size:42px;transform:rotate(-12deg);text-shadow:2px 2px #f8d681;}
+.blog-masthead::after {content:"♡";position:absolute;right:28px;top:22px;color:#cf6493;font-size:44px;transform:rotate(12deg);}
+.blog-kicker {display:inline-block;margin:0 0 10px;padding:3px 16px;background:#d2eef3;border:1px dashed #6695a6;border-radius:4px;font-size:12px;font-weight:bold;letter-spacing:2px;color:#315c70;transform:rotate(-2deg);}
+h1 {margin:0;font-size:34px;letter-spacing:2px;color:#775070;text-align:center;text-shadow:2px 2px 0 #f5cadb;}
+.blog-intro {font-size:14px;margin:12px 0 18px;color:#514853;}.blog-nav {display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;}.blog-nav a,#xp-settings-top {display:inline-block;padding:7px 15px;border:1px solid #a27c94;border-radius:999px;background:#fff2f7;color:#65465f;text-decoration:none;font-size:13px;box-shadow:0 2px 0 #e8bfd1;}
+.blog-nav a:nth-child(even) {background:#e9f6fa;border-color:#81aebc;color:#355f70;}.blog-nav a:hover {background:#f7d8e6;}#xp-settings-top {cursor:pointer;font:inherit;font-size:13px;}
+.widgets {max-width:1320px;gap:22px;}.widget {position:relative;background:var(--paper);border:2px solid #88798e;border-radius:15px;padding:18px;box-shadow:4px 4px 0 #dccde2;}
+.top-row {grid-template-columns:minmax(0,1fr) 220px;gap:20px;}.main-layout {grid-template-columns:minmax(0,1fr) 480px;gap:20px;}.bottom-widgets {grid-template-columns:205px minmax(0,1fr);gap:16px;margin-top:22px;}
+.blog-section {font-size:15px;line-height:1.7;font-weight:bold;color:#68455f;background:#f8dce8;border-bottom:1px dashed #d4a1b9;margin:-18px -18px 16px;padding:10px 15px;border-radius:13px 13px 0 0;letter-spacing:1px;}.blog-section::before {content:"✿";display:inline-block;margin-right:8px;color:#b4517e;}.left-content>.widget>.blog-section {background:#d7eff5;color:#376173;border-color:#98c2cf;}.bottom-widgets>.widget:nth-child(2)>.blog-section {background:#f9edb9;color:#75612e;border-color:#d0bd75;}
+#clock {font-family:inherit;font-size:24px;font-weight:bold;color:#584466;white-space:normal;}.info-bar {gap:12px;}.extra-info {border-color:#ead9e2;gap:12px;padding:0 12px;}.info-item .label {font-size:12px;color:#615264;}.info-item .content {font-size:15px;color:#383647;}.widget-status {font-size:12px;color:#665c6b;line-height:1.6;}.weekly-weather {border-color:#ead9e2;gap:6px;padding-top:12px;}.weather-day {font-size:12px;background:#fdf4f8;border:1px solid #edc6d7;border-radius:9px;padding:10px 3px;}.temp-max {color:#ad385a;}.temp-min {color:#285f9c;}
 button {font-family:inherit;}
-.weather-switch button,.video-tabs button,.news-tabs button,#news-fullscreen-tabs button,.refresh-btn,#news-expand-btn,#gmail-panel button,#widget-settings button,.cal-btn {color:#222;background:linear-gradient(#fff,#f4f3eb 50%,#e3dfcc);border:1px solid #7f9db9;border-radius:3px;box-shadow:inset 1px 1px white,inset -1px -1px #d1cbb4;padding:5px 9px;font-weight:normal;}
-.weather-switch button.active,.video-tabs button.active,.news-tabs button.active,#news-fullscreen-tabs button.active {color:#102960 !important;background:linear-gradient(#fff,#eaf1fc) !important;border-color:#316ac5;box-shadow:inset 0 3px 0 #ffc73c,inset 0 -1px 0 #c0d4f3;font-weight:bold;}
-button:hover {border-color:#e6a300;box-shadow:inset 0 0 0 1px #ffd46b;}button:active {background:#dfddce;}
-:where(a,button,input,textarea,.cal-cell):focus-visible {outline:2px dotted #153773;outline-offset:2px;}
-.garbage-button {background:#fffde6;border:3px solid #0755db;border-radius:8px 8px 0 0;color:#755716;font-size:12px;font-weight:normal;padding:14px;gap:8px;box-shadow:2px 4px 8px #12356d55;}
-.video-container {border-radius:0;background:black;border:1px solid #7f9db9;}.video-tabs {gap:6px;}.video-tabs button {font-size:11px;}
-.link-box {gap:4px;height:auto;justify-content:flex-start;}.link-box a {background:transparent;border:0;border-radius:0;padding:7px 3px;color:#003399;text-decoration:none;font-size:12px;font-weight:normal;justify-content:flex-start;}.link-box a:hover {text-decoration:underline;background:#dce5f5;}
-.news-header {border-bottom:1px solid #c4c0ae;padding-bottom:9px;align-items:flex-start;}.news-tabs {gap:4px;}.news-tabs button {font-size:10px;padding:5px 8px;}.news-list {gap:0;background:white;border:1px solid #7f9db9;}.news-list li,#news-fullscreen-list li {background:white;border:0;border-bottom:1px solid #e0e5ef;border-radius:0;padding:11px 9px;}.news-list a,#news-fullscreen-list a {font-size:12px;color:#003399;font-weight:normal;line-height:1.6;}.news-list li:hover {background:#e9f1ff;}.news-list li.is-read {background:#f9fafc;}.news-list li.is-read a {color:#663399 !important;}.unread-dot {background:#f6b12a;width:6px;height:6px;margin-top:6px;border-radius:0;}
-.cal-nav {color:#133c81;}.cal-btn {font-size:12px;padding:3px 8px;}.cal-grid {gap:2px;}.cal-header {font-size:11px;color:#4c4b40;}.cal-cell {background:white;border:1px solid #c8c6b6;border-radius:0;font-size:11px;padding:4px;min-height:53px;}.cal-cell:hover {background:#edf4ff;}.cal-today {outline:2px solid #316ac5;background:#e7efff;}.cal-plan {background:#d6e4fb;color:#193969;border-radius:0;}.cal-garbage {background:#fff1ba;color:#755716;border-radius:0;}.holiday-name {font-size:8px;}
-#widget-settings {background:var(--xp-face);border:3px solid #0755db;border-top-width:28px;border-radius:8px 8px 0 0;color:#222;box-shadow:4px 6px 12px #0005;}
-#widget-settings::backdrop {background:#17396966;}#widget-settings fieldset {border:1px solid #bcb7a3;border-radius:0;}#widget-settings input:not([type=checkbox]),#widget-settings textarea,#gmail-client-id {background:white;border:1px solid #7f9db9;border-radius:0;color:#222;}
-#news-fullscreen-overlay {background:var(--xp-face);border:4px solid #0755db;border-top-width:25px;}#news-fullscreen-close {background:linear-gradient(#ffb29a,#e04b27);border:1px solid #b83820;border-radius:3px;font-size:12px;}
-.blog-footer {position:fixed;inset:auto 0 0;z-index:1000;display:flex;align-items:center;height:38px;background:linear-gradient(#4599ff 0%,#1c6cf1 14%,#245cda 70%,#2255cb);border-top:1px solid #6caaff;box-shadow:0 -1px 3px #1d45a655;gap:7px;color:white;box-sizing:border-box;}
-#settings-open {display:block;margin:0;height:38px;flex-shrink:0;padding:0 19px 0 14px;border:0;border-radius:0 12px 12px 0;background:linear-gradient(#73ba63,#39962e 22%,#358b27 75%,#4b9f35);color:white;font:bold italic 17px Tahoma,sans-serif;text-shadow:1px 1px #1f641b;box-shadow:inset 0 2px 3px #ade09788,inset -3px 0 5px #246819;cursor:pointer;}
-#settings-open::before {content:"▦";font-style:normal;color:#fff7c3;margin-right:7px;}
-#settings-open:hover {background:linear-gradient(#8bc87b,#45a336);}.xp-task {color:white !important;text-decoration:none;font-size:11px;background:#3d7fe8;border:1px solid #1848a4;border-radius:3px;padding:5px 13px;box-shadow:inset 1px 1px #6fa5f7;white-space:nowrap;}.xp-task:hover {background:#5595f1;}.xp-task-main {background:#184fba;box-shadow:inset 1px 1px #103d97;}.xp-tray {margin-left:auto;align-self:stretch;display:flex;align-items:center;padding:0 14px;background:linear-gradient(#20bcf1,#1199db);border-left:1px solid #0778bd;font-size:11px;white-space:nowrap;}.xp-tray a {color:white;text-decoration:none;}
-* {scrollbar-width:thin;scrollbar-color:#7da4dd #eee9db;}
-@media(min-width:901px) and (max-width:1100px) {.main-layout {grid-template-columns:minmax(0,1fr) 380px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}}
-@media(max-width:900px) {.main-layout {grid-template-columns:1fr;}.bottom-widgets {grid-template-columns:190px minmax(0,1fr);}.info-bar {flex-wrap:wrap;}.extra-info {order:3;flex-basis:100%;border:0;border-top:1px solid #c4c0ae;padding:10px 0 0;margin:0;}.info-bar>div:last-child {margin-left:auto;}#news-widget {max-height:75vh;}}
-@media(max-width:600px) {body {padding:20px 10px 62px;}h1 {font-size:23px;}.blog-nav {gap:14px;}.top-row {grid-template-columns:1fr;gap:12px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}.extra-info {display:grid;grid-template-columns:1fr 1fr;gap:12px;}.cal-cell {min-height:52px;padding:3px 2px;}.cal-plan,.cal-garbage {font-size:8px;}.news-list a {overflow-wrap:anywhere;}#news-fullscreen-overlay {padding:14px;}#settings-open {font-size:15px;padding:0 12px 0 8px;}.xp-task {padding:5px 8px;font-size:10px;}.xp-task-secondary {display:none;}.xp-tray {padding:0 8px;font-size:10px;}.blog-footer {gap:5px;}}
+.weather-switch button,.video-tabs button,.news-tabs button,#news-fullscreen-tabs button,.refresh-btn,#news-expand-btn,#gmail-panel button,#widget-settings button,.cal-btn {background:#fff9fc;color:#604e66;border:1px solid #ba9cb5;border-radius:8px;padding:7px 10px;min-height:34px;font-size:13px;font-weight:normal;box-shadow:0 2px 0 #e6d6e4;}
+.weather-switch button.active,.video-tabs button.active,.news-tabs button.active,#news-fullscreen-tabs button.active {background:#f5c9dc !important;color:#66334d !important;border-color:#b87092;font-weight:bold;box-shadow:inset 0 -2px 0 #df9dbb;}
+button:hover {background:#f4e4ed;}:where(a,button,input,textarea,.cal-cell):focus-visible {outline:3px solid #305e8e;outline-offset:3px;}
+.garbage-button {background:#fff5c9;border:2px solid #b9a46d;border-radius:15px;color:#695121;padding:16px;font-size:14px;font-weight:normal;line-height:1.8;gap:8px;box-shadow:4px 4px 0 #eadcaa;}
+.video-tabs {gap:7px;}.video-container {border-radius:8px;border:2px solid #ad9ab4;background:black;}
+.link-box {gap:6px;height:auto;justify-content:flex-start;}.link-box a {background:#fdf3f7;border:1px dashed #d7a8bd;border-radius:8px;padding:10px 8px;color:#6f4661;justify-content:flex-start;font-size:14px;font-weight:normal;text-decoration:none;}.link-box a:nth-child(even) {background:#eef8fa;border-color:#a0c9d4;color:#365c70;}.link-box a:hover {background:#f5dfeb;}
+.news-header {padding-bottom:12px;border-bottom:1px dashed #dcc0d0;align-items:flex-start;gap:9px;}.news-tabs {gap:6px;}.news-tabs button {font-size:13px;}.news-list {gap:10px;}.news-list li,#news-fullscreen-list li {background:white;border:1px solid #ead8e3;border-left:4px solid #e7b0ca;border-radius:7px;padding:14px 11px;}.news-list a,#news-fullscreen-list a {font-size:15px;line-height:1.8;color:#305e8e;font-weight:normal;}.news-list li:hover {background:#fff6fa;}.news-list li.is-read {background:#f8f5f9;}.news-list li.is-read a {color:#79537b !important;}.unread-dot {background:#b96088;width:7px;height:7px;margin-top:10px;border-radius:50%;}
+.cal-nav {color:#655238;}.cal-btn {font-size:13px;padding:5px 9px;}.cal-grid {gap:3px;}.cal-header {font-size:13px;color:#514853;}.cal-cell {background:#fffdf7;border:1px solid #e3d8b9;border-radius:6px;font-size:13px;min-height:74px;padding:5px;}.cal-num {font-size:14px;}.cal-cell:hover {background:#fff4d8;}.cal-today {outline:2px solid #c591b1;background:#fce7f1;}.cal-dim {opacity:.55;}.sun {color:#b03d61;}.sat {color:#2b669b;}.cal-plan {background:#e5def2;color:#594472;border-radius:3px;}.cal-garbage {background:#f5e9ba;color:#70551d;border-radius:3px;}.cal-plan,.cal-garbage,.holiday-name {font-size:10px;line-height:1.5;}
+#widget-settings {background:#fffefb;border:2px solid #88798e;border-radius:15px;color:var(--ink);box-shadow:6px 6px 0 #d6c4dc;}
+#widget-settings::backdrop {background:#54405777;}#widget-settings fieldset {border:1px dashed #c5a5bb;border-radius:8px;}#widget-settings input:not([type=checkbox]),#widget-settings textarea,#gmail-client-id {background:white;border:1px solid #bb9eb5;border-radius:5px;color:var(--ink);}
+#news-fullscreen-overlay {background:#fff8fc;border:3px solid #d6a1bc;}#news-fullscreen-close {background:#9b527b;border-radius:8px;font-size:13px;}
+.blog-footer {max-width:1320px;margin:28px auto 0;text-align:center;font-size:13px;color:#684b64;line-height:2;}.blog-footer p {margin:0 0 10px;}.blog-footer a {color:#684b64;}#settings-open {display:inline-block;margin:10px 0 0;background:#f7d7e6;color:#66334d;border:1px solid #b87092;border-radius:999px;padding:7px 18px;min-height:34px;font-size:13px;cursor:pointer;}
+* {scrollbar-width:thin;scrollbar-color:#d5b2c9 #fcf1f6;}
+@media(max-width:1100px) {.main-layout {grid-template-columns:1fr;}.bottom-widgets {grid-template-columns:220px minmax(0,1fr);}.info-bar {flex-wrap:wrap;}.extra-info {order:3;flex-basis:100%;border:0;border-top:1px dashed #dcc0d0;padding:12px 0 0;margin:0;}.info-bar>div:last-child {margin-left:auto;}#news-widget {max-height:none;height:auto !important;}#news-widget > #news {max-height:none;overflow:visible;}}
+@media(max-width:600px) {body {padding:20px 12px 28px;}.blog-masthead {padding:23px 12px 16px;}.blog-masthead::before,.blog-masthead::after {font-size:22px;top:10px;}.blog-masthead::before {left:12px;}.blog-masthead::after {right:12px;}h1 {font-size:26px;letter-spacing:1px;}.blog-kicker {font-size:10px;letter-spacing:1px;}.blog-intro {font-size:13px;}.blog-nav {gap:8px;}.blog-nav a,#xp-settings-top {font-size:12px;padding:6px 11px;}.top-row {grid-template-columns:1fr;gap:14px;}.widget {padding:13px;}.blog-section {margin:-13px -13px 14px;font-size:14px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}.link-box a {font-size:13px;}.extra-info {display:grid;grid-template-columns:1fr 1fr;gap:14px;}.info-item .label {font-size:11px;}.cal-cell {min-height:76px;padding:4px 2px;}.cal-plan,.cal-garbage,.holiday-name {font-size:10px;white-space:normal;overflow-wrap:anywhere;}.news-list a {font-size:15px;overflow-wrap:anywhere;}.news-tabs button {font-size:12px;padding:7px 9px;}#news-fullscreen-overlay {padding:14px;}}
 @media(prefers-reduced-motion:reduce) {*,*::before,*::after {animation:none !important;transition:none !important;}}
-
-
-/* Readability: larger type, calmer wallpaper and unobstructed content. */
-body {font-size:15px;line-height:1.7;padding-bottom:24px;background-image:linear-gradient(#e6eef88c,#e6eef88c),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%221000%22%20viewBox%3D%220%200%201600%201000%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sky%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23247bc4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%239ed5f4%22/%3E%3C/linearGradient%3E%3ClinearGradient%20id%3D%22hill%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2382c136%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23549d21%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23277b18%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22cloud%22%3E%3CfeGaussianBlur%20stdDeviation%3D%2212%22/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20fill%3D%22url%28%23sky%29%22%20d%3D%22M0%200h1600v1000H0z%22/%3E%3Cg%20fill%3D%22white%22%20opacity%3D%22.83%22%20filter%3D%22url%28%23cloud%29%22%3E%3Cellipse%20cx%3D%22230%22%20cy%3D%22170%22%20rx%3D%22200%22%20ry%3D%2238%22/%3E%3Cellipse%20cx%3D%22280%22%20cy%3D%22145%22%20rx%3D%2285%22%20ry%3D%2244%22/%3E%3Cellipse%20cx%3D%22970%22%20cy%3D%22260%22%20rx%3D%22240%22%20ry%3D%2235%22/%3E%3Cellipse%20cx%3D%221040%22%20cy%3D%22225%22%20rx%3D%22105%22%20ry%3D%2255%22/%3E%3Cellipse%20cx%3D%221490%22%20cy%3D%2290%22%20rx%3D%22150%22%20ry%3D%2230%22/%3E%3C/g%3E%3Cpath%20d%3D%22M0%20720Q500%20550%20950%20690T1600%20675V1000H0Z%22%20fill%3D%22%2380b943%22/%3E%3Cpath%20d%3D%22M0%20750Q620%20490%201170%20700T1600%20740V1000H0Z%22%20fill%3D%22url%28%23hill%29%22/%3E%3Cpath%20d%3D%22M0%20810Q540%20595%201060%20750%22%20stroke%3D%22%2395cf49%22%20stroke-width%3D%225%22%20fill%3D%22none%22%20opacity%3D%22.3%22/%3E%3C/svg%3E");}
-.widgets,.blog-masthead {max-width:1400px;}.blog-masthead {background:#173f7bdd;padding:16px 20px;border-radius:7px;text-shadow:none;}.blog-kicker {font-size:12px;color:#e8f3ff;}.blog-intro {font-size:14px;color:#fff;}.blog-nav {font-size:14px;gap:20px;align-items:center;}h1 {font-size:28px;text-shadow:none;}
-.widget {background:#fffef8;padding:16px;border-width:2px;border-top:0;}.blog-section {margin:-16px -16px 16px;padding:7px 12px;font-size:15px;line-height:22px;}
-.top-row {grid-template-columns:minmax(0,1fr) 220px;}.main-layout {grid-template-columns:minmax(0,1fr) 500px;}.bottom-widgets {grid-template-columns:210px minmax(0,1fr);}
-#clock {font-size:24px;}.info-item .label {font-size:12px;color:#4b4b43;}.info-item .content {font-size:15px;color:#111;}.extra-info {gap:12px;}.info-bar {gap:12px;}
-.widget-status {font-size:12px;color:#4a4a43;line-height:1.6;}.weather-day {font-size:12px;padding:10px 3px;}.temp-max {color:#b42323;}.temp-min {color:#185ec3;}
-.weather-switch button,.video-tabs button,.news-tabs button,#news-fullscreen-tabs button,.refresh-btn,#news-expand-btn,#gmail-panel button,#widget-settings button,.cal-btn {font-size:13px;padding:7px 11px;min-height:34px;}.news-tabs {gap:6px;}.news-tabs button {font-size:13px;}.news-header {gap:10px;}.news-list li,#news-fullscreen-list li {padding:14px 12px;}.news-list a,#news-fullscreen-list a {font-size:15px;line-height:1.8;color:#163f85;}.unread-dot {width:7px;height:7px;background:#b67900;margin-top:10px;}
-.link-box a {font-size:14px;line-height:1.7;padding:10px 4px;border-bottom:1px solid #e0e2e7;}.garbage-button {font-size:14px;line-height:1.8;color:#5b4105;}
-.cal-header {font-size:13px;color:#343434;}.cal-cell {font-size:13px;min-height:74px;padding:5px;background:#fff;}.cal-num {font-size:14px;}.cal-plan,.cal-garbage,.holiday-name {font-size:10px;line-height:1.5;}.cal-dim {opacity:.55;}.sun {color:#b42323;}.sat {color:#185ec3;}
-.blog-footer {position:static;height:44px;margin:24px -20px -24px;}.xp-task {font-size:13px;padding:6px 14px;}.xp-tray {font-size:13px;}#settings-open {height:44px;}
-#xp-settings-top {padding:5px 12px;min-height:34px;background:#fff;border:1px solid #b5c7e4;border-radius:3px;color:#173f7b;font-size:13px;cursor:pointer;}
-@media(max-width:1100px) {.main-layout {grid-template-columns:1fr;}.bottom-widgets {grid-template-columns:220px minmax(0,1fr);}.link-box {display:flex;}.info-bar {flex-wrap:wrap;}.extra-info {order:3;flex-basis:100%;border:0;border-top:1px solid #c4c0ae;padding:12px 0 0;margin:0;}.info-bar>div:last-child {margin-left:auto;}#news-widget {max-height:none;height:auto !important;}#news-widget > #news {max-height:none;overflow:visible;}}
-@media(max-width:600px) {body {padding-bottom:20px;}.blog-masthead {padding:14px;}.blog-nav {gap:12px;font-size:13px;}.widget {padding:13px;}.blog-section {margin:-13px -13px 14px;font-size:14px;}.top-row {grid-template-columns:1fr;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}.link-box a {font-size:13px;}.extra-info {display:grid;grid-template-columns:1fr 1fr;gap:14px;}.info-item .label {font-size:11px;}.cal-cell {min-height:76px;padding:4px 2px;}.cal-plan,.cal-garbage,.holiday-name {font-size:10px;white-space:normal;overflow-wrap:anywhere;}.news-list a {font-size:15px;}.news-list li {padding:13px 9px;}.news-tabs button {font-size:12px;padding:7px 9px;}.blog-footer {margin:20px -10px -20px;height:42px;}#settings-open {height:42px;}.xp-task {font-size:11px;padding:6px 8px;}.xp-tray {font-size:11px;}}
 
 </style>
 </head>
 <body>
 
 <header class="blog-masthead" id="page-top">
-  <p class="blog-kicker">BIRATORI DESKTOP</p>
-  <h1>biratori-widget</h1>
-  <p class="blog-intro">平取の暮らしを、デスクトップに。天気・ニュース・いつものリンク。</p>
+  <p class="blog-kicker">☆ BIRATORI MEMO BOOK ☆</p>
+  <h1>びらとりメモ帳</h1>
+  <p class="blog-intro">天気も、ニュースも、お気に入りも。<br>いつもの平取を、ひとつのメモ帳に。</p>
   <nav class="blog-nav" aria-label="ページ内メニュー"><a href="#weather-section">お天気</a><a href="#video-section">テレビ</a><a href="#links-section">リンク集</a><a href="#calendar-section">カレンダー</a><a href="#news-widget">ニュース</a><button id="xp-settings-top" type="button" onclick="openWidgetSettings()">⚙ 設定</button></nav>
 </header>
 
@@ -234,7 +214,7 @@ body {font-size:15px;line-height:1.7;padding-bottom:24px;background-image:linear
 <div class="widgets">
   <div class="top-row" id="weather-section">
     <div class="widget">
-      <div class="blog-section">今日の平取 - 天気と暮らし</div>
+      <div class="blog-section">きょうの平取</div>
       <div class="info-bar">
         <div id="clock">--:--:--</div>
         <div class="extra-info">
@@ -263,7 +243,7 @@ body {font-size:15px;line-height:1.7;padding-bottom:24px;background-image:linear
   <div class="main-layout">
     <div class="left-content">
       <div class="widget">
-        <div class="blog-section" id="video-section">テレビ - ライブ映像</div>
+        <div class="blog-section" id="video-section">テレビの時間</div>
         <div class="video-tabs">
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
           <button id="btn-stv" onclick="switchVideo('3xfwDdlulDY', 'btn-stv')">STV</button>
@@ -321,7 +301,7 @@ body {font-size:15px;line-height:1.7;padding-bottom:24px;background-image:linear
     </div>
 
     <div class="widget" id="news-widget">
-      <div class="blog-section">ニュース - biratori-widget</div>
+      <div class="blog-section">気になるニュース</div>
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="nhk" class="active">NHK</button>
@@ -563,7 +543,7 @@ let newsLoading = false;
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
-  // XP-style desktop wallpaper is embedded in the stylesheet.
+  // Heisei stationery background is defined in the stylesheet.
 }
 setRandomBackground();
 
@@ -1376,6 +1356,6 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
   alignNewsHeight();
 })();
 </script>
-<footer class="blog-footer" aria-label="デスクトップのタスクバー"><button id="settings-open" type="button" onclick="openWidgetSettings()" title="ウィジェットの設定を開く">スタート</button><a class="xp-task xp-task-main" href="#page-top">▣ biratori-widget</a><a class="xp-task xp-task-secondary" href="#news-widget">ニュース</a><a class="xp-task xp-task-secondary" href="#calendar-section">カレンダー</a><div class="xp-tray"><a href="#weather-section">☀ 平取の天気</a></div></footer>
+<footer class="blog-footer"><p>♡ 今日も遊びにきてくれてありがとう ♡<br><a href="#page-top">↑ ページのいちばん上へ</a></p><button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ メモ帳の設定</button></footer>
 </body>
 </html>
