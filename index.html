@@ -208,6 +208,10 @@ button:active,.link-box a:active {transform:translateY(1px);}
 .seasonal-footer {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-top:10px;}.seasonal-footer p {font-size:11px;color:#476452;line-height:1.7;margin:0;}.seasonal-footer a {font-size:12px;color:#245941;text-underline-offset:3px;white-space:nowrap;}
 @media(max-width:600px){.seasonal-list {grid-template-columns:1fr;}.seasonal-heading {align-items:flex-start;}.seasonal-heading span {white-space:nowrap;}}
 
+
+.seasonal-events {border-top:1px solid #b8d9c0;margin-top:14px;padding-top:12px;}.seasonal-events h3 {font-size:15px;color:#315c42;margin:0 0 9px;}.seasonal-event-list {list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}.seasonal-event-list li {padding:11px 12px;background:#ffffffbf;border:1px solid #c4dfc7;border-radius:10px;overflow-wrap:anywhere;}.seasonal-event-list a {font-size:13px;font-weight:bold;color:#225c49;line-height:1.6;text-decoration:none;}.seasonal-event-list a:hover {text-decoration:underline;}.seasonal-event-meta {font-size:12px;line-height:1.7;margin:6px 0 0;color:#45644e;}.seasonal-event-state {display:inline-block;padding:1px 6px;margin-right:5px;border-radius:5px;background:#e1f0da;color:#3d612e;font-size:11px;}.seasonal-event-source {font-size:11px;line-height:1.7;color:#476452;margin:9px 0 0;}.seasonal-event-source a {color:#245941;}
+@media(max-width:900px){.seasonal-event-list {grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -255,6 +259,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
     <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
     <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
+    <div class="seasonal-events"><h3>📅 近くの催し ― 平取・日高周辺</h3><ul id="seasonal-events-list" class="seasonal-event-list" aria-live="polite"></ul><p id="seasonal-events-status" class="seasonal-event-source" role="status">催し情報を読み込んでいます。</p></div>
     <div class="seasonal-footer"><p id="seasonal-status" role="status"></p><a href="https://www.town.biratori.hokkaido.jp/" target="_blank" rel="noopener noreferrer">町のお知らせ・イベント ↗</a></div>
   </section>
 
@@ -769,6 +774,28 @@ function markAsRead(link, element) {
   if(element) element.closest('li').classList.add('is-read');
 }
 
+
+
+let hidakaEventRecord=readWidgetStorage('biratori_hidaka_events_v1',null);
+function validHidakaEvents(record){return record?.status==='ok'&&Number.isFinite(Date.parse(record.generatedAt))&&Array.isArray(record.items)&&record.items.every(item=>item&&typeof item.title==='string'&&typeof item.location==='string'&&/^https:\/\/hokkaido-hidaka-kankonavi\.com\/information\/\d+\/$/.test(item.link)&&/^\d{4}-\d{2}-\d{2}$/.test(item.startDate)&&/^\d{4}-\d{2}-\d{2}$/.test(item.endDate)&&item.endDate>=item.startDate);}
+function renderHidakaEvents(failed=false){
+  const list=document.getElementById('seasonal-events-list'),status=document.getElementById('seasonal-events-status');
+  if(!validHidakaEvents(hidakaEventRecord)){list.innerHTML='';status.textContent=failed?'催し情報を取得できませんでした。配信元でご確認ください。':'催し情報を読み込んでいます。';if(failed){const a=document.createElement('a');a.href='https://hokkaido-hidaka-kankonavi.com/';a.target='_blank';a.rel='noopener noreferrer';a.textContent=' 北海道ひだか観光ナビ ↗';status.append(a);}return;}
+  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),items=hidakaEventRecord.items.filter(item=>item.endDate>=today).slice(0,3);
+  const date=value=>value.replace(/-(0?)(\d+)/g,(_,zero,n)=>'/'+n);
+  list.innerHTML=items.map(item=>{
+    const period=item.startDate===item.endDate?date(item.startDate):date(item.startDate)+'〜'+date(item.endDate);
+    const title=item.title.replace(/^【[^】]+】\s*/, '');
+    return '<li><a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer">'+escapeWidgetHTML(title)+' ↗</a><p class="seasonal-event-meta"><span class="seasonal-event-state">'+(item.startDate<=today?'開催中':'開催予定')+'</span>'+escapeWidgetHTML(period)+'<br>'+escapeWidgetHTML(item.location)+'</p></li>';
+  }).join('');
+  const old=Date.now()-Date.parse(hidakaEventRecord.generatedAt)>48*60*60*1000;
+  status.textContent=(items.length?'':'開催日を確認できる開催中・開催予定の催しは現在ありません。 ')+(failed||old?'前回取得の情報／':'')+'更新：'+formatWidgetTime(Date.parse(hidakaEventRecord.generatedAt))+'｜';
+  const source=document.createElement('a');source.href='https://hokkaido-hidaka-kankonavi.com/';source.target='_blank';source.rel='noopener noreferrer';source.textContent='北海道ひだか観光ナビ';status.append(source,'。日程の変更・詳細は各記事でご確認ください。');
+}
+async function loadHidakaEvents(){
+  try{const record=await fetchWidgetJSON(new URL('./data/hidaka-events.json',location.href).href);if(!validHidakaEvents(record))throw Error('Invalid events');hidakaEventRecord=record;writeWidgetStorage('biratori_hidaka_events_v1',record);renderHidakaEvents();}catch{renderHidakaEvents(true);}
+}
+renderHidakaEvents();loadHidakaEvents();setInterval(loadHidakaEvents,30*60*1000);
 
 function seasonalGuidance(data,recordTime,now=Date.now()) {
   const jst=new Date(now).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});

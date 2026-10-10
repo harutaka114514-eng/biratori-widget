@@ -42,12 +42,17 @@ jobs:
         id: sasaru
         continue-on-error: true
         run: node scripts/update-sasaru-news.mjs
+      - name: Collect Hidaka events
+        id: hidaka
+        continue-on-error: true
+        run: node scripts/update-hidaka-events.mjs
       - name: Save collected news
-        if: steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success'
+        if: steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success'
         run: |
           git add data/domingo-news.json
           if [ -f data/sasaru-news.json ]; then git add data/sasaru-news.json; fi
           if [ -f data/walker-news.json ]; then git add data/walker-news.json; fi
+          if [ -f data/hidaka-events.json ]; then git add data/hidaka-events.json; fi
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
