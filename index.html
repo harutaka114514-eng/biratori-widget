@@ -217,16 +217,74 @@ button:active,.link-box a:active {transform:translateY(1px);}
 .seasonal-list li:only-child {grid-column:1/-1;}
 .seasonal-list.seasonal-three-cards {grid-template-columns:repeat(3,minmax(0,1fr));}.seasonal-list li[data-lifestyle] {background:#fffcf0d9;}.seasonal-note-label {display:block;font-size:11px;margin-bottom:4px;color:#49624c;}
 @media(max-width:900px){.seasonal-list.seasonal-three-cards {grid-template-columns:1fr;}}
+
+/* Switchable Wii appearance; original layout is preserved. */
+body[data-theme="wii"]{font-family:"Hiragino Maru Gothic ProN",Meiryo,sans-serif;background:repeating-linear-gradient(0deg,#f0f1f3 0,#f0f1f3 2px,#e8eaed 2px,#e8eaed 4px) !important;color:#505861;padding:28px 26px 36px;min-height:100vh;box-sizing:border-box;}
+body[data-theme="wii"]::before{display:none;}
+body[data-theme="wii"] .widget{background:linear-gradient(#fff,#f9fafb);border:2px solid #b9c4cf;border-radius:20px;padding:17px;box-shadow:inset 0 2px 0 white,0 4px 0 #d5d9de,0 7px 15px #77818a18;min-width:0;backdrop-filter:none;}
+body[data-theme="wii"] .widget:hover{border-color:#49bce8;box-shadow:0 0 0 2px #c8effb,0 4px 0 #cadce4;}
+body[data-theme="wii"] .garbage-button{background:linear-gradient(#fff,#f3f9ed);border:2px solid #b9c4cf;border-radius:20px;color:#517046;font-size:14px;font-weight:normal;gap:10px;box-shadow:0 4px 0 #d5d9de;padding:20px;}
+body[data-theme="wii"] .garbage-button:hover{border-color:#49bce8;}
+body[data-theme="wii"] .seasonal-widget{background:linear-gradient(#fff,#f6fbf8);}
+body[data-theme="wii"] #clock{font-size:23px;color:#46768e;font-family:inherit;}
+body[data-theme="wii"] .extra-info{border-color:#dce6ec;}
+body[data-theme="wii"] .info-item .label{font-size:11px;color:#74828d;}
+body[data-theme="wii"] .info-item .content{color:#51636d;}
+body[data-theme="wii"] .weekly-weather{border-color:#dce6ec;gap:6px;}
+body[data-theme="wii"] .weather-day{background:#f4fafd;border:1px solid #d9e9f0;border-radius:10px;padding:8px 2px;font-size:11px;}
+body[data-theme="wii"] .widget-status{color:#6c7d87;font-size:11px;}
+body[data-theme="wii"] .weather-switch button,body[data-theme="wii"] .video-tabs button,body[data-theme="wii"] .news-tabs button,body[data-theme="wii"] .refresh-btn,body[data-theme="wii"] #news-expand-btn,body[data-theme="wii"] .cal-btn,body[data-theme="wii"] #widget-settings button,body[data-theme="wii"] #gmail-panel button,body[data-theme="wii"] #news-fullscreen-tabs button{border:1px solid #b5d5e3;border-radius:999px;background:linear-gradient(#fff,#eef7fb);color:#557383;padding:6px 12px;font-size:12px;box-shadow:0 2px 0 #dce6ec;font-weight:normal;}
+body[data-theme="wii"] .weather-switch button.active,body[data-theme="wii"] .video-tabs button.active,body[data-theme="wii"] .news-tabs button.active,body[data-theme="wii"] #news-fullscreen-tabs button.active{background:linear-gradient(#d7f6ff,#afe5f6);color:#27647f;border-color:#4fb8df;box-shadow:0 2px 0 #b9d8e3;}
+body[data-theme="wii"] :where(a,button,input,textarea,.cal-cell):focus-visible{outline:3px solid #23acd9;outline-offset:3px;}
+body[data-theme="wii"] .video-container{border-radius:14px;border:2px solid #c9dfe9;background:#dceff8;}
+body[data-theme="wii"] .video-tabs{gap:8px;}
+body[data-theme="wii"] .link-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;height:auto;justify-content:start;}
+body[data-theme="wii"] .link-box a{background:linear-gradient(#fff,#eef5fa);color:#47667c;border:1px solid #c7dce7;border-radius:12px;text-decoration:none;font-size:12px;font-weight:normal;padding:14px 7px;min-height:45px;box-shadow:0 2px 0 #e0e7ec;box-sizing:border-box;}
+body[data-theme="wii"] .link-box a:hover{border-color:#49bce8;background:#edfaff;}
+body[data-theme="wii"] .cal-cell{border-radius:7px;min-height:43px;border-color:#dce4e9;background:#f8fafb;}
+body[data-theme="wii"] .cal-header{color:#708592;font-size:11px;}
+body[data-theme="wii"] .cal-today{outline:2px solid #59bddf;background:#e7f8ff;}
+body[data-theme="wii"] .cal-plan{background:#e2edf7;}
+body[data-theme="wii"] .cal-garbage{background:#eef0d9;}
+body[data-theme="wii"] .cal-plan,body[data-theme="wii"] .cal-garbage,body[data-theme="wii"] .holiday-name{font-size:9px;}
+body[data-theme="wii"] .news-header{border-bottom:1px solid #e0e7ec;padding-bottom:12px;gap:10px;}
+body[data-theme="wii"] .news-tabs{gap:8px;}
+body[data-theme="wii"] .news-list{gap:7px;}
+body[data-theme="wii"] .news-list li{background:#f8fbfd;border:1px solid #dbe7ed;border-radius:10px;padding:12px;}
+body[data-theme="wii"] .news-list a{color:#397695;font-size:14px;font-weight:normal;line-height:1.7;}
+body[data-theme="wii"] .unread-dot{background:#49bce8;}
+body[data-theme="wii"] .news-list li.is-read{background:#f5f7f9;}
+body[data-theme="wii"] .seasonal-heading h2{color:#587268;font-weight:normal;}
+body[data-theme="wii"] .seasonal-list li,body[data-theme="wii"] .seasonal-event-list li{background:#fff;border-color:#dbe7e1;}
+body[data-theme="wii"] .seasonal-list strong,body[data-theme="wii"] .seasonal-events h3{font-weight:normal;}
+body[data-theme="wii"] .seasonal-list li[data-lifestyle]{background:#fbfaf4;}
+body[data-theme="wii"] #widget-settings{background:#f8fafc;border:2px solid #7bc7e5;border-radius:20px;box-shadow:0 15px 55px #56677655;}
+body[data-theme="wii"] .cal-cell{height:42px;min-height:42px;overflow:hidden;padding:3px;}
+body[data-theme="wii"] .cal-plan,body[data-theme="wii"] .cal-garbage{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;}
+.theme-switch {display:flex;justify-content:center;align-items:center;gap:8px;margin:0 auto 15px;flex-wrap:wrap;}
+.theme-switch button {padding:8px 14px;border:1px solid #97bfd0;border-radius:999px;background:linear-gradient(#fff,#dceff8);color:#31576b;cursor:pointer;font:inherit;font-size:13px;}
+.theme-switch button[aria-pressed="true"] {background:linear-gradient(#d5f7ff,#99d8ef);border-color:#36a6d1;box-shadow:0 0 0 2px #c7effb;}
+body[data-theme="wii"] h1 {color:#697782;text-shadow:none;}
+body[data-theme="wii"] .link-box {display:flex;}
+body[data-theme="wii"] {padding:15px;}
+
+
+#widget-settings {position:fixed;}
+#widget-settings #settings-close {position:absolute;top:10px;right:10px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;font-size:25px;line-height:1;cursor:pointer;}
+#settings-title {padding-right:40px;}
+#widget-settings .theme-switch {justify-content:flex-start;margin:4px 0;}
 </style>
 </head>
-<body>
+<body data-theme="wii">
 
 <h1>biratori-widget</h1>
 <button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button>
 <dialog id="widget-settings" aria-labelledby="settings-title">
   <form id="settings-form">
+    <button id="settings-close" type="button" aria-label="設定画面を閉じる" title="閉じる" onclick="document.getElementById('widget-settings').close()">×</button>
     <h2 id="settings-title" style="font-size:18px;margin-top:0">設定</h2>
     <p class="help">設定はこのブラウザに保存されます。保存しても他の端末やブラウザには反映されません。</p>
+    <fieldset><legend>デザイン</legend><nav class="theme-switch" aria-label="デザイン切り替え"><button type="button" data-design="aero" aria-pressed="false">🌐 フルティガーエアロ</button><button type="button" data-design="wii" aria-pressed="true">Wii メニュー</button></nav><p class="help">選ぶとすぐに切り替わり、このブラウザに保存されます。</p></fieldset>
     <div id="settings-fields"></div>
     <p id="settings-error" role="alert" style="color:#b91c1c;font-size:13px"></p>
     <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onclick="document.getElementById('widget-settings').close()">キャンセル</button><button type="submit" style="background:#2563eb;color:white">保存</button></div>
@@ -1527,6 +1585,25 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
   if(typeof ResizeObserver!=='undefined')new ResizeObserver(alignNewsHeight).observe(left);
   window.addEventListener('resize',alignNewsHeight);
   alignNewsHeight();
+})();
+</script>
+<script>
+(function () {
+  function setDesign(theme) {
+    theme = theme === 'aero' ? 'aero' : 'wii';
+    document.body.dataset.theme = theme;
+    document.querySelectorAll('[data-design]').forEach(function(button) {
+      button.setAttribute('aria-pressed', String(button.dataset.design === theme));
+    });
+    try { localStorage.setItem('biratori_design', theme); } catch (_) {}
+    window.dispatchEvent(new Event('resize'));
+  }
+  var saved;
+  try { saved = localStorage.getItem('biratori_design'); } catch (_) {}
+  setDesign(saved || 'wii');
+  document.querySelectorAll('[data-design]').forEach(function(button) {
+    button.addEventListener('click', function() { setDesign(button.dataset.design); });
+  });
 })();
 </script>
 </body>
