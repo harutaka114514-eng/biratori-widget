@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>biratori-widget · Frutiger Aero</title>
+<title>biratori-widget のホームページ</title>
 <style>
 /* 既存のベーススタイル */
 body {
@@ -156,55 +156,52 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #news-widget > #meshi-panel, #news-widget > #gmail-panel { min-height: 0; overflow-y: auto; }
 @media(max-width:900px){ #news-widget { max-height: 75vh; } }
 
-/* Frutiger Aero: self-contained sky, glass and glossy controls. */
-:root {color-scheme:light;--ink:#164666;--edge:rgba(255,255,255,.92);--blue:#0077b9;--glass:linear-gradient(155deg,rgba(255,255,255,.93),rgba(232,250,255,.78) 48%,rgba(205,236,249,.82));}
-body {min-height:100vh;box-sizing:border-box;padding:30px 24px 48px;color:var(--ink);background-color:#83d1ef;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%221000%22%20viewBox%3D%220%200%201600%201000%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sky%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23168acb%22/%3E%3Cstop%20offset%3D%22.6%22%20stop-color%3D%22%23b5ecf5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e7fbef%22/%3E%3C/linearGradient%3E%3ClinearGradient%20id%3D%22hill%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23b8e959%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23299d66%22/%3E%3C/linearGradient%3E%3CradialGradient%20id%3D%22sun%22%3E%3Cstop%20stop-color%3D%22white%22%20stop-opacity%3D%22.95%22/%3E%3Cstop%20offset%3D%22.2%22%20stop-color%3D%22white%22%20stop-opacity%3D%22.5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22white%22%20stop-opacity%3D%220%22/%3E%3C/radialGradient%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%2214%22/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20fill%3D%22url%28%23sky%29%22%20d%3D%22M0%200h1600v1000H0z%22/%3E%3Ccircle%20cx%3D%221300%22%20cy%3D%22130%22%20r%3D%22380%22%20fill%3D%22url%28%23sun%29%22/%3E%3Cg%20fill%3D%22white%22%20opacity%3D%22.55%22%20filter%3D%22url%28%23blur%29%22%3E%3Cellipse%20cx%3D%22230%22%20cy%3D%22155%22%20rx%3D%22270%22%20ry%3D%2238%22/%3E%3Cellipse%20cx%3D%22340%22%20cy%3D%22138%22%20rx%3D%22130%22%20ry%3D%2250%22/%3E%3Cellipse%20cx%3D%22950%22%20cy%3D%22300%22%20rx%3D%22290%22%20ry%3D%2234%22/%3E%3Cellipse%20cx%3D%221100%22%20cy%3D%22285%22%20rx%3D%22160%22%20ry%3D%2248%22/%3E%3C/g%3E%3Cpath%20d%3D%22M0%20860Q400%20630%20820%20790T1600%20680V1000H0Z%22%20fill%3D%22%23a0d66e%22/%3E%3Cpath%20d%3D%22M0%20800Q480%20950%201000%20790T1600%20820V1000H0Z%22%20fill%3D%22url%28%23hill%29%22/%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-opacity%3D%22.35%22%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%22560%22%20r%3D%2248%22/%3E%3Ccircle%20cx%3D%221500%22%20cy%3D%22470%22%20r%3D%2273%22/%3E%3Ccircle%20cx%3D%221450%22%20cy%3D%22650%22%20r%3D%2224%22/%3E%3C/g%3E%3C/svg%3E") !important;background-size:cover;background-position:center;background-attachment:fixed;}
-body::before {background:linear-gradient(180deg,rgba(235,252,255,.06),rgba(235,252,255,.12));pointer-events:none;}
-h1 {font-size:28px;letter-spacing:1px;color:#fff;text-shadow:0 2px 3px #2b87af,0 0 20px rgba(255,255,255,.6);margin:0 0 12px;}
-h1::before {content:"";display:inline-block;width:32px;height:32px;vertical-align:-7px;margin-right:10px;border-radius:50%;border:1px solid white;background:radial-gradient(ellipse at 35% 22%,white 0%,rgba(255,255,255,.85) 10%,transparent 42%),linear-gradient(135deg,#a3ec7d,#0099c9 75%);box-shadow:inset 0 -3px 5px #007ba5,0 3px 10px #268bb8;}
-.widgets {gap:18px;max-width:1280px;}
-.widget {background:var(--glass);border:1px solid var(--edge);border-radius:19px;padding:18px;box-shadow:inset 0 1px 0 white,inset 0 -1px 0 rgba(72,156,190,.2),0 8px 24px rgba(17,91,121,.18),0 0 0 1px rgba(50,140,174,.22);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
-.top-row {grid-template-columns:minmax(0,1fr) 210px;gap:18px;}
-.main-layout {grid-template-columns:minmax(0,1fr) minmax(360px,470px);gap:18px;}
-.bottom-widgets {grid-template-columns:200px minmax(0,1fr);gap:16px;margin-top:18px;}
-#clock {color:#086b9d;font-family:"Segoe UI",sans-serif;font-size:27px;letter-spacing:1px;text-shadow:0 1px 0 white;}
-.extra-info {border-color:#bbdce8;gap:10px;}
-.info-item .label {color:#4b7186;}.info-item .content {color:#184d69;}
-.weekly-weather {border-color:#bddfeb;gap:6px;padding-top:12px;}
-.weather-day {border:1px solid rgba(140,193,216,.45);border-radius:10px;padding:7px 2px;background:linear-gradient(#fff9,#d9f4ff70);}
-.widget-status {color:#4e7184;}
-button,.link-box a {transition:filter .18s,box-shadow .18s,transform .18s;}
-.weather-switch button,.video-tabs button,.news-tabs button,#news-fullscreen-tabs button,.refresh-btn,#settings-open,#news-expand-btn,.cal-btn,#widget-settings button,#gmail-panel button {border:1px solid #9dcbdc;border-radius:8px;background:linear-gradient(#fff 0%,#edfaff 47%,#cfe8f3 49%,#e7f7fc 100%);color:#25536d;box-shadow:inset 0 1px 0 white,0 2px 3px #24638216;text-shadow:0 1px 0 #fff8;}
-#settings-open {padding:7px 18px;margin-bottom:22px;border-radius:999px;}
-.weather-switch button.active,.video-tabs button.active,.news-tabs button.active,#news-fullscreen-tabs button.active {background:linear-gradient(#85d8f7 0%,#3db0df 47%,#038bc9 49%,#057bad 100%) !important;border-color:#0483b8;color:white !important;text-shadow:0 1px 2px #00618e;box-shadow:inset 0 1px 0 #d3f6ff,0 2px 5px #0084b533;}
-button:hover,.link-box a:hover {filter:brightness(1.06);box-shadow:0 0 10px #7fd9fc80;}
-button:active,.link-box a:active {transform:translateY(1px);}
-:where(button,a,input,textarea,.cal-cell):focus-visible {outline:3px solid #005f94;outline-offset:3px;}
-.garbage-button {background:linear-gradient(155deg,#f9fff1,#deefb9 48%,#bada83 49%,#e1f3bf);border:1px solid #eefedd;border-radius:19px;color:#365d24;box-shadow:inset 0 1px 0 white,0 8px 24px #22623328;text-shadow:0 1px 0 #fff8;gap:7px;}
-.link-box a {background:linear-gradient(#ffffffbf 0%,#ffffff65 48%,#aad3e744 49%,#ffffff66 100%),var(--tint,#b8dfef);color:var(--link-ink,#1c5370);border-color:#ffffffd9;box-shadow:inset 0 1px 0 white,0 2px 5px #397b9720;font-size:12px;padding:11px 7px;border-radius:10px;}
-.btn-radio {--tint:#65bfe6;--link-ink:#07547d;}.btn-koho {--tint:#a4dcf6;}.btn-doshin {--tint:#f0c9df;--link-ink:#80385b;}.btn-bear {--tint:#f6dbaf;--link-ink:#7b4e20;}.btn-okuyami {--tint:#d6e6ed;}.btn-gmail {--tint:#f3c6c4;--link-ink:#8b3937;}.btn-deepl {--tint:#a9d6d0;--link-ink:#225e59;}
-.video-container {border:1px solid #fff;border-radius:12px;box-shadow:0 0 0 1px #90bdd0,0 3px 10px #18557426;}
-.news-header {padding-bottom:10px;border-bottom:1px solid #b6d8e5;}.news-tabs {gap:5px;}.news-tabs button {padding:6px 9px;}
-.news-list li,#news-fullscreen-list li {background:linear-gradient(120deg,#fffffff2,#edf9ffdf);border:1px solid #c3dfeb;border-radius:10px;box-shadow:inset 0 1px 0 white;}
-.news-list li:hover,#news-fullscreen-list li:hover {background:#e4f6ff;}.news-list a,#news-fullscreen-list a {color:#066b9c;line-height:1.6;}.news-list li.is-read {background:#edf5f8cc;}
-.unread-dot {background:radial-gradient(circle at 30% 25%,#ffdbb8,#ed644b 60%,#c02e32);box-shadow:0 1px 3px #d36e5850;}
-.cal-nav {color:#076f9d;}.cal-btn {font-size:14px;padding:5px 9px;}.cal-header {color:#527b90;}.cal-cell {background:linear-gradient(#fffffff0,#e5f3f9cc);border-color:#c6dfe9;min-height:58px;box-shadow:inset 0 1px 0 white;}.cal-cell:hover {background:#d7f0fb;}.cal-today {outline:2px solid #078ac2;background:linear-gradient(#e4faff,#b6e3f6);box-shadow:0 0 9px #32afe650;}.cal-plan {background:#c8e7f5;color:#225474;}.cal-garbage {background:#e5edbd;color:#536328;}
-#widget-settings {background:var(--glass);border:1px solid white;box-shadow:0 20px 70px #07557c66;backdrop-filter:blur(24px);color:var(--ink);}
-#widget-settings::backdrop {background:#07507066;backdrop-filter:blur(5px);}
-#widget-settings fieldset {border-color:#b3d5e5;}#widget-settings input:not([type=checkbox]),#widget-settings textarea,#gmail-client-id {background:#f5fcff;border:1px solid #9ec9dc;border-radius:7px;color:#164666;}
-#news-fullscreen-overlay {background:linear-gradient(145deg,#f2fcfffa,#d4eff8f5);backdrop-filter:blur(24px);}
-#news-fullscreen-close {background:linear-gradient(#ffb4a7,#dc554d 49%,#bc3737 50%,#df6961);border:1px solid #ba4a45;text-shadow:0 1px 1px #8d2020;}
-* {scrollbar-color:#82bed6 #e8f6fb;scrollbar-width:thin;}
-@media(min-width:901px) and (max-width:1100px) {.main-layout {grid-template-columns:minmax(0,1fr) 380px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}}
-@media(max-width:900px) {.main-layout {grid-template-columns:1fr;}.bottom-widgets {grid-template-columns:200px minmax(0,1fr);}.info-bar {flex-wrap:wrap;}.extra-info {order:3;flex-basis:100%;border:0;border-top:1px solid #bddfeb;padding:10px 0 0;margin:0;}.info-bar>div:last-child {margin-left:auto;}#news-widget {max-height:75vh;}}
-@media(max-width:600px) {body {padding:20px 12px 32px;}h1 {font-size:23px;}.top-row {grid-template-columns:1fr;gap:12px;}.garbage-button {min-height:64px;}.widget {padding:13px;border-radius:15px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;}.extra-info {display:grid;grid-template-columns:1fr 1fr;gap:12px;}.info-item {min-height:36px;}.news-header {align-items:flex-start;}.cal-cell {min-height:53px;padding:4px 2px;}.cal-plan,.cal-garbage {font-size:8px;}.news-list a {overflow-wrap:anywhere;}#news-fullscreen-overlay {padding:14px;}}
+/* Personal weblog: paper, dotted rules and a compact two-column layout. */
+:root {color-scheme:light;--paper:#fffef8;--ink:#49453d;--rule:#bcb4a0;}
+body {background-color:#eee9d9;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,#a9997710 3px,#a9997710 4px);padding:24px 16px 40px;color:var(--ink);font-family:"MS PGothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;font-size:12px;line-height:1.65;min-height:100vh;box-sizing:border-box;}
+body::before {display:none;}
+a {color:#315c96;}a:visited {color:#795779;}a:hover {color:#b65638;}
+.blog-masthead {max-width:1040px;margin:0 auto 16px;text-align:center;border:1px solid #bcb4a0;background:#fffdf3;padding:24px 16px 0;box-sizing:border-box;box-shadow:3px 3px 0 #d7d0bd;}
+.blog-kicker {font:11px Georgia,serif;letter-spacing:3px;color:#8c8166;margin:0 0 6px;}
+h1 {font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:27px;font-weight:normal;letter-spacing:3px;color:#665d48;text-shadow:none;margin:0;}
+.blog-intro {color:#77705f;font-size:11px;margin:10px 0 20px;}
+.blog-nav {border-top:1px dotted #bcb4a0;padding:9px 0;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;font-size:11px;}.blog-nav a {color:#666b44;text-decoration:underline;text-underline-offset:3px;}
+#settings-open {max-width:1040px;margin:0 auto 12px;padding:3px 10px;border:1px solid #aaa38e;border-radius:0;background:#f8f5e9;font-size:11px;color:#5f5b4e;}
+.widgets {max-width:1040px;gap:14px;}.widget {background:var(--paper);border:1px solid #bcb4a0;border-radius:0;box-shadow:2px 2px 0 #d7d0bd;padding:14px;}
+.top-row {grid-template-columns:minmax(0,1fr) 185px;gap:14px;}.main-layout {grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:18px;}.bottom-widgets {grid-template-columns:160px minmax(0,1fr);gap:12px;margin-top:14px;}
+.blog-section {font-size:12px;font-weight:bold;letter-spacing:1px;color:#686d49;background:#eeefde;border-top:1px solid #cbd0ae;border-bottom:1px solid #cbd0ae;padding:5px 8px;margin:-14px -14px 12px;}
+#clock {font-family:Georgia,"MS PGothic",serif;font-size:20px;color:#59573e;font-weight:normal;white-space:normal;}.info-bar {gap:8px;}.extra-info {padding:0 8px;margin:0;gap:8px;border-color:#d8d1be;}.info-item .label {font-size:9px;color:#827a69;}.info-item .content {font-size:12px;color:#524e40;}.weekly-weather {border-top:1px dotted #bcb4a0;padding-top:10px;}.weather-day {font-size:10px;}.widget-status {color:#7c7667;font-size:10px;}
+button {font-family:inherit;}
+.weather-switch button,.video-tabs button,.news-tabs button,#news-fullscreen-tabs button,.refresh-btn,#news-expand-btn,#gmail-panel button,#widget-settings button {border:1px solid #b7b19e;border-radius:2px;background:#f1eee3;color:#615c4e;box-shadow:inset 1px 1px 0 white;padding:4px 8px;font-weight:normal;}
+.weather-switch button.active,.video-tabs button.active,.news-tabs button.active,#news-fullscreen-tabs button.active {background:#737a55 !important;color:#fff !important;border-color:#5f6745;box-shadow:none;}
+button:hover {background:#e6e2d3;}button:active {transform:translateY(1px);}
+:where(a,button,input,textarea,.cal-cell):focus-visible {outline:2px solid #315c96;outline-offset:3px;}
+.garbage-button {background:#f4f0d9;color:#746335;border:1px solid #bcb185;border-radius:0;box-shadow:2px 2px 0 #d7d0bd;font-size:11px;padding:12px;gap:8px;font-weight:normal;}
+.video-tabs {gap:5px;}.video-container {border-radius:0;border:1px solid #bcb4a0;}
+.link-box {gap:0;justify-content:flex-start;height:auto;}.link-box a {display:block;padding:7px 2px;border:0;border-bottom:1px dotted #c5bfae;border-radius:0;background:none;color:#315c96;font-size:11px;font-weight:normal;text-align:left;text-decoration:underline;line-height:1.6;box-shadow:none;}.link-box a::before {content:"・";color:#8f9770;margin-right:2px;}.link-box a:hover {background:#f4f1e6;color:#ad583d;}
+.news-header {padding-bottom:9px;margin-bottom:10px;border-bottom:1px dotted #bcb4a0;align-items:flex-start;}.news-tabs {gap:4px;}.news-tabs button {font-size:10px;}.news-list {gap:0;}.news-list li,#news-fullscreen-list li {background:transparent;border:0;border-bottom:1px dotted #bcb4a0;padding:12px 3px;border-radius:0;}.news-list a,#news-fullscreen-list a {font-size:12px;font-weight:normal;line-height:1.9;color:#315c96;text-decoration:underline;text-underline-offset:3px;}.news-list li:hover {background:#f7f5ed;}.news-list li.is-read {background:transparent;}.news-list li.is-read a {color:#79647c !important;}.unread-dot {width:5px;height:5px;background:#a78356;border-radius:0;margin-top:8px;}
+.cal-nav {margin-bottom:12px;}.cal-btn {font-size:12px;color:#747b4f;border:1px solid #c9c3b1;padding:2px 6px;background:#f2f0e6;}.cal-grid {gap:2px;}.cal-header {color:#736c5b;font-size:10px;}.cal-cell {background:#f9f7ef;border:1px solid #e0dcca;border-radius:0;min-height:49px;font-size:11px;padding:3px;}.cal-cell:hover {background:#f0eddc;}.cal-today {outline:2px solid #848e5b;background:#eff0dc;}.cal-num {font-weight:normal;}.sun {color:#b45c4e;}.sat {color:#527fa4;}.cal-plan {background:#e5e8d4;color:#555d38;border-radius:0;}.cal-garbage {background:#eee6c7;color:#796834;border-radius:0;}.holiday-name {color:#b45c4e;font-size:8px;}
+#widget-settings {background:#fffdf5;border:1px solid #a49a82;border-radius:0;color:var(--ink);box-shadow:5px 5px 0 #0003;}
+#widget-settings fieldset {border:1px solid #c7bfa9;border-radius:0;}#widget-settings input:not([type=checkbox]),#widget-settings textarea,#gmail-client-id {background:white;border:1px solid #bcb4a0;border-radius:0;color:var(--ink);}
+#widget-settings::backdrop {background:#403a2d88;}
+#news-fullscreen-overlay {background:#fffdf5;}#news-fullscreen-close {background:#826a58;border-radius:2px;font-size:12px;}
+.blog-footer {max-width:1040px;margin:22px auto 0;border-top:1px dotted #a79e88;padding:14px 0;text-align:center;color:#8a806a;font-size:10px;letter-spacing:1px;}.blog-footer a {color:#747b4f;}
+* {scrollbar-width:thin;scrollbar-color:#b8b09a #f4f1e6;}
+@media(min-width:901px) and (max-width:1050px) {.main-layout {grid-template-columns:minmax(0,1fr) 380px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;gap:0 12px;}}
+@media(max-width:900px) {.main-layout {grid-template-columns:1fr;}.bottom-widgets {grid-template-columns:180px minmax(0,1fr);}.info-bar {flex-wrap:wrap;}.extra-info {order:3;flex-basis:100%;border:0;border-top:1px dotted #bcb4a0;padding:10px 0 0;}.info-bar>div:last-child {margin-left:auto;}#news-widget {max-height:75vh;}}
+@media(max-width:600px) {body {padding:14px 10px 28px;}.blog-masthead {padding:20px 10px 0;}h1 {font-size:20px;letter-spacing:1px;}.blog-nav {gap:14px;}.top-row {grid-template-columns:1fr;gap:10px;}.garbage-button {min-height:60px;}.bottom-widgets {grid-template-columns:1fr;}.link-box {display:grid;grid-template-columns:1fr 1fr;gap:0 10px;}.extra-info {display:grid;grid-template-columns:1fr 1fr;gap:12px;}.cal-cell {min-height:52px;padding:3px 2px;}.cal-plan,.cal-garbage {font-size:8px;}.news-list a {overflow-wrap:anywhere;}#news-fullscreen-overlay {padding:14px;}}
 @media(prefers-reduced-motion:reduce) {*,*::before,*::after {animation:none !important;transition:none !important;}}
 
 </style>
 </head>
 <body>
 
-<h1>biratori-widget</h1>
+<header class="blog-masthead" id="page-top">
+  <p class="blog-kicker">* * * BIRATORI WEBLOG * * *</p>
+  <h1>biratori-widget のホームページ</h1>
+  <p class="blog-intro">ようこそ。平取の天気やニュース、暮らしの情報を集めています。<br>お茶でも飲みながら、ゆっくりしていってください。</p>
+  <nav class="blog-nav" aria-label="ページ内メニュー"><a href="#weather-section">お天気</a><a href="#video-section">テレビ</a><a href="#links-section">リンク集</a><a href="#calendar-section">カレンダー</a><a href="#news-widget">ニュース</a></nav>
+</header>
 <button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button>
 <dialog id="widget-settings" aria-labelledby="settings-title">
   <form id="settings-form">
@@ -217,7 +214,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
 </dialog>
 
 <div class="widgets">
-  <div class="top-row">
+  <div class="top-row" id="weather-section">
     <div class="widget">
       <div class="info-bar">
         <div id="clock">--:--:--</div>
@@ -247,6 +244,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
   <div class="main-layout">
     <div class="left-content">
       <div class="widget">
+        <div class="blog-section" id="video-section">■ テレビの時間</div>
         <div class="video-tabs">
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
           <button id="btn-stv" onclick="switchVideo('3xfwDdlulDY', 'btn-stv')">STV</button>
@@ -259,6 +257,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
 
       <div class="bottom-widgets">
         <div class="widget">
+          <div class="blog-section" id="links-section">■ お気に入りリンク</div>
           <div class="link-box">
             <a href="https://www.nhk.or.jp/radio/player/?ch=r1" target="_blank" class="link-btn btn-radio">
               📻 NHKラジオ第1 (R1)
@@ -291,6 +290,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
           </div>
         </div>
         <div class="widget">
+          <div class="blog-section" id="calendar-section">■ 暮らしのカレンダー</div>
           <div class="cal-nav">
             <button class="cal-btn" onclick="changeMonth(-1)">◀</button>
             <div id="calTitle" style="font-weight:bold; font-size:16px;"></div>
@@ -302,6 +302,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
     </div>
 
     <div class="widget" id="news-widget">
+      <div class="blog-section">■ 気になるニュース</div>
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="nhk" class="active">NHK</button>
@@ -543,7 +544,7 @@ let newsLoading = false;
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
-  // Frutiger Aero background is embedded in the stylesheet.
+  // Background paper texture is defined in the stylesheet.
 }
 setRandomBackground();
 
@@ -1356,5 +1357,6 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
   alignNewsHeight();
 })();
 </script>
+<footer class="blog-footer">＊ ご訪問ありがとうございます ＊<br><a href="#page-top">↑ ページのいちばん上へ</a></footer>
 </body>
 </html>
