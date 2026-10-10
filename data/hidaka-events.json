@@ -1,17 +1,9 @@
 {
   "status": "ok",
-  "generatedAt": "2026-10-10T14:59:41.251Z",
+  "generatedAt": "2026-10-10T15:07:06.243Z",
   "source": "北海道ひだか観光ナビ",
   "sourceUrl": "https://hokkaido-hidaka-kankonavi.com/feed/",
   "items": [
-    {
-      "title": "【10/10(土)~11(日)】みなとテラス~いぶり・ひだかグルメフェスタ~ 開催!!",
-      "link": "https://hokkaido-hidaka-kankonavi.com/information/11528/",
-      "startDate": "2026-10-10",
-      "endDate": "2026-10-11",
-      "location": "苫小牧西港フェリーターミナル (苫小牧市入船町1-2-34)",
-      "publishedAt": "2026-09-18T08:08:30.000Z"
-    },
     {
       "title": "【10/11(日)】しずない農業まつり2026 開催!!",
       "link": "https://hokkaido-hidaka-kankonavi.com/information/9070/",
@@ -35,6 +27,14 @@
       "endDate": "2026-10-24",
       "location": "HBA日高軽種馬農業協同組合 北海道市場",
       "publishedAt": "2026-10-06T04:09:39.000Z"
+    },
+    {
+      "title": "【10/10(土)~11(日)】みなとテラス~いぶり・ひだかグルメフェスタ~ 開催!!",
+      "link": "https://hokkaido-hidaka-kankonavi.com/information/11528/",
+      "startDate": "2026-10-10",
+      "endDate": "2026-10-11",
+      "location": "苫小牧西港フェリーターミナル (苫小牧市入船町1-2-34)",
+      "publishedAt": "2026-09-18T08:08:30.000Z"
     },
     {
       "title": "【9/19(土)~11/23(月・祝)】TVアニメ『ゴールデンカムイ』×平取町 導きのコタンコㇿカムイ&周遊型謎解きイベントカードラリー 同時開催!!",
