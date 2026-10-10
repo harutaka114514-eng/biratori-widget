@@ -781,7 +781,7 @@ function validHidakaEvents(record){return record?.status==='ok'&&Number.isFinite
 function renderHidakaEvents(failed=false){
   const list=document.getElementById('seasonal-events-list'),status=document.getElementById('seasonal-events-status');
   if(!validHidakaEvents(hidakaEventRecord)){list.innerHTML='';status.textContent=failed?'催し情報を取得できませんでした。配信元でご確認ください。':'催し情報を読み込んでいます。';if(failed){const a=document.createElement('a');a.href='https://hokkaido-hidaka-kankonavi.com/';a.target='_blank';a.rel='noopener noreferrer';a.textContent=' 北海道ひだか観光ナビ ↗';status.append(a);}return;}
-  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),items=hidakaEventRecord.items.filter(item=>item.endDate>=today).slice(0,3);
+  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),items=hidakaEventRecord.items.filter(item=>item.endDate>=today).sort((a,b)=>Number(a.startDate<today)-Number(b.startDate<today)||(a.startDate>=today?a.startDate.localeCompare(b.startDate):a.endDate.localeCompare(b.endDate))||a.title.localeCompare(b.title,'ja')).slice(0,3);
   const date=value=>value.replace(/-(0?)(\d+)/g,(_,zero,n)=>'/'+n);
   list.innerHTML=items.map(item=>{
     const period=item.startDate===item.endDate?date(item.startDate):date(item.startDate)+'〜'+date(item.endDate);

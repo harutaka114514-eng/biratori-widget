@@ -35,7 +35,7 @@ export function parseHidakaEvents(xml,now=Date.now()){
     const location=venue?venue.slice(0,160):towns.length>2?'日高地域（平取町ほか）':towns.join('・')||'会場は配信元で確認';
     seen.add(link);items.push({title,link,...dates,location,publishedAt:new Date(publishedAt).toISOString()});
   }
-  items.sort((a,b)=>Number(!a.location.includes('平取'))-Number(!b.location.includes('平取'))||a.endDate.localeCompare(b.endDate)||a.startDate.localeCompare(b.startDate));
+  items.sort((a,b)=>Number(a.startDate<today)-Number(b.startDate<today)||(a.startDate>=today?a.startDate.localeCompare(b.startDate):a.endDate.localeCompare(b.endDate))||a.title.localeCompare(b.title,'ja'));
   return {items,skipped};
 }
 export async function main(){
