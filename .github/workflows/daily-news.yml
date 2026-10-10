@@ -10,6 +10,9 @@ on:
     paths-ignore:
       - 'data/daily-news.json'
       - 'data/walker-news.json'
+      - 'data/domingo-news.json'
+      - 'data/sasaru-news.json'
+      - 'data/hidaka-events.json'
       - '*.md'
 
 concurrency:
