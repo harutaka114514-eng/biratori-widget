@@ -273,8 +273,10 @@ body[data-theme="wii"] {padding:15px;}
 #widget-settings #settings-close {position:absolute;top:10px;right:10px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;font-size:25px;line-height:1;cursor:pointer;}
 #settings-title {padding-right:40px;}
 #widget-settings .theme-switch {justify-content:flex-start;margin:4px 0;}
-.info-bar {flex-wrap:wrap;}
-.extra-info {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));order:3;flex-basis:100%;border:0;border-top:1px solid #bddfeb;padding:12px 0 0;margin:0;gap:16px;overflow:visible;}
+.top-row {grid-template-columns:minmax(0,1fr);}
+.info-bar {flex-wrap:nowrap;}
+.extra-info {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));order:0;flex:1;min-width:0;border-top:0;padding:0 12px;margin:0 5px;gap:12px;overflow:visible;}
+@media(max-width:900px) {.info-bar {flex-wrap:wrap;}.extra-info {order:3;flex-basis:100%;border:0;border-top:1px solid #bddfeb;padding:12px 0 0;margin:0;}}
 .info-item .label,body[data-theme="wii"] .info-item .label {font-size:16px;line-height:1.5;color:#425b6b;margin-bottom:6px;}
 .info-item .content,body[data-theme="wii"] .info-item .content {font-size:20px;line-height:1.6;color:#243b4a;overflow-wrap:anywhere;}
 @media(max-width:600px) {.extra-info {grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -330,9 +332,6 @@ body[data-theme="wii"] {padding:15px;}
       <div id="weekly-weather" class="weekly-weather hourly-weather" aria-live="polite"></div>
       <div id="weather-status" class="widget-status" role="status"></div>
     </div>
-    <a href="https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r8biratori.pdf" target="_blank" class="garbage-button">
-      🗑 R8年度ごみ収集PDF<span>🔥月木 / ♻水</span><span id="garbage-summary" style="font-size:11px;font-weight:normal;margin-top:5px"></span>
-    </a>
   </div>
 
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
@@ -484,6 +483,7 @@ function garbageForDate(d) {
 }
 function renderGarbageSummary() {
   const el=document.getElementById('garbage-summary'),today=new Date(),tomorrow=new Date(today);tomorrow.setDate(today.getDate()+1);
+  if(!el)return;
   const g=widgetSettings.garbage||{},link=el.closest('a');
   if(g.pdf)link.href=g.pdf;
   el.textContent='今日：'+(garbageForDate(today).join('・')||'収集なし')+' ／ 明日：'+(garbageForDate(tomorrow).join('・')||'収集なし');
@@ -511,7 +511,7 @@ function openWidgetSettings() {
     fields+=`<div style="font-size:13px;margin-top:8px">${label}</div>`;
     ['日','月','火','水','木','金','土'].forEach((day,i)=>{fields+=`<label class="weekday"><input type="checkbox" name="garbage-${key}" value="${i}" ${(g[key]||fallback).includes(i)?'checked':''}>${day}</label>`;});
   }
-  fields+=input('収集表PDFのURL','setting-garbage-pdf',g.pdf||document.querySelector('.garbage-button').href);
+  fields+=input('収集表PDFのURL','setting-garbage-pdf',g.pdf||'https://biratorieisei-hokkaido.jp/biratorieisei/wp-content/uploads/r8biratori.pdf');
   fields+='<label for="setting-garbage-exceptions">日付別の変更（1行に1件）</label><textarea id="setting-garbage-exceptions" rows="4" placeholder="2026-12-31=休み&#10;2027-01-05=燃えるごみ">'+esc(Object.entries(g.exceptions||{}).map(([date,label])=>date+'='+label).join('\n'))+'</textarea><p class="help">「日付=休み」で収集なし。「日付=燃えるごみ」などで、その日の表示を置き換えます。</p></fieldset>';
   fields+='<fieldset><legend>ニュースの取得元</legend><p class="help">RSSのURLを1行に1つ入力します。空欄にするとその分類の取得を停止します。</p>';
   for(const key of Object.keys(urls))fields+=`<label for="setting-news-${key}">${names[key]}</label><textarea id="setting-news-${key}" rows="3">${esc((Array.isArray(urls[key])?urls[key]:[urls[key]]).join('\n'))}</textarea>`;
