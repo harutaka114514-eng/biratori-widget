@@ -331,6 +331,9 @@ body[data-theme="wii"] :is(.video-tabs button,.news-tabs button,.refresh-btn,.ca
 .news-tabs a,#news-fullscreen-tabs a {display:inline-flex;align-items:center;gap:6px;position:relative;box-sizing:border-box;padding:9px 12px;font-size:16px;line-height:1.5;border:1px solid #9dcbdc;border-radius:8px;text-decoration:none;color:#25536d;background:linear-gradient(#fff,#e7f7fc);}
 body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:999px;border-color:#b5d5e3;background:linear-gradient(#fff,#eef7fb);color:#557383;}
 #news-fullscreen-tabs {flex-wrap:wrap;}
+
+#links-panel,body[data-theme="wii"] #links-panel {grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;height:auto;align-content:start;overflow-y:auto;}
+#links-panel a,body[data-theme="wii"] #links-panel a {font-size:20px;padding:18px 14px;}
 </style>
 </head>
 <body data-theme="wii">
@@ -410,6 +413,20 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
     <div class="widget" id="news-widget">
       <div class="news-header">
         <div class="news-tabs">
+          <button data-type="links">🔗 リンク集</button>
+          <button data-type="keizai" class="active">旅行</button>
+          <button data-type="sakei">地域/食</button>
+          <button data-type="nl">道NL</button>
+          <button data-type="hobby">趣味</button>
+          <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
+        </div>
+        <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
+      </div>
+      <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
+      <ul id="news" class="news-list"></ul>
+      <div id="meshi-panel" style="display:none;"></div>
+      <div id="links-panel-home"></div>
+      <nav id="links-panel" class="link-box" aria-label="リンク集" style="display:none">
 
 
 <a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
@@ -437,17 +454,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
 
-          <button data-type="keizai" class="active">旅行</button>
-          <button data-type="sakei">地域/食</button>
-          <button data-type="nl">道NL</button>
-          <button data-type="hobby">趣味</button>
-          <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
-        </div>
-        <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
-      </div>
-      <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
-      <ul id="news" class="news-list"></ul>
-      <div id="meshi-panel" style="display:none;"></div>
+      </nav>
 
     </div>
   </div>
@@ -457,31 +464,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
   <div id="news-fullscreen-inner">
     <div id="news-fullscreen-header">
       <div id="news-fullscreen-tabs">
-
-
-<a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
-               target="_blank"
-               class="link-btn btn-koho">
-              📖 広報びらとり
-            </a>
-
-            <a href="#" target="_blank" class="link-btn btn-doshin">
-              🗞️ 道新デジタル
-            </a>
-
-            <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
-               target="_blank"
-               class="link-btn btn-bear"
-               onclick="markBearRead()">
-              🐻 熊情報
-            </a>
-
-            <a href="https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/" target="_blank" class="link-btn btn-okuyami" onclick="markOkuyamiRead()">
-                🙏 平取町おくやみ
-            </a>
-
-            <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
-
+        <button data-type="links">🔗 リンク集</button>
         <button data-type="keizai" class="active">旅行</button>
         <button data-type="sakei">地域/食</button>
         <button data-type="nl">道NL</button>
@@ -761,7 +744,7 @@ function mergeWidgetNews(items) {
 }
 function renderNewsStatus(type) {
   const el=document.getElementById('news-status');
-  if(type==='meshi'){el.textContent='';return;}
+  if(type==='meshi'||type==='links'){el.textContent='';return;}
   const state=newsStates[type];
   el.replaceChildren();
   const message=document.createElement('span');
@@ -870,6 +853,13 @@ async function preloadAllNews() {
 }
 
 function renderNews(type) {
+  const linksPanel=document.getElementById('links-panel');
+  if(!document.getElementById('news-fullscreen-overlay').classList.contains('active'))linksPanel.style.display=type==='links'?'grid':'none';
+  if(type==='links'){
+    document.getElementById('news').style.display='none';
+    document.getElementById('meshi-panel').style.display='none';
+    renderNewsStatus(type);return;
+  }
   renderNewsStatus(type);
   const ul = document.getElementById("news");
   const items = newsCache[type] || [];
@@ -1434,6 +1424,8 @@ origTabClick.forEach(b => {
     origTabClick.forEach(x => x.classList.remove('active'));
     b.classList.add('active');
     const type = b.dataset.type;
+    document.getElementById('links-panel').style.display=type==='links'?'grid':'none';
+    if(type==='links'){renderNews(type);return;}
     if(type === 'meshi'){
       document.getElementById('news').style.display = 'none';
       document.getElementById('meshi-panel').style.display = 'block';
@@ -1452,6 +1444,10 @@ let fsCurrentType = 'keizai';
 function renderNewsFullscreen(type) {
   const ul = document.getElementById('news-fullscreen-list');
   const meshiEl = document.getElementById('news-fullscreen-meshi');
+  const linksPanel=document.getElementById('links-panel');
+  document.getElementById('news-fullscreen-inner').append(linksPanel);
+  linksPanel.style.display=type==='links'?'grid':'none';
+  if(type==='links'){ul.style.display='none';meshiEl.style.display='none';return;}
   if (type === 'meshi') {
     ul.style.display = 'none';
     meshiEl.style.display = 'block';
@@ -1506,6 +1502,9 @@ function openNewsFullscreen() {
 }
 
 function closeNewsFullscreen() {
+  const linksPanel=document.getElementById('links-panel');
+  document.getElementById('links-panel-home').after(linksPanel);
+  linksPanel.style.display=document.querySelector('.news-tabs button.active')?.dataset.type==='links'?'grid':'none';
   document.getElementById('news-fullscreen-overlay').classList.remove('active');
   document.body.style.overflow = '';
 }
