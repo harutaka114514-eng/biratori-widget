@@ -415,7 +415,8 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
         <div class="news-tabs">
           <button data-type="links">🔗 リンク集</button>
           <button data-type="keizai" class="active">旅行</button>
-          <button data-type="sakei">地域/食</button>
+          <button data-type="sakei">地域</button>
+          <button data-type="gourmet">グルメ</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
           <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
@@ -468,7 +469,8 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
       <div id="news-fullscreen-tabs">
         <button data-type="links">🔗 リンク集</button>
         <button data-type="keizai" class="active">旅行</button>
-        <button data-type="sakei">地域/食</button>
+        <button data-type="sakei">地域</button>
+          <button data-type="gourmet">グルメ</button>
         <button data-type="nl">道NL</button>
         <button data-type="hobby">趣味</button>
         <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
@@ -528,7 +530,7 @@ function widgetVideoId(value) {
   }catch(e){return null;}
 }
 function openWidgetSettings() {
-  const esc=escapeWidgetHTML,g=widgetSettings.garbage||{},names={keizai:'旅行',sakei:'地域/食',nl:'道NL',hobby:'趣味'};
+  const esc=escapeWidgetHTML,g=widgetSettings.garbage||{},names={keizai:'旅行',sakei:'地域',gourmet:'グルメ',nl:'道NL',hobby:'趣味'};
   const input=(label,id,value)=>`<label for="${id}">${esc(label)}</label><input id="${id}" value="${esc(value)}">`;
   let fields='<fieldset><legend>動画</legend><p class="help">YouTubeの動画URLまたは動画IDを入力します。</p>';
   fields+=input('HTB','setting-video-1',widgetSettings.videos?.['btn-v1']||'tvgbZZYS4Nk');
@@ -597,16 +599,14 @@ const urls = {
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja",
     "https://sapporo.keizai.biz/rss.xml",
     "https://tomakomai.goguynet.jp/feed/",
-    "https://meshitabi-hokkaido.com/feed/",
     "https://hre-net.com/feed/",
     "https://biratori-shokokai.com/feed",
     "https://www.hi-mag.jp/feed/",
     "https://hokkaidolikers.com/feed/",
-    "https://sasaru.media/category/index.html?id=gourmet",
     "https://sasaru.media/category/index.html?id=money",
     "https://sasaru.media/category/index.html?id=media",
-    "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"
   ],
+  gourmet: ["https://meshitabi-hokkaido.com/feed/", "https://sasaru.media/category/index.html?id=gourmet", "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf"],
   nl: ["https://hokkaido-nl.jp/index.xml",
       "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml"],
   hobby: [
@@ -661,7 +661,16 @@ if(widgetSettings.news && !widgetSettings.sasaruCategoriesAdded){
   }
   widgetSettings.sasaruCategoriesAdded=true;writeWidgetStorage('biratori_settings_v1',widgetSettings);
 }
-let newsCache = { keizai: [], sakei: [], nl: [], hobby: [] };
+// Split saved combined feeds once, preserving custom regional sources.
+if(widgetSettings.news && !widgetSettings.regionalGourmetSplit){
+  const foodFeeds=new Set(defaultNewsUrls.gourmet);
+  const regional=Array.isArray(urls.sakei)?urls.sakei:[urls.sakei];
+  urls.gourmet=[...new Set([...urls.gourmet,...regional.filter(url=>foodFeeds.has(url))])];
+  urls.sakei=regional.filter(url=>!foodFeeds.has(url));
+  widgetSettings.news.sakei=[...urls.sakei];widgetSettings.news.gourmet=[...urls.gourmet];
+  widgetSettings.regionalGourmetSplit=true;writeWidgetStorage('biratori_settings_v1',widgetSettings);
+}
+let newsCache = { keizai: [], sakei: [], gourmet: [], nl: [], hobby: [] };
 const newsStates = {};
 let newsLoading = false;
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
