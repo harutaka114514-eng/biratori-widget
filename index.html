@@ -291,6 +291,40 @@ body[data-theme="wii"] {padding:15px;}
 @media(max-width:600px) {
   .weekly-weather,.weekly-weather.hourly-weather {grid-template-columns:repeat(auto-fit,minmax(85px,1fr));}
 }
+
+/* Spacious layout and readable type across the dashboard. */
+body,body[data-theme="wii"] {font-size:18px;padding:24px 20px 40px;}
+.widgets {max-width:1680px;gap:22px;}
+.main-layout {grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;}
+.bottom-widgets {grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:18px;}
+.widget {min-width:0;}
+#clock,body[data-theme="wii"] #clock {font-size:30px;}
+#clock span {font-size:18px !important;}
+.link-box a,body[data-theme="wii"] .link-box a {font-size:18px;padding:15px 10px;overflow-wrap:anywhere;}
+.news-list a,body[data-theme="wii"] .news-list a,#news-fullscreen-list a {font-size:20px;line-height:1.7;overflow-wrap:anywhere;}
+.video-tabs button,.news-tabs button,.refresh-btn,.cal-btn,#news-expand-btn,#news-fullscreen-tabs button,
+body[data-theme="wii"] :is(.video-tabs button,.news-tabs button,.refresh-btn,.cal-btn,#news-expand-btn,#news-fullscreen-tabs button) {font-size:16px;padding:9px 12px;}
+.widget-status,body[data-theme="wii"] .widget-status {font-size:15px;line-height:1.6;}
+.cal-header,body[data-theme="wii"] .cal-header {font-size:17px;}
+.cal-cell,body[data-theme="wii"] .cal-cell {font-size:19px;height:auto;min-height:100px;padding:7px 4px;overflow:visible;}
+.cal-plan,.cal-garbage,.holiday-name,body[data-theme="wii"] :is(.cal-plan,.cal-garbage,.holiday-name) {font-size:14px;line-height:1.5;white-space:normal;overflow-wrap:anywhere;}
+#calTitle {font-size:22px !important;}
+.seasonal-heading h2,.seasonal-events h3 {font-size:22px;}
+.seasonal-list li,.seasonal-event-list a {font-size:18px;}
+.seasonal-list strong {font-size:20px;}
+.seasonal-heading span,.seasonal-note-label,.seasonal-event-meta,.seasonal-event-state,.seasonal-event-source,.seasonal-footer p,.seasonal-footer a {font-size:15px;}
+#meshi-panel [style*="font-size"],#gmail-panel [style*="font-size"] {font-size:16px !important;}
+#gmail-list li,#gmail-panel h2 {font-size:18px;}
+#widget-settings :is(label,input:not([type=checkbox]),textarea,legend,.help,button),body[data-theme="wii"] #widget-settings button {font-size:16px;}
+#widget-settings #settings-close {font-size:25px;}
+@media(max-width:1100px) {.main-layout {grid-template-columns:minmax(0,1fr);}}
+@media(max-width:600px) {
+  body,body[data-theme="wii"] {padding:18px 10px 30px;}
+  .bottom-widgets {grid-template-columns:minmax(0,1fr);}
+  .cal-cell,body[data-theme="wii"] .cal-cell {min-height:85px;padding:5px 2px;font-size:18px;}
+  .cal-plan,.cal-garbage,.holiday-name,body[data-theme="wii"] :is(.cal-plan,.cal-garbage,.holiday-name) {font-size:13px;}
+  .seasonal-heading {flex-wrap:wrap;}
+}
 </style>
 </head>
 <body data-theme="wii">
