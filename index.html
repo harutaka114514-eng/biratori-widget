@@ -273,6 +273,22 @@ body[data-theme="wii"] {padding:15px;}
 #widget-settings #settings-close {position:absolute;top:10px;right:10px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;font-size:25px;line-height:1;cursor:pointer;}
 #settings-title {padding-right:40px;}
 #widget-settings .theme-switch {justify-content:flex-start;margin:4px 0;}
+.info-bar {flex-wrap:wrap;}
+.extra-info {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));order:3;flex-basis:100%;border:0;border-top:1px solid #bddfeb;padding:12px 0 0;margin:0;gap:16px;overflow:visible;}
+.info-item .label,body[data-theme="wii"] .info-item .label {font-size:16px;line-height:1.5;color:#425b6b;margin-bottom:6px;}
+.info-item .content,body[data-theme="wii"] .info-item .content {font-size:20px;line-height:1.6;color:#243b4a;overflow-wrap:anywhere;}
+@media(max-width:600px) {.extra-info {grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* Larger weather text in both themes, with room for each forecast. */
+.weekly-weather {grid-template-columns:repeat(auto-fit,minmax(90px,1fr));}
+.weekly-weather.hourly-weather {grid-template-columns:repeat(auto-fit,minmax(90px,1fr));}
+.weather-day,body[data-theme="wii"] .weather-day {font-size:16px;line-height:1.6;padding:10px 4px;color:#243b4a;}
+.weather-icon {font-size:28px;line-height:1.4;}
+.weather-switch button,body[data-theme="wii"] .weather-switch button {font-size:16px;padding:9px 14px;}
+#weather {font-size:24px;color:#243b4a;}
+#weather-status {font-size:14px;line-height:1.5;color:#425b6b;}
+@media(max-width:600px) {
+  .weekly-weather,.weekly-weather.hourly-weather {grid-template-columns:repeat(auto-fit,minmax(85px,1fr));}
+}
 </style>
 </head>
 <body data-theme="wii">
@@ -298,13 +314,13 @@ body[data-theme="wii"] {padding:15px;}
         <div id="clock">--:--:--</div>
         <div class="extra-info">
           <div class="info-item"><span class="label">今日の運勢</span><div id="fortune" class="content">...</div></div>
-          <div class="info-item" style="flex:1.6"><span class="label">📅 今日は何の日</span><div id="kinenbi" class="content" style="font-size:12px;cursor:pointer;" onclick="window.open(document.getElementById('kinenbi').dataset.url,'_blank')" title="ccnl.jpで詳細を見る">取得中...</div></div>
-          <div class="info-item"><span class="label">🌅 日の出 / 日の入り</span><div id="suntime" class="content" style="font-size:13px;">--:-- / --:--</div></div>
+          <div class="info-item"><span class="label">📅 今日は何の日</span><div id="kinenbi" class="content" style="cursor:pointer;" onclick="window.open(document.getElementById('kinenbi').dataset.url,'_blank')" title="ccnl.jpで詳細を見る">取得中...</div></div>
+          <div class="info-item"><span class="label">🌅 日の出 / 日の入り</span><div id="suntime" class="content">--:-- / --:--</div></div>
           <div class="info-item"><span class="label">平取アイヌ語</span><div id="ainu" class="content">...</div></div>
         </div>
         <div style="text-align:right;">
             <a href="https://tenki.jp/forecast/1/4/2200/1602/10days.html" target="_blank" style="font-size:12px; color:#666; font-weight:bold; background:#eee; padding:2px 6px; border-radius:4px; text-decoration:none;">平取</a>
-            <div id="weather" style="font-size:20px; font-weight:700; cursor:pointer;" onclick="window.open('https://tenki.jp/forecast/1/4/2200/1602/10days.html', '_blank')">--℃</div>
+            <div id="weather" style="font-weight:700; cursor:pointer;" onclick="window.open('https://tenki.jp/forecast/1/4/2200/1602/10days.html', '_blank')">--℃</div>
         </div>
       </div>
       <div class="weather-switch" role="group" aria-label="天気の表示切り替え">
@@ -1024,14 +1040,14 @@ function renderWeatherData(d) {
       grid.innerHTML=indices.map(({time,i})=>{
         const temp=Number.isFinite(h.temperature_2m[i])?Math.round(h.temperature_2m[i])+'℃':'--℃';
         const rain=Number.isFinite(h.precipitation_probability[i])?h.precipitation_probability[i]+'%':'--%';
-        return `<div class="weather-day"><div>${Number(time.slice(11,13))}時</div><div style="font-size:16px;">${icons[h.weathercode[i]]||"☁️"}</div><div style="font-weight:bold">${temp}</div><div class="weather-rain" title="降水確率">☔ ${rain}</div></div>`;
+        return `<div class="weather-day"><div>${Number(time.slice(11,13))}時</div><div class="weather-icon">${icons[h.weathercode[i]]||"☁️"}</div><div style="font-weight:bold">${temp}</div><div class="weather-rain" title="降水確率">☔ ${rain}</div></div>`;
       }).join('') || '<div style="grid-column:1/-1;font-size:12px;color:#666">本日の時間別予報がありません。一週間の天気をご確認ください。</div>';
       return;
     }
     let wHtml = "";
     for(let i=0; i<7; i++){
         const dt = new Date(d.daily.time[i]);
-        wHtml += `<div class="weather-day"><div>${dt.getMonth()+1}/${dt.getDate()}</div><div style="font-size:14px;">${icons[d.daily.weathercode[i]]||"☁️"}</div><div><span class="temp-max">${Math.round(d.daily.temperature_2m_max[i])}</span>/<span class="temp-min">${Math.round(d.daily.temperature_2m_min[i])}</span></div></div>`;
+        wHtml += `<div class="weather-day"><div>${dt.getMonth()+1}/${dt.getDate()}</div><div class="weather-icon">${icons[d.daily.weathercode[i]]||"☁️"}</div><div><span class="temp-max">${Math.round(d.daily.temperature_2m_max[i])}</span>/<span class="temp-min">${Math.round(d.daily.temperature_2m_min[i])}</span></div></div>`;
     }
     document.getElementById("weekly-weather").innerHTML = wHtml;
 }
