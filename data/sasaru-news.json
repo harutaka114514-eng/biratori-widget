@@ -1,8 +1,18 @@
 {
   "status": "ok",
-  "generatedAt": "2026-10-11T00:15:52.720Z",
+  "generatedAt": "2026-10-11T11:27:20.561Z",
   "source": "SASARU公式カテゴリ一覧（ファッション除外）",
   "items": [
+    {
+      "title": "店主こだわり「ワンプレートカレー」長沼のインド！んぼんぎ流の「混ぜると食感や香りが変わるカレー」新鮮野菜と本格スパイス融合！",
+      "link": "https://sasaru.media/article/gourmet/20261011_004/",
+      "pubDate": "2026-10-11T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "グルメ"
+      ],
+      "category": "gourmet"
+    },
     {
       "title": "コストコ『冬タイヤ』交換はweb予約がお得！「永久無料が一部有料になったけどお得？」初雪のニュースで予約が一瞬で埋まる！",
       "link": "https://sasaru.media/article/money/20261011_001/",
@@ -12,6 +22,16 @@
         "ライフスタイル"
       ],
       "category": "money"
+    },
+    {
+      "title": "道民100人が選ぶ秋の味覚1位は？シャインマスカット「去年より大きくて安い！」今年の価格を調査",
+      "link": "https://sasaru.media/article/media/20261011_003/",
+      "pubDate": "2026-10-11T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "ニュース"
+      ],
+      "category": "media"
     },
     {
       "title": "たらこ盛り放題！2000円で参加！15秒でどれだけ？直売所“盛り放題”1万円相当をゲットした人も！",
@@ -252,16 +272,6 @@
         "おでかけ"
       ],
       "category": "weather"
-    },
-    {
-      "title": "朝8時に開店！琴似に“レモンベーカリー”カフェ新店舗…窯焼きミニピザにフレンチトースト「モーニング＆ランチ人気」",
-      "link": "https://sasaru.media/article/gourmet/20261002_002/",
-      "pubDate": "2026-10-02T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "グルメ"
-      ],
-      "category": "gourmet"
     },
     {
       "title": "すでに予約50％越え! 札幌の老舗製本会社の「booco」じわりじわり年々ファン拡大「可愛くて機能的すぎる」",
@@ -707,16 +717,6 @@
       "title": "札幌市営地下鉄“クレカタッチ決済”『上限運賃サービス』登場「ドニチカ買わなくても自動的に乗り放題」",
       "link": "https://sasaru.media/article/media/20260402_001/",
       "pubDate": "2026-04-02T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "ニュース"
-      ],
-      "category": "media"
-    },
-    {
-      "title": "すごい反響！健康アプリ「アルカサル」スタート「DL数すでに4万以上」札幌の大人たちパパママ世代におススメ",
-      "link": "https://sasaru.media/article/media/20260331_003/",
-      "pubDate": "2026-03-31T00:00:00+09:00",
       "author": "SASARU",
       "categories": [
         "ニュース"
