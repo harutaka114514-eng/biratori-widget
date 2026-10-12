@@ -14,6 +14,8 @@ def main():
         try:
             result=subprocess.run(['twitter','user-posts',account,'-n','8','--json'],capture_output=True,text=True,timeout=60,check=True)
             rows=json.loads(result.stdout)
+            if isinstance(rows,dict) and rows.get("ok") is True:
+                rows=rows.get("data")
             if not isinstance(rows,list):raise ValueError('Invalid rows')
             for row in rows:
                 if not isinstance(row,dict):continue
