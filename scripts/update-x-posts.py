@@ -2,6 +2,7 @@
 import json, os, re, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 ACCOUNTS=['biratori_koho','cfm_domingo','nanairohidaka','tonekkochannel1','tomatofarmerkao','niikappu_ta']
 target=Path('data/x-posts.json')
 def main():
@@ -23,7 +24,14 @@ def main():
                 if str(author.get('screenName','')).lower()!=account.lower():continue
                 post_id=str(row.get('id',''))
                 if not re.fullmatch(r'\d+',post_id) or not isinstance(row.get('text'),str):continue
-                items.append({'account':account,'text':row['text'],'link':f'https://x.com/{account}/status/{post_id}','pubDate':row.get('createdAtISO') or ''})
+                images=[]
+                for media in row.get('media') or []:
+                    if not isinstance(media,dict) or media.get('type')!='photo':continue
+                    url=media.get('url','')
+                    parsed=urlparse(url)
+                    if parsed.scheme=='https' and parsed.hostname=='pbs.twimg.com' and parsed.path.startswith('/media/'):
+                        images.append(url)
+                items.append({'images':images,'account':account,'text':row['text'],'link':f'https://x.com/{account}/status/{post_id}','pubDate':row.get('createdAtISO') or ''})
             success+=1
         except (subprocess.SubprocessError,ValueError,OSError) as error:
             # Print only fixed diagnostic labels, never subprocess output or credentials.
