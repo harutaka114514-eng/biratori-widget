@@ -876,7 +876,7 @@ function renderXPosts(ul){
   ul.replaceChildren();
   const data=xPostData;
   const status=document.createElement('li');
-  status.textContent=!data?'Xの投稿を読み込み中…':!data.generatedAt?'投稿の自動取得は準備中です。':'最終取得：'+formatWidgetTime(Date.parse(data.generatedAt))+'（毎朝更新）';ul.append(status);
+  status.textContent=!data?'Xの投稿を読み込み中…':!data.generatedAt?'投稿の自動取得は準備中です。':'最終取得：'+formatWidgetTime(Date.parse(data.generatedAt))+'（毎日6・12・18・22時更新／日本時間）';ul.append(status);
   (data?.items||[]).forEach(item=>{
     if(!/^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(item.link))return;
     const li=document.createElement('li'),a=document.createElement('a');

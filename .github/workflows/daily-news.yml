@@ -2,8 +2,8 @@ name: Daily news and Pages
 
 on:
   schedule:
-    # 毎朝6:17ごろ（日本時間）。混雑で遅れる場合があります。
-    - cron: '17 21 * * *'
+    # 日本時間の6時・12時・18時・22時。混雑で遅れる場合があります。
+    - cron: '0 3,9,13,21 * * *'
   workflow_dispatch:
   push:
     branches: [main]
