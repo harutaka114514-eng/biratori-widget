@@ -123,7 +123,7 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 #news-fullscreen-list li.is-read a { color: #800080 !important; }
 #news-fullscreen-list .unread-dot { width: 9px; height: 9px; background-color: #ef4444; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
 #news-fullscreen-list li.is-read .unread-dot { display: none; }
-#news-fullscreen-meshi { flex: 1; overflow-y: auto; display: none; }
+#news-fullscreen-meshi { flex: 1; overflow-y: auto; }
 
 /* 設定と更新状態 */
 .widget-status {font-size:10px;color:#666;margin-top:6px;line-height:1.5;}
@@ -340,6 +340,16 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 
 .x-post-images {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:8px;margin-top:12px;}
 .x-post-images img {display:block;width:100%;max-height:440px;object-fit:contain;border-radius:10px;background:#eef3f6;}
+/* Tab panel visibility and constrained scrolling. */
+#news-widget [hidden], #news-fullscreen-inner [hidden] { display:none !important; }
+#links-panel, body[data-theme="wii"] #links-panel { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr)); }
+#news-widget > :is(#meshi-panel,#links-panel), #news-fullscreen-inner > :is(#news-fullscreen-meshi,#links-panel) { flex:1 1 auto; min-height:0; overflow-y:auto; }
+.news-header, #news-fullscreen-header { flex-shrink:0; align-items:flex-start; }
+.news-tabs, #news-fullscreen-tabs { flex:1 1 auto; min-width:0; }
+#news-expand-btn, #news-fullscreen-close { flex-shrink:0; }
+#meshi-panel li, #news-fullscreen-meshi li { flex-wrap:wrap; }
+#news-fullscreen-meshi [style*="font-size"] { font-size:16px !important; }
+@media(max-width:1100px) { #news-widget { max-height:75vh; } }
 </style>
 </head>
 <body data-theme="wii">
@@ -432,9 +442,9 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
       </div>
       <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
       <ul id="news" class="news-list"></ul>
-      <div id="meshi-panel" style="display:none;"></div>
+      <div id="meshi-panel" hidden></div>
       <div id="links-panel-home"></div>
-      <nav id="links-panel" class="link-box" aria-label="リンク集" style="display:none">
+      <nav id="links-panel" class="link-box" aria-label="リンク集" hidden>
 
 
 <a href="https://www.town.biratori.hokkaido.jp/choseijoho/koho_kocho/koho/2/2441.html"
@@ -486,7 +496,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
       <button id="news-fullscreen-close" onclick="closeNewsFullscreen()">✕ 閉じる</button>
     </div>
     <ul id="news-fullscreen-list" class="news-list"></ul>
-    <div id="news-fullscreen-meshi"></div>
+    <div id="news-fullscreen-meshi" hidden></div>
   </div>
 </div>
 
@@ -681,6 +691,10 @@ if(widgetSettings.news && !widgetSettings.regionalGourmetSplit){
 let newsCache = { keizai: [], sakei: [], gourmet: [], nl: [], hobby: [] };
 const newsStates = {};
 let newsLoading = false;
+// 通常表示と全画面の選択は従来どおり独立させる。
+let newsCurrentType = 'keizai';
+let fsCurrentType = 'keizai';
+let newsBodyOverflow = '';
 let readNewsLinks = new Set(JSON.parse(localStorage.getItem('read_news_links') || '[]'));
 
 function setRandomBackground() {
@@ -841,7 +855,7 @@ function filterDomingoArticles(items){
 async function preloadAllNews() {
   if(newsLoading)return;
   newsLoading=true;sasaruDataRequest=null;
-  const active=()=>document.querySelector('.news-tabs button.active')?.dataset.type || 'keizai';
+  const active=()=>newsCurrentType;
   renderNewsStatus(active());
   await Promise.all(Object.keys(urls).map(async key => {
     const feeds=Array.isArray(urls[key])?urls[key]:[urls[key]];
@@ -867,7 +881,7 @@ async function preloadAllNews() {
   const stored=writeWidgetStorage('biratori_news_cache_v1',feedRecords);
   Object.values(newsStates).forEach(state=>state.unsaved=!stored);
   newsLoading=false;
-  if(active()!=='meshi')renderNews(active()); else renderNewsStatus('meshi');
+  renderNews(active());
   if(document.getElementById('news-fullscreen-overlay').classList.contains('active'))renderNewsFullscreen(fsCurrentType);
 }
 
@@ -893,33 +907,57 @@ function renderXPosts(ul){
     li.append(a);ul.append(li);
   });
   if(!data&&!xPostRequest)xPostRequest=fetchWidgetJSON('data/x-posts.json').then(d=>{if(!Array.isArray(d.items))throw Error('Invalid X data');xPostData=d;}).catch(()=>{xPostData={items:[],generatedAt:null};}).finally(()=>{
-    if(document.querySelector('.news-tabs button.active')?.dataset.type==='x')renderXPosts(document.getElementById('news'));
+    if(newsCurrentType==='x')renderXPosts(document.getElementById('news'));
     if(document.getElementById('news-fullscreen-overlay').classList.contains('active')&&fsCurrentType==='x')renderXPosts(document.getElementById('news-fullscreen-list'));
   });
 }
-function renderNews(type) {
-  const linksPanel=document.getElementById('links-panel');
-  if(!document.getElementById('news-fullscreen-overlay').classList.contains('active'))linksPanel.style.display=type==='links'?'grid':'none';
-  if(type==='links'){
-    document.getElementById('news').style.display='none';
-    document.getElementById('meshi-panel').style.display='none';
-    renderNewsStatus(type);return;
+function isNewsFullscreenOpen() {
+  return document.getElementById('news-fullscreen-overlay').classList.contains('active');
+}
+
+// パネルの表示制御はここだけで行う。リンク集のDOMは複製しない。
+function updateNewsPanels(type, fullscreen) {
+  const list = document.getElementById(fullscreen ? 'news-fullscreen-list' : 'news');
+  const meshi = document.getElementById(fullscreen ? 'news-fullscreen-meshi' : 'meshi-panel');
+  list.hidden = type === 'links' || type === 'meshi';
+  meshi.hidden = type !== 'meshi';
+  if (fullscreen === isNewsFullscreenOpen()) {
+    document.getElementById('links-panel').hidden = type !== 'links';
   }
-  renderNewsStatus(type);
-  const ul = document.getElementById("news");
-  if(type==='x'){renderXPosts(ul);return;}
+  return { list, meshi };
+}
+
+function renderNewsItems(type, ul) {
+  if (type === 'x') { renderXPosts(ul); return; }
   const items = newsCache[type] || [];
-  if (items.length === 0) { ul.innerHTML = newsStates[type] ? "<li>表示できる記事がありません。</li>" : "<li>ロード中...</li>"; return; }
-
-
-
   ul.innerHTML = items.map(i => {
     const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
-    return `<li class="${isRead}">
-      <span class="unread-dot"></span>
-      ${widgetNewsLinkHTML(i)}
-    </li>`;
-  }).join('');
+    return `<li class="${isRead}"><span class="unread-dot"></span>${widgetNewsLinkHTML(i)}</li>`;
+  }).join('') || (newsStates[type] ? '<li>表示できる記事がありません。</li>' : '<li>ロード中...</li>');
+}
+
+function renderNewsView(type, fullscreen) {
+  const { list, meshi } = updateNewsPanels(type, fullscreen);
+  if (!fullscreen) renderNewsStatus(type);
+  if (type === 'links') return;
+  if (type === 'meshi') { renderMeshiPanelInto(meshi); return; }
+  renderNewsItems(type, list);
+}
+
+function renderNews(type) { renderNewsView(type, false); }
+function renderNewsFullscreen(type) { renderNewsView(type, true); }
+
+function selectNewsTab(type, fullscreen = false) {
+  const selector = fullscreen ? '#news-fullscreen-tabs' : '.news-tabs';
+  const buttons = [...document.querySelectorAll(selector + ' button[data-type]')];
+  if (!buttons.some(button => button.dataset.type === type)) return;
+  if (fullscreen) fsCurrentType = type; else newsCurrentType = type;
+  buttons.forEach(button => {
+    const selected = button.dataset.type === type;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+  renderNewsView(type, fullscreen);
 }
 
 function markAsRead(link, element) {
@@ -1387,12 +1425,7 @@ if(weatherRecord && validWeather(weatherRecord.data)) { renderWeatherData(weathe
 restoreNewsCache();
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
 
-document.querySelectorAll(".news-tabs button").forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll(".news-tabs button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active"); renderNews(b.dataset.type);
-  };
-});
+
 
 // ===== 近所めし：今開いてるお店 =====
 const nearbyShops = [
@@ -1432,11 +1465,9 @@ renderOpenShops();
 setInterval(renderOpenShops, 60000);
 
 // ===== 近所めし：今開いてるお店 =====
-function renderMeshiPanel(){
-  const el = document.getElementById('meshi-panel');
+function renderMeshiPanelInto(el){
   if(!el) return;
   const d = new Date();
-  const cur = d.getHours()*60+d.getMinutes();
   const dayNames = ['日','月','火','水','木','金','土'];
 
   const rows = nearbyShops.map(shop => {
@@ -1463,113 +1494,52 @@ function renderMeshiPanel(){
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">${rows}</ul>`;
 }
 
-// タブ切り替えに近所めし対応を追加
-const origTabClick = document.querySelectorAll(".news-tabs button");
-origTabClick.forEach(b => {
-  b.addEventListener('click', () => {
-    origTabClick.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    const type = b.dataset.type;
-    document.getElementById('links-panel').style.display=type==='links'?'grid':'none';
-    if(type==='links'){renderNews(type);return;}
-    if(type === 'meshi'){
-      document.getElementById('news').style.display = 'none';
-      document.getElementById('meshi-panel').style.display = 'block';
-      renderMeshiPanel();
-    } else {
-      document.getElementById('news').style.display = '';
-      document.getElementById('meshi-panel').style.display = 'none';
-      renderNews(type);
-    }
-  });
-});
-setInterval(()=>{ if(document.getElementById('meshi-panel').style.display!=='none') renderMeshiPanel(); }, 60000);
-// ===== RSS全画面モード =====
-let fsCurrentType = 'keizai';
 
-function renderNewsFullscreen(type) {
-  const ul = document.getElementById('news-fullscreen-list');
-  const meshiEl = document.getElementById('news-fullscreen-meshi');
-  const linksPanel=document.getElementById('links-panel');
-  document.getElementById('news-fullscreen-inner').append(linksPanel);
-  linksPanel.style.display=type==='links'?'grid':'none';
-  if(type==='links'){ul.style.display='none';meshiEl.style.display='none';return;}
-  if (type === 'meshi') {
-    ul.style.display = 'none';
-    meshiEl.style.display = 'block';
-    meshiEl.innerHTML = document.getElementById('meshi-panel').innerHTML || '';
-    renderMeshiPanelInto(meshiEl);
-  } else {
-    ul.style.display = 'flex';
-    meshiEl.style.display = 'none';
-    if(type==='x'){renderXPosts(ul);return;}
-    const items = newsCache[type] || [];
 
-    ul.innerHTML = items.map(i => {
-      const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
-      return `<li class="${isRead}">
-        <span class="unread-dot"></span>
-        ${widgetNewsLinkHTML(i)}
-      </li>`;
-    }).join('') || '<li>ロード中...</li>';
+function renderMeshiPanel() {
+  renderMeshiPanelInto(document.getElementById('meshi-panel'));
+  if (isNewsFullscreenOpen() && fsCurrentType === 'meshi') {
+    renderMeshiPanelInto(document.getElementById('news-fullscreen-meshi'));
   }
 }
 
-function renderMeshiPanelInto(el) {
-  const d = new Date();
-  const cur = d.getHours()*60+d.getMinutes();
-  const dayNames = ['日','月','火','水','木','金','土'];
-  const rows = nearbyShops.map(shop => {
-    const h = shop.hours[d.getDay()];
-    const open = isShopOpen(shop);
-    let timeStr = '定休日';
-    if(h) { timeStr = h.open+'〜'+h.close; if(h.open2) timeStr+=' / '+h.open2+'〜'+h.close2; }
-    return `<li style="background:#fff;border-radius:8px;padding:8px 10px;border:1px solid #eee;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${open?'#22c55e':'#d1d5db'};flex-shrink:0;${open?'box-shadow:0 0 5px #22c55e;':''}"></span>
-        <span style="font-size:13px;font-weight:${open?'700':'400'};color:${open?'#111':'#888'};">${shop.name}</span>
-      </div>
-      <span style="font-size:10px;color:${open?'#16a34a':'#aaa'};font-family:monospace;white-space:nowrap;">${timeStr}</span>
-    </li>`;
-  }).join('');
-  const openCount = nearbyShops.filter(isShopOpen).length;
-  el.innerHTML = `<div style="font-size:10px;color:#888;margin-bottom:6px;">${dayNames[d.getDay()]}曜日 ／ 営業中 <strong style="color:#16a34a;">${openCount}</strong> 店</div>
-    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">${rows}</ul>`;
-}
+setInterval(() => {
+  if (newsCurrentType === 'meshi' || (isNewsFullscreenOpen() && fsCurrentType === 'meshi')) renderMeshiPanel();
+}, 60000);
+
+// ===== RSS全画面モード =====
 
 function openNewsFullscreen() {
-  const activeTab = document.querySelector('.news-tabs button.active');
-  fsCurrentType = activeTab ? activeTab.dataset.type : 'keizai';
-  document.querySelectorAll('#news-fullscreen-tabs button').forEach(b => {
-    b.classList.toggle('active', b.dataset.type === fsCurrentType);
-  });
-  renderNewsFullscreen(fsCurrentType);
+  if (isNewsFullscreenOpen()) return;
+  newsBodyOverflow = document.body.style.overflow;
   document.getElementById('news-fullscreen-overlay').classList.add('active');
+  document.getElementById('news-fullscreen-inner').append(document.getElementById('links-panel'));
+  selectNewsTab(newsCurrentType, true);
   document.body.style.overflow = 'hidden';
 }
 
 function closeNewsFullscreen() {
-  const linksPanel=document.getElementById('links-panel');
-  document.getElementById('links-panel-home').after(linksPanel);
-  linksPanel.style.display=document.querySelector('.news-tabs button.active')?.dataset.type==='links'?'grid':'none';
+  if (!isNewsFullscreenOpen()) return;
   document.getElementById('news-fullscreen-overlay').classList.remove('active');
-  document.body.style.overflow = '';
+  document.getElementById('links-panel-home').after(document.getElementById('links-panel'));
+  renderNews(newsCurrentType);
+  document.body.style.overflow = newsBodyOverflow;
 }
 
-document.querySelectorAll('#news-fullscreen-tabs button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('#news-fullscreen-tabs button').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    fsCurrentType = b.dataset.type;
-    renderNewsFullscreen(fsCurrentType);
+for (const [selector, fullscreen] of [['.news-tabs', false], ['#news-fullscreen-tabs', true]]) {
+  const tabs = document.querySelector(selector);
+  tabs.addEventListener('click', event => {
+    const button = event.target.closest('button[data-type]');
+    if (button && tabs.contains(button)) selectNewsTab(button.dataset.type, fullscreen);
   });
-});
+  tabs.querySelectorAll('button[data-type]').forEach(button => {
+    button.type = 'button';
+    button.setAttribute('aria-pressed', String(button.classList.contains('active')));
+  });
+}
 
-document.getElementById('news-fullscreen-overlay').addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeNewsFullscreen();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeNewsFullscreen();
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && isNewsFullscreenOpen()) closeNewsFullscreen();
 });
 
 const defaultShopHours = nearbyShops.map(shop => JSON.parse(JSON.stringify(shop.hours)));
@@ -1588,7 +1558,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
   const news=document.getElementById('news-widget');
   if(!left||!news)return;
   function alignNewsHeight(){
-    if(window.matchMedia('(max-width:900px)').matches){
+    if(window.matchMedia('(max-width:1100px)').matches){
       news.style.height='';
     }else{
       news.style.height=left.getBoundingClientRect().height+'px';
