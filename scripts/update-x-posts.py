@@ -12,7 +12,7 @@ def main():
     items=[];success=0
     for account in ACCOUNTS:
         try:
-            result=subprocess.run(['twitter','search','--from',account,'--type','latest','-n','8','--json'],capture_output=True,text=True,timeout=60,check=True)
+            result=subprocess.run(['twitter','user-posts',account,'-n','8','--json'],capture_output=True,text=True,timeout=60,check=True)
             rows=json.loads(result.stdout)
             if not isinstance(rows,list):raise ValueError('Invalid rows')
             for row in rows:
