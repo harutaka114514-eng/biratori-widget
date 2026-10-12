@@ -334,6 +334,9 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 
 #links-panel,body[data-theme="wii"] #links-panel {grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;height:auto;align-content:start;overflow-y:auto;}
 #links-panel a,body[data-theme="wii"] #links-panel a {font-size:20px;padding:18px 14px;}
+.x-accounts {flex-wrap:wrap;}
+.x-accounts a {flex:0 1 auto;}
+.x-post-text {white-space:pre-wrap;overflow-wrap:anywhere;}
 </style>
 </head>
 <body data-theme="wii">
@@ -413,6 +416,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
     <div class="widget" id="news-widget">
       <div class="news-header">
         <div class="news-tabs">
+          <button data-type="x">X</button>
           <button data-type="links">🔗 リンク集</button>
           <button data-type="keizai" class="active">旅行</button>
           <button data-type="sakei">地域</button>
@@ -467,7 +471,8 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
   <div id="news-fullscreen-inner">
     <div id="news-fullscreen-header">
       <div id="news-fullscreen-tabs">
-        <button data-type="links">🔗 リンク集</button>
+        <button data-type="x">X</button>
+          <button data-type="links">🔗 リンク集</button>
         <button data-type="keizai" class="active">旅行</button>
         <button data-type="sakei">地域</button>
           <button data-type="gourmet">グルメ</button>
@@ -755,7 +760,7 @@ function mergeWidgetNews(items) {
 }
 function renderNewsStatus(type) {
   const el=document.getElementById('news-status');
-  if(type==='meshi'||type==='links'){el.textContent='';return;}
+  if(type==='meshi'||type==='links'||type==='x'){el.textContent='';return;}
   const state=newsStates[type];
   el.replaceChildren();
   const message=document.createElement('span');
@@ -863,6 +868,28 @@ async function preloadAllNews() {
   if(document.getElementById('news-fullscreen-overlay').classList.contains('active'))renderNewsFullscreen(fsCurrentType);
 }
 
+let xPostData=null,xPostRequest=null;
+function renderXPosts(ul){
+  ul.replaceChildren();
+  const accounts=['biratori_koho','cfm_domingo','nanairohidaka','tonekkochannel1','tomatofarmerkao','niikappu_ta'];
+  const header=document.createElement('li');header.className='x-accounts';
+  accounts.forEach(name=>{const a=document.createElement('a');a.href='https://x.com/'+name;a.target='_blank';a.rel='noopener noreferrer';a.textContent='@'+name;header.append(a);});ul.append(header);
+  const data=xPostData;
+  const status=document.createElement('li');
+  status.textContent=!data?'Xの投稿を読み込み中…':!data.generatedAt?'投稿の自動取得は準備中です。上のアカウント名からXを開けます。':'最終取得：'+formatWidgetTime(Date.parse(data.generatedAt))+'（毎朝更新）';ul.append(status);
+  (data?.items||[]).forEach(item=>{
+    if(!/^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(item.link))return;
+    const li=document.createElement('li'),a=document.createElement('a');
+    a.href=item.link;a.target='_blank';a.rel='noopener noreferrer';
+    const author=document.createElement('strong');author.textContent='@'+item.account;
+    const text=document.createElement('div');text.className='x-post-text';text.textContent=item.text;
+    a.append(author,text);li.append(a);ul.append(li);
+  });
+  if(!data&&!xPostRequest)xPostRequest=fetchWidgetJSON('data/x-posts.json').then(d=>{if(!Array.isArray(d.items))throw Error('Invalid X data');xPostData=d;}).catch(()=>{xPostData={items:[],generatedAt:null};}).finally(()=>{
+    if(document.querySelector('.news-tabs button.active')?.dataset.type==='x')renderXPosts(document.getElementById('news'));
+    if(document.getElementById('news-fullscreen-overlay').classList.contains('active')&&fsCurrentType==='x')renderXPosts(document.getElementById('news-fullscreen-list'));
+  });
+}
 function renderNews(type) {
   const linksPanel=document.getElementById('links-panel');
   if(!document.getElementById('news-fullscreen-overlay').classList.contains('active'))linksPanel.style.display=type==='links'?'grid':'none';
@@ -873,6 +900,7 @@ function renderNews(type) {
   }
   renderNewsStatus(type);
   const ul = document.getElementById("news");
+  if(type==='x'){renderXPosts(ul);return;}
   const items = newsCache[type] || [];
   if (items.length === 0) { ul.innerHTML = newsStates[type] ? "<li>表示できる記事がありません。</li>" : "<li>ロード中...</li>"; return; }
 
@@ -1467,6 +1495,7 @@ function renderNewsFullscreen(type) {
   } else {
     ul.style.display = 'flex';
     meshiEl.style.display = 'none';
+    if(type==='x'){renderXPosts(ul);return;}
     const items = newsCache[type] || [];
 
     ul.innerHTML = items.map(i => {

@@ -13,6 +13,7 @@ on:
       - 'data/domingo-news.json'
       - 'data/sasaru-news.json'
       - 'data/hidaka-events.json'
+      - 'data/x-posts.json'
       - '*.md'
 
 concurrency:
@@ -49,10 +50,26 @@ jobs:
         id: hidaka
         continue-on-error: true
         run: node scripts/update-hidaka-events.mjs
+      - name: Set up Python for X
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect X posts
+        id: xposts
+        continue-on-error: true
+        env:
+          TWITTER_AUTH_TOKEN: ${{ secrets.TWITTER_AUTH_TOKEN }}
+          TWITTER_CT0: ${{ secrets.TWITTER_CT0 }}
+        run: |
+          if [ -n "$TWITTER_AUTH_TOKEN" ] && [ -n "$TWITTER_CT0" ]; then
+            python -m pip install twitter-cli==0.8.5
+          fi
+          python scripts/update-x-posts.py
       - name: Save collected news
-        if: steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success'
+        if: steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.xposts.outcome == 'success'
         run: |
           git add data/domingo-news.json
+          if [ -f data/x-posts.json ]; then git add data/x-posts.json; fi
           if [ -f data/sasaru-news.json ]; then git add data/sasaru-news.json; fi
           if [ -f data/walker-news.json ]; then git add data/walker-news.json; fi
           if [ -f data/hidaka-events.json ]; then git add data/hidaka-events.json; fi
