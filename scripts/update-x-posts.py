@@ -23,7 +23,15 @@ def main():
                 if not re.fullmatch(r'\d+',post_id) or not isinstance(row.get('text'),str):continue
                 items.append({'account':account,'text':row['text'],'link':f'https://x.com/{account}/status/{post_id}','pubDate':row.get('createdAtISO') or ''})
             success+=1
-        except (subprocess.SubprocessError,ValueError,OSError):
+        except (subprocess.SubprocessError,ValueError,OSError) as error:
+            # Print only fixed diagnostic labels, never subprocess output or credentials.
+            raw=((getattr(error,'stderr','') or '')+' '+(getattr(error,'stdout','') or '')).lower()
+            reason='unclassified'
+            for terms,label in [(['401','403','authentication','expired','invalid cookie'],'authentication_or_access_denied'),(['429','rate limit'],'rate_limit'),(['timeout','timed out'],'timeout'),(['ssl','certificate'],'tls'),(['connection','resolve','network'],'network'),(['not found','404'],'endpoint_not_found')]:
+                if any(term in raw for term in terms):reason=label;break
+            if isinstance(error,ValueError):reason='invalid_response_format'
+            if isinstance(error,FileNotFoundError):reason='tool_not_found'
+            print(f'X diagnostic for @{account}: {reason}')
             print(f'X retrieval failed for @{account}; retaining previous posts.')
             items.extend(i for i in previous.get('items',[]) if i.get('account')==account)
     if not success:
