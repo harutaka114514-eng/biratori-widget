@@ -150,10 +150,10 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .main-layout { align-items: start; }
 .left-content, #news-widget { min-width: 0; }
 #news-widget { min-height: 0; overflow: hidden; }
-#news-widget > .news-header, #news-widget > #news-status { flex-shrink: 0; }
-#news-widget > #news { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-gutter: stable; }
-#news-widget > #news > li { flex-shrink: 0; }
-#news-widget > #meshi-panel, #news-widget > #gmail-panel { min-height: 0; overflow-y: auto; }
+#news-widget > .widget-content > .news-header, #news-widget > .widget-content > #news-status { flex-shrink: 0; }
+#news-widget > .widget-content > #news { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-gutter: stable; }
+#news-widget > .widget-content > #news > li { flex-shrink: 0; }
+#news-widget > .widget-content > #meshi-panel, #news-widget > .widget-content > #gmail-panel { min-height: 0; overflow-y: auto; }
 @media(max-width:900px){ #news-widget { max-height: 75vh; } }
 
 /* Frutiger Aero: self-contained sky, glass and glossy controls. */
@@ -343,14 +343,22 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 /* Tab panel visibility and constrained scrolling. */
 #news-widget [hidden], #news-fullscreen-inner [hidden] { display:none !important; }
 #links-panel, body[data-theme="wii"] #links-panel { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr)); }
-#news-widget > :is(#meshi-panel,#links-panel), #news-fullscreen-inner > :is(#news-fullscreen-meshi,#links-panel) { flex:1 1 auto; min-height:0; overflow-y:auto; }
+#news-widget > .widget-content > :is(#meshi-panel,#links-panel), #news-fullscreen-inner > :is(#news-fullscreen-meshi,#links-panel) { flex:1 1 auto; min-height:0; overflow-y:auto; }
 .news-header, #news-fullscreen-header { flex-shrink:0; align-items:flex-start; }
 .news-tabs, #news-fullscreen-tabs { flex:1 1 auto; min-width:0; }
 #news-expand-btn, #news-fullscreen-close { flex-shrink:0; }
 #meshi-panel li, #news-fullscreen-meshi li { flex-wrap:wrap; }
 #news-fullscreen-meshi [style*="font-size"] { font-size:16px !important; }
 /* 1列表示ではタブや記事数にかかわらずニュース欄の高さを一定にする。 */
-@media(max-width:1100px) { #news-widget { height:600px; max-height:none; } }
+@media(max-width:1100px) { #news-widget { height:2000px; max-height:none; } }
+
+/* ウィジェットの内容を保持したまま下半分を隠す。 */
+.widget { overflow:hidden; }
+.widget-size-bar { display:flex; justify-content:flex-end; flex:0 0 auto; margin-bottom:8px; }
+.widget-size-toggle { padding:6px 12px; border:1px solid #9dcbdc; border-radius:8px; background:#eef7fb; color:#25536d; font-size:14px; cursor:pointer; }
+.widget-content { display:flex; flex-direction:column; flex:1 1 auto; min-height:0; min-width:0; }
+.widget.is-reduced { height:var(--widget-half-height) !important; max-height:var(--widget-half-height) !important; }
+.widget.is-reduced > .widget-content { flex:0 0 var(--widget-content-height); height:var(--widget-content-height); overflow:hidden; }
 </style>
 </head>
 <body data-theme="wii">
@@ -1640,6 +1648,43 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
   setDesign(saved || 'wii');
   document.querySelectorAll('[data-design]').forEach(function(button) {
     button.addEventListener('click', function() { setDesign(button.dataset.design); });
+  });
+})();
+</script>
+
+<script>
+(function setupWidgetSizeControls() {
+  const widgets=[...document.querySelectorAll('.widgets .widget')];
+  const names=['天気・日々の情報','平取の季節だより','ライブ映像','カレンダー','ニュース'];
+  function measure(widget) {
+    const reduced=widget.classList.contains('is-reduced');
+    widget.classList.remove('is-reduced');
+    widget.style.setProperty('--widget-half-height',widget.getBoundingClientRect().height/2+'px');
+    widget.style.setProperty('--widget-content-height',widget.querySelector('.widget-content').getBoundingClientRect().height+'px');
+    widget.classList.toggle('is-reduced',reduced);
+  }
+  widgets.forEach((widget,index)=>{
+    const content=document.createElement('div');
+    content.className='widget-content'; content.id='widget-content-'+index;
+    while(widget.firstChild)content.append(widget.firstChild);
+    const bar=document.createElement('div'); bar.className='widget-size-bar';
+    const button=document.createElement('button');
+    button.type='button'; button.className='widget-size-toggle'; button.textContent='半分に縮小';
+    button.setAttribute('aria-controls',content.id); button.setAttribute('aria-expanded','true');
+    button.setAttribute('aria-label',names[index]+'を半分に縮小');
+    bar.append(button); widget.append(bar,content);
+    button.addEventListener('click',()=>{
+      if(!widget.classList.contains('is-reduced'))measure(widget);
+      const reduced=widget.classList.toggle('is-reduced');
+      button.textContent=reduced?'元に戻す':'半分に縮小';
+      button.setAttribute('aria-expanded',String(!reduced));
+      button.setAttribute('aria-label',names[index]+(reduced?'を元に戻す':'を半分に縮小'));
+    });
+  });
+  let frame;
+  window.addEventListener('resize',()=>{
+    cancelAnimationFrame(frame);
+    frame=requestAnimationFrame(()=>widgets.filter(widget=>widget.classList.contains('is-reduced')).forEach(measure));
   });
 })();
 </script>
