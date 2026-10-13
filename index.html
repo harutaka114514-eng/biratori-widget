@@ -728,6 +728,22 @@ function restoreNewsCache() {
   renderNews('keizai');
 }
 // RSSの表示用データを整形。本文・コメント・投稿者情報は表示に使いません。
+// 虚構新聞はRSSに日時がないため、記事URLの年月日を補完する（時刻は不明）。
+function kyokoNewsDateFromURL(link) {
+  try {
+    const url=new URL(link);
+    if(!['http:','https:'].includes(url.protocol)||!['kyoko-np.net','www.kyoko-np.net'].includes(url.hostname))return '';
+    const regular=url.pathname.match(/^\/(\d{4})(\d{2})(\d{2})\d{2}\.html$/);
+    const book=url.pathname.match(/^\/book(\d{2})(\d{2})(\d{2})\d{2}\.html$/);
+    const match=regular||book;
+    if(!match)return '';
+    const year=regular?Number(match[1]):2000+Number(match[1]);
+    const month=Number(match[2]),day=Number(match[3]);
+    const check=new Date(Date.UTC(year,month-1,day));
+    if(year<2000||check.getUTCFullYear()!==year||check.getUTCMonth()!==month-1||check.getUTCDate()!==day)return '';
+    return year+'-'+String(month).padStart(2,'0')+'-'+String(day).padStart(2,'0')+'T00:00:00+09:00';
+  } catch { return ''; }
+}
 function cleanWidgetNewsItem(item){
   if(!item || typeof item.title!=='string' || typeof item.link!=='string')return null;
   const doc=new DOMParser().parseFromString(item.title,'text/html');
@@ -735,7 +751,8 @@ function cleanWidgetNewsItem(item){
   const title=(doc.body.textContent||'').replace(/\s+/g,' ').trim();
   if(!title)return null;
   if(isHidakaFeed(item.link))return {title,link:item.link,pubDate:item.pubDate||''};
-  return {...item,title};
+  const urlDate=!Number.isFinite(Date.parse(item.pubDate))?kyokoNewsDateFromURL(item.link):'';
+  return urlDate?{...item,title,pubDate:urlDate,pubDateSource:'url',pubDatePrecision:'day'}:{...item,title};
 }
 function isHidakaFeed(url){
   try{return new URL(url).hostname==='hokkaido-hidaka-kankonavi.com';}catch{return false;}
