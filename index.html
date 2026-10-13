@@ -350,7 +350,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 #meshi-panel li, #news-fullscreen-meshi li { flex-wrap:wrap; }
 #news-fullscreen-meshi [style*="font-size"] { font-size:16px !important; }
 /* 1列表示ではタブや記事数にかかわらずニュース欄の高さを一定にする。 */
-@media(max-width:1100px) { #news-widget { height:2000px; max-height:none; } }
+@media(max-width:1100px) { #news-widget { height:1000px; max-height:none; } }
 
 /* ウィジェットの内容を保持したまま下半分を隠す。 */
 .widget { overflow:hidden; }
@@ -359,6 +359,10 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 .widget-content { display:flex; flex-direction:column; flex:1 1 auto; min-height:0; min-width:0; }
 .widget.is-reduced { height:var(--widget-half-height) !important; max-height:var(--widget-half-height) !important; }
 .widget.is-reduced > .widget-content { flex:0 0 var(--widget-content-height); height:var(--widget-content-height); overflow:hidden; }
+.all-widget-size-controls {display:flex;justify-content:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
+.older-news-row > details {width:100%;min-width:0;}
+.older-news-row summary {cursor:pointer;color:#25536d;font-weight:bold;padding:8px;}
+.older-news-list {margin-top:8px;}
 </style>
 </head>
 <body data-theme="wii">
@@ -895,13 +899,43 @@ async function preloadAllNews() {
 }
 
 let xPostData=null,xPostRequest=null;
+function splitRecentNews(items, now=Date.now()) {
+  const recent=[],older=[];
+  items.forEach(item=>{
+    const date=Date.parse(item.pubDate);
+    (Number.isFinite(date)&&now-date>=86400000?older:recent).push(item);
+  });
+  return {recent,older};
+}
+function appendOlderNews(ul,type,items,renderItem) {
+  if(!items.length)return;
+  const row=document.createElement('li'); row.className='older-news-row';
+  const details=document.createElement('details');
+  details.open=ul.dataset.olderExpanded===type;
+  const summary=document.createElement('summary');
+  summary.textContent='続きを見る（24時間以上前：'+items.length+'件）';
+  const list=document.createElement('ul');list.className='news-list older-news-list';
+  items.forEach(item=>list.append(renderItem(item)));
+  details.append(summary,list);row.append(details);ul.append(row);
+  details.addEventListener('toggle',()=>{if(details.isConnected)ul.dataset.olderExpanded=details.open?type:'';});
+}
+function newsArticleRow(item) {
+  const row=document.createElement('li');
+  row.className=readNewsLinks.has(item.link)?'is-read':'';
+  row.innerHTML='<span class="unread-dot"></span>'+widgetNewsLinkHTML(item);
+  return row;
+}
+
 function renderXPosts(ul){
+  const previous=ul.querySelector('.older-news-row details');
+  if(previous)ul.dataset.olderExpanded=previous.open?'x':'';
   ul.replaceChildren();
   const data=xPostData;
   const status=document.createElement('li');
   status.textContent=!data?'Xの投稿を読み込み中…':!data.generatedAt?'投稿の自動取得は準備中です。':'最終取得：'+formatWidgetTime(Date.parse(data.generatedAt))+'（毎日6・12・18・22時更新／日本時間）';ul.append(status);
-  (data?.items||[]).forEach(item=>{
-    if(!/^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(item.link))return;
+  const {recent,older}=splitRecentNews(data?.items||[]);
+  function renderPost(item){
+    if(!/^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(item.link))return document.createElement('li');
     const li=document.createElement('li'),a=document.createElement('a');
     a.href=item.link;a.target='_blank';a.rel='noopener noreferrer';
     const author=document.createElement('strong');author.textContent='@'+item.account;
@@ -913,8 +947,10 @@ function renderXPosts(ul){
       const img=document.createElement('img');img.src=url;img.alt='@'+item.account+'の投稿画像';img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';img.addEventListener('error',()=>img.remove());photos.append(img);
     });
     if(photos.childElementCount)a.append(photos);
-    li.append(a);ul.append(li);
-  });
+    li.append(a);return li;
+  }
+  recent.forEach(item=>ul.append(renderPost(item)));
+  appendOlderNews(ul,'x',older,renderPost);
   if(!data&&!xPostRequest)xPostRequest=fetchWidgetJSON('data/x-posts.json').then(d=>{if(!Array.isArray(d.items))throw Error('Invalid X data');xPostData=d;}).catch(()=>{xPostData={items:[],generatedAt:null};}).finally(()=>{
     if(newsCurrentType==='x')renderXPosts(document.getElementById('news'));
     if(document.getElementById('news-fullscreen-overlay').classList.contains('active')&&fsCurrentType==='x')renderXPosts(document.getElementById('news-fullscreen-list'));
@@ -937,12 +973,19 @@ function updateNewsPanels(type, fullscreen) {
 }
 
 function renderNewsItems(type, ul) {
+  const previous=ul.querySelector('.older-news-row details');
+  if(previous)ul.dataset.olderExpanded=previous.open?ul.dataset.newsType:'';
+  if(ul.dataset.newsType!==type){ul.dataset.olderExpanded='';ul.dataset.newsType=type;}
   if (type === 'x') { renderXPosts(ul); return; }
-  const items = newsCache[type] || [];
-  ul.innerHTML = items.map(i => {
-    const isRead = readNewsLinks.has(i.link) ? 'is-read' : '';
-    return `<li class="${isRead}"><span class="unread-dot"></span>${widgetNewsLinkHTML(i)}</li>`;
-  }).join('') || (newsStates[type] ? '<li>表示できる記事がありません。</li>' : '<li>ロード中...</li>');
+  const {recent,older}=splitRecentNews(newsCache[type] || []);
+  ul.replaceChildren();
+  recent.forEach(item=>ul.append(newsArticleRow(item)));
+  if(!recent.length){
+    const message=document.createElement('li');
+    message.textContent=older.length?'直近24時間のニュースはありません。':newsStates[type]?'表示できる記事がありません。':'ロード中...';
+    ul.append(message);
+  }
+  appendOlderNews(ul,type,older,newsArticleRow);
 }
 
 function renderNewsView(type, fullscreen) {
@@ -1681,12 +1724,35 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
       button.setAttribute('aria-label',names[index]+(reduced?'を元に戻す':'を半分に縮小'));
     });
   });
+  const allBar=document.createElement('div'); allBar.className='all-widget-size-controls';
+  function setReduced(widget,reduced){
+    widget.classList.toggle('is-reduced',reduced);
+    const button=widget.querySelector('.widget-size-toggle');
+    button.textContent=reduced?'元に戻す':'半分に縮小';
+    button.setAttribute('aria-expanded',String(!reduced));
+    button.setAttribute('aria-label',names[widgets.indexOf(widget)]+(reduced?'を元に戻す':'を半分に縮小'));
+  }
+  for(const [label,reduced] of [['全部縮小',true],['全部元に戻す',false]]){
+    const button=document.createElement('button');button.type='button';button.className='widget-size-toggle';button.textContent=label;
+    button.addEventListener('click',()=>{
+      if(reduced)widgets.filter(widget=>!widget.classList.contains('is-reduced')).forEach(measure);
+      widgets.forEach(widget=>setReduced(widget,reduced));
+    });
+    allBar.append(button);
+  }
+  document.querySelector('.widgets').before(allBar);
   let frame;
   window.addEventListener('resize',()=>{
     cancelAnimationFrame(frame);
     frame=requestAnimationFrame(()=>widgets.filter(widget=>widget.classList.contains('is-reduced')).forEach(measure));
   });
 })();
+</script>
+<script>
+setInterval(()=>{
+  renderNews(newsCurrentType);
+  if(isNewsFullscreenOpen())renderNewsFullscreen(fsCurrentType);
+},60000);
 </script>
 </body>
 </html>
