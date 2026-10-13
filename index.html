@@ -352,13 +352,16 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 /* 1列表示ではタブや記事数にかかわらずニュース欄の高さを一定にする。 */
 @media(max-width:1100px) { #news-widget { height:1000px; max-height:none; } }
 
-/* ウィジェットの内容を保持したまま下半分を隠す。 */
+/* 内容をすべて隠し、再表示の操作だけを残す。 */
 .widget { overflow:hidden; }
 .widget-size-bar { display:flex; justify-content:flex-end; flex:0 0 auto; margin-bottom:8px; }
 .widget-size-toggle { padding:6px 12px; border:1px solid #9dcbdc; border-radius:8px; background:#eef7fb; color:#25536d; font-size:14px; cursor:pointer; }
 .widget-content { display:flex; flex-direction:column; flex:1 1 auto; min-height:0; min-width:0; }
-.widget.is-reduced { height:var(--widget-half-height) !important; max-height:var(--widget-half-height) !important; }
-.widget.is-reduced > .widget-content { flex:0 0 var(--widget-content-height); height:var(--widget-content-height); overflow:hidden; }
+.widget.is-collapsed { height:auto !important; max-height:none !important; min-height:0; }
+.widget-content[hidden] { display:none !important; }
+.widget.is-collapsed > .widget-size-bar { margin-bottom:0; }
+.widget-control-label { font-size:14px; color:#25536d; }
+.widget-size-bar { justify-content:space-between; align-items:center; gap:10px; }
 .all-widget-size-controls {display:flex;justify-content:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
 .older-news-row > details {width:100%;min-width:0;}
 .older-news-row summary {cursor:pointer;color:#25536d;font-weight:bold;padding:8px;}
@@ -1696,56 +1699,39 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 </script>
 
 <script>
-(function setupWidgetSizeControls() {
+(function setupWidgetVisibilityControls() {
   const widgets=[...document.querySelectorAll('.widgets .widget')];
   const names=['天気・日々の情報','平取の季節だより','ライブ映像','カレンダー','ニュース'];
-  function measure(widget) {
-    const reduced=widget.classList.contains('is-reduced');
-    widget.classList.remove('is-reduced');
-    widget.style.setProperty('--widget-half-height',widget.getBoundingClientRect().height/2+'px');
-    widget.style.setProperty('--widget-content-height',widget.querySelector('.widget-content').getBoundingClientRect().height+'px');
-    widget.classList.toggle('is-reduced',reduced);
+  function setHidden(widget,hidden) {
+    if(hidden&&widget.id==='news-widget'&&isNewsFullscreenOpen())closeNewsFullscreen();
+    widget.classList.toggle('is-collapsed',hidden);
+    widget.querySelector('.widget-content').hidden=hidden;
+    const button=widget.querySelector('.widget-size-toggle');
+    button.textContent=hidden?'表示する':'非表示';
+    button.setAttribute('aria-expanded',String(!hidden));
+    button.setAttribute('aria-label',names[widgets.indexOf(widget)]+(hidden?'を表示する':'を非表示にする'));
   }
   widgets.forEach((widget,index)=>{
     const content=document.createElement('div');
-    content.className='widget-content'; content.id='widget-content-'+index;
+    content.className='widget-content';content.id='widget-content-'+index;
     while(widget.firstChild)content.append(widget.firstChild);
-    const bar=document.createElement('div'); bar.className='widget-size-bar';
+    const bar=document.createElement('div');bar.className='widget-size-bar';
+    const label=document.createElement('span');label.className='widget-control-label';label.textContent=names[index];
     const button=document.createElement('button');
-    button.type='button'; button.className='widget-size-toggle'; button.textContent='半分に縮小';
-    button.setAttribute('aria-controls',content.id); button.setAttribute('aria-expanded','true');
-    button.setAttribute('aria-label',names[index]+'を半分に縮小');
-    bar.append(button); widget.append(bar,content);
-    button.addEventListener('click',()=>{
-      if(!widget.classList.contains('is-reduced'))measure(widget);
-      const reduced=widget.classList.toggle('is-reduced');
-      button.textContent=reduced?'元に戻す':'半分に縮小';
-      button.setAttribute('aria-expanded',String(!reduced));
-      button.setAttribute('aria-label',names[index]+(reduced?'を元に戻す':'を半分に縮小'));
-    });
+    button.type='button';button.className='widget-size-toggle';
+    button.setAttribute('aria-controls',content.id);
+    bar.append(label,button);widget.append(bar,content);
+    setHidden(widget,false);
+    button.addEventListener('click',()=>setHidden(widget,!content.hidden));
   });
-  const allBar=document.createElement('div'); allBar.className='all-widget-size-controls';
-  function setReduced(widget,reduced){
-    widget.classList.toggle('is-reduced',reduced);
-    const button=widget.querySelector('.widget-size-toggle');
-    button.textContent=reduced?'元に戻す':'半分に縮小';
-    button.setAttribute('aria-expanded',String(!reduced));
-    button.setAttribute('aria-label',names[widgets.indexOf(widget)]+(reduced?'を元に戻す':'を半分に縮小'));
-  }
-  for(const [label,reduced] of [['全部縮小',true],['全部元に戻す',false]]){
+  const allBar=document.createElement('div');allBar.className='all-widget-size-controls';
+  for(const [label,hidden] of [['全部非表示',true],['全部表示',false]]){
     const button=document.createElement('button');button.type='button';button.className='widget-size-toggle';button.textContent=label;
-    button.addEventListener('click',()=>{
-      if(reduced)widgets.filter(widget=>!widget.classList.contains('is-reduced')).forEach(measure);
-      widgets.forEach(widget=>setReduced(widget,reduced));
-    });
+    button.setAttribute('aria-controls',widgets.map(widget=>widget.querySelector('.widget-content').id).join(' '));
+    button.addEventListener('click',()=>widgets.forEach(widget=>setHidden(widget,hidden)));
     allBar.append(button);
   }
   document.querySelector('.widgets').before(allBar);
-  let frame;
-  window.addEventListener('resize',()=>{
-    cancelAnimationFrame(frame);
-    frame=requestAnimationFrame(()=>widgets.filter(widget=>widget.classList.contains('is-reduced')).forEach(measure));
-  });
 })();
 </script>
 <script>
