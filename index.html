@@ -363,12 +363,15 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 .widget-control-label { font-size:14px; color:#25536d; }
 .widget-size-bar { justify-content:space-between; align-items:center; gap:10px; }
 .all-widget-size-controls {display:flex;justify-content:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
+#dashboard-controls {display:flex;justify-content:center;align-items:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
+#dashboard-controls #settings-open {margin:0;flex:0 0 auto;}
+#dashboard-controls .all-widget-size-controls {display:contents;}
 </style>
 </head>
 <body data-theme="wii">
 
 <h1>biratori-widget</h1>
-<button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button>
+<nav id="dashboard-controls" aria-label="ウィジェットの操作"><button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button></nav>
 <dialog id="widget-settings" aria-labelledby="settings-title">
   <form id="settings-form">
     <button id="settings-close" type="button" aria-label="設定画面を閉じる" title="閉じる" onclick="document.getElementById('widget-settings').close()">×</button>
@@ -1703,7 +1706,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
     button.addEventListener('click',()=>widgets.forEach(widget=>setHidden(widget,hidden)));
     allBar.append(button);
   }
-  document.querySelector('.widgets').before(allBar);
+  document.getElementById('dashboard-controls').append(allBar);
 })();
 </script>
 </body>
