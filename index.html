@@ -989,6 +989,57 @@ async function loadHidakaEvents(){
 }
 renderHidakaEvents();loadHidakaEvents();setInterval(loadHidakaEvents,30*60*1000);
 
+// Open-MeteoのWMOコードを現在・時間別・週間で共通表示する。
+function weatherCondition(code) {
+  const groups=[
+    [[0],'☀️','快晴'],[[1],'🌤️','晴れ'],[[2],'⛅','晴れ時々曇り'],[[3],'☁️','曇り'],
+    [[45,48],'🌫️','霧'],[[51,53,55],'🌦️','霧雨'],[[56,57],'🧊🌧️','凍る霧雨'],
+    [[61,63,65],'🌧️','雨'],[[66,67],'🧊🌧️','凍る雨'],
+    [[71,73,75,77],'❄️','雪'],[[80,81,82],'🌦️','にわか雨'],
+    [[85,86],'🌨️','にわか雪'],[[95,96,97,99],'⛈️','雷雨']
+  ];
+  const found=groups.find(([codes])=>codes.includes(code));
+  return found ? {icon:found[1],label:found[2]} : {icon:'❔',label:'天気不明'};
+}
+function weatherIconHTML(code) {
+  const condition=weatherCondition(code);
+  return '<span role="img" aria-label="'+condition.label+'" title="'+condition.label+'">'+condition.icon+'</span>';
+}
+function isRainWeatherCode(code) {
+  return [51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code);
+}
+function rainForecastWindow(data,now=Date.now()) {
+  const today=new Date(now).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+  const label=time=>{
+    const date=time.slice(0,10);
+    const tomorrow=new Date(now+86400000).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+    return (date===today?'今日':date===tomorrow?'明日':Number(date.slice(5,7))+'/'+Number(date.slice(8,10)))+' '+Number(time.slice(11,13))+'時';
+  };
+  const hourly=data?.hourly;
+  if(Array.isArray(hourly?.time)){
+    const points=hourly.time.map((time,i)=>({time,i,at:typeof time==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(time)?Date.parse(time+'+09:00'):NaN}))
+      .filter(point=>Number.isFinite(point.at)&&point.at>=now&&point.at<=now+86400000)
+      .sort((a,b)=>a.at-b.at);
+    const usable=points.filter(({i})=>Number.isFinite(hourly.weathercode?.[i])||Number.isFinite(hourly.precipitation_probability?.[i]));
+    if(usable.length){
+      const wet=usable.filter(({i})=>isRainWeatherCode(hourly.weathercode?.[i])||hourly.precipitation_probability?.[i]>=60);
+      if(!wet.length)return null;
+      const ranges=[];
+      for(const point of wet){
+        const last=ranges[ranges.length-1];
+        if(last&&point.at-last.end.at===3600000)last.end=point;
+        else ranges.push({start:point,end:point});
+      }
+      return '今後24時間の予報の目安：'+ranges.map(({start,end})=>start.at===end.at?label(start.time)+'ごろ':label(start.time)+'〜'+label(end.time)+'ごろ').join('、')+'。雨の予報、または降水確率60%以上です。現在の天気とは時間帯が異なります。雨具を用意しておくと安心です。';
+    }
+  }
+  const daily=data?.daily;
+  const tomorrow=new Date(now+86400000).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+  const dates=(daily?.time||[]).filter((date,i)=>(date===today||date===tomorrow)&&isRainWeatherCode(daily.weathercode?.[i]));
+  if(!dates.length)return null;
+  return dates.map(date=>date===today?'今日':'明日').join('・')+'の日別予報に雨があります。時間別予報がないため、降る時間帯は確認できません。現在の天気とは時間範囲が異なります。雨具を用意しておくと安心です。';
+}
+
 function seasonalGuidance(data,recordTime,now=Date.now()) {
   const jst=new Date(now).toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
   const month=Number(jst.slice(5,7));
@@ -1019,11 +1070,12 @@ function seasonalGuidance(data,recordTime,now=Date.now()) {
     if(temps.length){
       const low=Math.min(...temps),high=Math.max(...temps);
       if(codes.some(c=>[71,73,75,77,85,86].includes(c)))notices.push({title:'❄️ 雪の予報',text:period+'に雪の予報があります。足元と交通情報を確認し、移動は余裕を持って。'});
-      if(codes.some(c=>[95,96,99].includes(c)))notices.push({title:'⛈️ 雷雨の予報',text:period+'に雷雨の予報があります。外出前に最新の天気・注意報を確認しましょう。'});
+      if(codes.some(c=>[95,96,97,99].includes(c)))notices.push({title:'⛈️ 雷雨の予報',text:period+'に雷雨の予報があります。外出前に最新の天気・注意報を確認しましょう。'});
       if(high>=28)notices.push({title:'☀️ 暑さに備えて',text:period+'の予想最高気温は'+Math.round(high)+'℃。水分補給と涼しい場所での休憩を。'});
       if(low<=0)notices.push({title:'🧊 氷点下の予報',text:period+'の予想最低気温は'+Math.round(low)+'℃。濡れた路面などの凍結に注意してください。'});
       else if(low<=5)notices.push({title:'🧥 冷え込みに備えて',text:period+'の予想最低気温は'+Math.round(low)+'℃。暖かい上着があると安心です。'});
-      if(!notices.length&&(probabilities.some(p=>p>=60)||codes.some(c=>[51,53,55,56,57,61,63,65,66,67,80,81,82].includes(c))))notices.push({title:'☔ 雨への備え',text:period+'は雨の予報、または降水確率60%以上の時間帯があります。雨具を用意しておくと安心です。'});
+      const rainWindow=rainForecastWindow(data,now);
+      if(!notices.length&&rainWindow)notices.push({title:'☔ 雨への備え',text:rainWindow});
     }
   }
   if(!notices.length)notices.push({title:general.title,text:general.text});
@@ -1138,8 +1190,10 @@ function switchWeatherView(view){
 function renderWeatherData(d) {
     displayedWeather=d;
     renderSeasonalInfo();
-    const icons = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",61:"🌧️",71:"❄️",95:"⛈️"};
-    document.getElementById("weather").textContent = `${icons[d.current_weather.weathercode]||"☁️"} ${Math.round(d.current_weather.temperature)}℃`;
+    const currentCondition=weatherCondition(d.current_weather.weathercode);
+    const currentWeatherElement=document.getElementById("weather");
+    currentWeatherElement.textContent = `現在 ${currentCondition.icon} ${Math.round(d.current_weather.temperature)}℃`;
+    currentWeatherElement.title='現在の天気：'+currentCondition.label+' ／ tenki.jpで詳細を見る';
     const grid=document.getElementById("weekly-weather");
     grid.classList.toggle('hourly-weather',weatherView==='day');
     if(weatherView==='day'){
@@ -1153,14 +1207,14 @@ function renderWeatherData(d) {
       grid.innerHTML=indices.map(({time,i})=>{
         const temp=Number.isFinite(h.temperature_2m[i])?Math.round(h.temperature_2m[i])+'℃':'--℃';
         const rain=Number.isFinite(h.precipitation_probability[i])?h.precipitation_probability[i]+'%':'--%';
-        return `<div class="weather-day"><div>${Number(time.slice(11,13))}時</div><div class="weather-icon">${icons[h.weathercode[i]]||"☁️"}</div><div style="font-weight:bold">${temp}</div><div class="weather-rain" title="降水確率">☔ ${rain}</div></div>`;
+        return `<div class="weather-day"><div>${Number(time.slice(11,13))}時</div><div class="weather-icon">${weatherIconHTML(h.weathercode[i])}</div><div style="font-weight:bold">${temp}</div><div class="weather-rain" title="降水確率">☔ ${rain}</div></div>`;
       }).join('') || '<div style="grid-column:1/-1;font-size:12px;color:#666">本日の時間別予報がありません。一週間の天気をご確認ください。</div>';
       return;
     }
     let wHtml = "";
     for(let i=0; i<7; i++){
         const dt = new Date(d.daily.time[i]);
-        wHtml += `<div class="weather-day"><div>${dt.getMonth()+1}/${dt.getDate()}</div><div class="weather-icon">${icons[d.daily.weathercode[i]]||"☁️"}</div><div><span class="temp-max">${Math.round(d.daily.temperature_2m_max[i])}</span>/<span class="temp-min">${Math.round(d.daily.temperature_2m_min[i])}</span></div></div>`;
+        wHtml += `<div class="weather-day"><div>${dt.getMonth()+1}/${dt.getDate()}</div><div class="weather-icon">${weatherIconHTML(d.daily.weathercode[i])}</div><div><span class="temp-max">${Math.round(d.daily.temperature_2m_max[i])}</span>/<span class="temp-min">${Math.round(d.daily.temperature_2m_min[i])}</span></div></div>`;
     }
     document.getElementById("weekly-weather").innerHTML = wHtml;
 }
