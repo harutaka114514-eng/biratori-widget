@@ -366,6 +366,58 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 #dashboard-controls {display:flex;justify-content:center;align-items:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
 #dashboard-controls #settings-open {margin:0;flex:0 0 auto;}
 #dashboard-controls .all-widget-size-controls {display:contents;}
+
+/* Webcore: tiled desktop, beveled controls and classic blue title bars. */
+body[data-theme="webcore"] {
+  --ink:#202020; --blue:#000080;
+  font-family:"MS PGothic","ＭＳ Ｐゴシック","Courier New",monospace;
+  color:#202020;background-color:#008080;
+  background-image:repeating-linear-gradient(0deg,transparent 0 23px,#ffffff12 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,#ffffff12 23px 24px) !important;
+  background-size:24px 24px;background-attachment:fixed;transition:none;
+}
+body[data-theme="webcore"]::before {display:none;}
+body[data-theme="webcore"] h1 {color:#fff;text-shadow:2px 2px #000080;font-family:inherit;letter-spacing:2px;}
+body[data-theme="webcore"] .widget,
+body[data-theme="webcore"] #widget-settings {
+  background:#c0c0c0;color:#202020;border:3px solid;border-color:#fff #404040 #404040 #fff;
+  border-radius:0;box-shadow:3px 3px 0 #0006;backdrop-filter:none;
+}
+body[data-theme="webcore"] .widget {padding:10px;}
+body[data-theme="webcore"] .widget-size-bar {
+  background:linear-gradient(90deg,#000080,#1084d0);color:#fff;padding:5px 7px;margin:-7px -7px 12px;
+}
+body[data-theme="webcore"] .widget-control-label {color:#fff;font-weight:bold;letter-spacing:1px;}
+body[data-theme="webcore"] .widget.is-collapsed > .widget-size-bar {margin-bottom:-7px;}
+body[data-theme="webcore"] :is(button,.link-box a,.garbage-button),
+body[data-theme="webcore"] #widget-settings button {
+  font-family:inherit;background:#c0c0c0;color:#202020;border:2px solid;border-color:#fff #404040 #404040 #fff;
+  border-radius:0;box-shadow:1px 1px 0 #000;text-shadow:none;cursor:pointer;
+}
+body[data-theme="webcore"] :is(button,.link-box a,.garbage-button):active {
+  border-color:#404040 #fff #fff #404040;box-shadow:none;transform:none;
+}
+body[data-theme="webcore"] :is(.weather-switch,.video-tabs,.news-tabs,#news-fullscreen-tabs) button.active,
+body[data-theme="webcore"] #widget-settings .theme-switch button[aria-pressed="true"] {
+  background:#000080;color:#fff;border-color:#404040 #fff #fff #404040;box-shadow:none;
+}
+body[data-theme="webcore"] :is(a,button,input,textarea,.cal-cell):focus-visible {outline:3px dashed #b00060;outline-offset:3px;}
+body[data-theme="webcore"] :is(.weather-day,.cal-cell,.news-list li,#news-fullscreen-list li,.seasonal-list li,.seasonal-event-list li) {
+  background:#fffef2;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:none;
+}
+body[data-theme="webcore"] .news-list li.is-read {background:#e8e8e8;}
+body[data-theme="webcore"] :is(.news-list a,#news-fullscreen-list a,.seasonal-event-list a,.seasonal-footer a,.seasonal-event-source a,#gmail-list a) {color:#0000a8;text-decoration:underline;}
+body[data-theme="webcore"] .news-header {border-bottom:2px groove #fff;padding-bottom:10px;}
+body[data-theme="webcore"] :is(.seasonal-heading h2,.seasonal-events h3,#clock,.info-item .content) {color:#000080;}
+body[data-theme="webcore"] :is(.info-item .label,.widget-status,.cal-header,.seasonal-event-meta,.seasonal-event-source,.seasonal-footer p,#widget-settings .help) {color:#343434;}
+body[data-theme="webcore"] .cal-today {background:#ffffbd;outline:3px solid #000080;}
+body[data-theme="webcore"] :is(.cal-plan,.cal-garbage,.seasonal-event-state) {border-radius:0;}
+body[data-theme="webcore"] .video-container {border:3px inset #ddd;border-radius:0;}
+body[data-theme="webcore"] #widget-settings fieldset {border:2px groove #fff;border-radius:0;}
+body[data-theme="webcore"] #widget-settings :is(input:not([type=checkbox]),textarea) {background:#fff;color:#202020;border:2px inset #ddd;border-radius:0;}
+body[data-theme="webcore"] #settings-title {background:#000080;color:#fff;padding:8px 40px 8px 8px;}
+body[data-theme="webcore"] #news-fullscreen-overlay {background:#c0c0c0;backdrop-filter:none;}
+body[data-theme="webcore"] #news-fullscreen-header {background:#000080;padding:8px;}
+body[data-theme="webcore"] * {scrollbar-color:#c0c0c0 #808080;}
 </style>
 </head>
 <body data-theme="wii">
@@ -377,7 +429,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
     <button id="settings-close" type="button" aria-label="設定画面を閉じる" title="閉じる" onclick="document.getElementById('widget-settings').close()">×</button>
     <h2 id="settings-title" style="font-size:18px;margin-top:0">設定</h2>
     <p class="help">設定はこのブラウザに保存されます。保存しても他の端末やブラウザには反映されません。</p>
-    <fieldset><legend>デザイン</legend><nav class="theme-switch" aria-label="デザイン切り替え"><button type="button" data-design="aero" aria-pressed="false">🌐 フルティガーエアロ</button><button type="button" data-design="wii" aria-pressed="true">Wii メニュー</button></nav><p class="help">選ぶとすぐに切り替わり、このブラウザに保存されます。</p></fieldset>
+    <fieldset><legend>デザイン</legend><nav class="theme-switch" aria-label="デザイン切り替え"><button type="button" data-design="aero" aria-pressed="false">🌐 フルティガーエアロ</button><button type="button" data-design="wii" aria-pressed="true">Wii メニュー</button><button type="button" data-design="webcore" aria-pressed="false">▣ Webcore</button></nav><p class="help">選ぶとすぐに切り替わり、このブラウザに保存されます。</p></fieldset>
     <div id="settings-fields"></div>
     <p id="settings-error" role="alert" style="color:#b91c1c;font-size:13px"></p>
     <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onclick="document.getElementById('widget-settings').close()">キャンセル</button><button type="submit" style="background:#2563eb;color:white">保存</button></div>
@@ -1692,7 +1744,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 <script>
 (function () {
   function setDesign(theme) {
-    theme = theme === 'aero' ? 'aero' : 'wii';
+    theme = ['aero', 'wii', 'webcore'].includes(theme) ? theme : 'wii';
     document.body.dataset.theme = theme;
     document.querySelectorAll('[data-design]').forEach(function(button) {
       button.setAttribute('aria-pressed', String(button.dataset.design === theme));
