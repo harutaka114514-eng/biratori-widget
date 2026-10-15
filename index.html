@@ -435,7 +435,6 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
 <body data-theme="wii">
 
 <h1>biratori-widget</h1>
-<a id="wallpaper-credit" href="https://www.bing.com/" target="_blank" rel="noopener noreferrer" hidden></a>
 <nav id="dashboard-controls" aria-label="ウィジェットの操作"><button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button></nav>
 <dialog id="widget-settings" aria-labelledby="settings-title">
   <form id="settings-form">
@@ -443,7 +442,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
     <h2 id="settings-title" style="font-size:18px;margin-top:0">設定</h2>
     <p class="help">設定はこのブラウザに保存されます。保存しても他の端末やブラウザには反映されません。</p>
     <fieldset><legend>デザイン</legend><nav class="theme-switch" aria-label="デザイン切り替え"><button type="button" data-design="aero" aria-pressed="false">🌐 フルティガーエアロ</button><button type="button" data-design="wii" aria-pressed="true">Wii メニュー</button><button type="button" data-design="webcore" aria-pressed="false">▣ Webcore</button></nav><p class="help">選ぶとすぐに切り替わり、このブラウザに保存されます。</p></fieldset>
-    <fieldset><legend>背景</legend><div class="wallpaper-switch" aria-label="背景切り替え"><button type="button" data-wallpaper-choice="bing" aria-pressed="true">Bing Wallpaper（日替わり）</button><button type="button" data-wallpaper-choice="theme" aria-pressed="false">デザイン標準</button></div><p class="help">すぐに反映され、このブラウザに保存されます。Bing画像を読み込めない場合は標準背景を表示します。</p><p id="wallpaper-status" class="help" role="status"></p></fieldset>
+    <fieldset><legend>背景</legend><div class="wallpaper-switch" aria-label="背景切り替え"><button type="button" data-wallpaper-choice="bing" aria-pressed="true">Bing Wallpaper（日替わり）</button><button type="button" data-wallpaper-choice="theme" aria-pressed="false">デザイン標準</button></div><p class="help">すぐに反映され、このブラウザに保存されます。Bing画像を読み込めない場合は標準背景を表示します。</p><p id="wallpaper-status" class="help" role="status"></p><a id="wallpaper-credit" href="https://www.bing.com/" target="_blank" rel="noopener noreferrer" hidden></a></fieldset>
     <div id="settings-fields"></div>
     <p id="settings-error" role="alert" style="color:#b91c1c;font-size:13px"></p>
     <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onclick="document.getElementById('widget-settings').close()">キャンセル</button><button type="submit" style="background:#2563eb;color:white">保存</button></div>
@@ -1847,7 +1846,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
       body.style.setProperty('--bing-wallpaper', 'url(' + JSON.stringify(url.href) + ')');
       body.dataset.wallpaperReady = 'true';
       credit.href = link.href;
-      credit.textContent = 'Bing Wallpaper · ' + data.copyright;
+      credit.textContent = '画像の権利表記: ' + (data.copyright.includes('©') ? data.copyright.slice(data.copyright.indexOf('©')).replace(/\)$/, '') : data.copyright);
       render();
     } catch (_) {
       if (choice === 'bing') status.textContent = wallpaper ? '更新できなかったため、前回のBing画像を表示しています。' : 'Bing画像を読み込めないため、デザイン標準の背景を表示しています。';
