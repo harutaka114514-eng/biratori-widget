@@ -788,6 +788,25 @@ function widgetNewsBaseTitle(item,fullTitles){
   const knownSource=/^(?:.*\.(?:jp|com|net)|47NEWS|Domingo|NHK(?:ニュース)?|北海道新聞(?:デジタル)?|日テレNEWS(?:\s*NNN)?|ライブドアニュース|毎日新聞|日本経済新聞|Yahoo!ニュース|旅行Watch|グルメWatch|北海道ひだか観光ナビ)$/i.test(source);
   return googleNews||knownSource||fullTitles.has(base)?base:widgetNewsTitleKey(title);
 }
+// 共通する文字を順序どおり数え、長い方の見出しの50%以上なら重複。
+function widgetNewsSimilarTitle(left,right){
+  const a=Array.from(left.replace(/[\p{P}\p{S}\s]/gu,''));
+  const b=Array.from(right.replace(/[\p{P}\p{S}\s]/gu,''));
+  if(!a.length||!b.length)return false;
+  const threshold=Math.ceil(Math.max(a.length,b.length)/2);
+  if(Math.min(a.length,b.length)<threshold)return false;
+  const row=new Uint32Array(b.length+1);
+  for(const char of a){
+    let diagonal=0;
+    for(let j=1;j<=b.length;j++){
+      const previous=row[j];
+      row[j]=char===b[j-1]?diagonal+1:Math.max(row[j],row[j-1]);
+      diagonal=previous;
+    }
+    if(row[b.length]>=threshold)return true;
+  }
+  return false;
+}
 function mergeWidgetNews(items) {
   const links=new Set(), titles=new Set();
   const cleaned=items.map(cleanWidgetNewsItem).filter(item =>
@@ -804,8 +823,8 @@ function mergeWidgetNews(items) {
     let linkKey;
     try{linkKey=widgetNewsURLKey(item.link);}catch{return false;}
     const titleKey=widgetNewsBaseTitle(item,fullTitles);
-    if(links.has(linkKey)||(!isHiMagURL(item.link)&&titles.has(titleKey))) return false;
-    links.add(linkKey);if(!isHiMagURL(item.link))titles.add(titleKey);return true;
+    if(links.has(linkKey)||[...titles].some(title=>widgetNewsSimilarTitle(titleKey,title)))return false;
+    links.add(linkKey);titles.add(titleKey);return true;
   }).sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
 }
 function renderNewsStatus(type) {
