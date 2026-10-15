@@ -1,0 +1,11 @@
+import { writeFile } from 'node:fs/promises';
+const response = await fetch('https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=ja-JP', {signal: AbortSignal.timeout(20000)});
+if (!response.ok) throw new Error(`Bing metadata: ${response.status}`);
+const {images} = await response.json();
+const image = images?.[0];
+if (!image?.url || !image.copyright) throw new Error('Invalid Bing wallpaper metadata');
+const url = new URL(image.url, 'https://www.bing.com');
+const link = new URL(image.copyrightlink);
+if (url.origin !== 'https://www.bing.com' || link.origin !== 'https://www.bing.com') throw new Error('Unexpected Bing URL');
+await writeFile(new URL('../data/bing-wallpaper.json', import.meta.url), JSON.stringify({url: url.href, copyright: image.copyright, link: link.href, title: image.title, date: image.startdate}, null, 2) + '\n');
+console.log('Updated Bing wallpaper metadata:', image.startdate);

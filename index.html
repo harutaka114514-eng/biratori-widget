@@ -418,11 +418,24 @@ body[data-theme="webcore"] #settings-title {background:#000080;color:#fff;paddin
 body[data-theme="webcore"] #news-fullscreen-overlay {background:#c0c0c0;backdrop-filter:none;}
 body[data-theme="webcore"] #news-fullscreen-header {background:#000080;padding:8px;}
 body[data-theme="webcore"] * {scrollbar-color:#c0c0c0 #808080;}
+
+/* Wallpaper overrides the backgrounds of all three designs. */
+body[data-wallpaper="bing"][data-wallpaper-ready="true"] {
+  background-image:var(--bing-wallpaper) !important;
+  background-size:cover !important;background-position:center !important;
+  background-repeat:no-repeat !important;background-attachment:fixed !important;
+}
+body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-shadow:0 1px 4px #000,0 0 12px #000;}
+#wallpaper-credit {display:block;width:fit-content;max-width:100%;box-sizing:border-box;margin:0 auto 14px;padding:5px 10px;background:#fffffff0;color:#202020;font-size:13px;line-height:1.5;overflow-wrap:anywhere;}
+#wallpaper-credit[hidden] {display:none;}
+.wallpaper-switch {display:flex;flex-wrap:wrap;gap:8px;}
+#widget-settings .wallpaper-switch button[aria-pressed="true"] {outline:2px solid #0077b9;outline-offset:2px;}
 </style>
 </head>
 <body data-theme="wii">
 
 <h1>biratori-widget</h1>
+<a id="wallpaper-credit" href="https://www.bing.com/" target="_blank" rel="noopener noreferrer" hidden></a>
 <nav id="dashboard-controls" aria-label="ウィジェットの操作"><button id="settings-open" type="button" onclick="openWidgetSettings()">⚙ 設定</button></nav>
 <dialog id="widget-settings" aria-labelledby="settings-title">
   <form id="settings-form">
@@ -430,6 +443,7 @@ body[data-theme="webcore"] * {scrollbar-color:#c0c0c0 #808080;}
     <h2 id="settings-title" style="font-size:18px;margin-top:0">設定</h2>
     <p class="help">設定はこのブラウザに保存されます。保存しても他の端末やブラウザには反映されません。</p>
     <fieldset><legend>デザイン</legend><nav class="theme-switch" aria-label="デザイン切り替え"><button type="button" data-design="aero" aria-pressed="false">🌐 フルティガーエアロ</button><button type="button" data-design="wii" aria-pressed="true">Wii メニュー</button><button type="button" data-design="webcore" aria-pressed="false">▣ Webcore</button></nav><p class="help">選ぶとすぐに切り替わり、このブラウザに保存されます。</p></fieldset>
+    <fieldset><legend>背景</legend><div class="wallpaper-switch" aria-label="背景切り替え"><button type="button" data-wallpaper-choice="bing" aria-pressed="true">Bing Wallpaper（日替わり）</button><button type="button" data-wallpaper-choice="theme" aria-pressed="false">デザイン標準</button></div><p class="help">すぐに反映され、このブラウザに保存されます。Bing画像を読み込めない場合は標準背景を表示します。</p><p id="wallpaper-status" class="help" role="status"></p></fieldset>
     <div id="settings-fields"></div>
     <p id="settings-error" role="alert" style="color:#b91c1c;font-size:13px"></p>
     <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onclick="document.getElementById('widget-settings').close()">キャンセル</button><button type="submit" style="background:#2563eb;color:white">保存</button></div>
@@ -1795,6 +1809,61 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
     allBar.append(button);
   }
   document.getElementById('dashboard-controls').append(allBar);
+})();
+</script>
+<script>
+(function setupBingWallpaper() {
+  const body = document.body;
+  const credit = document.getElementById('wallpaper-credit');
+  const status = document.getElementById('wallpaper-status');
+  let choice = 'bing', wallpaper = null, loading = false;
+  try { if (localStorage.getItem('biratori_wallpaper') === 'theme') choice = 'theme'; } catch (_) {}
+  function render() {
+    body.dataset.wallpaper = choice;
+    document.querySelectorAll('[data-wallpaper-choice]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.wallpaperChoice === choice));
+    });
+    credit.hidden = choice !== 'bing' || !wallpaper;
+    status.textContent = choice === 'theme' ? 'デザイン標準の背景を表示しています。' : wallpaper ? 'Bingの日替わり画像を表示しています。' : 'Bing画像を読み込み中…';
+    window.dispatchEvent(new Event('resize'));
+  }
+  async function loadWallpaper() {
+    if (loading) return;
+    loading = true;
+    try {
+      const response = await fetch('data/bing-wallpaper.json', {cache:'no-cache', signal:AbortSignal.timeout(15000)});
+      if (!response.ok) throw new Error('metadata');
+      const data = await response.json();
+      const url = new URL(data.url), link = new URL(data.link);
+      if (url.origin !== 'https://www.bing.com' || link.origin !== 'https://www.bing.com' || !data.copyright) throw new Error('metadata');
+      await new Promise((resolve,reject) => {
+        const image = new Image();
+        const timeout = setTimeout(() => reject(new Error('image timeout')), 15000);
+        image.onload = () => {clearTimeout(timeout);resolve();};
+        image.onerror = () => {clearTimeout(timeout);reject(new Error('image'));};
+        image.src = url.href;
+      });
+      wallpaper = data;
+      body.style.setProperty('--bing-wallpaper', 'url(' + JSON.stringify(url.href) + ')');
+      body.dataset.wallpaperReady = 'true';
+      credit.href = link.href;
+      credit.textContent = 'Bing Wallpaper · ' + data.copyright;
+      render();
+    } catch (_) {
+      if (choice === 'bing') status.textContent = wallpaper ? '更新できなかったため、前回のBing画像を表示しています。' : 'Bing画像を読み込めないため、デザイン標準の背景を表示しています。';
+    } finally { loading = false; }
+  }
+  document.querySelectorAll('[data-wallpaper-choice]').forEach(button => {
+    button.addEventListener('click', () => {
+      choice = button.dataset.wallpaperChoice === 'theme' ? 'theme' : 'bing';
+      try { localStorage.setItem('biratori_wallpaper', choice); } catch (_) {}
+      render();
+      if (choice === 'bing') loadWallpaper();
+    });
+  });
+  render();
+  if (choice === 'bing') loadWallpaper();
+  setInterval(() => { if (choice === 'bing') loadWallpaper(); }, 60 * 60 * 1000);
 })();
 </script>
 </body>

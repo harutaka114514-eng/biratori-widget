@@ -14,6 +14,7 @@ on:
       - 'data/sasaru-news.json'
       - 'data/hidaka-events.json'
       - 'data/x-posts.json'
+      - 'data/bing-wallpaper.json'
       - '*.md'
 
 concurrency:
@@ -34,6 +35,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Update Bing wallpaper
+        id: wallpaper
+        continue-on-error: true
+        run: node scripts/update-bing-wallpaper.mjs
       - name: Collect Domingo news
         id: domingo
         continue-on-error: true
@@ -66,8 +71,9 @@ jobs:
           fi
           python scripts/update-x-posts.py
       - name: Save collected news
-        if: steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.xposts.outcome == 'success'
+        if: steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.xposts.outcome == 'success'
         run: |
+          if [ -f data/bing-wallpaper.json ]; then git add data/bing-wallpaper.json; fi
           git add data/domingo-news.json
           if [ -f data/x-posts.json ]; then git add data/x-posts.json; fi
           if [ -f data/sasaru-news.json ]; then git add data/sasaru-news.json; fi
