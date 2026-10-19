@@ -13,7 +13,7 @@ jobs:
           curl --fail --location --max-time 45 'https://www.gutabi.jp/event/area?w%5Bsp_i__a%5D%5B%5D=5&w%5Bsp_i__a%5D%5B%5D=9&button=' -o work/gutabi.html
       - name: Inspect calendar markup
         run: |
-          grep -n -E "event/detail|開催日|2026年|eventList|event-list" work/gutabi.html | head -80
+          sed -n '240,365p' work/gutabi.html
       - uses: actions/upload-artifact@v4
         with:
           name: gutabi-source
