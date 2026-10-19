@@ -477,7 +477,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
     <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
     <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
-    <div class="seasonal-events"><h3>📅 近くの催し ― 平取・日高周辺</h3><ul id="seasonal-events-list" class="seasonal-event-list" aria-live="polite"></ul><p id="seasonal-events-status" class="seasonal-event-source" role="status">催し情報を読み込んでいます。</p></div>
+    <div class="seasonal-events"><h3>📅 近くの催し ― 平取・日高・苫小牧・千歳周辺</h3><ul id="seasonal-events-list" class="seasonal-event-list" aria-live="polite"></ul><p id="seasonal-events-status" class="seasonal-event-source" role="status">催し情報を読み込んでいます。</p></div>
     <div class="seasonal-footer"><p id="seasonal-status" role="status"></p><a href="https://www.town.biratori.hokkaido.jp/" target="_blank" rel="noopener noreferrer">町のお知らせ・イベント ↗</a></div>
   </section>
 
@@ -1100,24 +1100,39 @@ function markAsRead(link, element) {
 
 
 
+const GUTABI_EVENTS_URL='https://www.gutabi.jp/event/area?w%5Bsp_i__a%5D%5B%5D=5&w%5Bsp_i__a%5D%5B%5D=9&button=';
 let hidakaEventRecord=readWidgetStorage('biratori_hidaka_events_v1',null);
-function validHidakaEvents(record){return record?.status==='ok'&&Number.isFinite(Date.parse(record.generatedAt))&&Array.isArray(record.items)&&record.items.every(item=>item&&typeof item.title==='string'&&typeof item.location==='string'&&/^https:\/\/hokkaido-hidaka-kankonavi\.com\/information\/\d+\/$/.test(item.link)&&/^\d{4}-\d{2}-\d{2}$/.test(item.startDate)&&/^\d{4}-\d{2}-\d{2}$/.test(item.endDate)&&item.endDate>=item.startDate);}
-function renderHidakaEvents(failed=false){
+let gutabiEventRecord=readWidgetStorage('biratori_gutabi_events_v1',null);
+const eventLoadFailures=new Set();
+function validHidakaEvents(record){return record?.status==='ok'&&Number.isFinite(Date.parse(record.generatedAt))&&Array.isArray(record.items)&&record.items.every(item=>item&&typeof item.title==='string'&&typeof item.location==='string'&&/^https:\/\/(?:hokkaido-hidaka-kankonavi\.com\/information\/\d+\/|www\.gutabi\.jp\/event\/detail\/\d+\/?)$/.test(item.link)&&/^\d{4}-\d{2}-\d{2}$/.test(item.startDate)&&/^\d{4}-\d{2}-\d{2}$/.test(item.endDate)&&item.endDate>=item.startDate);}
+function renderHidakaEvents(){
   const list=document.getElementById('seasonal-events-list'),status=document.getElementById('seasonal-events-status');
-  if(!validHidakaEvents(hidakaEventRecord)){list.innerHTML='';status.textContent=failed?'催し情報を取得できませんでした。配信元でご確認ください。':'催し情報を読み込んでいます。';if(failed){const a=document.createElement('a');a.href='https://hokkaido-hidaka-kankonavi.com/';a.target='_blank';a.rel='noopener noreferrer';a.textContent=' 北海道ひだか観光ナビ ↗';status.append(a);}return;}
-  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),items=hidakaEventRecord.items.filter(item=>item.endDate>=today).sort((a,b)=>Number(a.startDate<today)-Number(b.startDate<today)||(a.startDate>=today?a.startDate.localeCompare(b.startDate):a.endDate.localeCompare(b.endDate))||a.title.localeCompare(b.title,'ja')).slice(0,3);
+  const records=[hidakaEventRecord,gutabiEventRecord].filter(validHidakaEvents);
+  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),seen=new Set();
+  const items=records.flatMap(record=>record.items).filter(item=>{
+    const key=item.title.normalize('NFKC').replace(/\s/g,'')+'|'+item.startDate;
+    if(item.endDate<today||seen.has(key))return false;seen.add(key);return true;
+  }).sort((a,b)=>Number(a.startDate<today)-Number(b.startDate<today)||(a.startDate>=today?a.startDate.localeCompare(b.startDate):a.endDate.localeCompare(b.endDate))||a.title.localeCompare(b.title,'ja'));
   const date=value=>value.replace(/-(0?)(\d+)/g,(_,zero,n)=>'/'+n);
   list.innerHTML=items.map(item=>{
     const period=item.startDate===item.endDate?date(item.startDate):date(item.startDate)+'〜'+date(item.endDate);
     const title=item.title.replace(/^【[^】]+】\s*/, '');
-    return '<li><a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer">'+escapeWidgetHTML(title)+' ↗</a><p class="seasonal-event-meta"><span class="seasonal-event-state">'+(item.startDate<=today?'開催中':'開催予定')+'</span>'+escapeWidgetHTML(period)+'<br>'+escapeWidgetHTML(item.location)+'</p></li>';
+    return '<li><a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer">'+escapeWidgetHTML(title)+' ↗</a><p class="seasonal-event-meta"><span class="seasonal-event-state">'+(item.startDate<=today?(item.dateLabel?'開催期間中':'開催中'):'開催予定')+'</span>'+escapeWidgetHTML(period)+'<br>'+escapeWidgetHTML(item.location)+(item.dateLabel?'<br>開催日：'+escapeWidgetHTML(item.dateLabel)+'（開催日・時間は詳細へ）':'')+'</p></li>';
   }).join('');
-  const old=Date.now()-Date.parse(hidakaEventRecord.generatedAt)>48*60*60*1000;
-  status.textContent=(items.length?'':'開催日を確認できる開催中・開催予定の催しは現在ありません。 ')+(failed||old?'前回取得の情報／':'')+'更新：'+formatWidgetTime(Date.parse(hidakaEventRecord.generatedAt))+'｜';
-  const source=document.createElement('a');source.href='https://hokkaido-hidaka-kankonavi.com/';source.target='_blank';source.rel='noopener noreferrer';source.textContent='北海道ひだか観光ナビ';status.append(source,'。日程の変更・詳細は各記事でご確認ください。');
+  const updates=[];
+  if(validHidakaEvents(hidakaEventRecord))updates.push('日高：'+formatWidgetTime(Date.parse(hidakaEventRecord.generatedAt)));
+  if(validHidakaEvents(gutabiEventRecord))updates.push('ぐうたび：'+formatWidgetTime(Date.parse(gutabiEventRecord.generatedAt)));
+  status.textContent=(items.length?'':records.length?'開催中・開催予定の催しは現在ありません。 ':'催し情報を読み込んでいます。 ')+(eventLoadFailures.size?'一部の情報を取得できません。 ':'')+(updates.length?'更新 '+updates.join('／')+'。 ':'');
+  for(const [label,url] of [['北海道ひだか観光ナビ','https://hokkaido-hidaka-kankonavi.com/'],['ぐうたび北海道（毎月更新）',GUTABI_EVENTS_URL]]){
+    const source=document.createElement('a');source.href=url;source.target='_blank';source.rel='noopener noreferrer';source.textContent=label;status.append(source,' ');
+  }
+  status.append('日程の変更・詳細は各記事でご確認ください。');
 }
 async function loadHidakaEvents(){
-  try{const record=await fetchWidgetJSON(new URL('./data/hidaka-events.json',location.href).href);if(!validHidakaEvents(record))throw Error('Invalid events');hidakaEventRecord=record;writeWidgetStorage('biratori_hidaka_events_v1',record);renderHidakaEvents();}catch{renderHidakaEvents(true);}
+  await Promise.all([['hidaka','hidaka-events.json','biratori_hidaka_events_v1'],['gutabi','gutabi-events.json','biratori_gutabi_events_v1']].map(async([key,file,storage])=>{
+    try{const record=await fetchWidgetJSON(new URL('./data/'+file,location.href).href);if(!validHidakaEvents(record))throw Error('Invalid events');if(key==='hidaka')hidakaEventRecord=record;else gutabiEventRecord=record;writeWidgetStorage(storage,record);eventLoadFailures.delete(key);}catch{eventLoadFailures.add(key);}
+    renderHidakaEvents();
+  }));
 }
 renderHidakaEvents();loadHidakaEvents();setInterval(loadHidakaEvents,30*60*1000);
 
