@@ -21,7 +21,7 @@ on:
 
 concurrency:
   group: biratori-pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -42,38 +42,47 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_*.py'
           node --test tests/*.test.mjs
       - name: Collect RSS feeds and link update notices
+        if: github.event_name != 'push'
         id: feeds
         continue-on-error: true
         run: python3 scripts/update-widget-feeds.py
       - name: Update Bing wallpaper
+        if: github.event_name != 'push'
         id: wallpaper
         continue-on-error: true
         run: node scripts/update-bing-wallpaper.mjs
       - name: Collect Domingo news
+        if: github.event_name != 'push'
         id: domingo
         continue-on-error: true
         run: node scripts/update-domingo-news.mjs
       - name: Collect Walker Hokkaido outings
+        if: github.event_name != 'push'
         id: walker
         continue-on-error: true
         run: node scripts/update-walker-news.mjs
       - name: Collect SASARU categories
+        if: github.event_name != 'push'
         id: sasaru
         continue-on-error: true
         run: node scripts/update-sasaru-news.mjs
       - name: Collect Hidaka events
+        if: github.event_name != 'push'
         id: hidaka
         continue-on-error: true
         run: node scripts/update-hidaka-events.mjs
       - name: Collect monthly Gutabi events
+        if: github.event_name != 'push'
         id: gutabi
         continue-on-error: true
         run: node scripts/update-gutabi-events.mjs
       - name: Set up Python for X
+        if: github.event_name != 'push'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Collect X posts
+        if: github.event_name != 'push'
         id: xposts
         continue-on-error: true
         env:
