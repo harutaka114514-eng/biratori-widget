@@ -67,6 +67,48 @@ class FeedTests(unittest.TestCase):
         self.assertIn('https://kyoko-np.net/index.xml', urls)
         self.assertNotIn('https://sasaru.media/category/index.html?id=gourmet', urls)
 
+    def test_goguynet_backup_filters_publisher_date_and_index_pages(self):
+        def item(title, publisher, date='Wed, 21 Oct 2026 12:00:00 GMT', key='A'):
+            return f'<item><title>{title}</title><link>https://news.google.com/rss/articles/{key}</link><pubDate>{date}</pubDate><source url="https://{publisher}">News</source></item>'
+        body = ('<rss><channel>' + item('【苫小牧市】新店 - 地域ニュースサイト号外NET', 'tomakomai.goguynet.jp')
+                + item('イベント', 'tomakomai.goguynet.jp', key='B')
+                + item('【苫小牧市】別サイト', 'example.com', key='C')
+                + item('【苫小牧市】古い', 'tomakomai.goguynet.jp', 'Wed, 01 Oct 2025 12:00:00 GMT', 'D')
+                + '<item><title>Missing source</title></item></channel></rss>').encode()
+        def fetch(url):
+            if url == feeds.GOGUYNET_FEED:
+                raise urllib.error.HTTPError(url, 503, 'Unavailable', {}, None)
+            return body
+        result = feeds.collect_feed(feeds.GOGUYNET_FEED, {}, NOW, fetch)
+        self.assertEqual(result['status'], 'ok')
+        self.assertTrue(result['fallback'])
+        self.assertEqual(result['primaryError'], 'HTTP 503')
+        self.assertEqual([i['title'] for i in result['items']], ['【苫小牧市】新店'])
+
+    def test_both_feed_paths_failed_preserve_previous_success(self):
+        def fetch(url):
+            raise urllib.error.HTTPError(url, 503, 'Unavailable', {}, None)
+        previous = {'items': [{'title': 'old'}], 'generatedAt': '2026-10-20T00:00:00Z'}
+        result = feeds.collect_feed(feeds.GOGUYNET_FEED, previous, NOW, fetch)
+        self.assertEqual(result['status'], 'error')
+        self.assertEqual(result['items'], previous['items'])
+        self.assertEqual(result['generatedAt'], previous['generatedAt'])
+
+    def test_okuyami_fallback_and_badge_ignore_daily_date(self):
+        body = '<h1>平取町の本日のお悔やみ欄・訃報一覧</h1><time>2026-10-21</time><article class="obituary-item"><h4>架空の見出し</h4></article>'
+        def fetch(url):
+            if url == feeds.NOTICE_URLS['okuyami']:
+                raise urllib.error.HTTPError(url, 403, 'Forbidden', {}, None)
+            return body.encode()
+        record = feeds.collect_notice('okuyami', {}, NOW, fetch)
+        self.assertEqual(record['status'], 'ok')
+        self.assertEqual(record['sourceUrl'], feeds.OKUYAMI_BACKUP)
+        self.assertNotIn('架空', record['latest'])
+        self.assertEqual(record['latest'], feeds.parse_okuyami_backup(body.replace('2026-10-21', '2026-10-22')))
+        self.assertNotEqual(record['latest'], feeds.parse_okuyami_backup(body.replace('架空の見出し', '新しい架空の見出し')))
+        with self.assertRaises(ValueError):
+            feeds.parse_okuyami_backup(body.replace('平取町', '別の町'))
+
 
 if __name__ == '__main__':
     unittest.main()

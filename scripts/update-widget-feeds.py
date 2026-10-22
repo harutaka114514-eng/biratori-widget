@@ -2,6 +2,7 @@
 import concurrent.futures
 import email.utils
 import html
+import hashlib
 import http.client
 import json
 import re
@@ -21,6 +22,8 @@ NOTICE_URLS = {
     'bear': 'https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html',
     'okuyami': 'https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/',
 }
+OKUYAMI_BACKUP = 'https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/'
+GOGUYNET_FEED = 'https://tomakomai.goguynet.jp/feed/'
 
 
 class TextParser(HTMLParser):
@@ -136,6 +139,32 @@ def failure_reason(error):
     return 'network_error'
 
 
+def google_news_backup(host, checked_at, fetch=fetch_bytes):
+    url = 'https://news.google.com/rss/search?' + urllib.parse.urlencode({
+        'q': 'site:' + host + ' when:14d', 'hl': 'ja', 'gl': 'JP', 'ceid': 'JP:ja'})
+    body = fetch(url)
+    root = ET.fromstring(body)
+    # Check the publisher supplied by the RSS, not just a matching word in a title.
+    allowed = {node.findtext('link') for node in root.findall('.//item')
+               if node.find('source') is not None
+               and urllib.parse.urlsplit(node.find('source').get('url', '')).hostname == host}
+    now = datetime.fromisoformat(checked_at)
+    items = []
+    for item in parse_feed(body, url):
+        link = urllib.parse.urlsplit(item['link'])
+        date = date_string(item['pubDate'])
+        if item['link'] not in allowed or link.hostname != 'news.google.com' or not link.path.startswith('/rss/articles/') or not date:
+            continue
+        age = (now - datetime.fromisoformat(date)).total_seconds()
+        if not 0 <= age <= 14 * 86400 or not item['title'].startswith('【苫小牧市'):
+            continue
+        item['title'] = re.sub(r'\s+-\s+地域ニュースサイト号外NET$', '', item['title'])
+        items.append(item)
+    if not items:
+        raise ValueError('backup_articles_missing')
+    return items, url
+
+
 def collect_feed(url, previous, checked_at, fetch=fetch_bytes):
     try:
         body = fetch(url)
@@ -144,9 +173,30 @@ def collect_feed(url, previous, checked_at, fetch=fetch_bytes):
         items = parse_feed(body, url)
         return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at, 'items': items}
     except (OSError, ValueError, ET.ParseError, http.client.HTTPException) as error:
+        if url == GOGUYNET_FEED:
+            try:
+                items, backup_url = google_news_backup('tomakomai.goguynet.jp', checked_at, fetch)
+                return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at, 'items': items,
+                        'fallback': True, 'source': '号外NET苫小牧（Googleニュース経由・直近14日）',
+                        'sourceUrl': backup_url, 'primaryError': failure_reason(error)}
+            except (OSError, ValueError, ET.ParseError, http.client.HTTPException):
+                pass
         # Keep the last successful timestamp; a failed check must not look fresh.
         return {'status': 'error', 'generatedAt': previous.get('generatedAt'), 'checkedAt': checked_at,
                 'error': failure_reason(error), 'items': previous.get('items', [])}
+
+
+def parse_okuyami_backup(body):
+    title = re.search(r'<h1\b[^>]*>([\s\S]*?)</h1>', body, re.I)
+    if not title or '平取町の本日のお悔やみ' not in plain(title[1]):
+        raise ValueError('wrong_municipality')
+    # Fingerprint only obituary entries. The daily check date and ads must not
+    # create a new-information badge. Store no names or funeral details.
+    cards = re.findall(r'<article\b[^>]*class=["\'][^"\']*\bobituary-item\b[^"\']*["\'][^>]*>([\s\S]*?)</article>', body, re.I)
+    entries = sorted(set(plain(card) for card in cards))
+    if not entries and '本日の掲載はありません' not in plain(body):
+        raise ValueError('entry_title_missing')
+    return 'zenkoku-okuyami:' + hashlib.sha256('\n'.join(entries).encode()).hexdigest()
 
 
 def collect_notice(kind, previous, checked_at, fetch=fetch_bytes):
@@ -164,6 +214,14 @@ def collect_notice(kind, previous, checked_at, fetch=fetch_bytes):
                 raise ValueError('entry_title_missing')
         return {'status': 'ok', 'latest': latest, 'generatedAt': checked_at, 'checkedAt': checked_at}
     except (OSError, ValueError, http.client.HTTPException) as error:
+        if kind == 'okuyami':
+            try:
+                latest = parse_okuyami_backup(fetch(OKUYAMI_BACKUP).decode('utf-8', errors='replace'))
+                return {'status': 'ok', 'latest': latest, 'generatedAt': checked_at, 'checkedAt': checked_at,
+                        'fallback': True, 'source': '全国お悔やみ欄（平取町）', 'sourceUrl': OKUYAMI_BACKUP,
+                        'primaryError': failure_reason(error)}
+            except (OSError, ValueError, http.client.HTTPException):
+                pass
         return {**previous, 'status': 'error', 'checkedAt': checked_at, 'error': failure_reason(error)}
 
 
@@ -182,9 +240,11 @@ def main():
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')
     temporary.replace(OUTPUT)
     for url, record in feeds.items():
-        print(f"{record['status']}: {url}: {len(record['items'])} items" + (f" ({record['error']})" if record.get('error') else ''))
+        print(f"{record['status']}: {url}: {len(record['items'])} items" + (f" ({record['error']})" if record.get('error') else '')
+              + (f" (backup: {record['source']}; primary: {record['primaryError']})" if record.get('fallback') else ''))
     for key, record in notices.items():
-        print(f"{record['status']}: {key}" + (f" ({record['error']})" if record.get('error') else ''))
+        print(f"{record['status']}: {key}" + (f" ({record['error']})" if record.get('error') else '')
+              + (f" (backup: {record['source']}; primary: {record['primaryError']})" if record.get('fallback') else ''))
     failures = sum(record['status'] != 'ok' for record in feeds.values())
     print(f'RSS sources: {len(feeds) - failures}/{len(feeds)} successful. Failed sources are reported in the widget.')
     if failures == len(feeds):

@@ -912,6 +912,11 @@ function renderNewsStatus(type) {
     summary.textContent='取得できなかった配信元（'+state.failedSources.length+'件）';details.append(summary);
     state.failedSources.forEach(source=>{const line=document.createElement('div');line.textContent=source;details.append(line);});el.append(details);
   }
+  if(state?.fallbackSources?.length){
+    const details=document.createElement('details'),summary=document.createElement('summary');
+    summary.textContent='予備経路で取得（'+state.fallbackSources.length+'件・検索反映の遅れや未収録記事があります）';details.append(summary);
+    state.fallbackSources.forEach(source=>{const line=document.createElement('div');line.textContent=source;details.append(line);});el.append(details);
+  }
 }
 function isDomingoFeed(url){
   try{const parsed=new URL(url);return parsed.hostname==='news.google.com' && parsed.searchParams.get('q')?.trim()==='site:domingo.ne.jp';}catch{return false;}
@@ -979,7 +984,7 @@ async function fetchWidgetFeed(url){
     let data;
     try{
       data=await fetchWidgetJSON('./data/domingo-news.json?check='+Date.now());
-      if(data.status!=='ok'||!Array.isArray(data.items))throw Error('Invalid Domingo data');
+      if(!['ok','error'].includes(data.status)||!Array.isArray(data.items))throw Error('Invalid Domingo data');
     }catch(e){
       data=await fetchWidgetJSON('https://harutaka114514-eng.github.io/biratori-widget/data/domingo-news.json?check='+Date.now());
     }
@@ -992,7 +997,10 @@ async function fetchWidgetFeed(url){
   return fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
 }
 function filterDomingoArticles(items){
-  const now=Date.now();return items.filter(item=>item&&/^https:\/\/domingo\.ne\.jp\/article\/\d+\/?(?:[?#].*)?$/.test(item.link)&&Number.isFinite(Date.parse(item.pubDate))&&Date.parse(item.pubDate)>=now-14*86400000&&Date.parse(item.pubDate)<=now);
+  const now=Date.now();return items.filter(item=>item&&(
+    /^https:\/\/domingo\.ne\.jp\/article\/\d+\/?(?:[?#].*)?$/.test(item.link)||
+    item.sourceHost==='domingo.ne.jp'&&/^https:\/\/news\.google\.com\/rss\/articles\/[A-Za-z0-9_-]+(?:\?[^#]*)?$/.test(item.link)
+  )&&Number.isFinite(Date.parse(item.pubDate))&&Date.parse(item.pubDate)>=now-14*86400000&&Date.parse(item.pubDate)<=now);
 }
 async function preloadAllNews() {
   if(newsLoading)return;
@@ -1004,13 +1012,14 @@ async function preloadAllNews() {
   await loadWidgetFeedData(true).catch(()=>{});
   await Promise.all(Object.keys(urls).map(async key => {
     const feeds=Array.isArray(urls[key])?urls[key]:[urls[key]];
-    let failed=false;const failedSources=[];
+    let failed=false;const failedSources=[],fallbackSources=[];
     const records=await Promise.all(feeds.map(async url => {
       try {
         const d=await fetchWidgetFeed(url);
         if(!Array.isArray(d.items))throw Error('Invalid feed');
         const stale=Number.isFinite(Date.parse(d.generatedAt))&&Date.now()-Date.parse(d.generatedAt)>12*60*60*1000;
         if(d.status!=='ok'||stale){failed=true;failedSources.push(url+'：'+(stale&&d.status==='ok'?'自動更新が12時間以上前です':feedFailureMessage(d.error)));}
+        if(d.fallback&&d.status==='ok')fallbackSources.push(d.source+'（直接取得：'+feedFailureMessage(d.primaryError)+'）');
         const items=d.items.filter(item => {
           if(typeof item.title!=='string')return false;
           if(isHiMagURL(url))return true;
@@ -1024,7 +1033,7 @@ async function preloadAllNews() {
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
     newsCache[key]=mergeWidgetNews(available.flatMap(record=>record.items));
-    newsStates[key]={failed,failedSources,total:feeds.length,success:feeds.length-failedSources.length,time:available.length?Math.min(...available.map(record=>record.time)):null};
+    newsStates[key]={failed,failedSources,fallbackSources,total:feeds.length,success:feeds.length-failedSources.length,time:available.length?Math.min(...available.map(record=>record.time)):null};
   }));
   const stored=writeWidgetStorage('biratori_news_cache_v1',feedRecords);
   Object.values(newsStates).forEach(state=>state.unsaved=!stored);
@@ -1410,12 +1419,19 @@ function renderWeatherData(d) {
 
 async function checkLinkNotice(kind){
   const status=document.getElementById(kind+'-status');
+  const okuyamiOriginal='https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/';
+  if(kind==='okuyami')document.getElementById('okuyami-btn').href=okuyamiOriginal;
   try{
     const data=await loadWidgetFeedData(),record=data.notices[kind];
     if(!record)throw Error('取得結果がありません');
     const fresh=record.status==='ok'&&Date.now()-Date.parse(record.generatedAt)<=12*60*60*1000;
     status.textContent=fresh?'更新確認：'+formatWidgetTime(Date.parse(record.generatedAt))
       :'更新確認に失敗：'+(record.status==='ok'?'自動更新が12時間以上前です':feedFailureMessage(record.error))+'。リンク先でご確認ください。';
+    if(kind==='okuyami'&&fresh&&record.fallback&&record.sourceUrl==='https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/'){
+      document.getElementById('okuyami-btn').href=record.sourceUrl;
+      status.append('／代替：全国お悔やみ欄（平取町）。元サイトは'+feedFailureMessage(record.primaryError)+'。');
+      const original=document.createElement('a');original.href=okuyamiOriginal;original.target='_blank';original.rel='noopener noreferrer';original.textContent='元のサイト';status.append(' ',original);
+    }
     if(record.latest){
       const readKey=kind==='bear'?'bear_last_update':'okuyami_last_title';
       const tempKey=kind==='bear'?'bear_temp_latest':'okuyami_temp_latest';

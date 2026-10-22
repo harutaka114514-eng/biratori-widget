@@ -38,7 +38,9 @@ jobs:
         with:
           node-version: '22'
       - name: Test feed collection
-        run: python3 -m unittest discover -s tests -p 'test_*.py'
+        run: |
+          python3 -m unittest discover -s tests -p 'test_*.py'
+          node --test tests/*.test.mjs
       - name: Collect RSS feeds and link update notices
         id: feeds
         continue-on-error: true
