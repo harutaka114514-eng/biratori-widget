@@ -332,8 +332,10 @@ body[data-theme="wii"] :is(.video-tabs button,.news-tabs button,.refresh-btn,.ca
 body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:999px;border-color:#b5d5e3;background:linear-gradient(#fff,#eef7fb);color:#557383;}
 #news-fullscreen-tabs {flex-wrap:wrap;}
 
-#links-panel,body[data-theme="wii"] #links-panel {grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;height:auto;align-content:start;overflow-y:auto;}
-#links-panel a,body[data-theme="wii"] #links-panel a {font-size:20px;padding:18px 14px;}
+#links-panel,body[data-theme="wii"] #links-panel {gap:12px;height:auto;align-content:start;align-items:start;justify-content:start;grid-auto-rows:max-content;overflow-y:auto;padding:4px;box-sizing:border-box;}
+#links-panel a,body[data-theme="wii"] #links-panel a {box-sizing:border-box;min-width:0;min-height:64px;padding:12px;font-size:18px;line-height:1.5;text-align:center;}
+#links-panel .link-item {min-width:0;display:flex;flex-direction:column;}
+#links-panel .widget-status {margin:6px 2px 0;font-size:13px;line-height:1.5;overflow-wrap:anywhere;}
 .x-accounts {flex-wrap:wrap;}
 .x-accounts a {flex:0 1 auto;}
 .x-post-text {white-space:pre-wrap;overflow-wrap:anywhere;}
@@ -540,6 +542,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
               🗞️ 道新デジタル
             </a>
 
+            <div class="link-item">
             <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html"
                target="_blank"
                class="link-btn btn-bear"
@@ -548,11 +551,14 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
               🐻 熊情報 <span id="bear-badge" class="badge"></span>
             </a>
             <div id="bear-status" class="widget-status" role="status">更新確認中…</div>
+            </div>
 
+            <div class="link-item">
             <a href="https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
                 🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
             </a>
             <div id="okuyami-status" class="widget-status" role="status">更新確認中…</div>
+            </div>
 
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
             <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer" class="link-btn btn-gmail">✉ Gmail</a>
