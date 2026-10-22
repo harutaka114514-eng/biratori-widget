@@ -209,7 +209,7 @@ button:active,.link-box a:active {transform:translateY(1px);}
 @media(max-width:600px){.seasonal-list {grid-template-columns:1fr;}.seasonal-heading {align-items:flex-start;}.seasonal-heading span {white-space:nowrap;}}
 
 
-.seasonal-events {border-top:1px solid #b8d9c0;margin-top:14px;padding-top:12px;}.seasonal-events h3 {font-size:15px;color:#315c42;margin:0 0 9px;}.seasonal-event-list {list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}.seasonal-event-list li {padding:11px 12px;background:#ffffffbf;border:1px solid #c4dfc7;border-radius:10px;overflow-wrap:anywhere;}.seasonal-event-list a {font-size:13px;font-weight:bold;color:#225c49;line-height:1.6;text-decoration:none;}.seasonal-event-list a:hover {text-decoration:underline;}.seasonal-event-meta {font-size:12px;line-height:1.7;margin:6px 0 0;color:#45644e;}.seasonal-event-state {display:inline-block;padding:1px 6px;margin-right:5px;border-radius:5px;background:#e1f0da;color:#3d612e;font-size:11px;}.seasonal-event-source {font-size:11px;line-height:1.7;color:#476452;margin:9px 0 0;}.seasonal-event-source a {color:#245941;}
+.seasonal-events {border-top:1px solid #b8d9c0;margin-top:14px;padding-top:12px;}.seasonal-events h3 {font-size:15px;color:#315c42;margin:0 0 9px;}.seasonal-event-list {list-style:none;padding:0 0 8px;margin:0;display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:minmax(min(280px,100%),1fr);gap:9px;overflow-x:auto;}.seasonal-event-list li {padding:11px 12px;background:#ffffffbf;border:1px solid #c4dfc7;border-radius:10px;overflow-wrap:anywhere;}.seasonal-event-list a {font-size:13px;font-weight:bold;color:#225c49;line-height:1.6;text-decoration:none;}.seasonal-event-list a:hover {text-decoration:underline;}.seasonal-event-meta {font-size:12px;line-height:1.7;margin:6px 0 0;color:#45644e;}.seasonal-event-state {display:inline-block;padding:1px 6px;margin-right:5px;border-radius:5px;background:#e1f0da;color:#3d612e;font-size:11px;}.seasonal-event-source {font-size:11px;line-height:1.7;color:#476452;margin:9px 0 0;}.seasonal-event-source a {color:#245941;}
 @media(max-width:600px){.seasonal-event-list li {min-width:0;padding:9px 8px;}}
 
 
@@ -550,14 +550,14 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
                onclick="markBearRead()">
               🐻 熊情報 <span id="bear-badge" class="badge"></span>
             </a>
-            <div id="bear-status" class="widget-status" role="status">更新確認中…</div>
+            <div id="bear-status" class="widget-status" role="status" hidden>更新確認中…</div>
             </div>
 
             <div class="link-item">
             <a href="https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
                 🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
             </a>
-            <div id="okuyami-status" class="widget-status" role="status">更新確認中…</div>
+            <div id="okuyami-status" class="widget-status" role="status" hidden>更新確認中…</div>
             </div>
 
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
