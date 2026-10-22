@@ -547,10 +547,12 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
                onclick="markBearRead()">
               🐻 熊情報 <span id="bear-badge" class="badge"></span>
             </a>
+            <div id="bear-status" class="widget-status" role="status">更新確認中…</div>
 
             <a href="https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
                 🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
             </a>
+            <div id="okuyami-status" class="widget-status" role="status">更新確認中…</div>
 
             <a href="https://www.deepl.com/translator" target="_blank" class="link-btn btn-deepl">🌐 DeepL 翻訳</a>
             <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer" class="link-btn btn-gmail">✉ Gmail</a>
@@ -596,7 +598,7 @@ function escapeWidgetHTML(value) {return String(value).replace(/[&<>"']/g,c=>({'
 function formatWidgetTime(time) {return new Date(time).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'});}
 async function fetchWidgetJSON(url) {
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
-  try {const response=await fetch(url,{signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}
+  try {const response=await fetch(url,{signal:controller.signal,cache:'no-cache'});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}
 }
 function validWeather(d) {
   return !!(d && d.current_weather && Number.isFinite(d.current_weather.temperature) && Number.isFinite(d.current_weather.weathercode) && d.daily && ['time','weathercode','temperature_2m_max','temperature_2m_min'].every(key=>Array.isArray(d.daily[key])&&d.daily[key].length>=7) && d.daily.time.slice(0,7).every(time=>/^\d{4}-\d{2}-\d{2}$/.test(time)) && ['weathercode','temperature_2m_max','temperature_2m_min'].every(key=>d.daily[key].slice(0,7).every(Number.isFinite)));
@@ -900,10 +902,16 @@ function renderNewsStatus(type) {
   el.replaceChildren();
   const message=document.createElement('span');
   message.textContent=!state?'取得中…':state.loading?'前回の記事を表示／更新中':state.failed?'一部または全部を取得できませんでした。保存済み記事があれば表示しています。':'更新済み';
+  if(state && Number.isInteger(state.total)) message.textContent+='（取得成功 '+state.success+'/'+state.total+'配信元）';
   if(state && state.time) message.textContent+='（最終取得：'+formatWidgetTime(state.time)+'）';
   if(state && state.unsaved) message.textContent+='／保存できませんでした';
   el.append(message);
   const button=document.createElement('button');button.type='button';button.className='refresh-btn';button.textContent='再取得';button.disabled=newsLoading;button.onclick=()=>{loadWeather();preloadAllNews();};el.append(' ',button);
+  if(state?.failedSources?.length){
+    const details=document.createElement('details'),summary=document.createElement('summary');
+    summary.textContent='取得できなかった配信元（'+state.failedSources.length+'件）';details.append(summary);
+    state.failedSources.forEach(source=>{const line=document.createElement('div');line.textContent=source;details.append(line);});el.append(details);
+  }
 }
 function isDomingoFeed(url){
   try{const parsed=new URL(url);return parsed.hostname==='news.google.com' && parsed.searchParams.get('q')?.trim()==='site:domingo.ne.jp';}catch{return false;}
@@ -951,6 +959,19 @@ async function fetchSasaruCategory(category){
   }).catch(error=>{sasaruDataRequest=null;throw error;});
   const data=await sasaruDataRequest;return {...data,items:data.items.filter(item=>item.category===category)};
 }
+let widgetFeedData=null,widgetFeedRequest=null,widgetFeedLoadedAt=0;
+function loadWidgetFeedData(force=false){
+  if(widgetFeedRequest)return widgetFeedRequest;
+  if(!force&&widgetFeedData&&Date.now()-widgetFeedLoadedAt<60000)return Promise.resolve(widgetFeedData);
+  widgetFeedRequest=fetchWidgetJSON('./data/widget-feeds.json?check='+Date.now()).then(data=>{
+    if(data.version!==1||!data.feeds||!data.notices)throw Error('配信データの形式が不正です');
+    widgetFeedData=data;widgetFeedLoadedAt=Date.now();return data;
+  }).finally(()=>{widgetFeedRequest=null;});
+  return widgetFeedRequest;
+}
+function feedFailureMessage(error){
+  return ({maintenance:'配信元がメンテナンス中',invalid_rss:'RSS以外の応答',not_rss:'RSS以外の応答',timeout:'タイムアウト',incomplete_response:'応答が途中で切れました',network_error:'接続失敗'})[error]||error||'取得失敗';
+}
 async function fetchWidgetFeed(url){
   const category=sasaruCategory(url);if(category)return fetchSasaruCategory(category);
   if(url===walkerHokkaidoURL)return fetchWalkerHokkaidoArticles();
@@ -965,6 +986,9 @@ async function fetchWidgetFeed(url){
     if(Array.isArray(data.items))data.items=filterDomingoArticles(data.items);
     return data;
   }
+  const data=await loadWidgetFeedData();
+  if(Object.prototype.hasOwnProperty.call(data.feeds,url))return data.feeds[url];
+  // ユーザーが追加したRSSの従来の取得方法も維持する。
   return fetchWidgetJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url));
 }
 function filterDomingoArticles(items){
@@ -973,15 +997,20 @@ function filterDomingoArticles(items){
 async function preloadAllNews() {
   if(newsLoading)return;
   newsLoading=true;sasaruDataRequest=null;
+  Object.values(newsStates).forEach(state=>state.loading=true);
   const active=()=>newsCurrentType;
   renderNewsStatus(active());
+  // 1回の更新につき同一オリジンの収集結果を1度だけ読み込む。
+  await loadWidgetFeedData(true).catch(()=>{});
   await Promise.all(Object.keys(urls).map(async key => {
     const feeds=Array.isArray(urls[key])?urls[key]:[urls[key]];
-    let failed=false;
+    let failed=false;const failedSources=[];
     const records=await Promise.all(feeds.map(async url => {
       try {
         const d=await fetchWidgetFeed(url);
-        if(d.status!=='ok'||!Array.isArray(d.items))throw Error('Invalid feed');
+        if(!Array.isArray(d.items))throw Error('Invalid feed');
+        const stale=Number.isFinite(Date.parse(d.generatedAt))&&Date.now()-Date.parse(d.generatedAt)>12*60*60*1000;
+        if(d.status!=='ok'||stale){failed=true;failedSources.push(url+'：'+(stale&&d.status==='ok'?'自動更新が12時間以上前です':feedFailureMessage(d.error)));}
         const items=d.items.filter(item => {
           if(typeof item.title!=='string')return false;
           if(isHiMagURL(url))return true;
@@ -989,12 +1018,13 @@ async function preloadAllNews() {
           if(t==='Domingo 記事'||t.includes('新着記事一覧')||t.includes('記事一覧'))return false;
           return !(url.includes('valorant4jp.com') && c.includes('大会'));
         });
-        const record={items:mergeWidgetNews(items),time:(isDomingoFeed(url)||url===walkerHokkaidoURL||sasaruCategory(url))&&Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
-      } catch(e) {failed=true;const saved=feedRecords[url];return saved&&isDomingoFeed(url)?{...saved,items:filterDomingoArticles(saved.items||[])}:saved||null;}
+        if(d.status!=='ok'&&!items.length){return feedRecords[url]||null;}
+        const record={items:mergeWidgetNews(items),time:Number.isFinite(Date.parse(d.generatedAt))?Date.parse(d.generatedAt):Date.now()};feedRecords[url]=record;return record;
+      } catch(e) {failed=true;failedSources.push(url+'：'+feedFailureMessage(e.message));const saved=feedRecords[url];return saved&&isDomingoFeed(url)?{...saved,items:filterDomingoArticles(saved.items||[])}:saved||null;}
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
     newsCache[key]=mergeWidgetNews(available.flatMap(record=>record.items));
-    newsStates[key]={failed,time:available.length?Math.min(...available.map(record=>record.time)):null};
+    newsStates[key]={failed,failedSources,total:feeds.length,success:feeds.length-failedSources.length,time:available.length?Math.min(...available.map(record=>record.time)):null};
   }));
   const stored=writeWidgetStorage('biratori_news_cache_v1',feedRecords);
   Object.values(newsStates).forEach(state=>state.unsaved=!stored);
@@ -1003,7 +1033,19 @@ async function preloadAllNews() {
   if(document.getElementById('news-fullscreen-overlay').classList.contains('active'))renderNewsFullscreen(fsCurrentType);
 }
 
-let xPostData=null,xPostRequest=null;
+let xPostData=null,xPostRequest=null,xPostAttemptAt=0,xPostFailed=false;
+function loadXPosts(){
+  if(xPostRequest)return xPostRequest;
+  xPostAttemptAt=Date.now();
+  xPostRequest=fetchWidgetJSON('data/x-posts.json?check='+Date.now()).then(d=>{
+    if(!Array.isArray(d.items))throw Error('Invalid X data');xPostData=d;xPostFailed=false;
+  }).catch(()=>{xPostFailed=true;}).finally(()=>{
+    xPostRequest=null;
+    if(newsCurrentType==='x')renderXPosts(document.getElementById('news'));
+    if(isNewsFullscreenOpen()&&fsCurrentType==='x')renderXPosts(document.getElementById('news-fullscreen-list'));
+  });
+  return xPostRequest;
+}
 const NEWS_DISPLAY_LIMIT = 10;
 function displayedNewsItems(items) { return items.slice(0,NEWS_DISPLAY_LIMIT); }
 function newsArticleRow(item) {
@@ -1017,7 +1059,10 @@ function renderXPosts(ul){
   ul.replaceChildren();
   const data=xPostData;
   const status=document.createElement('li');
-  status.textContent=!data?'Xの投稿を読み込み中…':!data.generatedAt?'投稿の自動取得は準備中です。':'最終取得：'+formatWidgetTime(Date.parse(data.generatedAt))+'（毎日6・12・18・22時更新／日本時間）';ul.append(status);
+  status.textContent=!data?(xPostFailed?'Xの投稿データを取得できませんでした。':'Xの投稿を読み込み中…'):!data.generatedAt?'投稿の自動取得は準備中です。':'最終取得：'+formatWidgetTime(Date.parse(data.generatedAt))+'（毎日6・12・18・22時更新予定／遅れる場合があります）';
+  if(data&&(xPostFailed||data.status==='partial'||data.status==='error'))status.textContent+='／一部の取得に失敗。前回の投稿を含みます。';
+  if(data?.generatedAt&&Date.now()-Date.parse(data.generatedAt)>12*60*60*1000)status.textContent+='／自動更新が12時間以上前です。';
+  const retry=document.createElement('button');retry.type='button';retry.className='refresh-btn';retry.textContent='再取得';retry.disabled=!!xPostRequest;retry.onclick=loadXPosts;status.append(' ',retry);ul.append(status);
   const items=displayedNewsItems((data?.items||[]).filter(item=>/^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(item.link)));
   function renderPost(item){
     if(!/^https:\/\/x\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(item.link))return document.createElement('li');
@@ -1035,10 +1080,7 @@ function renderXPosts(ul){
     li.append(a);return li;
   }
   items.forEach(item=>ul.append(renderPost(item)));
-  if(!data&&!xPostRequest)xPostRequest=fetchWidgetJSON('data/x-posts.json').then(d=>{if(!Array.isArray(d.items))throw Error('Invalid X data');xPostData=d;}).catch(()=>{xPostData={items:[],generatedAt:null};}).finally(()=>{
-    if(newsCurrentType==='x')renderXPosts(document.getElementById('news'));
-    if(document.getElementById('news-fullscreen-overlay').classList.contains('active')&&fsCurrentType==='x')renderXPosts(document.getElementById('news-fullscreen-list'));
-  });
+  if(!xPostRequest&&Date.now()-xPostAttemptAt>=15*60*1000)loadXPosts();
 }
 function isNewsFullscreenOpen() {
   return document.getElementById('news-fullscreen-overlay').classList.contains('active');
@@ -1366,24 +1408,23 @@ function renderWeatherData(d) {
     document.getElementById("weekly-weather").innerHTML = wHtml;
 }
 
-async function checkOkuyami() {
-  try {
-    const targetUrl = "https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/";
-    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
-    const d = await r.json();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(d.contents, 'text/html');
-    const latestEntry = doc.querySelector('.entry-title a');
-    if (latestEntry) {
-      const latestTitle = latestEntry.innerText.trim();
-      const lastRead = localStorage.getItem('okuyami_last_title');
-      if (lastRead !== latestTitle) {
-        document.getElementById('okuyami-badge').classList.add('show');
-        localStorage.setItem('okuyami_temp_latest', latestTitle);
-      }
+async function checkLinkNotice(kind){
+  const status=document.getElementById(kind+'-status');
+  try{
+    const data=await loadWidgetFeedData(),record=data.notices[kind];
+    if(!record)throw Error('取得結果がありません');
+    const fresh=record.status==='ok'&&Date.now()-Date.parse(record.generatedAt)<=12*60*60*1000;
+    status.textContent=fresh?'更新確認：'+formatWidgetTime(Date.parse(record.generatedAt))
+      :'更新確認に失敗：'+(record.status==='ok'?'自動更新が12時間以上前です':feedFailureMessage(record.error))+'。リンク先でご確認ください。';
+    if(record.latest){
+      const readKey=kind==='bear'?'bear_last_update':'okuyami_last_title';
+      const tempKey=kind==='bear'?'bear_temp_latest':'okuyami_temp_latest';
+      document.getElementById(kind+'-badge').classList.toggle('show',localStorage.getItem(readKey)!==record.latest);
+      localStorage.setItem(tempKey,record.latest);
     }
-  } catch(e) {}
+  }catch(e){status.textContent='更新確認に失敗しました。リンク先でご確認ください。';}
 }
+async function checkOkuyami() { return checkLinkNotice('okuyami'); }
 
 function markOkuyamiRead() {
   const latest = localStorage.getItem('okuyami_temp_latest');
@@ -1393,26 +1434,7 @@ function markOkuyamiRead() {
   }
 }
 
-async function checkBearInfo() {
-  try {
-    const targetUrl = "https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html";
-    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
-    const d = await r.json();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(d.contents, 'text/html');
-    const text = (doc.body && doc.body.innerText) ? doc.body.innerText : "";
-    const m = text.match(/更新日：\s*(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
-    if (m) {
-      const yyyy = m[1], mm = String(m[2]).padStart(2, '0'), dd = String(m[3]).padStart(2, '0');
-      const latestUpdate = `${yyyy}-${mm}-${dd}`;
-      const lastRead = localStorage.getItem('bear_last_update');
-      if (lastRead !== latestUpdate) {
-        document.getElementById('bear-badge').classList.add('show');
-        localStorage.setItem('bear_temp_latest', latestUpdate);
-      }
-    }
-  } catch(e) {}
-}
+async function checkBearInfo() { return checkLinkNotice('bear'); }
 
 function markBearRead() {
   const latest = localStorage.getItem('bear_temp_latest');
@@ -1625,6 +1647,16 @@ setInterval(renderSeasonalInfo,60000);
 if(weatherRecord && validWeather(weatherRecord.data)) { renderWeatherData(weatherRecord.data); document.getElementById('weather-status').textContent='前回の天気（'+formatWidgetTime(weatherRecord.time)+'）／更新中'; }
 restoreNewsCache();
 loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
+// 開きっぱなしでも公開データの更新を取り込む（取得元の更新はGitHub Actions）。
+async function refreshWidgetData(){
+  await preloadAllNews();
+  checkOkuyami();checkBearInfo();
+  if(xPostData||newsCurrentType==='x'||fsCurrentType==='x')loadXPosts();
+}
+setInterval(refreshWidgetData,15*60*1000);
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&Date.now()-widgetFeedLoadedAt>=15*60*1000)refreshWidgetData();
+});
 
 
 
@@ -1883,3 +1915,4 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 </script>
 </body>
 </html>
+

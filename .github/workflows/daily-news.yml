@@ -16,6 +16,7 @@ on:
       - 'data/gutabi-events.json'
       - 'data/x-posts.json'
       - 'data/bing-wallpaper.json'
+      - 'data/widget-feeds.json'
       - '*.md'
 
 concurrency:
@@ -36,6 +37,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Test feed collection
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Collect RSS feeds and link update notices
+        id: feeds
+        continue-on-error: true
+        run: python3 scripts/update-widget-feeds.py
       - name: Update Bing wallpaper
         id: wallpaper
         continue-on-error: true
@@ -76,9 +83,10 @@ jobs:
           fi
           python scripts/update-x-posts.py
       - name: Save collected news
-        if: steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.gutabi.outcome == 'success' || steps.xposts.outcome == 'success'
+        if: steps.feeds.outcome == 'success' || steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.gutabi.outcome == 'success' || steps.xposts.outcome == 'success'
         run: |
           if [ -f data/bing-wallpaper.json ]; then git add data/bing-wallpaper.json; fi
+          if [ -f data/widget-feeds.json ]; then git add data/widget-feeds.json; fi
           git add data/domingo-news.json
           if [ -f data/x-posts.json ]; then git add data/x-posts.json; fi
           if [ -f data/sasaru-news.json ]; then git add data/sasaru-news.json; fi
@@ -114,3 +122,4 @@ jobs:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
