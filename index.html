@@ -792,11 +792,20 @@ function setRandomBackground() {
 }
 setRandomBackground();
 
+// グルメ欄では指定のウイスキー関連記事を保存済み分も含めて除外します。
+function filterGourmetNews(type, items) {
+  if(type !== 'gourmet') return items;
+  return items.filter(item => !/ウイスキー|ウヰスキー/.test(
+    [item.title, item.description, item.summary, ...(item.categories || [])]
+      .filter(value => typeof value === 'string').join(' ').normalize('NFKC')
+  ));
+}
+
 function restoreNewsCache() {
   for(const key of Object.keys(urls)) {
     const feeds = Array.isArray(urls[key]) ? urls[key] : [urls[key]];
     const records = feeds.map(url => {const record=feedRecords[url];return record&&isDomingoFeed(url)?{...record,items:filterDomingoArticles(record.items||[])}:record;}).filter(record => record && Array.isArray(record.items));
-    newsCache[key] = mergeWidgetNews(records.flatMap(record => record.items));
+    newsCache[key] = filterGourmetNews(key, mergeWidgetNews(records.flatMap(record => record.items)));
     if(records.length) newsStates[key] = {time:Math.min(...records.map(record => record.time)), failed:true, loading:true};
   }
   renderNews('keizai');
@@ -1038,7 +1047,7 @@ async function preloadAllNews() {
       } catch(e) {failed=true;failedSources.push(url+'：'+feedFailureMessage(e.message));const saved=feedRecords[url];return saved&&isDomingoFeed(url)?{...saved,items:filterDomingoArticles(saved.items||[])}:saved||null;}
     }));
     const available=records.filter(record=>record && Array.isArray(record.items));
-    newsCache[key]=mergeWidgetNews(available.flatMap(record=>record.items));
+    newsCache[key]=filterGourmetNews(key, mergeWidgetNews(available.flatMap(record=>record.items)));
     newsStates[key]={failed,failedSources,fallbackSources,total:feeds.length,success:feeds.length-failedSources.length,time:available.length?Math.min(...available.map(record=>record.time)):null};
   }));
   const stored=writeWidgetStorage('biratori_news_cache_v1',feedRecords);
