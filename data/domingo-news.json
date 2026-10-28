@@ -1,65 +1,182 @@
 {
   "status": "ok",
-  "generatedAt": "2026-10-27T15:02:27.263Z",
-  "checkedAt": "2026-10-27T15:02:27.263Z",
-  "source": "Domingo公式記事一覧（直近2週間）",
-  "sourceUrl": "https://domingo.ne.jp/article/list/1",
+  "generatedAt": "2026-10-28T00:09:30.387Z",
+  "checkedAt": "2026-10-28T00:09:30.387Z",
+  "source": "Domingo（Googleニュース経由・直近14日）",
+  "sourceUrl": "https://news.google.com/rss/search?q=site%3Adomingo.ne.jp%2Farticle%2F%20when%3A14d&hl=ja&gl=JP&ceid=JP%3Aja",
   "items": [
     {
-      "title": "【2026年最新】札幌・北大イチョウ並木が黄金色に！「北大金葉祭」ライトアップ＆紅葉イベントの見どころまとめ",
-      "link": "https://domingo.ne.jp/article/53126",
-      "pubDate": "2026-10-27T00:00:00+09:00",
-      "categories": [
-        "Domingo"
-      ]
-    },
-    {
-      "title": "おでかけするならココ！札幌の週末おすすめイベント４選【2026年10月31日～11月1日】",
-      "link": "https://domingo.ne.jp/article/62571",
-      "pubDate": "2026-10-26T00:00:00+09:00",
-      "categories": [
-        "Domingo"
-      ]
-    },
-    {
       "title": "コンクリートに描かれた自然のアート！？札幌・幌平橋の“風のレコード”が話題に",
-      "link": "https://domingo.ne.jp/article/62362",
-      "pubDate": "2026-10-21T00:00:00+09:00",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9zaWktSkJ4YngyMGFOY1hCdzAySi1UeVJIdlFyMGJJTXhWdTJUbXlLa25XN091LW9Jc2JTOHlrTUd5c1hSZzhRV2dPbkMtZw?oc=5",
+      "pubDate": "2026-10-21T00:40:02.000Z",
       "categories": [
         "Domingo"
-      ]
+      ],
+      "sourceHost": "domingo.ne.jp"
     },
     {
       "title": "週末におでかけするならココ！北海道のおすすめイベント4選【2026年10月24日～25日】",
-      "link": "https://domingo.ne.jp/article/62520",
-      "pubDate": "2026-10-20T00:00:00+09:00",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE42Ri1MSURpT3hvX2VFbEpMbXZoZ2JnRFVOa2ozYjlZNnJ4R0hwa2FVNG1FWFdvdDJOYVN1WnRUcVgyU2pVbU5YT0RLaw?oc=5",
+      "pubDate": "2026-10-20T01:12:50.000Z",
       "categories": [
         "Domingo"
-      ]
+      ],
+      "sourceHost": "domingo.ne.jp"
     },
     {
-      "title": "おでかけするならココ！札幌の週末おすすめイベント３選【2026年10月24日～25日】",
-      "link": "https://domingo.ne.jp/article/62513",
-      "pubDate": "2026-10-19T00:00:00+09:00",
+      "title": "おでかけするならココ！札幌の週末おすすめイベント４選【2026年10月31日～11月1日】",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFAzU05OcGFDZmV2SERGU0RnWFI0cWNQV1dTRlF0VGdsdWkxbnNQZFZlOWlMRnpZWGNDbjhDZmJUQmk0ZU51RnM0aUJ5cw?oc=5",
+      "pubDate": "2026-10-26T06:49:09.000Z",
       "categories": [
         "Domingo"
-      ]
-    },
-    {
-      "title": "【2026年最新】釧路・根室エリアを巡るおすすめドライブスポット20選！雄大な自然と道東の絶景を満喫",
-      "link": "https://domingo.ne.jp/article/6592",
-      "pubDate": "2026-10-18T00:00:00+09:00",
-      "categories": [
-        "Domingo"
-      ]
+      ],
+      "sourceHost": "domingo.ne.jp"
     },
     {
       "title": "いのちのかたちに宿る愛おしさ。札幌出身の彫刻家による4年ぶりの個展『My Dear 吉田みなみによる立体と絵画展』",
-      "link": "https://domingo.ne.jp/article/62435",
-      "pubDate": "2026-10-15T00:00:00+09:00",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9PU2FpcENDNUluU1ZUQWozYmF4aFhBdGtHT3FrY3NiZEUtR2JrSDBxWWJkWHJxQjJXdXRqelB4YTluNFdxNThKeHdvNA?oc=5",
+      "pubDate": "2026-10-15T07:00:00.000Z",
       "categories": [
         "Domingo"
-      ]
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "おでかけするならココ！札幌の週末おすすめイベント３選【2026年10月24日～25日】",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9vNlJsWTZPbTNEMlVubTczY2lEX3JFcHNqZzkzcE1zVXRPU3JySVpWejdRN1hjWnlqNWRkNVcyZ0c1WlR3R0RBUGF6Zw?oc=5",
+      "pubDate": "2026-10-19T05:53:17.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "週末におでかけするならここ！北海道のおすすめイベント4選【2026年10月17日～18日】",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9ZZlh3bFBmOFhhcVZ6QVZCTzRPLXBoT0FvbXlhQnJpZGJQNzBrOUFYWGRaM05aVFEzTmRVcUcwcVE4ZE9HVnkxYldSaw?oc=5",
+      "pubDate": "2026-10-14T07:00:00.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMimgVBVV95cUxOMnRfZ0d2aG9EMEEySmxXV3ozOUdfWUg1WU5QZGFhR2ozdndObjg4ZF9XVkt5OXo1Q3dnQTZzMjEta28xMlBHa2VsU21nVzhkNzhhekpmeUVMcUtOSFpzY29UNlM5MU5wUDFwR3lsTEVxU0s1SXlVMzNoRXRDSWY5RTVUdUhoeXN5d3FsMERWdGpqWlpySkhWTlNxeVRybmFWc2JyR2NYMWJCVWZiR2F3VkNkVDhCQV8yRnc2SFk5REpUZ2wtSXV4ck5EQ2s2WWtJZDJFVVpxSUoyYXE0Rk5YdW1YdjF6bGRCY2ljVVZobWpQNjFzMklmYXhzYWhFcS04TDBJSkhWUDZNZFRRd3ZmWl9JMGhWUnc5T1F0QXFxdUQ2RXRmalREa3pVRk91bjhvZkRwT0M3Q3phN1NrTEFHZXdBNFAwVVdvYS1YaXdrd1pfZWpMLUZZWVF1TjNCWVdZZlh3dnZrbUxjVmxVOEdEWW42NGxiQ1F1OUR2WW1GWlV2bllac1NHa0E2dTFFRlVlYnk2RkJNZkg5OWVaUGN1QlQ0VENuci1IbHZNc1JsOWRTNUhaOGRMRXgyZkJZSzJVU1F2bVRvQXZVd3ZrWFUwcUZTUkZwS3VmQ0RLbGdlT252UkFKNF96WjI0cVg1LXdydkI0emt4YlFUVUZ6emtVUk9VeC1pYkZ6YVpnR0d1TFQ2YVVabktmUmExSjRWclkyQTlsZm1XdGl2Wmg2MldyemNPVDdDQW5TelFmVzRIeVVzT0Vad3NHUnprWnM5bXotajVVSHZnU0lsOUhhOC1KQVozWmNOQmlXV0o5bndjTU83NVJrd2JycUtCTm5ITFFacFFObjNPdkFhSmI1UE03M0U5Wnd2S09nRWc?oc=5",
+      "pubDate": "2026-10-27T13:40:52.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMisARBVV95cUxPTmpORWJ5NDJuMzRvcFVuZVVKaFQ5UUpBUlZWSGkyN1RYTmhaWjNmQTJnWDQ4V1U4UEhZQ190ZFN6S0FhUFpwYVhHTXhnbUF0NTczLVg1UEkxOGM5NzdvdkYwRGhvLWZTMEczUk5LQUJIOUxfRXNVU3Ytc0FOUC1lRmJjblJ2b2VQOUxoNmF0dWwzcHpIQTlOcGJhX205dnJaYXo3SGY4RGpXVXVCTGpfYTRFZUt4aktQOV9FdkN3am9EajY0ZDFTdjVnZHpOOUtDMUYzUVBpdXpkZm13QmhURGZJOE5WUmF0bGR1T0hDVXVlVmNuTEtOYl9RTWNWb3FvSWgtT3FUOGh1NVJJOUNSM0FCZmZuRHBDZktzVjUwb1VhTmswVU11VnRoNlVsazUwUk54QlFEcTJoM3NoM2dLU0hVaG5GcDVCeWk5Y0VmdmZEejBfZ1E2RkxPYzBPcXFqYWp0MEk3X25xVzRNd09LUnlXdGJwSXc3TlNGUnNnWWY0b2ZhT0V3RHk3LXdpclRZa1U5UnJRTXIxVTk3MnQ3Mmw3SGZ0dmltbG1DekxrTVNQalZaUUMtU1JLOWRleVVDaTdmV3ljVjJ3M21sdmkxaDVZU0J6ekJCSHFnc3hpMGlodGhhbDg4VTNUUmVFb044Z0tSbU9XRlE0cHJISHh1WTBmNzFBZG1Ld01FWU5aX1ZxN0x5ZmdjNzZWR3NURGNnY2hWanlyZWxJTDBjRnNtOQ?oc=5",
+      "pubDate": "2026-10-26T11:42:34.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMi4ARBVV95cUxNZmpYQl94cnVvLTlFal9UVGFFY2MyWWJRdE1IWHE4WlNITmNnY3hpOFFFR2ZXalJQRVlkcjhSYjZ4VFJDX2dlVGhxeVZ0MUQ1clZBZzJFM0xPMmx0OHBLeld3dHNORXhOZm1aZ2tvbHpXaXQxNWtYekNtMXQ2ZGVKejNheFZuNmNKVTV3bndPX1VsVXVEQU9sZ0RTX3FoaXpvS21wWTJGR1lUQTIzVlFGQlFFa1I2WmJCdEdLM240MWxCQ1pwVzM1blZsVkFmWU5jNmh6djZycWdIOVVCcVl4U20wMzNlRHVQNUt6cTdxclR1RFlwMHRvYkpMLXpXbmhud1diTXZld29ITEVTS1ZwTk5sMFYwNHNfY2NvNEtwVWZPYjNycFJoX2JxZWpxaGtCNFU1c2hVZGtub3liQVMyVVM2NHlXUWpxRHBhblJvWFpXbDNlRW9DZGJ2a0tVeGYzd3VRVG80Vkc0czUyc3hRbHJSYmVwVDkzSWxvelg3ZjNHdUhfRkZaNm0wNWxjenZFNmZzOEpnaDg2c3A1LUJDZzd5eTZYdVJZeG0zeGdtWHdCbUt5QVhZdnlwVVZsNUpfcTNGZW5sMVU2RHdDMW9HcVMtWnQwOHZsYy16b3FvYUFCdzExOF9HRHkwMUtES3ZpOHpYT2VYOC1JSjA5RDV0bUxOZ3JxaXFWQ3VWYU90eE1MckpyYTBuYmctdFJZR3dFY0JFcERFWVZYRUNPdmpkNDhtbXpoZUhIWDdySXVoV3UweF94dHQ2MVo0dlZoSUVoQWlacU9YOUlFbWV3NElaUw?oc=5",
+      "pubDate": "2026-10-20T06:36:12.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMimgVBVV95cUxOcmZaNnJVNDNRVFFLblVhQkpvcl9wU0tKajA5eE50T1NHZmtPLU9FVVJIaE5VMHRxeGV5UnZfVlY4bEw1dnZJdE43LTJVRm1MbjgybTkzR0VNRHZia0hXQzJoaVU3YXVyeGVFVngwLXFSUFlBbnZFWGtldU9jZmZTSzZZaExCQVpCQmFqcmdHQmh6QVNkaEJqT21tbzM4emdHbnp3bUR6X2RKXzlWTVNacnl0MVY1ZzE5aWdOWVJLVVo4cVpSeUMteHZoVmFyR0FRRWhrTUl3YzJYa1BKVXM3dkpvYTE2U04xdlIxMVdudkhwQklxVkNFdGZjTTBJQW1iY1Y1UVVlM1ZCVGFtRHVzSlFOR1dMUng2MGFWNHRIVHJPc3VBN3lVUk10dUpVYlRpTmFrNDFQTTY4eEFjcGV5eldUcXU5VVF4YUMxUC1ZTjRRb2lmZUkyYzlPNGtISkEzME5ySjh0dEdyMTJQQ0hUVlh1eW9WaE1LNU1OWEhLNnRZamtMSnJXNzJZdE1mQTBOYTlfcXdWcHpDMmtfS184cnVETWx4VkR4ZHJhQXUwZllLMzJkeHBMVzd1WXRwMjVRNjVaeUNrWVYwZG9QaEhoa1gzNVFGaFRsUkdvQTZkeGoyT1h1YmlnWl9RczJMR3RYOWE3TWhPalYyckh5bGZqMklnV3owY1hzUzNuSnQwMHQzTXh4c1VVWkx6RGdyOHV4SnZRd3hQZmYyWnFCcVBybDRJQnFWaTBva2g3bVNxRkFXRFpoa000V05LS3dtVml1RDZNdy0zVzJuY1ItVVd4a2RFTDBuQ3lUSjJ6blVBWDlIVkF2VWhlVWtpTmJyck9UQnJMNmc1TlRKUjV1UFpzSnhnMVpXU0VFblE?oc=5",
+      "pubDate": "2026-10-27T13:40:51.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMivARBVV95cUxPbEY4M0hzd3B5ZHNnZWhHRDJHeWR1aURsRHhjQjZJS0RweHBUSlBnMGo5UUhEUzJGTXgwUWVnd0daSHhFVXNpQWlrVVhkZF9fY2h3Mkw0THlhSWdZQ1hsai14YzloRGdVYnFyVWg1RVh0bFU3MXJRVEIySDY1Rnk2cHIzZjZjRENXZFhVTThNUUJaODFpSG11amVOd1ZhVE4wN3BJS3RiZk16cWJkNlNMdWFfR3NmbkRtTC1YYXhPODlmS0RydGlWeFdNOGlqRjd6WmFoVEpuWlB6LTB6Y21xNDZpNlAxZnRYd2ZjTWhRN3NXYmhwQmhZUldZcG5FQ0RDeGluVjZOSDFGajZCM3VpMUhraF9jX2RaeEpGY0VrTjFraFB6VnlabnZGX01YOFVjM1FYZ0dOVXp0Nnpxdnd6c01WNmc3SkNpUlEtd1BYQzRLZk83QTVTSms5OXh4eWRPQXdtYUJaTGNlVG5SRm9rRVJVZG8ycENpQUZxYjNnWXJBUjBsRFFlbF9adnBBX212bERmRFlVQUNJOTZkb05aTFA2SGhZMThfdEtTMmU2aG04R1dQNWtnUTNrTUVCWUtITVVralBKMUU0SEJ4OEYxd2Q0TXBqWGlXLXlkWGVILWN2b2ZMeFExVHpqTjc0S0M5cXkzeHlXbUFUZ0IxUTJ0R0Vqdm1DVWhLa1Z0bnNPMDhOc0ljbGZOYXZtYmpLVkNhckRGVF9rbjV5aHRLSFZlV3dZMUFJUi1MVjhoeQ?oc=5",
+      "pubDate": "2026-10-26T11:42:34.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMi6gRBVV95cUxPMmRGZjhuTlJfYWJOY1Zzek9VdVBXLW1qQ2t1NlhVc0M5MXl1MElXUjFSVzhCb0VNUFN4MHVMQkFKMlZJUW5nWmdtSXNlQ3pEMjFPaEJDU25rd2FUNThsSVpRZXVMdzlHSlpOTGVJVkp3cHByOS1ybUt2ZDJpb1l1UkZBdjNHT3FaX20xeGRBOTNrTFJXLVdTY3JUS2ZyOHdkZjk0Y0lpSHUzZzA4ZzFEdG5XNnYtZEMteWZKQ0JiVFFQaDdvQVdjbHZrTFV4V3BHcWt1WVA2M2JibmdIMnp5N1BqdWs3WUFzYWFGU01ZUk1xaTI5Um80NGp3U2JELUxRMnh2ajd1TlBmSk5sZ1hvcElyNFU0ZGx0UlpqWkRSWm1adVliSmdkajBBMVlsbE4zcEhtYWd0dnFYWVVvMXlnZDZsWWRVLWZmNlRRVlEwREhHbE9ZNTA3b0lkenE3eGljV0x1Wk1FbTdST3VOR0M0bmhfQU5Bb3JKRFdPb3NkaDR6U1VhSDFkd3dlQWpWdGRGNk5BNGYzWDBTRkJmMTJjRnlVMkRrTktHWVBkOS1WaUdNUFNCRk5QUDlrUHBnZzBjVHk1YVJVWC1mR1hySnlaRFNXeTBvcC1ESzltaG1RcTA2MHRLdE8zbGY3c0ZLVTZmeDhZeHdiN0x1dXBtMmdoWWNZZFFhbzdndlM3Mk1OV1VWUW5ScVVsWjhlTmp6MlRta0RXazExZzNxVFFjZ2pUSDUwVjU5VHp6SkduOE4xdXNJSXUwWndPaHFHSjY3NTRFck94aTZnZEJ2ZTdwX2oyZUJjWWVtNUREZFE?oc=5",
+      "pubDate": "2026-10-21T04:39:53.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMijgVBVV95cUxNMGhMcVl4RTFWNUl1MkZRdVljcmdkUnh2aVBLYmpqdlZTOTFlVzhybVBfdThQcWE5X0xvOElZOFpVNEZ5QzlGNURORTFvMTRtZW0xSHFXQzVyRkloRl9sS3RLX2pzc09odGxiZWlNWkJoUWI0R2ZkampJVjcwMWdRNXN6RGZaZUFqckp3SENPbjVGTlVHNlYzS1ZMT2V0VXJUQUs5LXltaFJUWnBJLWNuZXhYS01lNVUtb1RMeUJicWZEb3VKNjB2cnEyWjBLYTd3TjRUcGpvdXA2TXpseGZwY0JmRktBa1dlZC1yMHNrQXl0QzRoSHhyQy1ULXZjYzlnYTBUNzJLaTdSaGFGdE9teEIzWHJJVV8zR0IyNmhsSk9nV0xDZEpwYjM2N210OWlvcnRmUzRWdERJOTRFMlo0ZG1SSGF3REN0bzFjU1djNlBmWjhiNEFnVGN0VXhFekpHM1kwWVZadGNzTzJ0NnhpRzB0bmgzVGE1YWV1bU1DYmpQNFNNVnU5QXdwM0ZGNEJub1Zwczh5WjZqZlowampmYzVGTUxYVWpvMTBpZ2xjazVQa3c5LTExd0VpQTF5ZHY0bVJnejJqQnNwWUk4N3kzeWJsNDZCSUcyYUhlcmdfeDFZMm5OTG8taEdXYTFCdkl3WUw3VXRCN3AxTnF6RHdvM0lRc0RreFBJcE1qVjFVSjJ3VXhSbS1RTXJGN2dWQTE4MGJWYm9mQXZreF9OeEZGZ2VyNW84MFQ3dElQWU9hbm9sdnlKRThJZU1neWFzQ0tmamd5dENkN2pWWFBHQVRMTkY4R01pTl9Kc21HRlFZc2NjUzhCUWotRTVOVFRBRUxQdXJsbEVSVTQwaWgzYnc?oc=5",
+      "pubDate": "2026-10-27T10:34:53.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMi4ARBVV95cUxPeEhwNjVFSEdyVUF4TnFNd2twWmpJQXVMdHZxT0tpUjhnSzAtZkNfelBJVXF0UDFEaXh4UlM5S3k0SGV1NkxGQjI2Nm5KdnEzcHJaWjNjSkhQRUNtUVFYRUJVQWlYa2FWQ1BQMzZiOEdnQ1c4ZTZReEpGMU1GVkJ0RV9OdHg2RUMzbklQZ25CRHY4SjFuWXItX1YtTTVKWG5CcnlaU1BRMGdSaTFzbUNiSjlJblFPNUxCVlBhQVhscllPUjdFVXg3Y1JlNEpaQ2RPZ2hPWnZsRlFrTWI5cUlfV0lQRzRUcEg2NmE0enpMendXdFpQTVJaTjN6YlBWMkhiRThRUUxxWUJfVFZ4RFFuQlQyeVpXcjYtMzVDQUJEV2RPNnJGNHlMOFd4T0p5c0FLR1JPWkFrLVpWOUkzQWJySno4VE4tZ0xZdWs5ZVZCRzlELVhoc1hVTU5nck55NXh0ZV85Z0pFcGg0UHo3TUJzeTBVcUVaV05KbFpJYTFldWNYeGV1N0pTZ3pCamp5RzFLeGFxOHpYVHR2aUQ0c2dwOS1DT0xLZVdMOFN3bXhCM2NrZUNXYkh3UmdBUzRMUWk0dUJwTHVtR0N3NlV0em5qNlBLdWd3N1A4RElfdHBnYnFNWUN4T3lvcXpGSWlUd29IS0hvcUhmV2RBSmF3N3oxOVVOODRUS0xYNUJHSmVVUWlLd1VjTFlsTjE2V2F4dVQxY3Q0YTI5N1lMekFhZkota0RyMURpTVJrdDNqeExVd1F0dzYzdmpKT21XUzBoOGxzT2E5dmY1dDdwdlJzV2RQZA?oc=5",
+      "pubDate": "2026-10-20T06:36:12.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMirwRBVV95cUxOblMzS0d6dW9JRXladXJ6TjVMQ0RQNFdRNnRQakx0OF9MTE5YeFRNVmVZaVlTbmoyTjRCU29mZWIzSENJWk9DWndoV1g5SDYxcVdUaEVFRV9VY3lXV0NLbGRzZHNKRmdkeWR4RVVtbFBSZDZULUhKeW51R29xSy0zUHhxZ3BZX3VjcTZkRWpZMUpKQ3c1VnM2ZkZCdTVzVWVaZ2VLZ09sVGljSmdtajFFTkFqd2EtaFVkQzY2eDcwNUxkMTdRcVp0aDkwNXl4ZVJRdk9nVjNFVmFkVTN5MFdPRUVqQnZ1M1JmdVJoWXJBN0Y3RTJxLTdWNk5DN2hEMjJqSklxdzlCQXlKcnVLb1VJX2NwOEQxUVhtemdET2ZXUFdWYUdNdDA5bWlvSXgyZG1aeVQ0QlVtVVdPaUxuYk8ybzU0dU9BLUJWMnk5eGYtVWhBQTcyNjByQ1FFRnBWUVQ5dHBWbFlMTm9QdDc1S2V2NXEwMU1meUY0Mm9xZ1JaRmFSZUt0TTZ2NE8wS0kwQ0syeXB0d2lCWGk0TXdSRlVaYVhhUENMUVpBU2toaUZwcDBvZ1c2ME44WmpTYW1Rd0hmYWpXZ0xkVDZhUnNpY1Ffc2p6NmtOQmJZVVZtb3hsUzNldFEyREVrVzhVVmpVUmlXektud094Tm1ScGFmNHJ2NEtENWlaNDlzUFBjX044blM0eXBLbFd2a2pVd1h0Y0IydnVVYlFSVUY0QkVNS3Q4?oc=5",
+      "pubDate": "2026-10-19T10:53:11.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMi0gRBVV95cUxQdGRwRVpJNFlhYlN3REJBaThiR1d5X0dKTVdnVlUtOU9qZVFCbmtsY2tUdGZzaHphWEFpNGRQYTkzWGNLeWlqUS00Ykwxb1FTYlR6a0JhQmhNU1lNaDU1MkZxamhzdEx3cjdZOWszRE53emQ4SzN0aGxYc1NrMDBLajY3NTlKUkFnUFU2UkJNZDN1UHRKODBBZHlGVW9Ed0lqcXVPMlRVQkc0YVdlaUFrenozOF9EVENMa0JPQ05vQU9Qc2FyN0FseGo5ZC13MlBoaksyekNYY0xIUUVzalRiYk1sN0FSWnl3Tm51WVdYWnR3dDdKZjM2M3doOVp4WVNETmJmX0tJblo4ZmhORWVPOHZ3ektpZEdGYUdOVUNSaFN4QWEyeDhDcTM2SGtGVVVNQ0lJWUpMa05idlRwYm1HM3FNMUZfalJFRzNWVllKZjc1c0ZKTlQ1amltMmlyRUlLZzIxM0pVR0VCRGNLUkNwQnZkYVhBcEtrazkyUk5WWFhrNVVNRG9NYVRCYUlqYlB4VkJhR2huMU8wdFl0T3prQmxLOHFkVFJ6S1pLVi1Rek5IVXFhN3FrTFMwY1c1allxUzN2QXY0dEx3LWVLV3BNaTZXdThUNEw3b0ZtRXg5MENfa1VtQXUwXzRnbkY2Y0paX2l1UXJjc3VvOUcyQ1pqOFhCRlBhUmg0eFhfalJjMUFTVFJ6Y1lGX1hCeW9xa01SUnhRS0hFMENEQjQtc0tkQWVqZDNzQnkxVEZjY2FQd24yR3I4Sm16RlpIcjAyaDRjLVE?oc=5",
+      "pubDate": "2026-10-21T04:39:53.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMi4ARBVV95cUxQUjF1S1c1N2xWWXJCMU1HYUZPRl9LelFfTlBhZ2ctU3FYbGZZT1VidURPTzQtTVVYR1JrOUJYY1RsakNfOWVVYkl0aDVHWVF2MHRCRnRYeU9DNTZER1RSMHZpM2phQzJIX1VGRVNxS0x3d1RiOTRYbWQtQ3BOQWQ0cmdnVzI4S1NYdUNHMlVfVW9OLVJid0luWjVPUVJ2Q3hTYUJ3LUY3Y1NmSGtVb1FCdlFIanpYX0VibHRQUDJHa1BBMkhpOU9UOUl4R2ppWFFuMXhoRjR5ZVZKUkR1TVZGTzZhenh3WjdBMXV0UHBXanVJY1Y4c2VwTmltbVVyT1k4MU9DUmFsZC15YV9UNXVFbTFGTDBWWVN1VmFTZWo2TTNxN0k5V3JQS3NwWEt4N3RfR2NLcU5UdnkxaWlGTTdBTFYzUEx6TXZlVXQ0UkVybHh0RE9EeUpGOWVETUpBQlI2cF9wNHplV1dKRVZDU1BQdVZ0aW5ncThGY3RZLTM0ZVplaDNicTItVmVEcTBQRzZiOWx5Yy1XeE5iRVUwYVRxVHVRMnhHaGI4NTFqVVJYcXZkYWdldTdrazU4LW5pR0hRV0hmenFqM01hOXlEMF95R3IwZ3RxN3NTcWdvcTNDTVJmNGt5cm8tb2dVQmd1UWd5aEJDaThIUC01Y0Z1TUc0dXJkajVJSkZwOFlzVTh2emphbktRelRUcFJCcGJFWjdDcWZoWENlSGJEUFhhTWN5ZDVUbEI4QnVsMWNrcWtSWVpST1ZtTldIbG5ldjcxZXhvTEpDWnhkMjFScDU2UGhpZw?oc=5",
+      "pubDate": "2026-10-26T11:42:34.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMixgRBVV95cUxPYWVZUHJRS3ZZcUVIS0RHQ040M1VaN05SUHg2LURNTDhlbUhqYmxCMjVkdUw1MHhDcVVtc0R3UVo3THN1YkFXNVBGeV9DZjF6WXRiWDJnSFVvZGJpRHkxNWpIVmhvS1pzSnlpYzR6OFBOdmx5RHExNGg4UGh2M1RNX1JES2o3SmpLUnFkS3Bsa0lQT0tRbFloSmk2OWJjdDlDcGxoaTExd0J1dGU5ejNLZTF2bFNGclFUQUR5UU1TX0c0UTFnVm1LeEhoR2RRZkdTWktockh3cm9TWHdka215SUdGbmlnVTAyeXlZTWFIR1B4OW04NndsT21WUVEwSDc3WTVKeHcxTk1BT2pkY0wxemJoMFdjV0xOTVFhY2sxb2xrWGRURGZJMGJ3bUZYeXdsQTZxbHpDUG1JdkhMR3dDNkdkNC0xa1dPOWpOY084NlV6SXhidF9FeUltZU03enBydWdnd0lDRlNVeDFFREtGeHpHYnNubUgzY3JuR2FDTHJweWJEQ1d5WVg3dmVhQ080YUdkaWRzcUdxbzlQT0duUEw4R20wakdHR3FxN3hEZFltbEszWkRfeU1XTThvZUVHVy03LU80WndyRUIweHZBNm10NkZfalVueDNUb29aWXVGekV2QjAzRTg5cXBqaTQySjZZTnFzUUoyWWpMOWJSTWx2Mm0tQTVuSTdZSW13Vkp5dktZZ1ZsOXRJZk93a2xYdlE2aTdOSHVwSWIwUXpYSTlsSjVlbDhmODVKQm9kX3A4MllzTXc?oc=5",
+      "pubDate": "2026-10-21T04:39:53.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
+    },
+    {
+      "title": "- domingo.ne.jp",
+      "link": "https://news.google.com/rss/articles/CBMivARBVV95cUxNWTd1QnlSeFV4clhySnRubTdhSDhmUm1mTExvQ192STdhUmdkYmVYUUJ4ZGFIcmgwaFA5N05McGduZ0hLZ0RQc1BGVTRhV25iR005Xy1ZNTJ0dEhsX00xTDVjaldfYXVLdTBISmdyOWtoX1hDMlU4OUlVMXl6WGJ6TC0zdlg3Zk16czg4a3hxbjRFUXg3c2N0Vkt0TnBDbHV2eS1NWDcxRURoTnlYN190RjhsaTBXR1ZxRkFIM0FHUm1lQUpXdEZiWXVyS2VWbXNQUWxrRUVBY3FLR3ZNVTV2ODBFRG82TmhNZ05mbUpVNXE1UGJhVVBEM2VGWWpfUU5uQ0gzaTlsVUM0Qm15QkpCUEJBS3BQTmFiYlQ2YmttVmVTdlFXVXBDc0l5QkwxczM5eTZJUFo1c3habzhSUmJwTzRzbDlBSkZjUU9lczFUTUp2Nl8yd19ma1o2RGYzLVo0VTRHRlBsQVZ6V1lGWnp0TmxQZDdidlJmS0dIYUdpSER6Q2ZBQzNYM2N3QWF6amp4SkdjZ0hUR0lPUk4xOGR4TmZJalJQYTV4blMxQmJWdnlLUi15ZnN3WkFHX1k4OTkyWkx2WVcwZnJKMmR6c0lqeFVKQmJ5R1owQWw5OGctSzQxMmVkc1RxQlE2Ui1vQUtsQjJKZl9QX3JhWHgzTm9Qbk96cTlnYUp1RHdyNDFCaU1uMnZydFRIVWtVUGl3M1VnNnMyX2RHOFhsenpxczFXN2VGZ1NUUUVfcWtydw?oc=5",
+      "pubDate": "2026-10-20T06:36:12.000Z",
+      "categories": [
+        "Domingo"
+      ],
+      "sourceHost": "domingo.ne.jp"
     }
-  ]
+  ],
+  "fallback": true,
+  "primaryError": "HTTP 503"
 }
