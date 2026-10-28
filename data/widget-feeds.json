@@ -3038,11 +3038,18 @@
       ]
     },
     "https://valorantnews.jp/feed": {
-      "status": "error",
-      "generatedAt": "2026-10-28T00:09:22.310544+00:00",
-      "checkedAt": "2026-10-28T09:09:13.783336+00:00",
-      "error": "timeout",
+      "status": "ok",
+      "generatedAt": "2026-10-28T12:30:14.435583+00:00",
+      "checkedAt": "2026-10-28T12:30:14.435583+00:00",
       "items": [
+        {
+          "title": "「G2 Esports」よりvalynが脱退 ─「仲間たちと過ごしたここ3、4年は最高だった。人生を変えるような経験で、何にも代えがたいものだ」",
+          "link": "https://valorantnews.jp/archives/169420",
+          "pubDate": "2026-10-28T12:14:32+00:00",
+          "categories": [
+            "チーム/移籍"
+          ]
+        },
         {
           "title": "VALORANT パッチノート13.09：新エージェント「ハッシュ」が登場、ウォーデン強化・クローヴ弱体化、アビリティー説明文も刷新",
           "link": "https://valorantnews.jp/archives/169416",
@@ -3127,14 +3134,6 @@
           "title": "「Cloud9」OXYがSentinelsに加入か、2027年の新デュエリストとして獲得と報道",
           "link": "https://valorantnews.jp/archives/169390",
           "pubDate": "2026-10-24T17:03:45+00:00",
-          "categories": [
-            "チーム/移籍"
-          ]
-        },
-        {
-          "title": "DFM MeiyがCrazy Raccoonに復帰か ─ 2027年のPacific参戦に向け獲得と報道、Vorzコーチも加入へ",
-          "link": "https://valorantnews.jp/archives/169386",
-          "pubDate": "2026-10-24T13:42:55+00:00",
           "categories": [
             "チーム/移籍"
           ]

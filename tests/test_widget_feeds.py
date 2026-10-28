@@ -11,6 +11,32 @@ URL = 'https://example.com/feed/'
 
 
 class FeedTests(unittest.TestCase):
+    def test_valorant_timeout_retries_official_rss_endpoint(self):
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            if url.endswith('/feed/'):
+                raise urllib.error.URLError(TimeoutError('timed out'))
+            return b'<rss><channel><item><title>New article</title><link>https://valorantnews.jp/archives/1</link></item></channel></rss>'
+        result = feeds.collect_feed(feeds.VALORANT_FEED, {}, NOW, fetch)
+        self.assertEqual(calls, list(feeds.VALORANT_FEED_ROUTES))
+        self.assertEqual(result['status'], 'ok')
+        self.assertEqual(result['items'][0]['title'], 'New article')
+        self.assertEqual(result['generatedAt'], NOW)
+
+    def test_valorant_invalid_retry_keeps_cache_and_timestamp(self):
+        for body in (b'<html>Maintenance</html>', b'<rss><channel/></rss>', b'broken XML'):
+            def fetch(url):
+                if url.endswith('/feed/'):
+                    raise urllib.error.URLError(TimeoutError('timed out'))
+                return body
+            previous = {'items': [{'title': 'old'}], 'generatedAt': '2026-10-20T00:00:00Z'}
+            result = feeds.collect_feed(feeds.VALORANT_FEED, previous, NOW, fetch)
+            self.assertEqual(result['status'], 'error')
+            self.assertEqual(result['error'], 'timeout')
+            self.assertEqual(result['items'], previous['items'])
+            self.assertEqual(result['generatedAt'], previous['generatedAt'])
+
     def test_rss2_dates_categories_and_safe_title(self):
         xml = b'''<rss><channel><item><title><![CDATA[<b>A &amp; B</b><script>bad()</script>]]></title><link>https://example.com/1</link><pubDate>Wed, 21 Oct 2026 22:30:00 +0900</pubDate><category>news</category></item></channel></rss>'''
         item = feeds.parse_feed(xml, URL)[0]

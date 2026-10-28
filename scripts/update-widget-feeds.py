@@ -24,6 +24,8 @@ NOTICE_URLS = {
 }
 OKUYAMI_BACKUP = 'https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/'
 GOGUYNET_FEED = 'https://tomakomai.goguynet.jp/feed/'
+VALORANT_FEED = 'https://valorantnews.jp/feed'
+VALORANT_FEED_ROUTES = ('https://valorantnews.jp/feed/', 'https://valorantnews.jp/?feed=rss2')
 
 
 class TextParser(HTMLParser):
@@ -118,7 +120,8 @@ def configured_feeds(document):
 def fetch_bytes(url):
     encoded = urllib.parse.quote(url, safe=':/?&=%')
     request = urllib.request.Request(encoded, headers={'User-Agent': 'BiratoriWidget/1.0 (public RSS reader)', 'Accept': 'application/rss+xml, application/xml, text/html;q=0.8, */*;q=0.5'})
-    with urllib.request.urlopen(request, timeout=25) as response:
+    timeout = 45 if urllib.parse.urlsplit(url).hostname == 'valorantnews.jp' else 25
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         data = response.read(MAX_BYTES + 1)
         if len(data) > MAX_BYTES:
             raise ValueError('response_too_large')
@@ -126,6 +129,8 @@ def fetch_bytes(url):
 
 
 def failure_reason(error):
+    if isinstance(error, urllib.error.URLError) and isinstance(error.reason, (TimeoutError, socket.timeout)):
+        return 'timeout'
     if isinstance(error, urllib.error.HTTPError):
         return 'HTTP ' + str(error.code)
     if isinstance(error, (TimeoutError, socket.timeout)):
@@ -167,12 +172,27 @@ def google_news_backup(host, checked_at, fetch=fetch_bytes):
 
 def collect_feed(url, previous, checked_at, fetch=fetch_bytes):
     try:
-        body = fetch(url)
+        # Use the canonical URL without paying for a redirect on every check.
+        primary_url = VALORANT_FEED_ROUTES[0] if url.rstrip('/') == VALORANT_FEED else url
+        body = fetch(primary_url)
         if 'メンテナンス' in body[:2000].decode('utf-8', errors='replace'):
             raise ValueError('maintenance')
         items = parse_feed(body, url)
+        if url.rstrip('/') == VALORANT_FEED and not items:
+            raise ValueError('invalid_items')
         return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at, 'items': items}
     except (OSError, ValueError, ET.ParseError, http.client.HTTPException) as error:
+        if url.rstrip('/') == VALORANT_FEED:
+            # Retry once through WordPress's equivalent RSS endpoint. Validate
+            # it before replacing cached articles; never mark stale data fresh.
+            try:
+                items = parse_feed(fetch(VALORANT_FEED_ROUTES[1]), url)
+                if not items:
+                    raise ValueError('invalid_items')
+                return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at,
+                        'items': items, 'sourceUrl': VALORANT_FEED_ROUTES[1]}
+            except (OSError, ValueError, ET.ParseError, http.client.HTTPException):
+                pass
         if url == GOGUYNET_FEED:
             try:
                 items, backup_url = google_news_backup('tomakomai.goguynet.jp', checked_at, fetch)
