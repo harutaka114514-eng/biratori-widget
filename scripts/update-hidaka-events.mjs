@@ -29,6 +29,10 @@ export function parseHidakaEvents(xml,now=Date.now()){
     if(!categories.includes('イベント'))continue;
     const title=clean(tag(raw,'title')),link=tag(raw,'link'),publishedAt=tag(raw,'pubDate'),text=clean(tag(raw,'content:encoded')||tag(raw,'description'));
     if(!title||!/^https:\/\/hokkaido-hidaka-kankonavi\.com\/information\/\d+\/$/.test(link)||seen.has(link))continue;
+    // Exclude administrative notices, professional training and qualification courses.
+    // Public cultural workshops remain eligible when their dates are confirmed.
+    const nonEventNotice=/(?:観光介助士|資格(?:取得|認定|試験)|検定(?:試験)?|受講者募集|受講生募集|研修会|職員研修|事業者向け(?:講座|研修)|セミナー|説明会|求人|採用情報|営業時間(?:変更)?|臨時休業|休館のお知らせ)/.test(title);
+    if(nonEventNotice){skipped++;continue;}
     const dates=eventDates(title,text,publishedAt);if(!dates||dates.endDate<dates.startDate){skipped++;continue;}if(dates.endDate<today)continue;
     const venue=text.match(/(?:場所|会場)(?:\s+|[:：]\s*)(.*?)(?=お問い合わせ|問い合わせ|$)/)?.[1]?.trim();
     const towns=['平取町','日高町','新冠町','新ひだか町','浦河町','様似町','えりも町','苫小牧市'].filter(t=>(title+' '+text).includes(t));
