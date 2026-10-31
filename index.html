@@ -338,6 +338,8 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 #links-panel .widget-status {margin:6px 2px 0;font-size:13px;line-height:1.5;overflow-wrap:anywhere;}
 .x-accounts {flex-wrap:wrap;}
 .x-accounts a {flex:0 1 auto;}
+.x-post-author {display:flex;align-items:center;gap:8px;margin-bottom:6px;overflow-wrap:anywhere;}
+.x-post-avatar {width:36px;height:36px;border-radius:50%;object-fit:cover;flex:0 0 36px;background:#eef3f6;}
 .x-post-text {white-space:pre-wrap;overflow-wrap:anywhere;}
 
 .x-post-images {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:8px;margin-top:12px;}
@@ -1094,7 +1096,15 @@ function renderXPosts(ul){
     a.href=item.link;a.target='_blank';a.rel='noopener noreferrer';
     const author=document.createElement('strong');author.textContent='@'+item.account;
     const text=document.createElement('div');text.className='x-post-text';text.textContent=item.text;
-    a.append(author,text);
+    const heading=document.createElement('div');heading.className='x-post-author';
+    const avatarUrl=data?.avatars?.[item.account];
+    try{
+      const parsed=new URL(avatarUrl);
+      if(parsed.protocol==='https:'&&parsed.hostname==='pbs.twimg.com'&&parsed.pathname.startsWith('/profile_images/')&&!parsed.username&&!parsed.password){
+        const avatar=document.createElement('img');avatar.className='x-post-avatar';avatar.src=parsed.href;avatar.alt='';avatar.width=36;avatar.height=36;avatar.loading='lazy';avatar.decoding='async';avatar.referrerPolicy='no-referrer';avatar.addEventListener('error',()=>avatar.remove());heading.append(avatar);
+      }
+    }catch{}
+    heading.append(author);a.append(heading,text);
     const photos=document.createElement('div');photos.className='x-post-images';
     (item.images||[]).slice(0,4).forEach(url=>{
       try{const parsed=new URL(url);if(parsed.protocol!=='https:'||parsed.hostname!=='pbs.twimg.com'||!parsed.pathname.startsWith('/media/'))return;}catch{return;}
