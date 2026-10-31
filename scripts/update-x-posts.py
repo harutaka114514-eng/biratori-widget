@@ -3,8 +3,33 @@ import json, os, re, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
+from urllib.request import urlopen
 ACCOUNTS=['biratori_koho','cfm_domingo','nanairohidaka','tonekkochannel1','tomatofarmerkao','niikappu_ta']
 target=Path('data/x-posts.json')
+def valid_avatar(url):
+    if not isinstance(url,str):return False
+    try:
+        parsed=urlparse(url)
+        return parsed.scheme=='https' and parsed.hostname=='pbs.twimg.com' and parsed.path.startswith('/profile_images/') and not parsed.username and not parsed.password
+    except ValueError:return False
+
+def refresh_avatars(items, previous):
+    avatars={account:url for account,url in previous.get('avatars',{}).items() if account in ACCOUNTS and valid_avatar(url)}
+    for account in ACCOUNTS:
+        post=next((item for item in items if item.get('account')==account),None)
+        if not post:continue
+        post_id=post.get('link','').rsplit('/',1)[-1]
+        if not re.fullmatch(r'\d+',post_id):continue
+        try:
+            with urlopen(f'https://cdn.syndication.twimg.com/tweet-result?id={post_id}&lang=ja&token=0',timeout=15) as response:
+                user=json.load(response).get('user',{})
+            url=user.get('profile_image_url_https')
+            if user.get('screen_name','').lower()==account.lower() and valid_avatar(url):
+                avatars[account]=url
+        except (OSError,ValueError,AttributeError):
+            print(f'X avatar retrieval failed for @{account}; retaining previous icon.')
+    return avatars
+
 def main():
     if not all(os.environ.get(k) for k in ('TWITTER_AUTH_TOKEN','TWITTER_CT0')):
         print('X credentials are not configured; keeping previous public data.')
@@ -48,7 +73,7 @@ def main():
         print('No X accounts could be retrieved. Previous file retained.')
         sys.exit(1)
     items=sorted({i['link']:i for i in items}.values(),key=lambda i:i['pubDate'],reverse=True)
-    payload={'status':'ok' if success==len(ACCOUNTS) else 'partial','generatedAt':datetime.now(timezone.utc).isoformat(),'accounts':ACCOUNTS,'items':items}
+    payload={'status':'ok' if success==len(ACCOUNTS) else 'partial','generatedAt':datetime.now(timezone.utc).isoformat(),'accounts':ACCOUNTS,'items':items,'avatars':refresh_avatars(items,previous)}
     temporary=target.with_suffix('.json.tmp');temporary.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n');temporary.replace(target)
     print(f'Updated {len(items)} X posts from {success} accounts.')
 if __name__=='__main__':main()
