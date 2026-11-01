@@ -1,0 +1,42 @@
+name: Generate VOICEVOX radio
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, voicevox-radio-setup]
+    paths:
+      - data/morning-briefing.json
+      - scripts/generate-voicevox-radio.py
+      - .github/workflows/voicevox-radio.yml
+  schedule:
+    - cron: '25 21 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: voicevox-radio
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start VOICEVOX engine
+        run: docker run -d --name voicevox -p 127.0.0.1:50021:50021 voicevox/voicevox_engine:cpu-latest
+      - name: Generate audio
+        run: python3 scripts/generate-voicevox-radio.py
+      - name: Commit audio
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/morning-radio.mp3 data/morning-radio.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update VOICEVOX morning radio"
+          git push
+      - name: Upload test audio
+        uses: actions/upload-artifact@v4
+        with:
+          name: voicevox-radio
+          path: |
+            data/morning-radio.mp3
+            data/morning-radio.json
