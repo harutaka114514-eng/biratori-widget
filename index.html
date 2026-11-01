@@ -378,7 +378,7 @@ body[data-theme="wii"] :is(.news-tabs a,#news-fullscreen-tabs a) {border-radius:
 .widget-content[hidden] { display:none !important; }
 .widget.is-collapsed > .widget-size-bar { margin-bottom:0; }
 .widget-control-label { font-size:14px; color:#25536d; }
-.widget-size-bar { justify-content:space-between; align-items:center; gap:10px; }
+.widget-size-bar { justify-content:flex-end; align-items:center; gap:10px; }
 .all-widget-size-controls {display:flex;justify-content:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
 #dashboard-controls {display:flex;justify-content:center;align-items:center;gap:10px;margin:0 auto 16px;flex-wrap:wrap;}
 #dashboard-controls #settings-open {margin:0;flex:0 0 auto;}
@@ -2071,7 +2071,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 <script>
 (function setupWidgetVisibilityControls() {
   const widgets=[...document.querySelectorAll('.widgets .widget')];
-  const names=['天気・日々の情報','平取の季節だより','ライブ映像','カレンダー','ニュース'];
+  const names=['天気・日々の情報','今日の平取ラジオ','平取の季節だより','ライブ映像','カレンダー','ニュース'];
   function setHidden(widget,hidden) {
     if(hidden&&widget.id==='news-widget'&&isNewsFullscreenOpen())closeNewsFullscreen();
     widget.classList.toggle('is-collapsed',hidden);
@@ -2086,11 +2086,10 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
     content.className='widget-content';content.id='widget-content-'+index;
     while(widget.firstChild)content.append(widget.firstChild);
     const bar=document.createElement('div');bar.className='widget-size-bar';
-    const label=document.createElement('span');label.className='widget-control-label';label.textContent=names[index];
     const button=document.createElement('button');
     button.type='button';button.className='widget-size-toggle';
     button.setAttribute('aria-controls',content.id);
-    bar.append(label,button);widget.append(bar,content);
+    bar.append(button);widget.append(bar,content);
     setHidden(widget,false);
     button.addEventListener('click',()=>setHidden(widget,!content.hidden));
   });
@@ -2251,7 +2250,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
       if (Number.isNaN(date.getTime()) || data.audio !== 'morning-radio.mp3') throw Error('invalid');
       const stamp = new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit'}).format(date);
       audio.src = './data/morning-radio.mp3?v=' + encodeURIComponent(data.generatedAt || data.updatedAt);
-      status.textContent = 'ニュース更新：' + stamp + '。気温は音声作成時の情報です。';
+      status.textContent = 'ニュース更新：' + stamp + '。天気は音声作成時の情報です。';
       const box = document.getElementById('radio-chapters-box');
       const list = document.getElementById('radio-chapters');
       const chapters = Array.isArray(data.chapters) ? data.chapters.filter(c => typeof c.title === 'string' && Number.isFinite(c.start) && c.start >= 0) : [];
