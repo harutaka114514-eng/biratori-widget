@@ -2062,38 +2062,15 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 </script>
 
 <script>
-(function setupWidgetVisibilityControls() {
+(function setupWidgetContent() {
   const widgets=[...document.querySelectorAll('.widgets .widget')];
-  const names=['天気・日々の情報','今日の平取ラジオ','平取の季節だより','ライブ映像','カレンダー','ニュース'];
-  function setHidden(widget,hidden) {
-    if(hidden&&widget.id==='news-widget'&&isNewsFullscreenOpen())closeNewsFullscreen();
-    widget.classList.toggle('is-collapsed',hidden);
-    widget.querySelector('.widget-content').hidden=hidden;
-    const button=widget.querySelector('.widget-size-toggle');
-    button.textContent=hidden?'表示する':'非表示';
-    button.setAttribute('aria-expanded',String(!hidden));
-    button.setAttribute('aria-label',names[widgets.indexOf(widget)]+(hidden?'を表示する':'を非表示にする'));
-  }
   widgets.forEach((widget,index)=>{
     const content=document.createElement('div');
     content.className='widget-content';content.id='widget-content-'+index;
     while(widget.firstChild)content.append(widget.firstChild);
-    const bar=document.createElement('div');bar.className='widget-size-bar';
-    const button=document.createElement('button');
-    button.type='button';button.className='widget-size-toggle';
-    button.setAttribute('aria-controls',content.id);
-    bar.append(button);widget.append(bar,content);
-    setHidden(widget,false);
-    button.addEventListener('click',()=>setHidden(widget,!content.hidden));
+    widget.append(content);
   });
-  const allBar=document.createElement('div');allBar.className='all-widget-size-controls';
-  for(const [label,hidden] of [['全部非表示',true],['全部表示',false]]){
-    const button=document.createElement('button');button.type='button';button.className='widget-size-toggle';button.textContent=label;
-    button.setAttribute('aria-controls',widgets.map(widget=>widget.querySelector('.widget-content').id).join(' '));
-    button.addEventListener('click',()=>widgets.forEach(widget=>setHidden(widget,hidden)));
-    allBar.append(button);
-  }
-  document.getElementById('dashboard-controls').append(allBar);
+
 })();
 </script>
 <script>
