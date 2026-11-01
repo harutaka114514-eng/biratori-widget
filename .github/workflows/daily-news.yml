@@ -17,6 +17,7 @@ on:
       - 'data/x-posts.json'
       - 'data/bing-wallpaper.json'
       - 'data/widget-feeds.json'
+      - 'data/japanese-holidays.json'
       - '*.md'
 
 concurrency:
@@ -41,6 +42,11 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p 'test_*.py'
           node --test tests/*.test.mjs
+      - name: Update official holidays
+        if: github.event_name != 'push'
+        id: holidays
+        continue-on-error: true
+        run: python3 scripts/update-holidays.py
       - name: Collect RSS feeds and link update notices
         if: github.event_name != 'push'
         id: feeds
@@ -94,8 +100,9 @@ jobs:
           fi
           python scripts/update-x-posts.py
       - name: Save collected news
-        if: steps.feeds.outcome == 'success' || steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.gutabi.outcome == 'success' || steps.xposts.outcome == 'success'
+        if: steps.holidays.outcome == 'success' || steps.feeds.outcome == 'success' || steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.gutabi.outcome == 'success' || steps.xposts.outcome == 'success'
         run: |
+          if [ -f data/japanese-holidays.json ]; then git add data/japanese-holidays.json; fi
           if [ -f data/bing-wallpaper.json ]; then git add data/bing-wallpaper.json; fi
           if [ -f data/widget-feeds.json ]; then git add data/widget-feeds.json; fi
           git add data/domingo-news.json
