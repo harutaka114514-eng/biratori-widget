@@ -6,7 +6,7 @@ on:
       - scripts/generate-voicevox-radio.py
       - .github/workflows/voicevox-radio.yml
   push:
-    branches: [main, voicevox-radio-setup]
+    branches: [main]
     paths:
       - data/morning-briefing.json
       - scripts/generate-voicevox-radio.py
