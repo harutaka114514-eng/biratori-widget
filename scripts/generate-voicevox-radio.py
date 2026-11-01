@@ -40,7 +40,7 @@ os.makedirs("data", exist_ok=True)
 with tempfile.TemporaryDirectory() as tmp:
     paths = []
     for i, text in enumerate(texts):
-        params = urllib.parse.urlencode({"text": text, "speaker": 3})
+        params = urllib.parse.urlencode({"text": text.replace("平取", "びらとり"), "speaker": 3})
         req = urllib.request.Request(base + "/audio_query?" + params, data=b"", method="POST")
         with urllib.request.urlopen(req, timeout=120) as res:
             query = res.read()
@@ -54,13 +54,18 @@ with tempfile.TemporaryDirectory() as tmp:
     combined = os.path.join(tmp, "combined.wav")
     with wave.open(paths[0], "rb") as first:
         params = first.getparams()
+    chapter_titles = ["オープニング・平取の気温"] + [str(item.get("title") or f"ニュース {i}") for i, item in enumerate(items, 1)] + ["エンディング"]
+    chapters = []
+    frames_elapsed = 0
     with wave.open(combined, "wb") as out:
         out.setparams(params)
-        for path in paths:
+        for title, path in zip(chapter_titles, paths):
             with wave.open(path, "rb") as part:
                 if part.getparams()[:3] != params[:3] or part.getparams()[4:] != params[4:]:
                     raise SystemExit("音声形式が一致しません")
+                chapters.append({"title": title, "start": round(frames_elapsed / params.framerate, 3)})
+                frames_elapsed += part.getnframes()
                 out.writeframes(part.readframes(part.getnframes()))
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", combined, "-codec:a", "libmp3lame", "-b:a", "64k", "data/morning-radio.mp3"], check=True)
 with open("data/morning-radio.json", "w", encoding="utf-8") as f:
-    json.dump({"updatedAt": data["updatedAt"], "voice": "VOICEVOX:ずんだもん", "generatedAt": now.isoformat(), "audio": "morning-radio.mp3"}, f, ensure_ascii=False, indent=2)
+    json.dump({"updatedAt": data["updatedAt"], "voice": "VOICEVOX:ずんだもん", "generatedAt": now.isoformat(), "audio": "morning-radio.mp3", "chapters": chapters}, f, ensure_ascii=False, indent=2)
