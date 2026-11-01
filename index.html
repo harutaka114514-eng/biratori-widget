@@ -65,6 +65,19 @@ h1 { margin: 5px 0 10px; font-size: 20px; font-weight: 600; text-align: center; 
 .btn-doshin { background-color: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
 .btn-radio { background-color: #006eb1; color: #ffffff; border-color: #004d7c; }
 
+
+#news-order-open {padding:5px 8px;font-size:10px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;cursor:pointer;white-space:nowrap;}
+#news-order-dialog {width:min(420px,calc(100% - 32px));max-height:85vh;box-sizing:border-box;border:0;border-radius:14px;padding:18px;color:#333;}
+#news-order-dialog::backdrop {background:rgba(0,0,0,.45);}
+#news-order-dialog h2 {font-size:17px;margin:0 0 6px;}
+#news-order-dialog p {font-size:12px;line-height:1.5;margin:0 0 10px;}
+#news-order-list {list-style:none;padding:0;margin:0;max-height:55vh;overflow-y:auto;}
+#news-order-list li {display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #eee;}
+#news-order-list li span {flex:1;min-width:0;font-size:13px;}
+#news-order-dialog button {padding:6px 10px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;}
+#news-order-dialog button:disabled {opacity:.35;cursor:default;}
+#news-order-actions {display:flex;gap:8px;justify-content:flex-end;margin-top:12px;}
+
 /* ニュース スタイル */
 .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 5px; }
 .news-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
@@ -526,6 +539,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
         <button data-type="murash">🎮 ムラッシュ</button>
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
+        <button id="news-order-open" type="button" aria-label="ニュースタブの順番を変更">↕ 並べ替え</button>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
       </div>
       <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
@@ -595,6 +609,13 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
     <div id="news-fullscreen-meshi" hidden></div>
   </div>
 </div>
+
+<dialog id="news-order-dialog" aria-labelledby="news-order-title">
+  <h2 id="news-order-title">ニュースの順番</h2>
+  <p>▲・▼を押して順番を変更できます。この端末のブラウザに保存されます。</p>
+  <ol id="news-order-list"></ol>
+  <div id="news-order-actions"><button type="button" id="news-order-reset">元の順番に戻す</button><button type="button" id="news-order-close">閉じる</button></div>
+</dialog>
 
 <script>
 function readWidgetStorage(key,fallback) {
@@ -1883,6 +1904,50 @@ for (const [selector, fullscreen] of [['.news-tabs', false], ['#news-fullscreen-
     button.setAttribute('aria-pressed', String(button.classList.contains('active')));
   });
 }
+
+
+// ニュースタブの並び順をこのブラウザに保存し、通常表示と全画面で共通にする。
+(function setupNewsTabOrder(){
+  const key='biratori_news_tab_order_v1';
+  const normal=document.querySelector('.news-tabs');
+  const fullscreen=document.getElementById('news-fullscreen-tabs');
+  const dialog=document.getElementById('news-order-dialog');
+  const list=document.getElementById('news-order-list');
+  const original=[...normal.querySelectorAll('button[data-type]')].map(b=>b.dataset.type);
+  let stored=[];
+  try { const value=JSON.parse(localStorage.getItem(key)||'[]'); if(Array.isArray(value)) stored=value; } catch(e) {}
+  let order=[...new Set(stored.filter(type=>original.includes(type))),...original.filter(type=>!stored.includes(type))];
+  function apply(){
+    for(const container of [normal,fullscreen]) for(const type of order){
+      const button=[...container.querySelectorAll('button[data-type]')].find(b=>b.dataset.type===type);
+      if(button)container.append(button);
+    }
+  }
+  function draw(focusType,focusDir){
+    list.replaceChildren();
+    order.forEach((type,index)=>{
+      const row=document.createElement('li'), name=document.createElement('span');
+      const tab=[...normal.querySelectorAll('button[data-type]')].find(b=>b.dataset.type===type);
+      name.textContent=tab?tab.textContent:type;row.append(name);
+      for(const [direction,symbol,verb] of [[-1,'▲','上へ'],[1,'▼','下へ']]){
+        const button=document.createElement('button');button.type='button';button.textContent=symbol;
+        button.setAttribute('aria-label',name.textContent+'を'+verb);button.disabled=index+direction<0||index+direction>=order.length;
+        button.addEventListener('click',()=>{
+          const target=index+direction;[order[index],order[target]]=[order[target],order[index]];
+          apply();try{localStorage.setItem(key,JSON.stringify(order));}catch(e){}
+          draw(type,direction);
+        });
+        row.append(button);if(type===focusType&&direction===focusDir&&!button.disabled)button.dataset.restoreFocus='true';
+      }
+      list.append(row);
+    });
+    list.querySelector('[data-restore-focus]')?.focus();
+  }
+  apply();
+  document.getElementById('news-order-open').addEventListener('click',()=>{draw();dialog.showModal();});
+  document.getElementById('news-order-close').addEventListener('click',()=>dialog.close());
+  document.getElementById('news-order-reset').addEventListener('click',()=>{order=[...original];apply();try{localStorage.removeItem(key);}catch(e){}draw();});
+})();
 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && isNewsFullscreenOpen()) closeNewsFullscreen();
