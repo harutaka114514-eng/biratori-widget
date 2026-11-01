@@ -494,14 +494,17 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
 
 <section class="widget" aria-labelledby="radio-title" style="gap:8px">
   <h2 id="radio-title" style="font-size:17px;margin:0">📻 今日の平取ラジオ</h2>
-  <p style="margin:0;font-size:13px;line-height:1.5">平取の天気と北海道朝刊を音声でお届けします。音声はお使いの端末の読み上げ機能を使います。</p>
+  <p style="margin:0;font-size:13px;line-height:1.5">北海道朝刊をずんだもんの声でお届けします。音声：VOICEVOX:ずんだもん</p>
+  <audio id="voicevox-radio" controls preload="none" style="width:100%" aria-label="VOICEVOX朝刊ラジオ"></audio>
+  <p id="voicevox-radio-status" role="status" style="margin:0;font-size:12px;color:#555">音声の更新状況を確認しています…</p>
+  <details><summary style="cursor:pointer;font-size:13px">端末の音声で天気と朝刊を聴く</summary>
   <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
     <button type="button" id="radio-play">▶ 再生</button>
     <button type="button" id="radio-pause" disabled>⏸ 一時停止</button>
     <button type="button" id="radio-stop" disabled>■ 停止</button>
     <label for="radio-voice" style="font-size:13px">声</label><select id="radio-voice" aria-label="読み上げる声"><option value="">端末の標準音声</option></select>
   </div>
-  <p id="radio-status" role="status" aria-live="polite" style="margin:0;font-size:12px;color:#555">再生ボタンを押すと番組が始まります。</p>
+  <p id="radio-status" role="status" aria-live="polite" style="margin:0;font-size:12px;color:#555">再生ボタンを押すと番組が始まります。</p></details>
 </section>
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
     <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
@@ -2228,6 +2231,29 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
     paused = !paused; controls(); if (paused) status.textContent = '一時停止中';
   });
   stop.addEventListener('click', () => { ++generation; synth.cancel(); reset('停止しました。'); });
+})();
+</script>
+
+<script>
+(() => {
+  const audio = document.getElementById('voicevox-radio');
+  const status = document.getElementById('voicevox-radio-status');
+  audio.addEventListener('play', () => {
+    if ('speechSynthesis' in window) { const button = document.getElementById('radio-stop'); if (button && !button.disabled) button.click(); }
+  });
+  audio.addEventListener('error', () => { status.textContent = '音声ファイルを読み込めません。時間をおいて再度お試しください。'; });
+  document.getElementById('radio-play').addEventListener('click', () => audio.pause());
+  fetch('./data/morning-radio.json?ts=' + Date.now(), {cache:'no-store'})
+    .then(r => { if (!r.ok) throw Error('metadata'); return r.json(); })
+    .then(data => {
+      const date = new Date(data.updatedAt);
+      if (Number.isNaN(date.getTime()) || data.audio !== 'morning-radio.mp3') throw Error('invalid');
+      const stamp = new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit'}).format(date);
+      audio.src = './data/morning-radio.mp3?v=' + encodeURIComponent(data.generatedAt || data.updatedAt);
+      status.textContent = 'ニュース更新：' + stamp + '。気温は音声作成時の情報です。';
+      fetch('./data/morning-briefing.json?ts=' + Date.now(), {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(current => { if (current && new Date(current.updatedAt) > date) status.textContent += ' 新しい朝刊が届いています。音声の更新をお待ちください。'; }).catch(() => {});
+    })
+    .catch(() => { audio.hidden = true; status.textContent = 'VOICEVOX音声はまだ準備できていません。端末の音声でお聴きいただけます。'; });
 })();
 </script>
 

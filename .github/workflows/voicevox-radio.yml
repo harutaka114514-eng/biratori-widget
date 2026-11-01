@@ -1,0 +1,63 @@
+name: Generate VOICEVOX radio
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/generate-voicevox-radio.py
+      - .github/workflows/voicevox-radio.yml
+  push:
+    branches: [main]
+    paths:
+      - data/morning-briefing.json
+      - scripts/generate-voicevox-radio.py
+      - .github/workflows/voicevox-radio.yml
+  schedule:
+    - cron: '25 21 * * *'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: voicevox-radio
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install audio encoder
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Start VOICEVOX engine
+        run: docker run -d --name voicevox -p 127.0.0.1:50021:50021 voicevox/voicevox_engine:cpu-latest
+      - name: Generate audio
+        run: python3 scripts/generate-voicevox-radio.py
+      - name: Commit audio
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/morning-radio.mp3 data/morning-radio.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update VOICEVOX morning radio"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git diff --quiet origin/main -- data/morning-briefing.json; then
+              echo "Morning briefing changed during generation; waiting for the newer run."
+              exit 1
+            fi
+            git rebase origin/main
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" = 3 ]; then exit 1; fi
+          done
+      - name: Deploy updated audio
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run daily-news.yml --ref main
+      - name: Upload test audio
+        uses: actions/upload-artifact@v4
+        with:
+          name: voicevox-radio
+          path: |
+            data/morning-radio.mp3
+            data/morning-radio.json
