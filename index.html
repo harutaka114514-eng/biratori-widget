@@ -1226,7 +1226,7 @@ function renderBriefingMarkdown(container, markdown) {
       parent.append(document.createTextNode(text.slice(pos,match.index)));
       let el;
       if(match[2]!==undefined){el=document.createElement('img');el.alt=match[2];el.src=match[3];el.loading='lazy';el.referrerPolicy='no-referrer';el.style.cssText='display:block;max-width:100%;max-height:280px;object-fit:contain;margin:8px 0;border-radius:6px';el.onerror=()=>el.remove();}
-      else if(match[4]!==undefined){el=document.createElement('a');el.textContent=match[4];el.href=match[5];el.target='_blank';el.rel='noopener noreferrer';}
+      else if(match[4]!==undefined){el=document.createElement('a');el.textContent=match[4];el.href=match[5];el.target='_blank';el.rel='noopener noreferrer';el.style.fontSize='inherit';}
       else {el=document.createElement('strong');el.textContent=match[6];}
       parent.append(el);pos=pattern.lastIndex;
     }
@@ -1240,7 +1240,7 @@ function renderBriefingMarkdown(container, markdown) {
     if(heading){const el=document.createElement('h'+Math.min(heading[1].length+1,5));el.style.cssText='margin:14px 0 8px;line-height:1.4';inline(el,heading[2]);container.append(el);continue;}
     if(line.startsWith('|') && i+1<lines.length && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i+1])){
       const wrap=document.createElement('div');wrap.style.overflowX='auto';
-      const table=document.createElement('table');table.style.cssText='border-collapse:collapse;width:100%;font-size:12px;margin:8px 0';
+      const table=document.createElement('table');table.style.cssText='border-collapse:collapse;width:100%;font-size:14px;margin:8px 0';
       function row(text,header){const tr=document.createElement('tr');for(const cell of text.trim().replace(/^\||\|$/g,'').split('|')){const el=document.createElement(header?'th':'td');el.style.cssText='border:1px solid #ddd;padding:6px;text-align:left';inline(el,cell.trim());tr.append(el);}table.append(tr);}
       row(line,true);i++;while(i+1<lines.length && lines[i+1].trim().startsWith('|'))row(lines[++i],false);
       wrap.append(table);container.append(wrap);continue;
@@ -1257,7 +1257,7 @@ function renderMorningBriefing(list) {
     list.append(intro);return;
   }
   if(typeof morningBriefing.reportMarkdown==='string' && morningBriefing.reportMarkdown.trim()) {
-    intro.style.cssText='display:block;line-height:1.7;font-size:13px;min-width:0;overflow-wrap:anywhere;';
+    intro.style.cssText='display:block;line-height:1.7;font-size:15px;min-width:0;overflow-wrap:anywhere;';
     if(morningError){const warning=document.createElement('p');warning.textContent='更新できなかったため前回分を表示しています。';intro.append(warning);}
     renderBriefingMarkdown(intro,morningBriefing.reportMarkdown);
     list.append(intro);return;
@@ -1272,7 +1272,7 @@ function renderMorningBriefing(list) {
       const img=document.createElement('img');img.src=item.imageUrl;img.alt=String(item.imageAlt||'ニュースの関連画像');img.loading='lazy';img.referrerPolicy='no-referrer';img.style.cssText='display:block;max-width:100%;max-height:150px;margin:8px 0;object-fit:cover;border-radius:6px';img.onerror=()=>img.remove();li.append(img);
     }
     for(const [label,value] of [['事実',item.summary],['生活への影響・分析',item.analysis]]) if(value) {
-      const p=document.createElement('p');p.style.cssText='margin:6px 0;line-height:1.5;font-size:12px';p.textContent=label+'：'+value;li.append(p);
+      const p=document.createElement('p');p.style.cssText='margin:6px 0;line-height:1.6;font-size:14px';p.textContent=label+'：'+value;li.append(p);
     }
     if(typeof item.url==='string' && /^https:\/\//.test(item.url)) {
       const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=(item.source||'情報源')+' ↗';li.append(a);
