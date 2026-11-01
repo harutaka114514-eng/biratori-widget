@@ -2249,8 +2249,9 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
       const date = new Date(data.updatedAt);
       if (Number.isNaN(date.getTime()) || data.audio !== 'morning-radio.mp3') throw Error('invalid');
       const stamp = new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit'}).format(date);
-      audio.src = './data/morning-radio.mp3?v=' + encodeURIComponent(data.updatedAt);
-      status.textContent = 'ニュース更新：' + stamp + '。最新の情報はニュース欄もご確認ください。';
+      audio.src = './data/morning-radio.mp3?v=' + encodeURIComponent(data.generatedAt || data.updatedAt);
+      status.textContent = 'ニュース更新：' + stamp + '。気温は音声作成時の情報です。';
+      fetch('./data/morning-briefing.json?ts=' + Date.now(), {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(current => { if (current && new Date(current.updatedAt) > date) status.textContent += ' 新しい朝刊が届いています。音声の更新をお待ちください。'; }).catch(() => {});
     })
     .catch(() => { audio.hidden = true; status.textContent = 'VOICEVOX音声はまだ準備できていません。端末の音声でお聴きいただけます。'; });
 })();
