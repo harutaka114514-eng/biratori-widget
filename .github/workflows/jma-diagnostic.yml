@@ -1,0 +1,12 @@
+name: JMA diagnostic
+on:
+  pull_request:
+    paths: ['.github/workflows/jma-diagnostic.yml', 'scripts/jma-diagnostic.py']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/jma-diagnostic.py
