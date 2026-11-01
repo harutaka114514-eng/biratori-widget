@@ -114,6 +114,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html _site/
+          cp murash-matches.json _site/
           cp -R data _site/data
           if [ -f background.jpg ]; then cp background.jpg _site/; fi
           touch _site/.nojekyll
