@@ -26,6 +26,7 @@ OKUYAMI_BACKUP = 'https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/'
 GOGUYNET_FEED = 'https://tomakomai.goguynet.jp/feed/'
 VALORANT_FEED = 'https://valorantnews.jp/feed'
 VALORANT_FEED_ROUTES = ('https://valorantnews.jp/feed/', 'https://valorantnews.jp/?feed=rss2')
+NEWS_BACKUP_HOSTS = {'biratori-shokokai.com', 'hi-mag.jp', 'meshitabi-hokkaido.com'}
 
 
 class TextParser(HTMLParser):
@@ -170,6 +171,35 @@ def google_news_backup(host, checked_at, fetch=fetch_bytes):
     return items, url
 
 
+
+def alternate_news_backup(host, checked_at, fetch=fetch_bytes):
+    # 検索結果を使う場合は配信元ドメイン・リンク・日時を検証し、
+    # キャッシュ済み記事を新規記事として扱わない。
+    url = 'https://news.google.com/rss/search?' + urllib.parse.urlencode({
+        'q': 'site:' + host, 'hl': 'ja', 'gl': 'JP', 'ceid': 'JP:ja'})
+    body = fetch(url)
+    root = ET.fromstring(body)
+    allowed = set()
+    for node in root.findall('.//item'):
+        source = node.find('source')
+        source_host = urllib.parse.urlsplit(source.get('url', '')).hostname if source is not None else ''
+        if (source_host or '').removeprefix('www.') == host:
+            allowed.add(node.findtext('link'))
+    now = datetime.fromisoformat(checked_at)
+    items = []
+    for item in parse_feed(body, url):
+        link = urllib.parse.urlsplit(item['link'])
+        date = date_string(item['pubDate'])
+        if item['link'] not in allowed or link.hostname != 'news.google.com' or not link.path.startswith('/rss/articles/') or not date:
+            continue
+        age = (now - datetime.fromisoformat(date)).total_seconds()
+        if 0 <= age <= 90 * 86400:
+            items.append(item)
+    if not items:
+        raise ValueError('backup_articles_missing')
+    return items, url
+
+
 def collect_feed(url, previous, checked_at, fetch=fetch_bytes):
     try:
         # Use the canonical URL without paying for a redirect on every check.
@@ -198,6 +228,26 @@ def collect_feed(url, previous, checked_at, fetch=fetch_bytes):
                 items, backup_url = google_news_backup('tomakomai.goguynet.jp', checked_at, fetch)
                 return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at, 'items': items,
                         'fallback': True, 'source': '号外NET苫小牧（Googleニュース経由・直近14日）',
+                        'sourceUrl': backup_url, 'primaryError': failure_reason(error)}
+            except (OSError, ValueError, ET.ParseError, http.client.HTTPException):
+                pass
+        host = (urllib.parse.urlsplit(url).hostname or '').removeprefix('www.')
+        if host in NEWS_BACKUP_HOSTS:
+            # WordPress の別RSS経路を試し、失敗時は検索経由の限定バックアップへ。
+            alternate_url = 'https://' + urllib.parse.urlsplit(url).hostname + '/?feed=rss2'
+            try:
+                items = parse_feed(fetch(alternate_url), alternate_url)
+                if not items:
+                    raise ValueError('invalid_items')
+                return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at,
+                        'items': items, 'sourceUrl': alternate_url}
+            except (OSError, ValueError, ET.ParseError, http.client.HTTPException):
+                pass
+            try:
+                items, backup_url = alternate_news_backup(host, checked_at, fetch)
+                return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at,
+                        'items': items, 'fallback': True,
+                        'source': host + '（Googleニュース経由・直近90日）',
                         'sourceUrl': backup_url, 'primaryError': failure_reason(error)}
             except (OSError, ValueError, ET.ParseError, http.client.HTTPException):
                 pass
