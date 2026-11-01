@@ -26,7 +26,8 @@ try:
 except Exception as error:
     print(f"天気情報の取得に失敗: {error}")
 print(weather_text)
-texts = [f"こんにちは。今日の平取ラジオです。{weather_text} 北海道朝刊をお届けします。ニュースは{stamp.month}月{stamp.day}日、{stamp.hour}時{stamp.minute}分時点の情報です。"]
+weekday = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"][now.weekday()]
+texts = [f"こんにちは。今日の平取ラジオです。今日は{now.year}年{now.month}月{now.day}日、{weekday}です。{weather_text} 北海道朝刊をお届けします。ニュースは{stamp.month}月{stamp.day}日、{stamp.hour}時{stamp.minute}分時点の情報です。"]
 for i, item in enumerate(items, 1):
     text = f"{i}つ目のニュース。{item.get('title', '')}。{item.get('summary', '')}"
     if item.get("analysis"):
