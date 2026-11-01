@@ -500,12 +500,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
   <details id="radio-chapters-box" hidden><summary style="cursor:pointer;font-size:13px;font-weight:600">📑 チャプターを選ぶ</summary><div id="radio-chapters" style="display:flex;flex-direction:column;gap:5px;margin-top:8px"></div></details>
 
 </section>
-  <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
-    <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
-    <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
-    <div class="seasonal-events"><h3>📅 近くの催し ― 平取・日高・苫小牧・千歳周辺</h3><ul id="seasonal-events-list" class="seasonal-event-list" aria-live="polite" tabindex="0" aria-label="近くの催し。横にスクロールできます"></ul><p id="seasonal-events-status" class="seasonal-event-source" role="status">催し情報を読み込んでいます。</p></div>
-    <div class="seasonal-footer"><p id="seasonal-status" role="status"></p><a href="https://www.town.biratori.hokkaido.jp/" target="_blank" rel="noopener noreferrer">町のお知らせ・イベント ↗</a></div>
-  </section>
+
 
   <div class="main-layout">
     <div class="left-content">
@@ -1321,6 +1316,7 @@ const eventLoadFailures=new Set();
 function validHidakaEvents(record){return record?.status==='ok'&&Number.isFinite(Date.parse(record.generatedAt))&&Array.isArray(record.items)&&record.items.every(item=>item&&typeof item.title==='string'&&typeof item.location==='string'&&/^https:\/\/(?:hokkaido-hidaka-kankonavi\.com\/information\/\d+\/|www\.gutabi\.jp\/event\/detail\/\d+\/?)$/.test(item.link)&&/^\d{4}-\d{2}-\d{2}$/.test(item.startDate)&&/^\d{4}-\d{2}-\d{2}$/.test(item.endDate)&&item.endDate>=item.startDate);}
 function renderHidakaEvents(){
   const list=document.getElementById('seasonal-events-list'),status=document.getElementById('seasonal-events-status');
+  if (!list || !status) return;
   const records=[hidakaEventRecord,gutabiEventRecord].filter(validHidakaEvents);
   const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}),seen=new Set();
   const items=records.flatMap(record=>record.items).filter(item=>{
@@ -1513,6 +1509,7 @@ function selectedSeasonalLifestyle(){
 }
 
 function renderSeasonalInfo(){
+  if (!document.getElementById('seasonal-list')) return;
   const result=seasonalGuidance(weatherRecord?.data,weatherRecord?.time);
   document.getElementById('seasonal-season').textContent=result.season;
   const note=selectedSeasonalLifestyle();
