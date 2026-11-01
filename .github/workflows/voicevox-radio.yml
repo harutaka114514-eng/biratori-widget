@@ -15,6 +15,7 @@ on:
     - cron: '25 21 * * *'
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: voicevox-radio
   cancel-in-progress: false
@@ -36,7 +37,21 @@ jobs:
           git add data/morning-radio.mp3 data/morning-radio.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update VOICEVOX morning radio"
-          git push
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git diff --quiet origin/main -- data/morning-briefing.json; then
+              echo "Morning briefing changed during generation; waiting for the newer run."
+              exit 1
+            fi
+            git rebase origin/main
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" = 3 ]; then exit 1; fi
+          done
+      - name: Deploy updated audio
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run daily-news.yml --ref main
       - name: Upload test audio
         uses: actions/upload-artifact@v4
         with:
