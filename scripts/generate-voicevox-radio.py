@@ -58,7 +58,7 @@ with tempfile.TemporaryDirectory() as tmp:
         out.setparams(params)
         for path in paths:
             with wave.open(path, "rb") as part:
-                if part.getparams()[:4] != params[:4]:
+                if part.getparams()[:3] != params[:3] or part.getparams()[4:] != params[4:]:
                     raise SystemExit("音声形式が一致しません")
                 out.writeframes(part.readframes(part.getnframes()))
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", combined, "-codec:a", "libmp3lame", "-b:a", "64k", "data/morning-radio.mp3"], check=True)
