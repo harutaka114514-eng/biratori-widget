@@ -1,6 +1,10 @@
 name: Generate VOICEVOX radio
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/generate-voicevox-radio.py
+      - .github/workflows/voicevox-radio.yml
   push:
     branches: [main, voicevox-radio-setup]
     paths:
