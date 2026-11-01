@@ -11,8 +11,6 @@ on:
       - data/morning-briefing.json
       - scripts/generate-voicevox-radio.py
       - .github/workflows/voicevox-radio.yml
-  schedule:
-    - cron: '25 21 * * *'
 permissions:
   contents: write
   actions: write
