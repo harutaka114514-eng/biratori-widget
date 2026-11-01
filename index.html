@@ -1170,7 +1170,7 @@ function renderMurashMatches(list){
  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
  const matches=murashMatches.filter(m=>/^\\d{4}-\\d{2}-\\d{2}$/.test(m.date)&&m.date>=today&&['VALORANT','Overwatch','Shadowverse'].includes(m.game)).sort((a,b)=>a.date.localeCompare(b.date));
  if(!matches.length){const li=document.createElement('li');li.textContent=murashLoaded?'現在、確認済みの今後の試合はありません。':'日程を読み込み中…';list.append(li);}
- for(const m of matches){const li=document.createElement('li');li.style.display='block';const strong=document.createElement('strong');strong.textContent=m.date+'　'+m.game+'　vs '+m.opponent;li.append(strong);const detail=document.createElement('div');detail.textContent=[m.tournament,m.time?'開始 '+m.time+' JST':'開始時間未発表'].filter(Boolean).join(' ／ ');detail.style.fontSize='11px';li.append(detail);if(m.url&&/^https:\\/\\//.test(m.url)){const a=document.createElement('a');a.href=m.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='公式情報 ↗';li.append(a);}list.append(li);}
+ for(const m of matches){const li=document.createElement('li');li.style.display='block';const strong=document.createElement('strong');strong.textContent=m.date+'　'+m.game+'　vs '+m.opponent;li.append(strong);const detail=document.createElement('div');detail.textContent=[m.tournament,m.time?'開始 '+m.time+' JST':'開始時間未発表'].filter(Boolean).join(' ／ ');detail.style.fontSize='11px';li.append(detail);if(m.url&&/^https:\/\//.test(m.url)){const a=document.createElement('a');a.href=m.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='公式情報 ↗';li.append(a);}list.append(li);}
  const li=document.createElement('li');li.textContent='公式発表をもとに更新。日程・開始時刻は変更される場合があります。';li.style.fontSize='11px';list.append(li);
 }
 loadMurashMatches();
