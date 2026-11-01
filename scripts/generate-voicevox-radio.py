@@ -11,7 +11,7 @@ stamp = datetime.fromisoformat(data["updatedAt"].replace("Z", "+00:00")).astimez
 now = datetime.now(ZoneInfo("Asia/Tokyo"))
 weather_text = "平取の天気は取得できませんでした。画面の天気欄をご確認ください。"
 try:
-    url = "https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&hourly=temperature_2m,weathercode,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo"
+    url = "https://api.open-meteo.com/v1/forecast?latitude=42.58&longitude=142.13&current_weather=true&hourly=temperature_2m,weathercode,precipitation_probability,precipitation,wind_speed_10m,wind_gusts_10m&wind_speed_unit=ms&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo"
     with urllib.request.urlopen(url, timeout=20) as response:
         forecast = json.load(response)
     current = forecast["current_weather"]
@@ -32,24 +32,48 @@ try:
                 points.append(index)
         except (ValueError, TypeError):
             continue
-    temperatures = [hourly["temperature_2m"][i] for i in points if isinstance(hourly["temperature_2m"][i], (int, float))]
-    codes = [hourly["weathercode"][i] for i in points if isinstance(hourly["weathercode"][i], (int, float))]
-    probabilities = [hourly["precipitation_probability"][i] for i in points if isinstance(hourly["precipitation_probability"][i], (int, float))]
+    def hourly_values(name):
+        values = hourly.get(name, [])
+        return [values[i] for i in points if i < len(values) and isinstance(values[i], (int, float)) and not isinstance(values[i], bool)]
+    temperatures = hourly_values("temperature_2m")
+    codes = hourly_values("weathercode")
+    probabilities = hourly_values("precipitation_probability")
+    precipitation = hourly_values("precipitation")
+    winds = hourly_values("wind_speed_10m")
+    gusts = hourly_values("wind_gusts_10m")
     notices = []
-    if any(c in (71,73,75,77,85,86) for c in codes):
-        notices.append("今後24時間に雪の予報があります。足元と交通情報を確認し、移動には余裕を持ちましょう。")
     if any(c in (95,96,97,99) for c in codes):
-        notices.append("今後24時間に雷雨の予報があります。外出前に最新の天気や注意報を確認しましょう。")
-    if temperatures and max(temperatures) >= 28:
-        notices.append("暑さに備え、水分補給と涼しい場所での休憩を心がけましょう。")
-    if temperatures and min(temperatures) <= 0:
+        notices.append("今後24時間に雷雨の予報があります。外出前に最新の気象情報を確認し、雷が聞こえたら安全な建物内に避難しましょう。")
+    if any(c in (56,57,66,67) for c in codes):
+        notices.append("凍る雨や霧雨の予報があります。路面が凍結するおそれがあるため、移動は慎重に。")
+    if any(c in (75,86) for c in codes):
+        notices.append("強い雪の予報があります。視界や道路状況を確認し、移動に余裕を持ちましょう。")
+    elif any(c in (71,73,77,85) for c in codes):
+        notices.append("雪の予報があります。足元と交通情報を確認し、移動には余裕を持ちましょう。")
+    if winds and max(winds) >= 10 or gusts and max(gusts) >= 15:
+        notices.append("風が強まる予報です。屋外の飛ばされやすい物や、運転中の横風に注意しましょう。")
+    if any(c in (65,82) for c in codes) or precipitation and max(precipitation) >= 10:
+        notices.append("雨が強まる予報です。冠水しやすい場所を避け、最新の気象情報を確認しましょう。")
+    elif any(c in (51,53,55,61,63,80,81) for c in codes) or any(p >= 60 for p in probabilities):
+        notices.append("雨の予報、または降水確率が高い時間があります。雨具を用意しておくと安心です。")
+    if any(c in (45,48) for c in codes):
+        notices.append("霧の予報があります。車の運転は視界に気を配り、車間距離を十分に取りましょう。")
+    if temperatures and min(temperatures) <= -10:
+        notices.append("厳しい冷え込みの予報です。防寒と水道の凍結防止に気を配りましょう。")
+    elif temperatures and min(temperatures) <= 0:
         notices.append("氷点下の予報があります。濡れた路面などの凍結に注意してください。")
     elif temperatures and min(temperatures) <= 5:
         notices.append("冷え込みに備えて、暖かい上着があると安心です。")
-    if not notices and (any(c in (51,53,55,56,57,61,63,65,66,67,80,81,82) for c in codes) or any(p >= 60 for p in probabilities)):
-        notices.append("今後24時間に雨の予報、または降水確率が高い時間があります。雨具を用意しておくと安心です。")
+    if temperatures and max(temperatures) >= 35:
+        notices.append("大変厳しい暑さの予報です。無理な外出を控え、冷房とこまめな水分補給を心がけましょう。")
+    elif temperatures and max(temperatures) >= 30:
+        notices.append("真夏日となる予報です。水分を取り、涼しい場所で休憩しましょう。")
+    elif temperatures and max(temperatures) >= 28:
+        notices.append("暑さに備え、水分補給と涼しい場所での休憩を心がけましょう。")
+    if temperatures and max(temperatures) - min(temperatures) >= 10:
+        notices.append("気温差が大きくなる予報です。脱ぎ着しやすい服装で調整しましょう。")
     if notices:
-        weather_text += " 天気に合わせた注意です。" + "".join(notices[:2])
+        weather_text += " 今後24時間の予報に基づく注意です。" + "".join(notices[:4])
 
 except Exception as error:
     print(f"天気情報の取得に失敗: {error}")
