@@ -497,6 +497,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
   <p style="margin:0;font-size:13px;line-height:1.5">北海道朝刊をずんだもんの声でお届けします。音声：VOICEVOX:ずんだもん</p>
   <audio id="voicevox-radio" controls preload="none" style="width:100%" aria-label="VOICEVOX朝刊ラジオ"></audio>
   <p id="voicevox-radio-status" role="status" style="margin:0;font-size:12px;color:#555">音声の更新状況を確認しています…</p>
+  <details id="radio-chapters-box" hidden><summary style="cursor:pointer;font-size:13px;font-weight:600">📑 チャプターを選ぶ</summary><div id="radio-chapters" style="display:flex;flex-direction:column;gap:5px;margin-top:8px"></div></details>
   <details><summary style="cursor:pointer;font-size:13px">端末の音声で天気と朝刊を聴く</summary>
   <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
     <button type="button" id="radio-play">▶ 再生</button>
@@ -2189,7 +2190,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
     if (token !== generation || !playing) return;
     if (index >= segments.length) { reset('放送が終わりました。'); return; }
     const part = segments[index++];
-    const utterance = new SpeechSynthesisUtterance(part.text);
+    const utterance = new SpeechSynthesisUtterance(part.text.replace(/平取/g, "びらとり"));
     utterance.lang = 'ja-JP'; utterance.rate = 1;
     const voice = synth.getVoices().find(v => v.voiceURI === voices.value);
     if (voice) utterance.voice = voice;
@@ -2251,6 +2252,28 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
       const stamp = new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit'}).format(date);
       audio.src = './data/morning-radio.mp3?v=' + encodeURIComponent(data.generatedAt || data.updatedAt);
       status.textContent = 'ニュース更新：' + stamp + '。気温は音声作成時の情報です。';
+      const box = document.getElementById('radio-chapters-box');
+      const list = document.getElementById('radio-chapters');
+      const chapters = Array.isArray(data.chapters) ? data.chapters.filter(c => typeof c.title === 'string' && Number.isFinite(c.start) && c.start >= 0) : [];
+      if (chapters.length) {
+        chapters.forEach((chapter, i) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.style.cssText = 'text-align:left;padding:7px 9px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;cursor:pointer;font-size:13px';
+          const seconds = Math.floor(chapter.start);
+          button.textContent = Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0') + '  ' + chapter.title;
+          button.addEventListener('click', () => { audio.currentTime = chapter.start; const result = audio.play(); if (result) result.catch(() => { status.textContent = '再生ボタンを押して音声をお聴きください。'; }); });
+          list.appendChild(button);
+        });
+        const markCurrent = () => {
+          let current = 0;
+          chapters.forEach((c, i) => { if (audio.currentTime >= c.start) current = i; });
+          [...list.children].forEach((button, i) => { button.style.background = i === current ? '#dbeafe' : '#f8fafc'; if (i === current) button.setAttribute('aria-current', 'true'); else button.removeAttribute('aria-current'); });
+        };
+        audio.addEventListener('timeupdate', markCurrent);
+        markCurrent();
+        box.hidden = false;
+      }
       fetch('./data/morning-briefing.json?ts=' + Date.now(), {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(current => { if (current && new Date(current.updatedAt) > date) status.textContent += ' 新しい朝刊が届いています。音声の更新をお待ちください。'; }).catch(() => {});
     })
     .catch(() => { audio.hidden = true; status.textContent = 'VOICEVOX音声はまだ準備できていません。端末の音声でお聴きいただけます。'; });
