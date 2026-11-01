@@ -23,8 +23,9 @@ try:
     high, low = daily["temperature_2m_max"][0], daily["temperature_2m_min"][0]
     rain = daily["precipitation_probability_max"][0]
     weather_text = f"平取の天気です。音声作成時の天気は{condition}、気温は{temp:g}度です。今日の予想最高気温は{high:g}度、最低気温は{low:g}度、降水確率の最大は{rain}パーセントです。天気は変わることがありますので、最新の予報もご確認ください。" 
-except Exception:
-    pass
+except Exception as error:
+    print(f"天気情報の取得に失敗: {error}")
+print(weather_text)
 texts = [f"こんにちは。今日の平取ラジオです。{weather_text} 北海道朝刊をお届けします。ニュースは{stamp.month}月{stamp.day}日、{stamp.hour}時{stamp.minute}分時点の情報です。"]
 for i, item in enumerate(items, 1):
     text = f"{i}つ目のニュース。{item.get('title', '')}。{item.get('summary', '')}"
