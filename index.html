@@ -522,7 +522,8 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
           <button data-type="gourmet">グルメ</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
-          <button data-type="murash">🎮 ムラッシュ</button>
+          <button data-type="morning">📰 北海道朝刊</button>
+        <button data-type="murash">🎮 ムラッシュ</button>
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
@@ -584,6 +585,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
           <button data-type="gourmet">グルメ</button>
         <button data-type="nl">道NL</button>
         <button data-type="hobby">趣味</button>
+        <button data-type="morning">📰 北海道朝刊</button>
         <button data-type="murash">🎮 ムラッシュ</button>
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
       </div>
@@ -916,7 +918,7 @@ function mergeWidgetNews(items) {
 }
 function renderNewsStatus(type) {
   const el=document.getElementById('news-status');
-  if(type==='meshi'||type==='links'||type==='x'){el.textContent='';return;}
+  if(type==='morning'||type==='meshi'||type==='links'||type==='x'){el.textContent='';return;}
   const state=newsStates[type];
   el.replaceChildren();
   const message=document.createElement('span');
@@ -1150,6 +1152,7 @@ function renderNewsView(type, fullscreen) {
   const { list, meshi } = updateNewsPanels(type, fullscreen);
   if (!fullscreen) renderNewsStatus(type);
   if (type === 'links') return;
+  if (type === 'morning') { renderMorningBriefing(list); loadMorningBriefing(); return; }
   if (type === 'murash') { renderMurashMatches(list); return; }
   if (type === 'meshi') { renderMeshiPanelInto(meshi); return; }
   renderNewsItems(type, list);
@@ -1174,6 +1177,52 @@ function renderMurashMatches(list){
  const li=document.createElement('li');li.textContent='公式発表をもとに更新。日程・開始時刻は変更される場合があります。';li.style.fontSize='11px';list.append(li);
 }
 loadMurashMatches();
+
+
+let morningBriefing=null, morningLoading=false, morningAttempt=0, morningError=false;
+async function loadMorningBriefing(force=false) {
+  if (morningLoading || (!force && Date.now()-morningAttempt<60000)) return;
+  morningLoading=true; morningAttempt=Date.now();
+  try {
+    const response=await fetch('./data/morning-briefing.json?ts='+Date.now(),{cache:'no-store'});
+    if(!response.ok) throw new Error('briefing unavailable');
+    const data=await response.json();
+    if(!Array.isArray(data.items)) throw new Error('invalid briefing');
+    morningBriefing=data; morningError=false;
+  } catch(e) { morningError=true; }
+  finally {
+    morningLoading=false;
+    if(newsCurrentType==='morning') renderNews('morning');
+    if(fsCurrentType==='morning'&&isNewsFullscreenOpen()) renderNewsFullscreen('morning');
+  }
+}
+function renderMorningBriefing(list) {
+  list.replaceChildren();
+  const intro=document.createElement('li'); intro.style.display='block';
+  if (!morningBriefing) {
+    intro.textContent=morningError?'朝刊を取得できませんでした。時間をおいて再度お試しください。':'朝刊を読み込み中…';
+    if(morningError){const retry=document.createElement('button');retry.type='button';retry.textContent='再取得';retry.onclick=()=>loadMorningBriefing(true);intro.append(' ',retry);}
+    list.append(intro);return;
+  }
+  const updated=new Date(morningBriefing.updatedAt);
+  intro.textContent=(morningBriefing.title||'北海道朝刊ブリーフィング')+'｜'+(Number.isNaN(updated.getTime())?'更新日時不明':updated.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}))+(morningError?'（更新できなかったため前回分を表示）':'');
+  list.append(intro);
+  for(const item of morningBriefing.items) {
+    const li=document.createElement('li');li.style.display='block';
+    const title=document.createElement('strong');title.textContent=String(item.title||'ニュース');li.append(title);
+    if(typeof item.imageUrl==='string' && /^https:\/\//.test(item.imageUrl)) {
+      const img=document.createElement('img');img.src=item.imageUrl;img.alt=String(item.imageAlt||'ニュースの関連画像');img.loading='lazy';img.referrerPolicy='no-referrer';img.style.cssText='display:block;max-width:100%;max-height:150px;margin:8px 0;object-fit:cover;border-radius:6px';img.onerror=()=>img.remove();li.append(img);
+    }
+    for(const [label,value] of [['事実',item.summary],['生活への影響・分析',item.analysis]]) if(value) {
+      const p=document.createElement('p');p.style.cssText='margin:6px 0;line-height:1.5;font-size:12px';p.textContent=label+'：'+value;li.append(p);
+    }
+    if(typeof item.url==='string' && /^https:\/\//.test(item.url)) {
+      const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=(item.source||'情報源')+' ↗';li.append(a);
+    }
+    list.append(li);
+  }
+}
+setInterval(()=>{if(newsCurrentType==='morning'||(fsCurrentType==='morning'&&isNewsFullscreenOpen()))loadMorningBriefing(true);},10*60*1000);
 
 function renderNews(type) { renderNewsView(type, false); }
 function renderNewsFullscreen(type) { renderNewsView(type, true); }
