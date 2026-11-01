@@ -25,6 +25,8 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+      - name: Install audio encoder
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Start VOICEVOX engine
         run: docker run -d --name voicevox -p 127.0.0.1:50021:50021 voicevox/voicevox_engine:cpu-latest
       - name: Generate audio
