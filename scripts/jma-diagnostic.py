@@ -13,6 +13,7 @@ for group, records in area.items():
             if isinstance(obj,dict) and ('平取' in obj.get('name','') or '胆振' in obj.get('name','') or '日高' == obj.get('name','')):
                 print('AREA',group,code,json.dumps(obj,ensure_ascii=False))
 data=json.loads(get('/bosai/warning/data/r8/015000.json'))
+open('/tmp/biratori-jma.json','w',encoding='utf-8').write(json.dumps(data,ensure_ascii=False))
 print('TYPE',type(data).__name__)
 if isinstance(data,list):
     for report in data:
