@@ -460,6 +460,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
     <p class="help">設定はこのブラウザに保存されます。保存しても他の端末やブラウザには反映されません。</p>
     <fieldset><legend>デザイン</legend><nav class="theme-switch" aria-label="デザイン切り替え"><button type="button" data-design="aero" aria-pressed="false">🌐 フルティガーエアロ</button><button type="button" data-design="wii" aria-pressed="true">Wii メニュー</button><button type="button" data-design="webcore" aria-pressed="false">▣ Webcore</button></nav><p class="help">選ぶとすぐに切り替わり、このブラウザに保存されます。</p></fieldset>
     <fieldset><legend>背景</legend><div class="wallpaper-switch" aria-label="背景切り替え"><button type="button" data-wallpaper-choice="bing" aria-pressed="true">Bing Wallpaper（日替わり）</button><button type="button" data-wallpaper-choice="theme" aria-pressed="false">デザイン標準</button></div><p class="help">すぐに反映され、このブラウザに保存されます。Bing画像を読み込めない場合は標準背景を表示します。</p><p id="wallpaper-status" class="help" role="status"></p><a id="wallpaper-credit" href="https://www.bing.com/" target="_blank" rel="noopener noreferrer" hidden></a></fieldset>
+    <fieldset><legend>ニュースタブの順番</legend><p class="help">ニュース欄のタブを好きな順番に変更できます。</p><button id="news-order-open" type="button" aria-label="ニュースタブの順番を変更">↕ 並べ替え</button></fieldset>
     <div id="settings-fields"></div>
     <p id="settings-error" role="alert" style="color:#b91c1c;font-size:13px"></p>
     <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onclick="document.getElementById('widget-settings').close()">キャンセル</button><button type="submit" style="background:#2563eb;color:white">保存</button></div>
@@ -539,7 +540,6 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
         <button data-type="murash">🎮 ムラッシュ</button>
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
-        <button id="news-order-open" type="button" aria-label="ニュースタブの順番を変更">↕ 並べ替え</button>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
       </div>
       <div id="news-status" class="widget-status" role="status" style="margin:0 0 6px"></div>
