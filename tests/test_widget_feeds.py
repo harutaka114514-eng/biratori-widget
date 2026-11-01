@@ -120,6 +120,33 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(result['items'], previous['items'])
         self.assertEqual(result['generatedAt'], previous['generatedAt'])
 
+    def test_timeout_falls_back_to_validated_publisher_search(self):
+        body = b'''<rss><channel>
+        <item><title>Valid</title><link>https://news.google.com/rss/articles/VALID</link><pubDate>Wed, 21 Oct 2026 12:00:00 GMT</pubDate><source url="https://biratori-shokokai.com">Publisher</source></item>
+        <item><title>Wrong source</title><link>https://news.google.com/rss/articles/WRONG</link><pubDate>Wed, 21 Oct 2026 12:00:00 GMT</pubDate><source url="https://example.com">Other</source></item>
+        <item><title>Old</title><link>https://news.google.com/rss/articles/OLD</link><pubDate>Wed, 01 Oct 2025 12:00:00 GMT</pubDate><source url="https://biratori-shokokai.com">Publisher</source></item>
+        </channel></rss>'''
+        def fetch(url):
+            if 'news.google.com' in url:
+                return body
+            raise urllib.error.URLError(TimeoutError('timed out'))
+        result = feeds.collect_feed('https://biratori-shokokai.com/feed', {}, NOW, fetch)
+        self.assertEqual(result['status'], 'ok')
+        self.assertTrue(result['fallback'])
+        self.assertEqual(result['primaryError'], 'timeout')
+        self.assertEqual([item['title'] for item in result['items']], ['Valid'])
+
+    def test_empty_backup_keeps_stale_cache_and_its_timestamp(self):
+        previous = {'items': [{'title': 'old'}], 'generatedAt': '2026-10-20T00:00:00Z'}
+        def fetch(url):
+            if 'news.google.com' in url:
+                return b'<rss><channel/></rss>'
+            raise urllib.error.URLError(TimeoutError('timed out'))
+        result = feeds.collect_feed('https://www.hi-mag.jp/feed/', previous, NOW, fetch)
+        self.assertEqual(result['status'], 'error')
+        self.assertEqual(result['items'], previous['items'])
+        self.assertEqual(result['generatedAt'], previous['generatedAt'])
+
     def test_okuyami_fallback_and_badge_ignore_daily_date(self):
         body = '<h1>平取町の本日のお悔やみ欄・訃報一覧</h1><time>2026-10-21</time><article class="obituary-item"><h4>架空の見出し</h4></article>'
         def fetch(url):
