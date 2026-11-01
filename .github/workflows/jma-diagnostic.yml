@@ -1,7 +1,7 @@
 name: JMA diagnostic
 on:
   pull_request:
-    paths: ['.github/workflows/jma-diagnostic.yml', 'scripts/jma-diagnostic.py']
+    paths: ['.github/workflows/jma-diagnostic.yml', 'scripts/jma-diagnostic.py', 'index.html', 'tests/jma-warning.test.mjs']
 permissions:
   contents: read
 jobs:
@@ -10,3 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/jma-diagnostic.py
+      - run: node --test tests/jma-warning.test.mjs
+      - name: Check live data parser
+        run: |
+          node -e "const fs=require('fs'),vm=require('vm');let s=fs.readFileSync('index.html','utf8');let x=s.slice(s.indexOf('// BEGIN_JMA_WARNING_PARSER'),s.indexOf('// END_JMA_WARNING_PARSER'));let parse=vm.runInNewContext(x+';parseBiratoriWarnings');let out=parse(JSON.parse(fs.readFileSync('/tmp/biratori-jma.json','utf8')));console.log(JSON.stringify(out));if(out.uncertain)process.exit(1)"
