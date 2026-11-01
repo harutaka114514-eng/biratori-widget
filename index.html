@@ -1954,6 +1954,36 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
   setInterval(() => { if (choice === 'bing') loadWallpaper(); }, 60 * 60 * 1000);
 })();
 </script>
+
+<!-- MURASH GAMING 試合日程：既存ウィジェットは変更しない -->
+<section class="widget" id="murash-schedule-widget" aria-labelledby="murash-schedule-title" style="max-width:1200px;margin:15px auto;">
+ <h2 id="murash-schedule-title" style="font-size:17px;margin:0 0 8px;">🎮 MURASH GAMING 試合日程</h2>
+ <div id="murash-schedule-list" style="display:grid;gap:7px;"></div>
+ <p style="font-size:11px;margin:8px 0 0;">日本時間／開始時刻未発表。日程変更の可能性があります。<a href="https://murashgaming.co.jp/news/shadowverse_003/" target="_blank" rel="noopener noreferrer">公式スケジュール・結果を確認 ↗</a></p>
+</section>
+<script>
+(function(){
+ const matches=[
+  {date:'2026-11-01',game:'Shadowverse',opponent:'ZETA DIVISION',round:'第10節'},
+  {date:'2026-11-18',game:'Shadowverse',opponent:'レバンガ北海道',round:'第11節'},
+  {date:'2026-12-27',game:'Shadowverse',opponent:'Crazy Raccoon',round:'第12節'},
+  {date:'2027-01-13',game:'Shadowverse',opponent:'DetonatioN FocusMe',round:'第13節'},
+  {date:'2027-01-24',game:'Shadowverse',opponent:'VARREL',round:'第14節'}
+ ];
+ const root=document.getElementById('murash-schedule-list');
+ const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ const upcoming=matches.filter(m=>m.date>=today);
+ if(!upcoming.length){root.textContent='掲載済みの日程は終了しました。最新情報は公式サイトをご確認ください。';return;}
+ upcoming.forEach(m=>{
+  const row=document.createElement('div');row.style.cssText='display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:9px 11px;border-radius:10px;background:rgba(255,255,255,.75);border:1px solid rgba(80,140,180,.2);font-size:12px;';
+  const date=document.createElement('strong');date.style.cssText='min-width:96px;color:#075b93';
+  const [y,mo,d]=m.date.split('-').map(Number);date.textContent=mo+'/'+d+' ('+'日月火水木金土'[new Date(Date.UTC(y,mo-1,d)).getUTCDay()]+')';
+  const detail=document.createElement('span');detail.textContent=m.game+' '+m.round+'　vs '+m.opponent;
+  const link=document.createElement('a');link.href='https://murashgaming.co.jp/news/shadowverse_003/';link.target='_blank';link.rel='noopener noreferrer';link.textContent='詳細 ↗';link.style.marginLeft='auto';
+  row.append(date,detail,link);root.appendChild(row);
+ });
+})();
+</script>
 </body>
 </html>
 
