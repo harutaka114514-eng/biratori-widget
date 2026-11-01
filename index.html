@@ -492,6 +492,17 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
     </div>
   </div>
 
+<section class="widget" aria-labelledby="radio-title" style="gap:8px">
+  <h2 id="radio-title" style="font-size:17px;margin:0">📻 今日の平取ラジオ</h2>
+  <p style="margin:0;font-size:13px;line-height:1.5">平取の天気と北海道朝刊を音声でお届けします。音声はお使いの端末の読み上げ機能を使います。</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+    <button type="button" id="radio-play">▶ 再生</button>
+    <button type="button" id="radio-pause" disabled>⏸ 一時停止</button>
+    <button type="button" id="radio-stop" disabled>■ 停止</button>
+    <label for="radio-voice" style="font-size:13px">声</label><select id="radio-voice" aria-label="読み上げる声"><option value="">端末の標準音声</option></select>
+  </div>
+  <p id="radio-status" role="status" aria-live="polite" style="margin:0;font-size:12px;color:#555">再生ボタンを押すと番組が始まります。</p>
+</section>
   <section class="widget seasonal-widget" aria-labelledby="seasonal-title">
     <div class="seasonal-heading"><h2 id="seasonal-title">🌿 平取の季節だより</h2><span id="seasonal-season"></span></div>
     <ul id="seasonal-list" class="seasonal-list" aria-live="polite"></ul>
@@ -2145,6 +2156,80 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 })();
 </script>
 
+
+<script>
+(() => {
+  const play = document.getElementById('radio-play'), pause = document.getElementById('radio-pause'), stop = document.getElementById('radio-stop');
+  const status = document.getElementById('radio-status'), voices = document.getElementById('radio-voice');
+  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+    play.disabled = true; voices.disabled = true; status.textContent = 'このブラウザーは音声読み上げに対応していません。'; return;
+  }
+  const synth = window.speechSynthesis;
+  let segments = [], index = 0, generation = 0, playing = false, paused = false;
+  function updateVoices() {
+    const selected = voices.value;
+    const list = synth.getVoices().filter(v => /^ja(?:-|_)/i.test(v.lang));
+    voices.replaceChildren(new Option('端末の標準音声', ''));
+    list.forEach(v => voices.add(new Option(v.name, v.voiceURI)));
+    if (list.some(v => v.voiceURI === selected)) voices.value = selected;
+  }
+  updateVoices();
+  synth.addEventListener('voiceschanged', updateVoices);
+  function controls() {
+    play.disabled = playing; pause.disabled = !playing; stop.disabled = !playing;
+    pause.textContent = paused ? '▶ 再開' : '⏸ 一時停止';
+  }
+  function reset(message) {
+    playing = false; paused = false; controls(); status.textContent = message;
+  }
+  function speakNext(token) {
+    if (token !== generation || !playing) return;
+    if (index >= segments.length) { reset('放送が終わりました。'); return; }
+    const part = segments[index++];
+    const utterance = new SpeechSynthesisUtterance(part.text);
+    utterance.lang = 'ja-JP'; utterance.rate = 1;
+    const voice = synth.getVoices().find(v => v.voiceURI === voices.value);
+    if (voice) utterance.voice = voice;
+    utterance.onstart = () => { if (token === generation) status.textContent = part.label; };
+    utterance.onend = () => speakNext(token);
+    utterance.onerror = e => { if (token === generation && e.error !== 'canceled' && e.error !== 'interrupted') reset('音声を再生できませんでした。端末の音量や日本語音声を確認してください。'); };
+    synth.speak(utterance);
+  }
+  play.addEventListener('click', async () => {
+    const token = ++generation;
+    playing = true; paused = false; controls(); status.textContent = '番組を準備しています…';
+    let data;
+    try {
+      const response = await fetch('./data/morning-briefing.json?ts=' + Date.now(), {cache:'no-store'});
+      if (!response.ok) throw new Error('fetch');
+      data = await response.json();
+      if (!Array.isArray(data.items) || !data.items.length) throw new Error('empty');
+    } catch (_) {
+      if (token === generation) reset('朝刊を取得できませんでした。時間をおいて再生してください。');
+      return;
+    }
+    if (token !== generation) return;
+    const date = new Date(data.updatedAt);
+    const stamp = Number.isNaN(date.getTime()) ? '更新日時不明' : new Intl.DateTimeFormat('ja-JP', {timeZone:'Asia/Tokyo', month:'long', day:'numeric', hour:'numeric', minute:'2-digit'}).format(date);
+    const weather = document.getElementById('weather')?.textContent.trim() || '';
+    const weatherText = weather && !/--|取得中|エラー/.test(weather) ? '現在の平取の天気表示は、' + weather + 'です。' : '平取の天気は取得できませんでした。画面の天気欄も確認してください。';
+    segments = [{label:'オープニング', text:'こんにちは。今日の平取ラジオです。' + weatherText + ' 続いて北海道朝刊をお届けします。ニュースは' + stamp + '時点の情報です。'}];
+    data.items.forEach((item, i) => {
+      const title = String(item.title || 'ニュース');
+      const text = (i + 1) + 'つ目のニュース。' + title + '。' + String(item.summary || '') + (item.analysis ? ' ここからは生活への影響や分析です。' + String(item.analysis) : '') + (item.source ? ' 情報源は、' + String(item.source) + 'です。' : '');
+      segments.push({label:'ニュース ' + (i + 1) + '：' + title, text});
+    });
+    segments.push({label:'エンディング', text:'以上、今日の平取ラジオでした。情報は更新されることがあります。詳しくは画面のニュース欄をご確認ください。'});
+    index = 0; speakNext(token);
+  });
+  pause.addEventListener('click', () => {
+    if (!playing || index === 0) return;
+    if (paused) synth.resume(); else synth.pause();
+    paused = !paused; controls(); if (paused) status.textContent = '一時停止中';
+  });
+  stop.addEventListener('click', () => { ++generation; synth.cancel(); reset('停止しました。'); });
+})();
+</script>
 
 </body>
 </html>
