@@ -1584,6 +1584,22 @@ const ainuWords = [
 
 let currentViewDate = new Date();
 const HOLIDAYS_2026 = {"2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日"};
+const HOLIDAYS_2027 = {"2027-01-01":"元日","2027-01-11":"成人の日","2027-02-11":"建国記念の日","2027-02-23":"天皇誕生日","2027-03-21":"春分の日","2027-03-22":"振替休日","2027-04-29":"昭和の日","2027-05-03":"憲法記念日","2027-05-04":"みどりの日","2027-05-05":"こどもの日","2027-07-19":"海の日","2027-08-11":"山の日","2027-09-20":"敬老の日","2027-09-23":"秋分の日","2027-10-11":"スポーツの日","2027-11-03":"文化の日","2027-11-23":"勤労感謝の日"};
+// Keep the published holidays available even when the network is unavailable.
+let officialHolidays = {...HOLIDAYS_2026, ...HOLIDAYS_2027};
+async function loadOfficialHolidays() {
+  try {
+    const response = await fetch('./data/japanese-holidays.json', {cache:'no-store'});
+    if (!response.ok) throw new Error('holiday data unavailable');
+    const data = await response.json();
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('invalid holiday data');
+    for (const [date,name] of Object.entries(data)) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(date) && typeof name === 'string' && name.length <= 30)
+        officialHolidays[date] = name;
+    }
+    drawCal();
+  } catch (e) { /* Use the built-in published calendar. */ }
+}
 function changeMonth(diff) { currentViewDate.setMonth(currentViewDate.getMonth() + diff); drawCal(); }
 
 function drawCal(){
@@ -1594,7 +1610,7 @@ function drawCal(){
   for(let i=0; i<42; i++){
     const d=new Date(start); d.setDate(start.getDate()+i);
     const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const hName = (d.getFullYear() === 2026) ? HOLIDAYS_2026[dateStr] : "";
+    const hName = officialHolidays[dateStr] || "";
     let colorClass = (d.getDay() === 0 || hName) ? "sun" : (d.getDay() === 6 ? "sat" : "");
     const isToday = d.toDateString() === today.toDateString() ? "cal-today" : "";
     const isOtherMonth = d.getMonth() !== month ? "cal-dim" : "";
@@ -1605,7 +1621,7 @@ function drawCal(){
 
     html += `<div class=\"cal-cell ${isOtherMonth} ${isToday}\" onclick="editPlan('${dateStr}')">
       <div class=\"cal-num ${colorClass}\">${d.getDate()}</div>
-      ${hName ? `<div class=\"holiday-name\">${hName}</div>` : ""}
+      ${hName ? `<div class=\"holiday-name\">${escapeWidgetHTML(hName)}</div>` : ""}
       ${planHtml}
       ${garbageForDate(d).map(label => `<div class="cal-garbage">${escapeWidgetHTML(label)}</div>`).join('')}
     </div>`;
@@ -1780,7 +1796,7 @@ renderSeasonalInfo();
 setInterval(renderSeasonalInfo,60000);
 if(weatherRecord && validWeather(weatherRecord.data)) { renderWeatherData(weatherRecord.data); document.getElementById('weather-status').textContent='前回の天気（'+formatWidgetTime(weatherRecord.time)+'）／更新中'; }
 restoreNewsCache();
-loadWeather(); drawCal(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
+loadWeather(); drawCal(); loadOfficialHolidays(); checkOkuyami(); checkBearInfo(); preloadAllNews(); loadKinenbi(); calcSunTimes();
 // 開きっぱなしでも公開データの更新を取り込む（取得元の更新はGitHub Actions）。
 async function refreshWidgetData(){
   await preloadAllNews();
