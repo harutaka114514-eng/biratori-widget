@@ -492,6 +492,14 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
     </div>
   </div>
 
+<section class="widget" id="jma-warning-widget" aria-labelledby="jma-warning-title" style="gap:8px;border:1px solid #b8d5e4">
+  <h2 id="jma-warning-title" style="font-size:17px;margin:0">⚠️ 平取町の気象警報・注意報</h2>
+  <div id="jma-warning-result" role="status" aria-live="polite" style="font-size:14px;line-height:1.6">気象庁の情報を確認しています…</div>
+  <p id="jma-warning-time" style="margin:0;font-size:12px;color:#555">確認中</p>
+  <p style="margin:0;font-size:12px;line-height:1.5">気象警報・注意報（河川氾濫・津波は対象外）。最新情報は気象庁で確認してください。</p>
+  <a href="https://www.jma.go.jp/bosai/warning/#area_type=class20s&amp;area_code=0160200&amp;lang=ja" target="_blank" rel="noopener noreferrer" style="font-size:13px">気象庁で平取町の詳しい情報を見る ↗</a>
+</section>
+
 <section class="widget" aria-labelledby="radio-title" style="gap:8px">
   <h2 id="radio-title" style="font-size:17px;margin:0">📻 今日の平取ラジオ</h2>
   <p style="margin:0;font-size:13px;line-height:1.5">北海道朝刊をずんだもんの声でお届けします。音声：VOICEVOX:ずんだもん</p>
@@ -2167,6 +2175,103 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
       fetch('./data/morning-briefing.json?ts=' + Date.now(), {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(current => { if (current && new Date(current.updatedAt) > date) status.textContent += ' 新しい朝刊が届いています。音声の更新をお待ちください。'; }).catch(() => {});
     })
     .catch(() => { audio.hidden = true; status.textContent = 'VOICEVOX音声はまだ準備できていません。時間をおいて再度お試しください。'; });
+})();
+</script>
+
+<script>
+// 気象庁の令和8年形式。氾濫は別データなので、この一覧には含めない。
+// BEGIN_JMA_WARNING_PARSER
+const BIRATORI_WARNING_NAMES = {
+  '02':'暴風雪警報','03':'レベル3大雨警報','05':'暴風警報','06':'大雪警報','07':'波浪警報','08':'レベル3高潮警報','09':'レベル3土砂災害警報',
+  '10':'レベル2大雨注意報','12':'大雪注意報','13':'風雪注意報','14':'雷注意報','15':'強風注意報','16':'波浪注意報','17':'融雪注意報','19':'レベル2高潮注意報','20':'濃霧注意報','21':'乾燥注意報','22':'なだれ注意報','23':'低温注意報','24':'霜注意報','25':'着氷注意報','26':'着雪注意報','27':'その他の注意報','29':'レベル2土砂災害注意報',
+  '32':'暴風雪特別警報','33':'レベル5大雨特別警報','35':'暴風特別警報','36':'大雪特別警報','37':'波浪特別警報','38':'レベル5高潮特別警報','39':'レベル5土砂災害特別警報',
+  '43':'レベル4大雨危険警報','48':'レベル4高潮危険警報','49':'レベル4土砂災害危険警報'
+};
+function parseBiratoriWarnings(reports) {
+  if (!Array.isArray(reports) || !reports.length) throw new Error('invalid reports');
+  const items = [], seen = new Set();
+  let uncertain = false, matched = 0;
+  for (const report of reports) {
+    if (!report || typeof report !== 'object' || !/^VPWW(55|56|57|58|59|60|61)$/.test(report.dataTypeCode || '') || !Number.isFinite(Date.parse(report.reportDatetime))) { uncertain = true; continue; }
+    const areas = report.warning?.class20Items;
+    if (!Array.isArray(areas)) { uncertain = true; continue; }
+    const target = areas.filter(area => area?.areaCode === '0160200');
+    if (target.length !== 1) { uncertain = true; continue; }
+    matched++;
+    const kinds = target[0].kinds;
+    if (!Array.isArray(kinds) || !kinds.length) { uncertain = true; continue; }
+    for (const kind of kinds) {
+      if (!kind || typeof kind.status !== 'string') { uncertain = true; continue; }
+      if (kind.status === '解除' || kind.status === '発表警報・注意報はなし') continue;
+      const active = kind.status === '発表' || kind.status === '継続' || /^(特別警報|危険警報|警報)から(危険警報|警報|注意報)$/.test(kind.status);
+      if (!active) { uncertain = true; continue; }
+      const code = typeof kind.code === 'string' ? kind.code : '';
+      if (!BIRATORI_WARNING_NAMES[code]) { uncertain = true; continue; }
+      if (!seen.has(code)) {
+        seen.add(code);
+        const severity = ['32','33','35','36','37','38','39'].includes(code) ? 3 : ['43','48','49'].includes(code) ? 2 : ['02','03','05','06','07','08','09'].includes(code) ? 1 : 0;
+        items.push({name:BIRATORI_WARNING_NAMES[code], severity, issued:report.reportDatetime});
+      }
+    }
+  }
+  if (!matched) throw new Error('Biratori area missing');
+  items.sort((a,b)=>b.severity-a.severity || a.name.localeCompare(b.name,'ja'));
+  return {items, uncertain};
+}
+// END_JMA_WARNING_PARSER
+(() => {
+  const result = document.getElementById('jma-warning-result');
+  const stamp = document.getElementById('jma-warning-time');
+  const box = document.getElementById('jma-warning-widget');
+  let loading = false, lastChecked = 0;
+  const format = value => new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
+  async function refreshWarnings() {
+    if (loading) return;
+    loading = true;
+    stamp.textContent = lastChecked ? '更新中（前回確認：' + format(lastChecked) + '）' : '確認中';
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(()=>controller.abort(),12000);
+      let response;
+      try { response = await fetch('https://www.jma.go.jp/bosai/warning/data/r8/015000.json?ts='+Date.now(), {cache:'no-store',signal:controller.signal}); }
+      finally { clearTimeout(timeout); }
+      if (!response.ok) throw new Error('HTTP error');
+      const parsed = parseBiratoriWarnings(await response.json());
+      result.replaceChildren();
+      if (parsed.items.length) {
+        const list = document.createElement('ul');
+        list.style.cssText = 'margin:0;padding-left:1.4em';
+        for (const item of parsed.items) {
+          const li = document.createElement('li');
+          li.textContent = item.name + '（発表・更新：' + format(item.issued) + '）';
+          li.style.fontWeight = 'bold';
+          list.appendChild(li);
+        }
+        result.appendChild(list);
+        const max = Math.max(...parsed.items.map(item=>item.severity));
+        box.style.borderColor = max ? '#dc2626' : '#d97706';
+        box.style.backgroundColor = max ? '#fff1f2' : '#fffbeb';
+      } else if (!parsed.uncertain) {
+        result.textContent = '平取町に発表中の気象警報・注意報はありません。';
+        box.style.borderColor = '#b8d5e4'; box.style.backgroundColor = '';
+      }
+      if (parsed.uncertain) {
+        const p = document.createElement('p');
+        p.textContent = '一部の情報を確認できません。気象庁で最新の状況を確認してください。';
+        p.style.cssText = 'color:#b45309;margin:4px 0;font-weight:bold';
+        result.appendChild(p);
+      }
+      lastChecked = Date.now();
+      stamp.textContent = '最終確認：' + format(lastChecked) + '｜自動更新：5分ごと';
+    } catch (_) {
+      result.textContent = '情報を取得できず、発表状況は不明です。気象庁のページを確認してください。';
+      box.style.borderColor = '#d97706'; box.style.backgroundColor = '#fffbeb';
+      stamp.textContent = lastChecked ? '取得失敗｜前回の確認：' + format(lastChecked) : '取得失敗';
+    } finally { loading = false; }
+  }
+  refreshWarnings();
+  setInterval(()=>{if(!document.hidden)refreshWarnings();},5*60*1000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden && Date.now()-lastChecked>=60000)refreshWarnings();});
 })();
 </script>
 
