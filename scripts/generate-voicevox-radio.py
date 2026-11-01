@@ -21,8 +21,7 @@ try:
     conditions = {0:"快晴", 1:"晴れ", 2:"晴れ時々くもり", 3:"くもり", 45:"霧", 48:"霧", 51:"霧雨", 53:"霧雨", 55:"霧雨", 56:"凍る霧雨", 57:"凍る霧雨", 61:"雨", 63:"雨", 65:"強い雨", 66:"凍る雨", 67:"凍る雨", 71:"雪", 73:"雪", 75:"強い雪", 77:"雪", 80:"にわか雨", 81:"にわか雨", 82:"激しいにわか雨", 85:"にわか雪", 86:"激しいにわか雪", 95:"雷雨", 96:"ひょうを伴う雷雨", 99:"ひょうを伴う雷雨"}
     condition = conditions.get(code, "天気の種類は不明")
     high, low = daily["temperature_2m_max"][0], daily["temperature_2m_min"][0]
-    rain = daily["precipitation_probability_max"][0]
-    weather_text = f"平取の天気です。音声作成時の天気は{condition}、気温は{temp:g}度です。今日の予想最高気温は{high:g}度、最低気温は{low:g}度、降水確率の最大は{rain}パーセントです。天気は変わることがありますので、最新の予報もご確認ください。" 
+    weather_text = f"平取の天気です。音声作成時の天気は{condition}、気温は{temp:g}度です。今日の予想最高気温は{high:g}度、最低気温は{low:g}度です。" 
     hourly = forecast.get("hourly", {})
     points = []
     for index, value in enumerate(hourly.get("time", [])):
@@ -41,6 +40,23 @@ try:
     precipitation = hourly_values("precipitation")
     winds = hourly_values("wind_speed_10m")
     gusts = hourly_values("wind_gusts_10m")
+    if probabilities:
+        weather_text += f" 音声作成時から今後24時間の降水確率の最大は{max(probabilities):g}パーセントです。"
+    else:
+        weather_text += " 今後24時間の降水確率は取得できませんでした。"
+    weather_text += " 天気は変わることがありますので、最新の予報もご確認ください。"
+    def value_at(name, index):
+        values = hourly.get(name, [])
+        return values[index] if index < len(values) else None
+    def time_label(index):
+        forecast_time = datetime.fromisoformat(hourly["time"][index])
+        delta = (forecast_time.date() - now.date()).days
+        day = "今日" if delta == 0 else "明日" if delta == 1 else f"{forecast_time.month}月{forecast_time.day}日"
+        return f"{day}の{forecast_time.hour}時ごろ"
+    rainy_codes = (51,53,55,61,63,65,80,81,82)
+    rainy_points = [i for i in points if value_at("weathercode", i) in rainy_codes]
+    strong_rain_points = [i for i in rainy_points if value_at("weathercode", i) in (65,82) or (isinstance(value_at("precipitation", i), (int, float)) and value_at("precipitation", i) >= 10)]
+    likely_points = [i for i in points if isinstance(value_at("precipitation_probability", i), (int, float)) and value_at("precipitation_probability", i) >= 60]
     notices = []
     if any(c in (95,96,97,99) for c in codes):
         notices.append("今後24時間に雷雨の予報があります。外出前に最新の気象情報を確認し、雷が聞こえたら安全な建物内に避難しましょう。")
@@ -52,10 +68,12 @@ try:
         notices.append("雪の予報があります。足元と交通情報を確認し、移動には余裕を持ちましょう。")
     if winds and max(winds) >= 10 or gusts and max(gusts) >= 15:
         notices.append("風が強まる予報です。屋外の飛ばされやすい物や、運転中の横風に注意しましょう。")
-    if any(c in (65,82) for c in codes) or precipitation and max(precipitation) >= 10:
-        notices.append("雨が強まる予報です。冠水しやすい場所を避け、最新の気象情報を確認しましょう。")
-    elif any(c in (51,53,55,61,63,80,81) for c in codes) or any(p >= 60 for p in probabilities):
-        notices.append("雨の予報、または降水確率が高い時間があります。雨具を用意しておくと安心です。")
+    if strong_rain_points:
+        notices.append(f"{time_label(strong_rain_points[0])}から雨が強まる予報です。冠水しやすい場所を避け、最新の気象情報を確認しましょう。")
+    elif rainy_points:
+        notices.append(f"{time_label(rainy_points[0])}に雨の予報があります。雨具を用意しておくと安心です。")
+    elif likely_points:
+        notices.append(f"{time_label(likely_points[0])}に降水確率が高くなる予報です。雨や雪に備え、最新の予報を確認しましょう。")
     if any(c in (45,48) for c in codes):
         notices.append("霧の予報があります。車の運転は視界に気を配り、車間距離を十分に取りましょう。")
     if temperatures and min(temperatures) <= -10:
