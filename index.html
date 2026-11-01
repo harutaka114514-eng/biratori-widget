@@ -522,7 +522,8 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
           <button data-type="gourmet">グルメ</button>
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
-          <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
+          <button data-type="murash">🎮 ムラッシュ</button>
+<button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
       </div>
@@ -583,7 +584,8 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
           <button data-type="gourmet">グルメ</button>
         <button data-type="nl">道NL</button>
         <button data-type="hobby">趣味</button>
-        <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
+        <button data-type="murash">🎮 ムラッシュ</button>
+<button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
       </div>
       <button id="news-fullscreen-close" onclick="closeNewsFullscreen()">✕ 閉じる</button>
     </div>
@@ -1148,9 +1150,30 @@ function renderNewsView(type, fullscreen) {
   const { list, meshi } = updateNewsPanels(type, fullscreen);
   if (!fullscreen) renderNewsStatus(type);
   if (type === 'links') return;
+  if (type === 'murash') { renderMurashMatches(list); return; }
   if (type === 'meshi') { renderMeshiPanelInto(meshi); return; }
   renderNewsItems(type, list);
 }
+
+
+// MURASH GAMING: confirmed schedule JSON is maintained separately by the daily review.
+let murashMatches=[];
+let murashLoaded=false;
+async function loadMurashMatches(){
+ try {const response=await fetch('./murash-matches.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('schedule unavailable');const data=await response.json();murashMatches=Array.isArray(data.matches)?data.matches:[];murashLoaded=true;}
+ catch(e){murashLoaded=true;murashMatches=[];}
+ if(newsCurrentType==='murash')renderNews('murash');
+ if(fsCurrentType==='murash'&&isNewsFullscreenOpen())renderNewsFullscreen('murash');
+}
+function renderMurashMatches(list){
+ list.replaceChildren();
+ const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+ const matches=murashMatches.filter(m=>/^\\d{4}-\\d{2}-\\d{2}$/.test(m.date)&&m.date>=today&&['VALORANT','Overwatch','Shadowverse'].includes(m.game)).sort((a,b)=>a.date.localeCompare(b.date));
+ if(!matches.length){const li=document.createElement('li');li.textContent=murashLoaded?'現在、確認済みの今後の試合はありません。':'日程を読み込み中…';list.append(li);}
+ for(const m of matches){const li=document.createElement('li');li.style.display='block';const strong=document.createElement('strong');strong.textContent=m.date+'　'+m.game+'　vs '+m.opponent;li.append(strong);const detail=document.createElement('div');detail.textContent=[m.tournament,m.time?'開始 '+m.time+' JST':'開始時間未発表'].filter(Boolean).join(' ／ ');detail.style.fontSize='11px';li.append(detail);if(m.url&&/^https:\\/\\//.test(m.url)){const a=document.createElement('a');a.href=m.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='公式情報 ↗';li.append(a);}list.append(li);}
+ const li=document.createElement('li');li.textContent='公式発表をもとに更新。日程・開始時刻は変更される場合があります。';li.style.fontSize='11px';list.append(li);
+}
+loadMurashMatches();
 
 function renderNews(type) { renderNewsView(type, false); }
 function renderNewsFullscreen(type) { renderNewsView(type, true); }
@@ -1955,35 +1978,7 @@ document.getElementById('settings-form').addEventListener('submit',saveWidgetSet
 })();
 </script>
 
-<!-- MURASH GAMING 試合日程：既存ウィジェットは変更しない -->
-<section class="widget" id="murash-schedule-widget" aria-labelledby="murash-schedule-title" style="max-width:1200px;margin:15px auto;">
- <h2 id="murash-schedule-title" style="font-size:17px;margin:0 0 8px;">🎮 MURASH GAMING 試合日程</h2>
- <div id="murash-schedule-list" style="display:grid;gap:7px;"></div>
- <p style="font-size:11px;margin:8px 0 0;">日本時間／開始時刻未発表。日程変更の可能性があります。<a href="https://murashgaming.co.jp/news/shadowverse_003/" target="_blank" rel="noopener noreferrer">公式スケジュール・結果を確認 ↗</a></p>
-</section>
-<script>
-(function(){
- const matches=[
-  {date:'2026-11-01',game:'Shadowverse',opponent:'ZETA DIVISION',round:'第10節'},
-  {date:'2026-11-18',game:'Shadowverse',opponent:'レバンガ北海道',round:'第11節'},
-  {date:'2026-12-27',game:'Shadowverse',opponent:'Crazy Raccoon',round:'第12節'},
-  {date:'2027-01-13',game:'Shadowverse',opponent:'DetonatioN FocusMe',round:'第13節'},
-  {date:'2027-01-24',game:'Shadowverse',opponent:'VARREL',round:'第14節'}
- ];
- const root=document.getElementById('murash-schedule-list');
- const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
- const upcoming=matches.filter(m=>m.date>=today);
- if(!upcoming.length){root.textContent='掲載済みの日程は終了しました。最新情報は公式サイトをご確認ください。';return;}
- upcoming.forEach(m=>{
-  const row=document.createElement('div');row.style.cssText='display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:9px 11px;border-radius:10px;background:rgba(255,255,255,.75);border:1px solid rgba(80,140,180,.2);font-size:12px;';
-  const date=document.createElement('strong');date.style.cssText='min-width:96px;color:#075b93';
-  const [y,mo,d]=m.date.split('-').map(Number);date.textContent=mo+'/'+d+' ('+'日月火水木金土'[new Date(Date.UTC(y,mo-1,d)).getUTCDay()]+')';
-  const detail=document.createElement('span');detail.textContent=m.game+' '+m.round+'　vs '+m.opponent;
-  const link=document.createElement('a');link.href='https://murashgaming.co.jp/news/shadowverse_003/';link.target='_blank';link.rel='noopener noreferrer';link.textContent='詳細 ↗';link.style.marginLeft='auto';
-  row.append(date,detail,link);root.appendChild(row);
- });
-})();
-</script>
+
 </body>
 </html>
 
