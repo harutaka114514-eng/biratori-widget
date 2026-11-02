@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-02T21:58:04.399176+00:00",
+  "generatedAt": "2026-11-02T22:01:35.033327+00:00",
   "feeds": {
     "https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "「インプレスカレンダー」2027年版発売。世界の街歩き気分を楽しめる風景カレンダー4選",
@@ -101,8 +101,8 @@
     },
     "https://hokkaido-hidaka-kankonavi.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "乗り合い便ナナパカ号運行中！",
@@ -201,9 +201,10 @@
       ]
     },
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja": {
-      "status": "ok",
+      "status": "error",
       "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
+      "error": "HTTP 503",
       "items": [
         {
           "title": "＜画像4 / 5＞アイヌ工芸の今昔に触れる 平取町二風谷の匠の道へ（前編） - ウォーカープラス",
@@ -808,9 +809,10 @@
       ]
     },
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja": {
-      "status": "ok",
+      "status": "error",
       "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
+      "error": "HTTP 503",
       "items": [
         {
           "title": "開港100年！ 新千歳空港グルメ すきま時間に映画館＆温泉も！【グッド！いちおし】 - テレ朝NEWS",
@@ -1416,8 +1418,8 @@
     },
     "https://sapporo.keizai.biz/rss.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "札幌・二十四軒にパン店「ルーツアンドベーカリー」 カキザワの職人継承",
@@ -1512,9 +1514,10 @@
       ]
     },
     "https://tomakomai.goguynet.jp/feed/": {
-      "status": "ok",
+      "status": "error",
       "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
+      "error": "timeout",
       "items": [
         {
           "title": "【苫小牧市】学校再編ビジョンの変更点は？ 清水小・明野中の統合時期などを説明する第2回地域説明会が11月2日から開催されます",
@@ -1594,16 +1597,12 @@
           "pubDate": "2026-10-26T21:58:39+00:00",
           "categories": []
         }
-      ],
-      "fallback": true,
-      "source": "号外NET苫小牧（Googleニュース経由・直近14日）",
-      "sourceUrl": "https://news.google.com/rss/search?q=site%3Atomakomai.goguynet.jp+when%3A14d&hl=ja&gl=JP&ceid=JP%3Aja",
-      "primaryError": "timeout"
+      ]
     },
     "https://hre-net.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "閉店した「みよしの中の島店」が入っていた雑居ビル解体、更地に",
@@ -1689,8 +1688,8 @@
     },
     "https://biratori-shokokai.com/feed": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "2026年度 第2四半期・中小企業景況調査報告について",
@@ -1776,8 +1775,8 @@
     },
     "https://www.hi-mag.jp/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "11月の詩",
@@ -1895,8 +1894,8 @@
     },
     "https://hokkaidolikers.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "【旭川市】有効期限なし＆積立OK！ふるなびトラベルに「旭川市の旅行ポイント」が新登場",
@@ -2044,8 +2043,8 @@
     },
     "https://meshitabi-hokkaido.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "ドライブ途中で立ち寄りたい『砂川ハイウェイオアシス館』で食べる北海道グルメ/砂川市",
@@ -2240,9 +2239,15 @@
     },
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
+        {
+          "title": "星野リゾート、鹿や信濃雪鱒をフレンチで楽しむ「秋限定コース」を軽井沢「ブレストンコート ユカワタン」で提供中",
+          "link": "https://gourmet.watch.impress.co.jp/docs/news/2152885.html",
+          "pubDate": "2026-11-02T22:00:00+00:00",
+          "categories": []
+        },
         {
           "title": "ロッテ×ことりっぷ「小さなチョコパイ＜馬車道十番館のティラミス＞」など2種発売。横浜・神戸で長く愛される名店とコラボ",
           "link": "https://gourmet.watch.impress.co.jp/docs/news/2151602.html",
@@ -2416,19 +2421,13 @@
           "link": "https://gourmet.watch.impress.co.jp/docs/news/2152787.html",
           "pubDate": "2026-11-01T22:00:00+00:00",
           "categories": []
-        },
-        {
-          "title": "すき家、朝食の全メイン商品が30円引きに！ アプリ限定「11月得すきクーポン」を配信",
-          "link": "https://gourmet.watch.impress.co.jp/docs/news/2152747.html",
-          "pubDate": "2026-11-01T21:00:00+00:00",
-          "categories": []
         }
       ]
     },
     "https://hokkaido-nl.jp/index.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "自作カヤックで北極海目指す～白老の田中さん、来年６月出発予定～【白老町】",
@@ -2494,8 +2493,8 @@
     },
     "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "イラン攻撃再開判断「急がず」 米大統領、中間選挙後が焦点",
@@ -2917,8 +2916,8 @@
     },
     "https://kyoko-np.net/index.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "「筋書きあるドラマ」で安心感 野球に「メークシナリオ制」導入を提言",
@@ -3080,8 +3079,8 @@
     },
     "https://valorantnews.jp/feed": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "「G2 Esports」にHYUNMINが加入か ─ DRXからAmericasへ移籍、jawgemoの後任として獲得と報道",
@@ -3183,8 +3182,8 @@
     },
     "https://www.valorant4jp.com/rss.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "items": [
         {
           "title": "Riot Games、コミュニティからの批判を受け「VCT EMEA 2027 KICK-OFF」オープン予選形式を変更、変則ダブルエリミからスイスステージおよびシングルエリミ形式へ移行",
@@ -3390,9 +3389,10 @@
       ]
     },
     "https://news.google.com/rss/search?q=%E6%A0%AA%E4%B8%BB%E5%84%AA%E5%BE%85&hl=ja&gl=JP&ceid=JP:ja": {
-      "status": "ok",
+      "status": "error",
       "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
+      "error": "HTTP 503",
       "items": [
         {
           "title": "木徳神糧、株主優待を拡充！ 従来は｢500株｣が必要だったが、今後は｢200株｣で5kg相当の米穀製品がもらえて、他の配布区分の優待品の額面も大幅にアップ！ - ダイヤモンド・オンライン",
@@ -3997,9 +3997,10 @@
       ]
     },
     "https://news.google.com/rss/search?q=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%81%93%E3%81%AE%E9%A7%85&hl=ja&gl=JP&ceid=JP:ja": {
-      "status": "ok",
+      "status": "error",
       "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
+      "error": "HTTP 503",
       "items": [
         {
           "title": "道の駅あっさぶのレストラン「ASSAN」は11月10日（火）〜30日（月）臨時休業いたします。 - 北の道の駅",
@@ -4608,14 +4609,14 @@
     "bear": {
       "status": "ok",
       "latest": "2026-10-29",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00"
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00"
     },
     "okuyami": {
       "status": "ok",
       "latest": "zenkoku-okuyami:72eedb5c631bda479c475211494f0280fefb484a154a086edbd283e06cd5c287",
-      "generatedAt": "2026-11-02T21:58:04.399176+00:00",
-      "checkedAt": "2026-11-02T21:58:04.399176+00:00",
+      "generatedAt": "2026-11-02T22:01:35.033327+00:00",
+      "checkedAt": "2026-11-02T22:01:35.033327+00:00",
       "fallback": true,
       "source": "全国お悔やみ欄（平取町）",
       "sourceUrl": "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/",
