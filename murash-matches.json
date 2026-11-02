@@ -1,6 +1,30 @@
 {
-  "updatedAt": "2026-11-01",
+  "updatedAt": "2026-11-03",
   "matches": [
+    {
+      "date": "2026-11-11",
+      "game": "Overwatch",
+      "opponent": "韓国地域4位（チーム名未確定）",
+      "tournament": "OWCS 2026 Asia Stage 3・グループA",
+      "time": "20:30",
+      "url": "https://owcsasia.com/"
+    },
+    {
+      "date": "2026-11-12",
+      "game": "Overwatch",
+      "opponent": "韓国地域1位（チーム名未確定）",
+      "tournament": "OWCS 2026 Asia Stage 3・グループA",
+      "time": "20:30",
+      "url": "https://owcsasia.com/"
+    },
+    {
+      "date": "2026-11-13",
+      "game": "Overwatch",
+      "opponent": "パシフィック地域1位（チーム名未確定）",
+      "tournament": "OWCS 2026 Asia Stage 3・グループA",
+      "time": "17:00",
+      "url": "https://owcsasia.com/"
+    },
     {
       "date": "2026-11-18",
       "game": "Shadowverse",
