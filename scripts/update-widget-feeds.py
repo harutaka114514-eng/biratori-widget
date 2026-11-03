@@ -7,6 +7,8 @@ import http.client
 import json
 import re
 import socket
+import threading
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -20,13 +22,21 @@ OUTPUT = ROOT / 'data/widget-feeds.json'
 MAX_BYTES = 5_000_000
 NOTICE_URLS = {
     'bear': 'https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html',
-    'okuyami': 'https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/',
+    'okuyami': 'https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/',
 }
 OKUYAMI_BACKUP = 'https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/'
+OKUYAMI_LEGACY = 'https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/'
 GOGUYNET_FEED = 'https://tomakomai.goguynet.jp/feed/'
 VALORANT_FEED = 'https://valorantnews.jp/feed'
 VALORANT_FEED_ROUTES = ('https://valorantnews.jp/feed/', 'https://valorantnews.jp/?feed=rss2')
 NEWS_BACKUP_HOSTS = {'biratori-shokokai.com', 'hi-mag.jp', 'meshitabi-hokkaido.com'}
+LIVE_VIDEO_SOURCES = {
+    'btn-v1': 'https://www.youtube.com/@HTBnews/live',
+    'btn-stv': 'https://www.stv.jp/news/index.html',
+    'btn-custom-video': 'https://www.stv.jp/tv/dosanko_eve/index.html',
+}
+GOOGLE_NEWS_LOCK = threading.Lock()
+google_news_last_request = 0.0
 
 
 class TextParser(HTMLParser):
@@ -118,15 +128,40 @@ def configured_feeds(document):
             and urllib.parse.parse_qs(urllib.parse.urlsplit(url).query).get('q') != ['site:domingo.ne.jp']]
 
 
-def fetch_bytes(url):
+def fetch_bytes_once(url):
     encoded = urllib.parse.quote(url, safe=':/?&=%')
     request = urllib.request.Request(encoded, headers={'User-Agent': 'BiratoriWidget/1.0 (public RSS reader)', 'Accept': 'application/rss+xml, application/xml, text/html;q=0.8, */*;q=0.5'})
-    timeout = 45 if urllib.parse.urlsplit(url).hostname == 'valorantnews.jp' else 25
+    timeout = 45 if urllib.parse.urlsplit(url).hostname in ('valorantnews.jp', 'tomakomai.goguynet.jp') else 25
     with urllib.request.urlopen(request, timeout=timeout) as response:
         data = response.read(MAX_BYTES + 1)
         if len(data) > MAX_BYTES:
             raise ValueError('response_too_large')
         return data
+
+
+def fetch_bytes(url):
+    global google_news_last_request
+    for attempt in range(3):
+        try:
+            if urllib.parse.urlsplit(url).hostname == 'news.google.com':
+                # Avoid bursting all four topic searches at Google's RSS endpoint.
+                with GOOGLE_NEWS_LOCK:
+                    time.sleep(max(0, 1 - (time.monotonic() - google_news_last_request)))
+                    google_news_last_request = time.monotonic()
+                    return fetch_bytes_once(url)
+            return fetch_bytes_once(url)
+        except (OSError, http.client.HTTPException) as error:
+            transient = (error.code in (408, 429, 500, 502, 503, 504)
+                         if isinstance(error, urllib.error.HTTPError)
+                         else isinstance(error, (urllib.error.URLError, TimeoutError, ConnectionError, http.client.IncompleteRead)))
+            if not transient or attempt == 2:
+                raise
+            delay = 2 ** attempt
+            if isinstance(error, urllib.error.HTTPError):
+                retry_after = error.headers.get('Retry-After', '') if error.headers else ''
+                if retry_after.isdigit():
+                    delay = min(30, max(delay, int(retry_after)))
+            time.sleep(delay)
 
 
 def failure_reason(error):
@@ -225,6 +260,15 @@ def collect_feed(url, previous, checked_at, fetch=fetch_bytes):
                 pass
         if url == GOGUYNET_FEED:
             try:
+                alternate_url = 'https://tomakomai.goguynet.jp/?feed=rss2'
+                items = parse_feed(fetch(alternate_url), alternate_url)
+                if not items:
+                    raise ValueError('invalid_items')
+                return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at,
+                        'items': items, 'sourceUrl': alternate_url}
+            except (OSError, ValueError, ET.ParseError, http.client.HTTPException):
+                pass
+            try:
                 items, backup_url = google_news_backup('tomakomai.goguynet.jp', checked_at, fetch)
                 return {'status': 'ok', 'generatedAt': checked_at, 'checkedAt': checked_at, 'items': items,
                         'fallback': True, 'source': '号外NET苫小牧（Googleニュース経由・直近14日）',
@@ -278,21 +322,55 @@ def collect_notice(kind, previous, checked_at, fetch=fetch_bytes):
                 raise ValueError('update_date_missing')
             latest = datetime(*map(int, match.groups())).strftime('%Y-%m-%d')
         else:
-            match = re.search(r'<h[1-6]\b[^>]*class=["\'][^"\']*\bentry-title\b[^"\']*["\'][^>]*>([\s\S]*?)</h[1-6]>', body, re.I)
-            latest = plain(match[1]) if match else ''
-            if not latest:
-                raise ValueError('entry_title_missing')
+            latest = parse_okuyami_backup(body)
+            return {'status': 'ok', 'latest': latest, 'generatedAt': checked_at, 'checkedAt': checked_at,
+                    'source': '全国お悔やみ欄（平取町）', 'sourceUrl': NOTICE_URLS[kind]}
         return {'status': 'ok', 'latest': latest, 'generatedAt': checked_at, 'checkedAt': checked_at}
     except (OSError, ValueError, http.client.HTTPException) as error:
         if kind == 'okuyami':
             try:
-                latest = parse_okuyami_backup(fetch(OKUYAMI_BACKUP).decode('utf-8', errors='replace'))
+                body = fetch(OKUYAMI_LEGACY).decode('utf-8', errors='replace')
+                match = re.search(r'<h[1-6]\b[^>]*class=["\'][^"\']*\bentry-title\b[^"\']*["\'][^>]*>([\s\S]*?)</h[1-6]>', body, re.I)
+                latest = plain(match[1]) if match else ''
+                if not latest:
+                    raise ValueError('entry_title_missing')
                 return {'status': 'ok', 'latest': latest, 'generatedAt': checked_at, 'checkedAt': checked_at,
-                        'fallback': True, 'source': '全国お悔やみ欄（平取町）', 'sourceUrl': OKUYAMI_BACKUP,
+                        'fallback': True, 'source': 'お悔やみメディア（平取町）', 'sourceUrl': OKUYAMI_LEGACY,
                         'primaryError': failure_reason(error)}
             except (OSError, ValueError, http.client.HTTPException):
                 pass
         return {**previous, 'status': 'error', 'checkedAt': checked_at, 'error': failure_reason(error)}
+
+
+def youtube_video_id(document):
+    # Accept links published by the broadcaster, not arbitrary script values.
+    matches = re.findall(r'https?://(?:www\.)?(?:youtube\.com/(?:live/|embed/|watch\?v=)|youtu\.be/)([\w-]{11})(?=[?&"\'\s<]|$)', html.unescape(document))
+    if not matches:
+        raise ValueError('live_video_missing')
+    return matches[0]
+
+
+def collect_live_video(key, previous, checked_at, fetch=fetch_bytes):
+    source = LIVE_VIDEO_SOURCES[key]
+    try:
+        page = fetch(source).decode('utf-8', errors='replace')
+        if key == 'btn-v1':
+            canonical = re.search(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)', page, re.I)
+            if not canonical:
+                raise ValueError('live_video_missing')
+            video_id = youtube_video_id(html.unescape(canonical[1]))
+        else:
+            video_id = youtube_video_id(page)
+            page = fetch('https://www.youtube.com/watch?v=' + video_id).decode('utf-8', errors='replace')
+        if not re.search(r'"playabilityStatus"\s*:\s*\{\s*"status"\s*:\s*"OK"', page):
+            raise ValueError('video_unavailable')
+        if not re.search(r'"playableInEmbed"\s*:\s*true', page) or not re.search(r'"isLiveNow"\s*:\s*true', page):
+            raise ValueError('video_not_live_or_embeddable')
+        return {'status': 'ok', 'videoId': video_id, 'generatedAt': checked_at,
+                'checkedAt': checked_at, 'sourceUrl': source}
+    except (OSError, ValueError, http.client.HTTPException) as error:
+        return {**previous, 'status': 'error', 'checkedAt': checked_at,
+                'error': str(error) if isinstance(error, ValueError) else failure_reason(error), 'sourceUrl': source}
 
 
 def main():
@@ -302,9 +380,11 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
         futures = {url: pool.submit(collect_feed, url, previous.get('feeds', {}).get(url, {}), now) for url in urls}
         notices = {key: pool.submit(collect_notice, key, previous.get('notices', {}).get(key, {}), now) for key in NOTICE_URLS}
+        videos = {key: pool.submit(collect_live_video, key, previous.get('videos', {}).get(key, {}), now) for key in LIVE_VIDEO_SOURCES}
         feeds = {url: task.result() for url, task in futures.items()}
         notices = {key: task.result() for key, task in notices.items()}
-    payload = {'version': 1, 'generatedAt': now, 'feeds': feeds, 'notices': notices}
+        videos = {key: task.result() for key, task in videos.items()}
+    payload = {'version': 1, 'generatedAt': now, 'feeds': feeds, 'notices': notices, 'videos': videos}
     OUTPUT.parent.mkdir(exist_ok=True)
     temporary = OUTPUT.with_suffix('.json.tmp')
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')
@@ -316,6 +396,8 @@ def main():
         print(f"{record['status']}: {key}" + (f" ({record['error']})" if record.get('error') else '')
               + (f" (backup: {record['source']}; primary: {record['primaryError']})" if record.get('fallback') else ''))
     failures = sum(record['status'] != 'ok' for record in feeds.values())
+    for key, record in videos.items():
+        print(f"{record['status']}: video {key}: {record.get('videoId', 'unavailable')}" + (f" ({record['error']})" if record.get('error') else ''))
     print(f'RSS sources: {len(feeds) - failures}/{len(feeds)} successful. Failed sources are reported in the widget.')
     if failures == len(feeds):
         raise SystemExit(1)
@@ -323,3 +405,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

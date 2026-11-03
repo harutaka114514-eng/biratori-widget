@@ -2,6 +2,7 @@ import importlib.util
 from pathlib import Path
 import unittest
 import urllib.error
+from unittest import mock
 
 spec = importlib.util.spec_from_file_location('feeds', Path(__file__).resolve().parents[1] / 'scripts/update-widget-feeds.py')
 feeds = importlib.util.module_from_spec(spec)
@@ -102,7 +103,7 @@ class FeedTests(unittest.TestCase):
                 + item('【苫小牧市】古い', 'tomakomai.goguynet.jp', 'Wed, 01 Oct 2025 12:00:00 GMT', 'D')
                 + '<item><title>Missing source</title></item></channel></rss>').encode()
         def fetch(url):
-            if url == feeds.GOGUYNET_FEED:
+            if urllib.parse.urlsplit(url).hostname == 'tomakomai.goguynet.jp':
                 raise urllib.error.HTTPError(url, 503, 'Unavailable', {}, None)
             return body
         result = feeds.collect_feed(feeds.GOGUYNET_FEED, {}, NOW, fetch)
@@ -147,21 +148,83 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(result['items'], previous['items'])
         self.assertEqual(result['generatedAt'], previous['generatedAt'])
 
-    def test_okuyami_fallback_and_badge_ignore_daily_date(self):
+    def test_okuyami_primary_and_badge_ignore_daily_date(self):
         body = '<h1>平取町の本日のお悔やみ欄・訃報一覧</h1><time>2026-10-21</time><article class="obituary-item"><h4>架空の見出し</h4></article>'
         def fetch(url):
-            if url == feeds.NOTICE_URLS['okuyami']:
-                raise urllib.error.HTTPError(url, 403, 'Forbidden', {}, None)
+            self.assertEqual(url, feeds.NOTICE_URLS['okuyami'])
             return body.encode()
         record = feeds.collect_notice('okuyami', {}, NOW, fetch)
         self.assertEqual(record['status'], 'ok')
         self.assertEqual(record['sourceUrl'], feeds.OKUYAMI_BACKUP)
+        self.assertNotIn('fallback', record)
         self.assertNotIn('架空', record['latest'])
         self.assertEqual(record['latest'], feeds.parse_okuyami_backup(body.replace('2026-10-21', '2026-10-22')))
         self.assertNotEqual(record['latest'], feeds.parse_okuyami_backup(body.replace('架空の見出し', '新しい架空の見出し')))
         with self.assertRaises(ValueError):
             feeds.parse_okuyami_backup(body.replace('平取町', '別の町'))
 
+    def test_transient_http_retry_and_forbidden_not_retried(self):
+        error = urllib.error.HTTPError(URL, 503, 'Unavailable', {}, None)
+        with mock.patch.object(feeds, 'fetch_bytes_once', side_effect=[error, b'fresh']) as fetch, mock.patch.object(feeds.time, 'sleep'):
+            self.assertEqual(feeds.fetch_bytes(URL), b'fresh')
+            self.assertEqual(fetch.call_count, 2)
+        with mock.patch.object(feeds, 'fetch_bytes_once', side_effect=urllib.error.HTTPError(URL, 403, 'Forbidden', {}, None)) as fetch, mock.patch.object(feeds.time, 'sleep'):
+            with self.assertRaises(urllib.error.HTTPError):
+                feeds.fetch_bytes(URL)
+            self.assertEqual(fetch.call_count, 1)
+
+    def test_network_retry_is_bounded(self):
+        with mock.patch.object(feeds, 'fetch_bytes_once', side_effect=TimeoutError()) as fetch, mock.patch.object(feeds.time, 'sleep'):
+            with self.assertRaises(TimeoutError):
+                feeds.fetch_bytes(URL)
+            self.assertEqual(fetch.call_count, 3)
+
+    def test_goguynet_wordpress_route_before_search(self):
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            if url == feeds.GOGUYNET_FEED:
+                raise TimeoutError()
+            return b'<rss><channel><item><title>New article</title><link>https://tomakomai.goguynet.jp/2026/10/21/test/</link></item></channel></rss>'
+        record = feeds.collect_feed(feeds.GOGUYNET_FEED, {}, NOW, fetch)
+        self.assertEqual(record['status'], 'ok')
+        self.assertEqual(record['sourceUrl'], 'https://tomakomai.goguynet.jp/?feed=rss2')
+        self.assertEqual(len(calls), 2)
+
+    def test_okuyami_failure_retains_cache_and_success_date(self):
+        previous = {'latest': 'fingerprint', 'generatedAt': '2026-10-20T00:00:00Z'}
+        def denied(url):
+            raise urllib.error.HTTPError(url, 503, 'Unavailable', {}, None)
+        record = feeds.collect_notice('okuyami', previous, NOW, denied)
+        self.assertEqual(record['status'], 'error')
+        self.assertEqual(record['latest'], previous['latest'])
+        self.assertEqual(record['generatedAt'], previous['generatedAt'])
+
+    def test_live_video_from_broadcaster_must_be_live_and_embeddable(self):
+        player = b'"playabilityStatus":{"status":"OK","playableInEmbed":true},"liveBroadcastDetails":{"isLiveNow":true}'
+        def fetch(url):
+            if url == feeds.LIVE_VIDEO_SOURCES['btn-stv']:
+                return b'<a href="https://youtube.com/live/Wvqa1Csp5Vk">STV</a>'
+            self.assertEqual(url, 'https://www.youtube.com/watch?v=Wvqa1Csp5Vk')
+            return player
+        result = feeds.collect_live_video('btn-stv', {}, NOW, fetch)
+        self.assertEqual(result['status'], 'ok')
+        self.assertEqual(result['videoId'], 'Wvqa1Csp5Vk')
+        for invalid in (player.replace(b'"OK"', b'"ERROR"'), player.replace(b'"isLiveNow":true', b'"isLiveNow":false'), player.replace(b'"playableInEmbed":true', b'"playableInEmbed":false')):
+            previous = {'videoId': 'OLD12345678', 'generatedAt': '2026-10-20T00:00:00Z'}
+            result = feeds.collect_live_video('btn-stv', previous, NOW, lambda url: fetch(url) if 'stv.jp' in url else invalid)
+            self.assertEqual(result['status'], 'error')
+            self.assertEqual(result['videoId'], previous['videoId'])
+            self.assertEqual(result['generatedAt'], previous['generatedAt'])
+
+    def test_htb_canonical_and_reject_unrelated_links(self):
+        page = b'<link rel="canonical" href="https://www.youtube.com/watch?v=tvgbZZYS4Nk">"playabilityStatus":{"status":"OK","playableInEmbed":true},"isLiveNow":true'
+        result = feeds.collect_live_video('btn-v1', {}, NOW, lambda _: page)
+        self.assertEqual(result['videoId'], 'tvgbZZYS4Nk')
+        with self.assertRaises(ValueError):
+            feeds.youtube_video_id('<a href="https://evil.example/watch?v=tvgbZZYS4Nk">Not YouTube</a>')
+
 
 if __name__ == '__main__':
     unittest.main()
+

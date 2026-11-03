@@ -612,13 +612,14 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
       <div class="widget">
         <div class="video-tabs">
           <button id="btn-v1" class="active" onclick="switchVideo('tvgbZZYS4Nk', 'btn-v1')">HTB</button>
-          <button id="btn-stv" onclick="switchVideo('3xfwDdlulDY', 'btn-stv')">STV</button>
+          <button id="btn-stv" onclick="switchVideo('Wvqa1Csp5Vk', 'btn-stv')">STV</button>
           <button id="btn-custom-video" onclick="switchVideo('Y1uNv-JTJKg', 'btn-custom-video')">どさんこワイド179</button>
 
         </div>
         <div class="video-container">
-          <iframe id="main-video" src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&mute=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+          <iframe id="main-video" title="北海道のニュース動画" src="https://www.youtube.com/embed/tvgbZZYS4Nk?autoplay=1&amp;mute=1&amp;enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:13px"><a id="video-watch-link" href="https://www.youtube.com/watch?v=tvgbZZYS4Nk" target="_blank" rel="noopener noreferrer">YouTubeで開く ↗</a><button id="video-retry" type="button" class="refresh-btn" onclick="switchVideo('',currentVideoButton);loadWidgetFeedData(true).catch(()=>{});">再読み込み</button><span id="video-status" role="status"></span></div>
       </div>
 
       <div class="bottom-widgets">
@@ -680,7 +681,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
             </div>
 
             <div class="link-item">
-            <a href="https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
+            <a href="https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/" target="_blank" class="link-btn btn-okuyami" id="okuyami-btn" onclick="markOkuyamiRead()">
                 🙏 平取町おくやみ <span id="okuyami-badge" class="badge"></span>
             </a>
             <div id="okuyami-status" class="widget-status" role="status" hidden>更新確認中…</div>
@@ -776,8 +777,8 @@ function openWidgetSettings() {
   const esc=escapeWidgetHTML,g=widgetSettings.garbage||{},names={keizai:'旅行',sakei:'地域',gourmet:'グルメ',nl:'道NL',hobby:'趣味'};
   const input=(label,id,value)=>`<label for="${id}">${esc(label)}</label><input id="${id}" value="${esc(value)}">`;
   let fields='<fieldset><legend>動画</legend><p class="help">YouTubeの動画URLまたは動画IDを入力します。</p>';
-  fields+=input('HTB','setting-video-1',widgetSettings.videos?.['btn-v1']||'tvgbZZYS4Nk');
-  fields+=input('STV','setting-video-2',widgetSettings.videos?.['btn-stv']||'3xfwDdlulDY')+'</fieldset>';
+  fields+=input('HTB','setting-video-1',effectiveVideoId('btn-v1'));
+  fields+=input('STV','setting-video-2',effectiveVideoId('btn-stv'))+'</fieldset>';
   fields+='<fieldset><legend>ごみ収集</legend><p class="help">初期値は元のページの「月木／水」です。収集表の自動読取りは行いません。地区・祝日・年末年始の例外はPDFを確認して設定してください。</p>';
   for(const [key,label,fallback] of [['burn','燃えるごみ',[1,4]],['recycle','資源ごみ',[3]]]) {
     fields+=`<div style="font-size:13px;margin-top:8px">${label}</div>`;
@@ -801,6 +802,7 @@ function saveWidgetSettings(event) {
   try {
     const videos={'btn-v1':widgetVideoId(value('setting-video-1')),'btn-stv':widgetVideoId(value('setting-video-2'))};
     if(Object.values(videos).some(id=>!id))throw Error('動画URLまたは動画IDを確認してください。');
+    for(const [button,id] of Object.entries(videos))if(id===liveVideoSources[button])delete videos[button];
     const pdf=value('setting-garbage-pdf');if(!httpURL(pdf))throw Error('収集表PDFのURLを確認してください。');
     const exceptions={};
     for(const line of value('setting-garbage-exceptions').split('\n').map(s=>s.trim()).filter(Boolean)) {
@@ -1047,7 +1049,7 @@ function mergeWidgetNews(items) {
 }
 function renderNewsStatus(type) {
   const el=document.getElementById('news-status');
-  if(type==='morning'||type==='meshi'||type==='links'||type==='x'){el.textContent='';return;}
+  if(type==='morning'||type==='meshi'||type==='links'||type==='x'||type==='murash'){el.textContent='';return;}
   const state=newsStates[type];
   el.replaceChildren();
   const message=document.createElement('span');
@@ -1120,7 +1122,7 @@ function loadWidgetFeedData(force=false){
   if(!force&&widgetFeedData&&Date.now()-widgetFeedLoadedAt<60000)return Promise.resolve(widgetFeedData);
   widgetFeedRequest=fetchWidgetJSON('./data/widget-feeds.json?check='+Date.now()).then(data=>{
     if(data.version!==1||!data.feeds||!data.notices)throw Error('配信データの形式が不正です');
-    widgetFeedData=data;widgetFeedLoadedAt=Date.now();return data;
+    widgetFeedData=data;widgetFeedLoadedAt=Date.now();updateLiveVideoSources(data.videos);return data;
   }).finally(()=>{widgetFeedRequest=null;});
   return widgetFeedRequest;
 }
@@ -1291,9 +1293,10 @@ function renderNewsView(type, fullscreen) {
 // MURASH GAMING: confirmed schedule JSON is maintained separately by the daily review.
 let murashMatches=[];
 let murashLoaded=false;
+let murashLoadError=false;
 async function loadMurashMatches(){
- try {const response=await fetch('./murash-matches.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('schedule unavailable');const data=await response.json();murashMatches=Array.isArray(data.matches)?data.matches:[];murashLoaded=true;}
- catch(e){murashLoaded=true;murashMatches=[];}
+ try {const response=await fetch('./murash-matches.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('schedule unavailable');const data=await response.json();if(!Array.isArray(data.matches))throw Error('invalid schedule');murashMatches=data.matches;murashLoaded=true;murashLoadError=false;}
+ catch(e){murashLoaded=true;murashLoadError=true;}
  if(newsCurrentType==='murash')renderNews('murash');
  if(fsCurrentType==='murash'&&isNewsFullscreenOpen())renderNewsFullscreen('murash');
 }
@@ -1301,7 +1304,8 @@ function renderMurashMatches(list){
  list.replaceChildren();
  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
  const matches=murashMatches.filter(m=>/^\d{4}-\d{2}-\d{2}$/.test(m.date)&&m.date>=today&&['VALORANT','Overwatch','Shadowverse'].includes(m.game)).sort((a,b)=>a.date.localeCompare(b.date));
- if(!matches.length){const li=document.createElement('li');li.textContent=murashLoaded?'現在、確認済みの今後の試合はありません。':'日程を読み込み中…';list.append(li);}
+ if(murashLoadError){const li=document.createElement('li');li.textContent='日程を取得できませんでした。';if(matches.length)li.append(' 前回の日程を表示しています。');const retry=document.createElement('button');retry.type='button';retry.className='refresh-btn';retry.textContent='再取得';retry.onclick=loadMurashMatches;li.append(' ',retry);list.append(li);}
+ if(!matches.length&&!murashLoadError){const li=document.createElement('li');li.textContent=murashLoaded?'現在、確認済みの今後の試合はありません。':'日程を読み込み中…';list.append(li);}
  for(const m of matches){const li=document.createElement('li');li.style.display='block';const strong=document.createElement('strong');strong.textContent=m.date+'　'+m.game+'　vs '+m.opponent;li.append(strong);const detail=document.createElement('div');detail.textContent=[m.tournament,m.time?'開始 '+m.time+' JST':'開始時間未発表'].filter(Boolean).join(' ／ ');detail.style.fontSize='11px';li.append(detail);if(m.url&&/^https:\/\//.test(m.url)){const a=document.createElement('a');a.href=m.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='公式情報 ↗';li.append(a);}list.append(li);}
  const li=document.createElement('li');li.textContent='公式発表をもとに更新。日程・開始時刻は変更される場合があります。';li.style.fontSize='11px';list.append(li);
 }
@@ -1690,7 +1694,7 @@ function renderWeatherData(d) {
 
 async function checkLinkNotice(kind){
   const status=document.getElementById(kind+'-status');
-  const okuyamiOriginal='https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/';
+  const okuyamiOriginal='https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/';
   if(kind==='okuyami')document.getElementById('okuyami-btn').href=okuyamiOriginal;
   try{
     const data=await loadWidgetFeedData(),record=data.notices[kind];
@@ -1698,10 +1702,9 @@ async function checkLinkNotice(kind){
     const fresh=record.status==='ok'&&Date.now()-Date.parse(record.generatedAt)<=12*60*60*1000;
     status.textContent=fresh?'更新確認：'+formatWidgetTime(Date.parse(record.generatedAt))
       :'更新確認に失敗：'+(record.status==='ok'?'自動更新が12時間以上前です':feedFailureMessage(record.error))+'。リンク先でご確認ください。';
-    if(kind==='okuyami'&&fresh&&record.fallback&&record.sourceUrl==='https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/'){
+    if(kind==='okuyami'&&fresh&&['https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/','https://okuyami-media.com/category/hokkaido-region/hokkaido-pref/%e5%b9%b3%e5%8f%96%e7%94%ba/'].includes(record.sourceUrl)){
       document.getElementById('okuyami-btn').href=record.sourceUrl;
-      status.append('／代替：全国お悔やみ欄（平取町）。元サイトは'+feedFailureMessage(record.primaryError)+'。');
-      const original=document.createElement('a');original.href=okuyamiOriginal;original.target='_blank';original.rel='noopener noreferrer';original.textContent='元のサイト';status.append(' ',original);
+      if(record.fallback)status.append('／予備の配信元を表示しています。');
     }
     if(record.latest){
       const readKey=kind==='bear'?'bear_last_update':'okuyami_last_title';
@@ -1803,12 +1806,55 @@ function clock(){
   document.getElementById("clock").innerHTML=`<span style=\"font-size:14px\">${m}/${d}(${w})</span> ${h}:${i}:${s}`;
 }
 
+// BEGIN_LIVE_VIDEO_PLAYER
+const liveVideoSources={'btn-v1':'tvgbZZYS4Nk','btn-stv':'Wvqa1Csp5Vk','btn-custom-video':'Y1uNv-JTJKg'};
+const legacyVideoDefaults={'btn-v1':'tvgbZZYS4Nk','btn-stv':'3xfwDdlulDY','btn-custom-video':'Y1uNv-JTJKg'};
+let currentVideoButton='btn-v1',currentVideoId='',youtubePlayer=null,videoLoadTimer=null,youtubeApiRequested=false;
+function effectiveVideoId(button,fallback='') {
+  const custom=widgetSettings.videos?.[button];
+  return custom&&custom!==legacyVideoDefaults[button]?custom:liveVideoSources[button]||fallback;
+}
+function videoStatus(message) {document.getElementById('video-status').textContent=message;}
+function updateLiveVideoSources(records) {
+  if(!records||typeof records!=='object')return;
+  for(const button of Object.keys(liveVideoSources)){
+    const record=records[button];
+    if(record?.status==='ok'&&/^[\w-]{11}$/.test(record.videoId)&&Number.isFinite(Date.parse(record.generatedAt)))liveVideoSources[button]=record.videoId;
+  }
+  if(currentVideoId&&effectiveVideoId(currentVideoButton)!==currentVideoId)switchVideo('',currentVideoButton);
+}
+function onYouTubeIframeAPIReady() {
+  if(youtubePlayer||!window.YT?.Player)return;
+  youtubePlayer=new window.YT.Player('main-video',{events:{
+    onReady(event){clearTimeout(videoLoadTimer);videoStatus('');event.target.mute();event.target.playVideo();},
+    onStateChange(event){if(event.data===1){clearTimeout(videoLoadTimer);videoStatus('');}else if(event.data===0)videoStatus('配信が終了しました。再読み込み、またはYouTubeでご確認ください。');},
+    onAutoplayBlocked(){clearTimeout(videoLoadTimer);videoStatus('再生ボタンを押してご覧ください。');},
+    onError(event){clearTimeout(videoLoadTimer);videoStatus([100,101,150].includes(event.data)?'この動画は再生できません。YouTubeでご確認ください。':'動画を読み込めません。再読み込み、またはYouTubeでご確認ください。');loadWidgetFeedData(true).catch(()=>{});}
+  }});
+}
 function switchVideo(id, btnId) {
-  id = (widgetSettings.videos && widgetSettings.videos[btnId]) || id;
-  document.getElementById('main-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&enablejsapi=1`;
+  id=effectiveVideoId(btnId,id);
+  if(!/^[\w-]{11}$/.test(id))return;
+  currentVideoButton=btnId;currentVideoId=id;
+  const frame=document.getElementById('main-video');
+  document.getElementById('video-watch-link').href='https://www.youtube.com/watch?v='+id;
+  videoStatus('動画を読み込み中…');clearTimeout(videoLoadTimer);
+  videoLoadTimer=setTimeout(()=>videoStatus('プレーヤーを読み込めない場合は、YouTubeで開いてご覧ください。'),15000);
+  if(youtubePlayer?.loadVideoById){youtubePlayer.mute();youtubePlayer.loadVideoById(id);}
+  else{
+    const source=new URL('https://www.youtube.com/embed/'+id);
+    source.search=new URLSearchParams({autoplay:'1',mute:'1',enablejsapi:'1',playsinline:'1',origin:location.origin}).toString();
+    frame.src=source.href;
+  }
   document.querySelectorAll('.video-tabs button').forEach(b => b.classList.remove('active'));
   document.getElementById(btnId).classList.add('active');
+  if(window.YT?.Player)onYouTubeIframeAPIReady();
+  else if(!youtubeApiRequested){
+    youtubeApiRequested=true;const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';script.async=true;
+    script.onerror=()=>{youtubeApiRequested=false;videoStatus('プレーヤーを読み込めません。YouTubeで開いてご覧ください。');};document.head.append(script);
+  }
 }
+// END_LIVE_VIDEO_PLAYER
 
 setInterval(clock, 1000); clock();
 
@@ -2432,4 +2478,5 @@ function parseBiratoriWarnings(reports) {
 
 </body>
 </html>
+
 
