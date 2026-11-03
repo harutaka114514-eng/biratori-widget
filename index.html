@@ -2326,7 +2326,7 @@ function parseBiratoriWarnings(reports) {
       result.appendChild(head);
       const list = document.createElement('ul');
       list.style.cssText = 'margin:0;padding-left:1.4em';
-      for (const item of items.slice(0, 3)) {
+      for (const item of items.filter(item => item.date === latest.date)) {
         const li = document.createElement('li');
         li.textContent = formatDate(item.date) + ' ' + (item.time || '') + '・' + item.place;
         list.appendChild(li);
