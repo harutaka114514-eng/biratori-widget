@@ -13,6 +13,7 @@ on:
       - 'data/domingo-news.json'
       - 'data/sasaru-news.json'
       - 'data/hidaka-events.json'
+      - 'data/bear-sightings.json'
       - 'data/gutabi-events.json'
       - 'data/x-posts.json'
       - 'data/bing-wallpaper.json'
@@ -77,6 +78,11 @@ jobs:
         id: hidaka
         continue-on-error: true
         run: node scripts/update-hidaka-events.mjs
+      - name: Collect Biratori bear sightings
+        if: github.event_name != 'push'
+        id: bears
+        continue-on-error: true
+        run: node scripts/update-bear-sightings.mjs
       - name: Collect monthly Gutabi events
         if: github.event_name != 'push'
         id: gutabi
@@ -100,7 +106,7 @@ jobs:
           fi
           python scripts/update-x-posts.py
       - name: Save collected news
-        if: steps.holidays.outcome == 'success' || steps.feeds.outcome == 'success' || steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.gutabi.outcome == 'success' || steps.xposts.outcome == 'success'
+        if: steps.holidays.outcome == 'success' || steps.feeds.outcome == 'success' || steps.wallpaper.outcome == 'success' || steps.domingo.outcome == 'success' || steps.walker.outcome == 'success' || steps.sasaru.outcome == 'success' || steps.hidaka.outcome == 'success' || steps.gutabi.outcome == 'success' || steps.xposts.outcome == 'success' || steps.bears.outcome == 'success'
         run: |
           if [ -f data/japanese-holidays.json ]; then git add data/japanese-holidays.json; fi
           if [ -f data/bing-wallpaper.json ]; then git add data/bing-wallpaper.json; fi
@@ -111,6 +117,7 @@ jobs:
           if [ -f data/walker-news.json ]; then git add data/walker-news.json; fi
           if [ -f data/hidaka-events.json ]; then git add data/hidaka-events.json; fi
           if [ -f data/gutabi-events.json ]; then git add data/gutabi-events.json; fi
+          if [ -f data/bear-sightings.json ]; then git add data/bear-sightings.json; fi
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
