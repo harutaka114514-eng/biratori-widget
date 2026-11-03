@@ -507,7 +507,6 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
   <h2 id="bear-title" style="font-size:17px;margin:0">🐻 平取町のヒグマ出没情報</h2>
   <div id="bear-result" role="status" aria-live="polite" style="font-size:14px;line-height:1.6">平取町の情報を確認しています…</div>
   <p id="bear-time" style="margin:0;font-size:12px;color:#555">確認中</p>
-  <p style="margin:0;font-size:12px;line-height:1.5">出没情報がない場所が安全とは限りません。山に入る際は音を出すなど、十分注意してください。</p>
   <div style="display:flex;gap:12px;flex-wrap:wrap">
     <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html" target="_blank" rel="noopener noreferrer" style="font-size:13px">平取町の公式情報を見る ↗</a>
     <a id="bear-map-link" href="#" target="_blank" rel="noopener noreferrer" style="font-size:13px" hidden>出没マップ（Googleマイマップ）を見る ↗</a>
@@ -2321,22 +2320,18 @@ function parseBiratoriWarnings(reports) {
       const recent30 = items.filter(item => { const d = dayDiff(today, item.date); return d >= 0 && d <= 30; }).length;
       result.replaceChildren();
       const head = document.createElement('p');
-      head.style.cssText = 'margin:0 0 4px;font-weight:bold' + (ago <= 30 ? ';color:#b45309' : '');
-      head.textContent = '最新：' + formatDate(latest.date) + ' ' + (latest.time || '') + '・' + latest.place + (ago >= 0 ? '（' + (ago === 0 ? '今日' : ago + '日前') + '）' : '');
+      const isRecent = ago >= 0 && ago <= 7;
+      head.style.cssText = 'margin:0 0 4px;font-weight:bold' + (isRecent ? ';color:#b45309' : '');
+      head.textContent = isRecent
+        ? '最新：' + formatDate(latest.date) + ' ' + items.filter(item => item.date === latest.date).map(item => (item.time || '') + '・' + item.place).join('／') + '（' + (ago === 0 ? '今日' : ago + '日前') + '）'
+        : '最新：報告なし（直近1週間）';
       result.appendChild(head);
-      const list = document.createElement('ul');
-      list.style.cssText = 'margin:0;padding-left:1.4em';
-      for (const item of items.filter(item => item.date === latest.date)) {
-        const li = document.createElement('li');
-        li.textContent = formatDate(item.date) + ' ' + (item.time || '') + '・' + item.place;
-        list.appendChild(li);
-      }
-      result.appendChild(list);
       const meta = document.createElement('p');
       meta.style.cssText = 'margin:4px 0 0;font-size:13px';
       meta.textContent = (data.fiscalYearLabel || '今年度') + 'の累計 ' + items.length + '件' + (recent30 ? '・直近30日で ' + recent30 + '件' : '・直近30日の出没なし');
       result.appendChild(meta);
-      if (ago <= 30) { box.style.borderColor = '#d97706'; box.style.backgroundColor = '#fffbeb'; }
+      box.style.borderColor = isRecent ? '#d97706' : '#b8d5e4';
+      box.style.backgroundColor = isRecent ? '#fffbeb' : '';
       if (typeof data.mapUrl === 'string' && data.mapUrl.startsWith('https://www.google.com/maps/d/')) {
         mapLink.href = data.mapUrl; mapLink.hidden = false;
       }
@@ -2347,6 +2342,8 @@ function parseBiratoriWarnings(reports) {
     }
   }
   loadBears();
+  setInterval(() => { if (!document.hidden) loadBears(); }, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) loadBears(); });
 })();
 </script>
 
