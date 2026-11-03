@@ -31,7 +31,7 @@ VALORANT_FEED = 'https://valorantnews.jp/feed'
 VALORANT_FEED_ROUTES = ('https://valorantnews.jp/feed/', 'https://valorantnews.jp/?feed=rss2')
 NEWS_BACKUP_HOSTS = {'biratori-shokokai.com', 'hi-mag.jp', 'meshitabi-hokkaido.com'}
 LIVE_VIDEO_SOURCES = {
-    'btn-v1': 'https://www.youtube.com/@HTBnews/live',
+    'btn-v1': 'https://www.htb.co.jp/',
     'btn-stv': 'https://www.stv.jp/news/index.html',
     'btn-custom-video': 'https://www.stv.jp/tv/dosanko_eve/index.html',
 }
@@ -355,19 +355,27 @@ def collect_live_video(key, previous, checked_at, fetch=fetch_bytes):
     try:
         page = fetch(source).decode('utf-8', errors='replace')
         if key == 'btn-v1':
-            canonical = re.search(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)', page, re.I)
-            if not canonical:
+            # HTB's official home page labels the live-news thumbnail.
+            # YouTube watch pages can refuse automated data-center requests;
+            # that must not be mistaken for the broadcaster ending its stream.
+            thumbnail = next((tag for tag in re.findall(r'<img\b[^>]*>', page, re.I)
+                              if re.search(r'alt=["\'][^"\']*北海道ニュース24[^"\']*["\']', tag)), '')
+            match = re.search(r'https://img\.youtube\.com/vi/([\w-]{11})/', thumbnail)
+            if not match:
                 raise ValueError('live_video_missing')
-            video_id = youtube_video_id(html.unescape(canonical[1]))
+            video_id = match[1]
+        elif key == 'btn-stv':
+            match = re.search(r'https://(?:www\.)?youtube\.com/live/([\w-]{11})(?=[?&"\'\s<]|$)', html.unescape(page))
+            if not match:
+                raise ValueError('live_video_missing')
+            video_id = match[1]
         else:
-            video_id = youtube_video_id(page)
-            page = fetch('https://www.youtube.com/watch?v=' + video_id).decode('utf-8', errors='replace')
-        if not re.search(r'"playabilityStatus"\s*:\s*\{\s*"status"\s*:\s*"OK"', page):
-            raise ValueError('video_unavailable')
-        if not re.search(r'"playableInEmbed"\s*:\s*true', page) or not re.search(r'"isLiveNow"\s*:\s*true', page):
-            raise ValueError('video_not_live_or_embeddable')
+            live_section = re.search(r'<h3\b[^>]*>[\s\S]*?【LIVE】どさんこワイド179[\s\S]*?</h3>([\s\S]{0,2000})', page)
+            if not live_section:
+                raise ValueError('live_video_missing')
+            video_id = youtube_video_id(live_section[1])
         return {'status': 'ok', 'videoId': video_id, 'generatedAt': checked_at,
-                'checkedAt': checked_at, 'sourceUrl': source}
+                'checkedAt': checked_at, 'sourceUrl': source, 'verification': 'official_live_listing'}
     except (OSError, ValueError, http.client.HTTPException) as error:
         return {**previous, 'status': 'error', 'checkedAt': checked_at,
                 'error': str(error) if isinstance(error, ValueError) else failure_reason(error), 'sourceUrl': source}

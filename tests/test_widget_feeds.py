@@ -200,27 +200,27 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(record['latest'], previous['latest'])
         self.assertEqual(record['generatedAt'], previous['generatedAt'])
 
-    def test_live_video_from_broadcaster_must_be_live_and_embeddable(self):
-        player = b'"playabilityStatus":{"status":"OK","playableInEmbed":true},"liveBroadcastDetails":{"isLiveNow":true}'
+    def test_live_video_uses_official_listing_without_youtube_watch_request(self):
         def fetch(url):
-            if url == feeds.LIVE_VIDEO_SOURCES['btn-stv']:
-                return b'<a href="https://youtube.com/live/Wvqa1Csp5Vk">STV</a>'
-            self.assertEqual(url, 'https://www.youtube.com/watch?v=Wvqa1Csp5Vk')
-            return player
+            self.assertEqual(url, feeds.LIVE_VIDEO_SOURCES['btn-stv'])
+            return b'<a href="https://youtube.com/live/Wvqa1Csp5Vk">STV</a>'
         result = feeds.collect_live_video('btn-stv', {}, NOW, fetch)
         self.assertEqual(result['status'], 'ok')
         self.assertEqual(result['videoId'], 'Wvqa1Csp5Vk')
-        for invalid in (player.replace(b'"OK"', b'"ERROR"'), player.replace(b'"isLiveNow":true', b'"isLiveNow":false'), player.replace(b'"playableInEmbed":true', b'"playableInEmbed":false')):
-            previous = {'videoId': 'OLD12345678', 'generatedAt': '2026-10-20T00:00:00Z'}
-            result = feeds.collect_live_video('btn-stv', previous, NOW, lambda url: fetch(url) if 'stv.jp' in url else invalid)
-            self.assertEqual(result['status'], 'error')
-            self.assertEqual(result['videoId'], previous['videoId'])
-            self.assertEqual(result['generatedAt'], previous['generatedAt'])
+        self.assertEqual(result['verification'], 'official_live_listing')
+        previous = {'videoId': 'OLD12345678', 'generatedAt': '2026-10-20T00:00:00Z'}
+        result = feeds.collect_live_video('btn-stv', previous, NOW, lambda _: b'<a href="https://youtube.com/watch?v=OTHER123456">old clip</a>')
+        self.assertEqual(result['status'], 'error')
+        self.assertEqual(result['videoId'], previous['videoId'])
+        self.assertEqual(result['generatedAt'], previous['generatedAt'])
 
-    def test_htb_canonical_and_reject_unrelated_links(self):
-        page = b'<link rel="canonical" href="https://www.youtube.com/watch?v=tvgbZZYS4Nk">"playabilityStatus":{"status":"OK","playableInEmbed":true},"isLiveNow":true'
-        result = feeds.collect_live_video('btn-v1', {}, NOW, lambda _: page)
+    def test_htb_live_label_and_dosanko_live_section(self):
+        page = '<img src="https://img.youtube.com/vi/OTHER123456/mqdefault.jpg" alt="番組紹介"><img src="https://img.youtube.com/vi/tvgbZZYS4Nk/mqdefault.jpg" alt="北海道ニュース24〜HTBニュースLIVE">'
+        result = feeds.collect_live_video('btn-v1', {}, NOW, lambda _: page.encode())
         self.assertEqual(result['videoId'], 'tvgbZZYS4Nk')
+        page = '<h3><span>【LIVE】どさんこワイド179を24時間配信</span></h3><iframe src="https://www.youtube.com/embed/Y1uNv-JTJKg?autoplay=1"></iframe>'
+        result = feeds.collect_live_video('btn-custom-video', {}, NOW, lambda _: page.encode())
+        self.assertEqual(result['videoId'], 'Y1uNv-JTJKg')
         with self.assertRaises(ValueError):
             feeds.youtube_video_id('<a href="https://evil.example/watch?v=tvgbZZYS4Nk">Not YouTube</a>')
 

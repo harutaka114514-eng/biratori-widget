@@ -44,7 +44,7 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_*.py'
           node --test tests/*.test.mjs
       - name: Update official holidays
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: holidays
         continue-on-error: true
         run: python3 scripts/update-holidays.py
@@ -54,47 +54,47 @@ jobs:
         continue-on-error: true
         run: python3 scripts/update-widget-feeds.py
       - name: Update Bing wallpaper
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: wallpaper
         continue-on-error: true
         run: node scripts/update-bing-wallpaper.mjs
       - name: Collect Domingo news
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: domingo
         continue-on-error: true
         run: node scripts/update-domingo-news.mjs
       - name: Collect Walker Hokkaido outings
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: walker
         continue-on-error: true
         run: node scripts/update-walker-news.mjs
       - name: Collect SASARU categories
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: sasaru
         continue-on-error: true
         run: node scripts/update-sasaru-news.mjs
       - name: Collect Hidaka events
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: hidaka
         continue-on-error: true
         run: node scripts/update-hidaka-events.mjs
       - name: Collect Biratori bear sightings
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: bears
         continue-on-error: true
         run: node scripts/update-bear-sightings.mjs
       - name: Collect monthly Gutabi events
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: gutabi
         continue-on-error: true
         run: node scripts/update-gutabi-events.mjs
       - name: Set up Python for X
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Collect X posts
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[refresh feeds]')
         id: xposts
         continue-on-error: true
         env:
@@ -148,4 +148,5 @@ jobs:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
 
