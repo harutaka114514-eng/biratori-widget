@@ -515,6 +515,17 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   background:var(--panel-control) !important;
   color:var(--panel-control-ink) !important;
 }
+
+/* Event cards show a two-line title and their dates only. */
+#seasonal-events-list a {
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  max-height:3.2em;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 </style>
 </head>
 <body data-theme="wii">
@@ -1421,7 +1432,8 @@ function renderHidakaEvents(){
   list.innerHTML=items.map(item=>{
     const period=item.startDate===item.endDate?date(item.startDate):date(item.startDate)+'〜'+date(item.endDate);
     const title=item.title.replace(/^【[^】]+】\s*/, '');
-    return '<li><a href="'+escapeWidgetHTML(item.link)+'" target="_blank" rel="noopener noreferrer">'+escapeWidgetHTML(title)+' ↗</a><p class="seasonal-event-meta"><span class="seasonal-event-state">'+(item.startDate<=today?(item.dateLabel?'開催期間中':'開催中'):'開催予定')+'</span>'+escapeWidgetHTML(period)+'<br>'+escapeWidgetHTML(item.location)+(item.dateLabel?'<br>開催日：'+escapeWidgetHTML(item.dateLabel)+'（開催日・時間は詳細へ）':'')+'</p></li>';
+    const dates=item.dateLabel ? item.startDate.slice(0,4)+'年 '+item.dateLabel : period;
+    return '<li><a href="'+escapeWidgetHTML(item.link)+'" title="'+escapeWidgetHTML(title)+'" target="_blank" rel="noopener noreferrer">'+escapeWidgetHTML(title)+' ↗</a><p class="seasonal-event-meta">'+escapeWidgetHTML(dates)+'</p></li>';
   }).join('');
   const updates=[];
   if(validHidakaEvents(hidakaEventRecord))updates.push('日高：'+formatWidgetTime(Date.parse(hidakaEventRecord.generatedAt)));
@@ -1431,6 +1443,7 @@ function renderHidakaEvents(){
     const source=document.createElement('a');source.href=url;source.target='_blank';source.rel='noopener noreferrer';source.textContent=label;status.append(source,' ');
   }
   status.append('日程の変更・詳細は各記事でご確認ください。');
+  status.hidden=items.length>0&&!eventLoadFailures.size;
 }
 async function loadHidakaEvents(){
   await Promise.all([['hidaka','hidaka-events.json','biratori_hidaka_events_v1'],['gutabi','gutabi-events.json','biratori_gutabi_events_v1']].map(async([key,file,storage])=>{
