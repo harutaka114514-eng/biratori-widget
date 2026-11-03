@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-03T09:28:00.571038+00:00",
+  "generatedAt": "2026-11-03T09:31:17.221019+00:00",
   "feeds": {
     "https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "【旅レポ】醤油蔵とウイスキー蒸留所を巡って奥深い但馬グルメの魅力に触れる旅へ。兵庫・養父（やぶ）の“道の駅隣接ホテル”を拠点に2泊3日",
@@ -101,8 +101,8 @@
     },
     "https://hokkaido-hidaka-kankonavi.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "乗り合い便ナナパカ号運行中！",
@@ -202,8 +202,8 @@
     },
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "人物や花・・・色彩豊かな絵画42点 梅田正子さん遺作展、平取で４日から - 北海道新聞デジタル",
@@ -485,8 +485,8 @@
     },
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "「もっと買ってくればよかった」 “新千歳空港限定の大人気スイーツ”に「想像以上の美味しさ」「会社のお土産にも大好評」などの声【実食レビュー】（ねとらぼ） - Yahoo!ニュース",
@@ -498,6 +498,12 @@
           "title": "開港100年！ 新千歳空港グルメ すきま時間に映画館＆温泉も！【グッド！いちおし】 - テレ朝NEWS",
           "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE5iTE14SHpzelpsZTRNS2NlOVU5WnZUdTI1ME9rS2kzWGNkRzcxbWlCc2tCRThWQXNtWjljLWNmQUxEUzZXVXhYUWdvX0pjQ2xxSnlCYUg5VldwbUo2djFJMlUxZjZ5RVZoSWJVd3JhUUQ1QQ?oc=5",
           "pubDate": "2026-11-02T11:34:12+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港IC出口付近で乗用車が大破 60代とみられる男性が意識不明の重体 道央道・苫小牧東IC～新千歳空港IC（下り）で通行止め 同乗者女性も重傷 - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9OMl85UnVnTnlhWm1RNHhCMFlwZ1NzS21DNnhCMW5jd0ZQazlSZDdnXzVfcDZTYWRvc1N3aXVHc0poSUFEaU1pMnQ1QVVydUtQRERDd2FjVU53bDhreEh3?oc=5",
+          "pubDate": "2026-10-28T03:27:00+00:00",
           "categories": []
         },
         {
@@ -513,15 +519,33 @@
           "categories": []
         },
         {
+          "title": "新千歳空港で買いたい北海道土産の新定番！札幌農学校の新作「第2農場チーズケーキ」を実食レポ - domingo.ne.jp",
+          "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE82Zk9rZVdlQjJNSk8zcjZVc0c1STZIeTdZYzR1TVR3NzJJT3gxOGRILWJkMHU3T0hJMkpBeVdqNWY1akZhQTFlREQxOA?oc=5",
+          "pubDate": "2026-10-28T04:57:23+00:00",
+          "categories": []
+        },
+        {
           "title": "「新千歳空港１００年」相原秀起著 村民が造った飛行場、国内有数の大空港に - 北海道新聞デジタル",
           "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBMQ3lheGJCVF9CVkxqQjRvMzJpZzVqQVRHOHpoWTFrandVNUx4aXl3cHFHTmdJNTh1eFBPd0VneGxRbEdMbDlCM3RMM0hLazlaRDB3eDB3UVBQdw?oc=5",
           "pubDate": "2026-10-30T01:11:20+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港周辺対策グループ - 総合政策部航空港湾局航空課 - 北海道のホームページ",
-          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5HM2F4S1BUWF9ucDY4a2xGSE9SYzlybWpKQ3NrRkdwcjQwOUxpV3k0ekxIVVY4aEVqRnNmLXJBQm5ldkQtMEg1WDE3TVBtd1c3enRqX2NmQUVzWEZ1S2dfTlhHSlRLc1BpQ09zY1Focw?oc=5",
-          "pubDate": "2026-08-18T07:00:00+00:00",
+          "title": "新千歳空港国際線 今冬の運航計画を発表 ピーク時の便数は週336便と過去最大に 北海道 - 日テレNEWS NNN",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQYzJmcWFnV3F0ckpmSTZOdnFNRUZmRnlyMm84TWVlMXFvR2FRclNOdWs3bkxjeklQbVlaSUNMMUVBTGxub0UyUS1LbHhuQXZGLUVhcTdjQkxZalVxZGp2VlVrZ0x0eXhxaGo1aFI0SFRJRzd3QnRJU3NUSm9wekF0aE5yTG9PZW8?oc=5",
+          "pubDate": "2026-10-28T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港節目の日 初飛来から100年、さらなる飛躍誓って式典 [北海道] - 朝日新聞",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9vUnlLOWtJMjRrOWtaUDZmUXBMXzNQQlNzQnFyQlhISGlhX1I2dlNIU00ycXhsdjJBZFZ0QV9ta2hRMGh1ekc4Z0RjQ29tQl9uZ21MaUVBdXY0cm8tQjhPLWZSakwwaGM?oc=5",
+          "pubDate": "2026-10-23T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港の冬の国際線は過去最多の週336便に 韓国が全体の4割、アメリカやカナダ行き新路線も - HTB 北海道テレビ",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBheGVQYUJXR1o2NV9sQVdLSE4wOWpUS1hRYzJJSXpfZm9HalRUUmVrRy1Uenh4Y3hBS1VRV3NMd2ZLM0xENEI0NldfcW9UMXN1U090d0ZCeU1Vdw?oc=5",
+          "pubDate": "2026-10-26T06:53:00+00:00",
           "categories": []
         },
         {
@@ -531,45 +555,57 @@
           "categories": []
         },
         {
-          "title": "新千歳空港へ行ったら絶対買いたい！もらってうれしい北海道のお土産20選 - Web eclat",
-          "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1qMUZ3WXV2RGVMa3BVMlYtQlpWOE1JQ09WcnhoZ2JhclhoRmZiNVFiaENmeTBjNi1NOGtnZkRmZWpmSTNWc0RrR1NoTTFaWkRtZHROMHk0R3FOd1hldGZWZEpR?oc=5",
-          "pubDate": "2026-10-10T07:00:00+00:00",
+          "title": "新千歳空港の冬期国際線スケジュール、6%増 台湾路線が好調 - 日本経済新聞",
+          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5aMmx4U2V1NW5YOG5fa0NUZzI1OWQ1NW5uRU4yLTg5MWtlZ1ZNSWxQRlJiQnhQczJjVnZseVhPLUdXZ0E1Yl9kSENvc25HS0xJNDdLYzdLY09BeTVFdHRuUEtEQy1tMjNvRW5OUQ?oc=5",
+          "pubDate": "2026-10-26T09:47:36+00:00",
           "categories": []
         },
         {
-          "title": "【新千歳空港が進化】利用客2600万人で過去最多！空港がテーマパークに？飛行機に乗らない人も楽しめる場所へ「より便利に、楽しく」2027年夏にはアニメ施設など“約20店舗”誕生〈北海道〉 - UHB 北海道文化放送",
-          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9vVFJ0cEtnZmI0YVdsb2NZNzFwN3cyYnFqZjh3RldjMGotdGR5WjlxelhwbXcydWdtZ2VrQ1JxNHFvQm8yc05VcS1KOW5xY2IzYl95dzY4NA?oc=5",
-          "pubDate": "2026-08-30T07:00:00+00:00",
+          "title": "プロレス TAKE OFF！ from 新千歳空港 - 新日本プロレス",
+          "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE4xdzRRS3kya05lNWdMbmVHdjlVdldyNUFSTFZVcWpJNXV6U1c5ZTlBSTNFNzZQMFF6WjNGcE1veUJ4dXRlMGc2YTFfQ2hlcG5JMHc?oc=5",
+          "pubDate": "2026-09-18T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "9月18日（金）「千歳市空港開港100年記念イベント」として、新千歳空港のど真ん中で新日本プロレスが“空港プロレス”開催決定!! - 新日本プロレス",
-          "link": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTFA2bkF4YnZiV2gyR3dScUVLdXVKLUN0SGw0aUpZZUpUZVlKbnBrZ2lxSWstYno1UklDM0RXa290OVJXMWM?oc=5",
-          "pubDate": "2026-07-19T07:00:00+00:00",
+          "title": "「もっと買ってくればよかった」 “新千歳空港限定の大人気スイーツ”に「想像以上の美味しさ」「会社のお土産にも大好評」などの声【実食レビュー】 (ねとらぼ) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOWXladnlrVmZadUozQ1lhM3FuUFRCbE9EYlFvN2d1bnJpdzhNSzQ5TXA2WDF5S1htSWF0aUhfdWZzM0pTbzRSN0p1TnBZaDRvZXZDd29SWWhRX015WUQtN3hXNnpiQVFMR1BzYlNmU1NQVHcyVUJUMlpBN3JGc05uc19JdHp1QnlWN2t4bmlB?oc=5",
+          "pubDate": "2026-11-02T01:20:00+00:00",
           "categories": []
         },
         {
-          "title": "口蹄疫ウイルス、検疫で初検出 新千歳空港でヤギ肉から：時事ドットコム - 時事ドットコム",
-          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9hOFJGZEpOM0x5d1Q5cUgzbzJpLVIteVBtck5wakJFaHNLUEhmb1A0SzZJOVNrQlNhN1hvUlhCTEVBLXdFc216b1RhbnprbEs5clBWbWR3emF0czJWQ2ZFRXgwdw?oc=5",
-          "pubDate": "2026-09-10T07:00:00+00:00",
+          "title": "整備士の仕事 間近で見学 新千歳空港（動画） - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5zOFNZRUZZYzVEQlU1LXBoSHZmaE9WQlpyQVUtYzV5TDY1SWdxVjZ0VkFSR1lrU3JzOHZPTS1yMDJUaUd2bTdYME5VWFN6djFHVGx6UmZtOTk3eEFBT1BTSkRxNl94Y1Z0Tnc?oc=5",
+          "pubDate": "2026-10-30T08:22:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港に史上初のアメリカ・カナダ路線１２月に就航 決め手は？ 空港運営会社のトップに直撃 - HTB 北海道テレビ",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5XZXlPXzNWLUxzYXJ5cDlhN0RacXF4aEo0Q1M0UWtRZHppNlpiNTVwc01VbmNfeTVzZEVTcThVdGJXWVg2Z3ZnenNYUTBtNU1rN1JmR1NDekYwQQ?oc=5",
-          "pubDate": "2026-08-23T07:00:00+00:00",
+          "title": "JALの新千歳―羽田線が就航75周年 空港の歴史とともに [北海道] - 朝日新聞",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBJM0ZwZzdid2VpOHoxMnFfTllwUG5hUFZTY2EtZUpqbWoybHMwSHJpVVZXVVlzOUlJQ2R5eXR3R2sxZDE0WmFmV0gxZHR3VmxUclhTdFFrTFpqakgxVzhfQlVGdDVZemc?oc=5",
+          "pubDate": "2026-10-27T02:00:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港 空港施設の耐震化事業 丨 現場クロスナレッジ - 国土交通省",
-          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQa25LOUVkT20xNHdoT2NOWm5hYmdyaWNOR0ppMlZNNmJTNi1sdVZoemFyR3FpSUh5Rno1amNieGotdjZfLTZRNzF0TnpLTE1fSm5COFJVMktFdV9aZ2RFZWRNWG40OVF4aEpUdHFNOEJKbzR5UGRJR3lSTzJNZVJSQnJIMERWbk50d25QNXFvMFZYcWFLMzlzQl9Sa0I?oc=5",
-          "pubDate": "2026-03-17T09:15:27+00:00",
+          "title": "JALの札幌－東京便が就航75周年 新千歳空港で記念セレモニー 横断幕掲げて記念便を見送り - HTB 北海道テレビ",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB0cldIaXB0QkFJUW1fYlpaRkNPRlFrb2pENUhBU0F4X0d6N3RicE94LVcwaC1KUTZsdE5YV1V6X0JiU3lMX0dTOTl5QXJfM0hacmo1Y1FkeVZnQQ?oc=5",
+          "pubDate": "2026-10-26T03:05:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港周辺地域振興基金について - 北海道のホームページ",
-          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5LaWtkeksyaWdSY2FkV09TZVYxSXotYVhnS19SclZ1cXBXMExPWnNHcjVzblFpb25sblU2Rk51SWV3ZmsxNy1tSlRRWWJMM0pmS2xjMFVDUWtxSU5ZNTdhRGdZay1Jck0?oc=5",
-          "pubDate": "2026-08-17T07:00:00+00:00",
+          "title": "新千歳空港×新日本プロレス 棚橋弘至社長「良い違和感」 開港100年記念イベント - テレ朝NEWS",
+          "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE0xYkxtRHRtR0ZlVTl5ZDdPTl9hLVJLMjJDQTJnTHlhcDZzZ0gzdlNpcXM2OHNpSjQwN2g0MHRSTy1iOVpnVkpDTmtQUGo3a0QxcnYzeV9vSnlLaXhBcjdSQjd2WEkyZ3lKdnhtVU9YcTJMUQ?oc=5",
+          "pubDate": "2026-10-18T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "着陸場の完成から100年 新千歳空港で記念イベント 「空港開港100年」の節目を祝う 北海道 - 日テレNEWS NNN",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOeFRoc09iX1oxcjNZY1U1enZ1a2RBR2QyYzh3WEUySDVwSjR2VG1kdEVtX3BHRTAwNjFmSzZzNlFjTUJSRGVPandfSldKY2Z5QUZIS19MY29wSnloVzdfRVVoWVc4Vlh2aHp1dWJLMHlLcDVlR250YzI2Z0pPNEtBVUhqUnN6Mjg?oc=5",
+          "pubDate": "2026-10-22T22:29:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港と札幌都心部を結ぶバスをリニューアル 「すすきの発ダイレクト便」新設 北海道中央バス - 日テレNEWS NNN",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPUXRnWDdvaXJtN0dZclNJc0hCdHBLbVhuZktWMWhaRGl1VzlDWDFDejluZDlyZmQ4Z1I5ajdHcC14ek9mWUxidHE0Ym1ZSUc3MUY3aURoTm9od05WVVJYTVZzR0FxdnR0YVM5TUFBN0lHZ0F0a2hzNHgwYUhxLUl2SXVBOTJwbEU?oc=5",
+          "pubDate": "2026-10-22T07:00:00+00:00",
           "categories": []
         },
         {
@@ -579,9 +615,87 @@
           "categories": []
         },
         {
+          "title": "第13回 新千歳空港国際アニメーション映画祭 上映＆トークショー実施決定！ - 機動警察パトレイバー公式サイト",
+          "link": "https://news.google.com/rss/articles/CBMiygJBVV95cUxNellVRTJLUkxlS2N3R3JvcElQUjg4Nk9yM05YazFzZDZxVkY3UlhuWHdzX3g4ZFc3V2dieGhoWVNaMm52U2FteEd6LUZidlYxbl9VajNZQmFaTjZKb2lQRWQyRC1aaVJ6Yi00ZHJuczkyNkNycFRjeGlVUXRVRm1MTUdhZFpFRlFETHpBVXlZajByak9IcnJjQ3F6QmdselVLejcyUVhjQmFrNnJKWUFZQVhMeE5Td3dDUVVUZGMzb2F5Y2JhVW5ZcjRPdzVsNHh3bmV1a3dfR1F5bUdoS0wwY285QWxXSlpzRzlNQl83LWNNNEZ6Sy1oLUg0S25QRWtWaFpXaXc2VnliclpzbjhaZnNpNk81ZXpIYW90WVNrOURjdFRhcWNqaTdxUmJ1WTdWa0xoYTZEa3czM3k3TElwc1hBM3lCZm5WNXc?oc=5",
+          "pubDate": "2026-10-09T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "JALの札幌－東京便が就航75周年 新千歳空港で記念セレモニー 横断幕掲げて記念便を見送り - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBtT0NrX1hYOXE1c0F2Q3NtREtvQlZDNDBKMGFHRGMtTl9aTVdjN3lmN3JjM09OZFAxekpZUEpQWGJYU3Z0TWczNHJrdXU5SDhzMjR2aDM3MjVVTzlSMG1GQi1ObmV0UVFpdloxSk9HTi1TcTBQR2pacTRCUjJyNG8?oc=5",
+          "pubDate": "2026-10-26T03:05:16+00:00",
+          "categories": []
+        },
+        {
+          "title": "「千歳空港開港」100周年祝う 航空関係者や市民ら参加し記念式典 - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1KRnFpT29GSUR1UXZHRmFNQWNCM04yU1RUWlhVX2FiMkdRaEV4b2NoRHJIWTNCT3Z5bHhBZ3pBc0dZbk81T0JEN3NCWnBxU2kzSDFRUGRvQkhJQQ?oc=5",
+          "pubDate": "2026-10-22T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港へ行ったら絶対買いたい！もらってうれしい北海道のお土産20選 - Web eclat",
+          "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1qMUZ3WXV2RGVMa3BVMlYtQlpWOE1JQ09WcnhoZ2JhclhoRmZiNVFiaENmeTBjNi1NOGtnZkRmZWpmSTNWc0RrR1NoTTFaWkRtZHROMHk0R3FOd1hldGZWZEpR?oc=5",
+          "pubDate": "2026-10-10T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港×QuizKnockイベントに本学が協力！DIDIM体験も実施！ - www.siu.ac.jp",
+          "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBUQlF0VXVFRDBtY2JxdGw2Q0dhdEhTQkhsMl84ZldwNndSdUptTGVNdzJMOUtpWDd4Zk16Z3o1WGx5TVYwcll3b0VwRzBfWGxaZldCMThBQ3FKRkJQ?oc=5",
+          "pubDate": "2026-10-20T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【北海道土産】新千歳空港でしか買えない！もらってうれしい北海道のお土産3選 (Web eclat) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOQ0xJR3dreXN3ekdsaUJDb0J3cXFHcFpvNkxZN3pUaVlxX1YteWZ6azdqVmZoTEtvRnNZS2xUNXpiMlNaUkNrUkNCeTFkaE8tbklJZldRcUZKa2NGLTVWTHhoVkZCOGdJN1llNXgwTjR0LTJvNjJNSDRsanhBSWFXUDZuV1dZVWNWNWJrMnlB?oc=5",
+          "pubDate": "2026-10-18T11:27:46+00:00",
+          "categories": []
+        },
+        {
+          "title": "【11月19日解禁】ボージョレ・ヌーボーが北海道新千歳空港に到着…「果実味を感じる」仕上がり - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1maHFHQ2JyT04yc0xEbVVjTHVfNXFHalVRc3NxbUg5ZkZZNDNWM3FubzFaam82YXRrUmJ3Sl9kcl9kX1hFYUR2dEhzTTZnMk1WVUFMS2hPRHQwZw?oc=5",
+          "pubDate": "2026-10-25T09:31:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港】今冬の国際線数が過去最多“6193便”へ！アジア路線の大幅増に加え、アメリカ・カナダを結ぶ新路線にも期待…成長のカギ「アウトバウンド需要」獲得へ向け更なる路線拡大の準備進める - UHB 北海道文化放送",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1wdXlQRVV5YzJ5NGZVaERUV1NqOVlWcV8yYnNQSkpUZVpnaEpsM2UxQmt4RE5WQlF4S0xLLUJQdGxjU0M3NEY0V1JLVlc1M3Q3TnVOcDNPUQ?oc=5",
+          "pubDate": "2026-10-26T09:37:13+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港駅「スルー化」検討へ。快速エアポートの混雑常態化、ラピダス進出で問われる千歳線の輸送力 - 健美家",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1ob0pHbktzZmtDUkxqM3Zib2NMVDI5dF9IazR3SDZJVktJZUVyWDE5MjdfWmhaUU1oSDN0ZmQwdC1lM0tKeGdoVXJ6OG4ycVJWUkltNXVpRm9aa01XWWxaQmR5cEpieFk?oc=5",
+          "pubDate": "2026-07-16T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "「新千歳空港×新日本プロレス」棚橋社長に聞く ウルフアロンも【グッド！いちおし】 - テレ朝NEWS",
+          "link": "https://news.google.com/rss/articles/CBMickFVX3lxTFA2dXU0eS1pZGtYa1ZCYS0xYmo5c2Uyc1M3N2pvRV9tY3NrdGxCODd6ZFNqOFgxeFQyZE9LMndORFNTa2xyNGRQTHRqTl9YeWc0d1BieU1DNmgwVW1aSVM2ZkZ5aU5pWVh0TzlZWEhzSUh6QQ?oc=5",
+          "pubDate": "2026-10-09T07:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "千歳開港１００年！進化が止まらない新千歳空港が運ぶ「ヒト・モノ・マネー」の裏側に迫る（テレビ北海道） - Yahoo!ニュース",
           "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE4wNnhfSkZyT0xnbXNnTTVsTnJHNTgxSUhmLXlBa3ctX2VHRWlIYmI0V1dQNTJybE5zcXpaMl9YbVZRSmpxNWI4NVl3ekp5WTFrUVFqZ0YyWFg3cnBWOHlRdDY0bVYtSk5aanN4cW12eTM4NmxHLTNiaUI4Rk9vTHc?oc=5",
           "pubDate": "2026-10-17T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港が進化】利用客2600万人で過去最多！空港がテーマパークに？飛行機に乗らない人も楽しめる場所へ「より便利に、楽しく」2027年夏にはアニメ施設など“約20店舗”誕生〈北海道〉 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOd01CY2VUY0hJLVhESnQ1ZkhWUUdCNEFVOUMtUXZpZjkyeHVHTE80V2dOdlZoOHkzVEJzeVJxVHppSElmVVVhOTRpdmw0Zk0yRURuTThjemVERHN5bndCZFBKYm9Sa3otRGkxdHRhSUZVTTNMXzJwTFI3NHpybFpxTHBmXzdVUWxf?oc=5",
+          "pubDate": "2026-08-30T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港節目の日 初飛来から100年、さらなる飛躍誓って式典 (朝日新聞) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNLW9ZVDUyLTJnS3dHdWdoQjFEWFJodG1tbGxaSzlxSlhXc01OYlkyMksydkRnWEttYjhCRktUZllFc3l2a3VtM2F4dkt1eGI1YkdCXzFZd1lvNmprMy1TNXRWQjhua3htdkM1cEZZOWJMMFQwd3k4X1RPWmlZOEttdG5TZ2lsaVVMSHBHRmhn?oc=5",
+          "pubDate": "2026-10-23T01:00:01+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港のルーツは”鍬で地面をならした”滑走路】千歳に空港が誕生して100年＿芸能界きっての”飛行機好き”風間俊介さんは「お祝いのためすっ飛んできました！」〈北海道〉 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNd0RVSU9UMjJnWXEyaU1QNWdiOXF5ZWMzQ0hCSWEyNm55c3FIY1NBa1JzbmZhZlZfTmNQbVFnUkdBbHhQUWg5VDZfWEJzVlRLaE1WQzZ2SFRPVVluLXlYREZMbkJYWHluZ1A3SVpza0VTTHJRUnpDMC1aNVcxbnFqVUF6cFRocnZzYV8zcm5R?oc=5",
+          "pubDate": "2026-10-22T11:20:01+00:00",
           "categories": []
         },
         {
@@ -591,15 +705,183 @@
           "categories": []
         },
         {
+          "title": "【11月19日解禁】ボージョレ・ヌーボーが北海道新千歳空港に到着…「果実味を感じる」仕上がり - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5DWVYzMmJEemNtc3JxNWNKZk5pMkpkU3pRckxfa2dEU0pvMDdDUWczZlNaTW5RY3FJV2Fib1lYWEY5cFRySHVadHJsclpvWnNtX0M2UzdwbWRVeXdiN01RSGF2WmtGdlJmaXhFUVdhYzhraENTRW56SE9IU202UHc?oc=5",
+          "pubDate": "2026-10-25T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港のルーツは”鍬で地面をならした”滑走路】千歳に空港が誕生して100年_芸能界きっての”飛行機好き”風間俊介さんは「お祝いのためすっ飛んできました!」〈北海道〉 (FNNプライムオンライン) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQN3loNGpJM0RwVXBlQm1iejZ1UTBKR1R0MEEtM2I5aFZBTFpFWTZqUy1HeWw2LXdEcXRPb0tPakdWOGJ4bHdMN2t2ZjNkblFxQUhrem1zTlJBaVBqQWJDSnpMbXF2ekhmNjNNV1RJejNrdmxGYno5RnRETXFlczdnOEZ5dEJzLUxjUjVENmln?oc=5",
+          "pubDate": "2026-10-26T12:01:20+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港のタリーズ、10/26移転オープン 連絡施設2階初の常設飲食店 - Aviation Wire",
+          "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBZWDg0ZkU1X0V3VjRZSTRaNGlTdndoSC1SY3E5YnNLTmVrMXhzRzlBMUFpcG96OTBNbTFHYmlrYXpjX2o4VXNoVVBXb3JmUm9LdGI2dDVR?oc=5",
+          "pubDate": "2026-10-13T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港が進化】利用客2600万人で過去最多！空港がテーマパークに？飛行機に乗らない人も楽しめる場所へ「より便利に、楽しく」2027年夏にはアニメ施設など“約20店舗”誕生〈北海道〉 - UHB 北海道文化放送",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9vVFJ0cEtnZmI0YVdsb2NZNzFwN3cyYnFqZjh3RldjMGotdGR5WjlxelhwbXcydWdtZ2VrQ1JxNHFvQm8yc05VcS1KOW5xY2IzYl95dzY4NA?oc=5",
+          "pubDate": "2026-08-30T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "最大１２万立方メートルの雪を貯蔵“世界最大級”新千歳空港の冷房システムの裏側 二酸化炭素削減も… - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBlQllyNXh3V2NvNnBSTzdQTldyVjhQSUJjbnpyTk5uaTh3Xzc0MFZmQVdRZDdiS2VJU3dOLXBRTTNEaFBnT1dyLXoyRkt3bGhfNFcyTnF1R2RXUXl3R0ZDMlBuenhISHFSbXdNcWpaekdMbE1pd202Q1k5UFRoUlE?oc=5",
+          "pubDate": "2026-08-17T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "9月18日（金） 開催『プロレス TAKE OFF！ from 新千歳空港』チケット詳細が決定！ - 新日本プロレス",
+          "link": "https://news.google.com/rss/articles/CBMiREFVX3lxTE55dXJvWjFYSExQOGZ0VjdyMXJ6YTJXcDUwNXlGVHFfZmZBRVg5TzF4U0JONXZRZDE3QWZkT0tEVWxmWGVR?oc=5",
+          "pubDate": "2026-08-17T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【9月18日 (金)新千歳空港センタープラザ大会の“一部対戦カード”が変更！】第1試合に海野翔太が出場へ！真壁＆矢野＆安田とカルテット結成で、Unbound Co.と激突！ - 新日本プロレス",
+          "link": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE1lcXlCNTk5eGpYaEk2SjdobzZ1UXBWbHB4alZpcXpGeHRTOVhva0hZaFU4c0xTbi1LT0tKbUJzdEJxLW8?oc=5",
+          "pubDate": "2026-09-06T07:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "【スタバ】1店舗限定！知る人ぞ知る「エスプレッソを使った激レアフラペチーノ」がおいしすぎる！ - Yahoo!ニュース",
           "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNZ2FOMEVaWThRTktUUEtZNjJiYmNFaWl6VENOUU5wckZ1R1U3SEpYWW9sUnptY0lNR2NuNjZrNDI4M0FiUm53SnZCQmIwS3c0cHg2UThsTl9PSFBDWVhNTDA3RGl1U0JNM25ZbVJ2RjVneEJ5TVZ1MnFaMlpMbXpoRmp3LXgyOVdz?oc=5",
           "pubDate": "2026-10-31T23:34:26+00:00",
           "categories": []
         },
         {
-          "title": "【速報】新千歳空港で多数の乗客らが足止め…カミナリの影響で到着便が遅れて旅行客らがバスやタクシー乗り場に長い行列…空港で一夜を明かそうという人も＜北海道千歳市＞ - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9wNklVZlQzZ19sSFhuaEEyUHhsdXh2VlQwSmdPOHk1eVpSLXV4cjc3WUZVQkxJRXpTakZoVGgtbVlPTUhqS1pJdEJpNGJMclRzY1ZMLWdpRHJ6enRWTFVxU1c4dXBnd3ZYM3BIeDRiazFxZGduU0dOMUdwdWdtRDQ?oc=5",
-          "pubDate": "2026-08-28T07:00:00+00:00",
+          "title": "新千歳空港そばに半導体の開発拠点を整備 ラピダスとの協力にも期待 [北海道] - 朝日新聞",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5fb09CblZTazFnRXp2NEd2SmEwdkphV2pPSmtJbXRVNjFPeTJJMF9NV3BjZjZYSHFXUXBRdnA5aUZhWHIzMmpBM0FtTDVxbDVHaFlZbnU0NmEtbUxVWG9MdDdseWdMTlk?oc=5",
+          "pubDate": "2026-10-23T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港のルーツは”鍬で地面をならした”滑走路】千歳に空港が誕生して100年＿芸能界きっての”飛行機好き”風間俊介さんは「お祝いのためすっ飛んできました！」〈北海道〉 - FNNプライムオンライン",
+          "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBybnBpZlZDNW0zQkpLcmR5N3pUQ2V2ZGJzMk5FWG5kMGJyUWlsVUxnTl84S3hvNEp1c0MzZlhySmN0U01rTWZCdmtqYlgxUQ?oc=5",
+          "pubDate": "2026-10-26T12:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【9月18日 (金)新千歳空港センタープラザ大会の全カードが決定！】メインは、後藤革命軍 vs Unbound Co.の8人タッグ戦！ウルフ＆上村＆タイチvs TMDK！真壁＆矢野vs K.O.Bの最終前哨戦も実現！ - 新日本プロレス",
+          "link": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9zelJuZEIxRDN3XzdZOWZibW9FQ0hMckYtUks1bWlIUXMzbEZRRkdoSzVBN3c2Z3pVWGoxai1jQ3pJX0E?oc=5",
+          "pubDate": "2026-08-17T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港のアンダーパスが冠水し通行できなくなる車も…快速エアポート39本を含む列車108本が運休…大雨に見舞われた北海道…札幌には初めてレベル4の「大雨危険警報」が発表 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9IMVBMVjBPS1dRXzVDLUZmOWE0WnlhTnEwdGVRaVpaTmlfR25Tb2d4UzF1bllEWlUtTi05Zm0xb2NqRmw0Y0VpMW5ST21wVFZfTkJwODZYTkcyZ0NRYjVCNlhxNDF2ZjFCclNqUExTWjlJRThjQm5HOG5TZG5kd3c?oc=5",
+          "pubDate": "2026-09-29T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "牛乳、小豆、小麦が三位一体となった「新千歳空港限定」ソフトクリーム 北海道らしいボリューム感に「カロリー爆弾」「物理で殴ってくる」 - まいどなニュース",
+          "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5HZ0tocGhfelNOUngyWmF1ZTBuU0FDZVRISnFweXZYaW5DVy1MVTd1eHdHeWNaQnpVY0V1NGFiM0tjTGlLVklMeldzMUdzU1Vs?oc=5",
+          "pubDate": "2026-10-28T02:40:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "JR北海道 札幌圏と新千歳空港結ぶ「快速エアポート」新型車両導入で輸送力向上へ - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5uZ0pQd1ZyODVZWmYwdG9kWEtJbml2aUIxZENUTnBGZm8zeFdLTGgwb1k3MHYxdFJlTnowanVIajh4MlhwSS1nM0V5bUc3ekFMV3U3dmt1MEN5VDBmcVlR?oc=5",
+          "pubDate": "2026-10-23T08:40:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港のルーツは”鍬で地面をならした”滑走路】千歳に空港が誕生して100年＿芸能界きっての”飛行機好き”風間俊介さんは「お祝いのためすっ飛んできました！」〈北海道〉 - UHB 北海道文化放送",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE14d2N1UWxEbnR0d052THREaFIxcC1kVFBEY3ZYOHFMUTJnOXdpUDVibHhNZlA1OWlWWGJRd3VLUmhmOGNFcWtJQjRVa05oYjFpYjhtN3JNQQ?oc=5",
+          "pubDate": "2026-10-22T11:39:55+00:00",
+          "categories": []
+        },
+        {
+          "title": "「ボジョレ・ヌーボー」が新千歳空港に到着 ことしはブドウの糖度高く果実味感じる味わい（2026年10月25日掲載） - 日テレNEWS NNN",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1HOUUtUS1FeWhaQks1SnhkQmc0Sm1UV0VPa1MtMTYxV1pmS0twUy1udFNxOXF0cFExTkNRclo5ZmhYSFVvOHlmbmhzRmlPdHRpZVdjY1k2ZlZjYzlPT3gycXBYTWttZjZNc0JSbm9RcERQSE51ZmVuVTNpWlBKZ28?oc=5",
+          "pubDate": "2026-10-25T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港でプロレス初興行 開港100年記念、会場熱気（共同通信） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE0xa3hZLXdEQnE4STNxSmhKb3RJTzdFUXAyMmlfekwxdGVpOEVBQkZhN3FNRTA3WGI0OFUtcWZodDRUYTltR0s0VDJtZkUtUTJ5RmZ1d0U2NTJzU09BTkFpSGI0MzV5YVB0S2E3OFp5M1BpSnlhLXRDcnAwR2hMTXM?oc=5",
+          "pubDate": "2026-09-18T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "口蹄疫ウイルス、検疫で初検出 新千歳空港でヤギ肉から：時事ドットコム - 時事ドットコム",
+          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9hOFJGZEpOM0x5d1Q5cUgzbzJpLVIteVBtck5wakJFaHNLUEhmb1A0SzZJOVNrQlNhN1hvUlhCTEVBLXdFc216b1RhbnprbEs5clBWbWR3emF0czJWQ2ZFRXgwdw?oc=5",
+          "pubDate": "2026-09-10T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "オリジナル フレーム切手 「千歳市空港開港100年記念 翼に夢を乗せて次の100年へ」の販売開始と贈呈式の開催 - 郵便局",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE85RUtYWHZSYnE4clVGQWlZcmk2UFpHWnU3VmtLTlRZdDBpQ3Q1QzVtUWhKSTdPSzhVcUJ1YUVLSi1zbXBBbHRJYlRMYVVobF8zZlJfYWVVcDFFS0VWdWtNblNkZ0pSdkg0aWY3QjhNeEtOTGpNQzRtMk5qMEdhSDg?oc=5",
+          "pubDate": "2026-08-03T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "北海道：俳優風間俊介さんも登壇 新千歳空港「開港１００年」記念式典に１２４０人：地域ニュース - 読売新聞",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1iQ2FmdGdnT0wwMFFIQUtVZ1h6Z3JWT3dTN1JINHpKZ1pYalg0LVAyNkthVXRXd2pJeXd3UjNXOXZxUG5Zc3pWUlh0UFJpUmF5dXl4Q0JSZUVLcFhqLWd5U052R3BQVExIMFNBT3NLcnp4R1BV?oc=5",
+          "pubDate": "2026-10-23T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "JR北海道 札幌圏と新千歳空港結ぶ「快速エアポート」新型車両導入で輸送力向上へ - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE13dFVYS0l2V080OU1aMFkweG8zVjJ6WG1abUF2dW5pME1jZkxNemswcVlOQ1BDME03ZGlYV0FldmxEUG5LcEU0SHg4X1NweU13NTVBWXdyRjU0NVBQM2dpS0lnNHloMjQ?oc=5",
+          "pubDate": "2026-10-05T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "9月18日（金）「千歳市空港開港100年記念イベント」として、新千歳空港のど真ん中で新日本プロレスが“空港プロレス”開催決定!! - 新日本プロレス",
+          "link": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTFA2bkF4YnZiV2gyR3dScUVLdXVKLUN0SGw0aUpZZUpUZVlKbnBrZ2lxSWstYno1UklDM0RXa290OVJXMWM?oc=5",
+          "pubDate": "2026-07-19T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "千歳開港１００年！進化が止まらない新千歳空港が運ぶ「ヒト・モノ・マネー」の裏側に迫る (テレビ北海道) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOdUVZQ291UHluRHNpWW8ySXVpQVlZVUZOUVBXTDU5NmM2WVVFb2JhVGhZVXZQQWJBTDlVcHJ1dVF1dXM2VTlSYld2VUdfRDBfbW5LbnNqQkc2bUUwTE1KUEdjSHY3TEQwQXhuYXpjT3NCSzJlTXpWTUxyVUkxNGYwUV9rM2tXOEJsckFLTWN3?oc=5",
+          "pubDate": "2026-10-17T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港そばに半導体の開発拠点を整備 ラピダスとの協力にも期待 (朝日新聞) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOcDNLSkdKTTNmUmtCSFFPYURBYWEtTW85clVVVHAxMG1LYWl6dEJqby03LUt1Vno3bmZ2VEhOcWlwcHRhM3MxelRJbjZwQ3RjMW1kMEowMVBaS2lNVnpHblZ6MnkyR0tYS3I2bS1ySmZ4TXJzWkxwcVBTckJlVHhmbGx5LWQ4eEVyZl9IOEZR?oc=5",
+          "pubDate": "2026-10-23T10:40:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港に史上初のアメリカ・カナダ路線１２月に就航 決め手は？ 空港運営会社のトップに直撃 - HTB 北海道テレビ",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5XZXlPXzNWLUxzYXJ5cDlhN0RacXF4aEo0Q1M0UWtRZHppNlpiNTVwc01VbmNfeTVzZEVTcThVdGJXWVg2Z3ZnenNYUTBtNU1rN1JmR1NDekYwQQ?oc=5",
+          "pubDate": "2026-08-23T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港IC近くの道道で乗用車とトレーラーが正面衝突 乗用車が全焼し男女2人死亡・幼い女児が重傷 北海道苫小牧市 - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5YU01xeWJIdVFjTDkzUV9wVzNXR1VDbVdReGE4OEpibHZyM0NYeGtEQ0NtVVRqUTBHWFk1ZDdxLWRocEt3YnZGeTUwWDVYa1VOVUctTjZVLUpFVy1UdnZv?oc=5",
+          "pubDate": "2026-10-21T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "口蹄疫ウイルス、検疫で初検出 新千歳空港でヤギ肉から - 時事ドットコム",
+          "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNMkp5YlBWR2xMOFlGWnVQLTBfeW1LN1l6UUNGNUZkZVhMZHZ6dVltRHdLd0N4T2pyTGZTYzlCNF9JQm5lNXJDenRLQ3AzaTd1V1J1TmdERlo4VUx1WlEtdEIxTkp4bEtETVVNUnQyZW9wdUJUUVc2dFlLY1NOVTc1TQ?oc=5",
+          "pubDate": "2026-09-10T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港連絡バス、12月11日から札幌都心線を再編！「すすきの発 空港ダイレクト」新設 - FlyTeam",
+          "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBCYnNPN3dBZFd0Q1RpVzkwa3lOQWg4TUR6aW8tZTRka0dVMFV1TGJlUWoxWGtJTmxjVkFyV1RGbDJDM0F0c1VrYldTVk84TEk?oc=5",
+          "pubDate": "2026-10-26T03:03:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳―羽田線 就航７５周年 ＪＡＬが記念セレモニー（苫小牧民報） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9oR1RZdkJwQzIwVU9iU3pWWHlSZDhTQmlLbW16aktsYktqV2w0WGtlMl9jcm01bjBLZmZJQVN6N29ZYWw2VVNXTlVaclByUHZ0TklOOHpYTlpVVlh1UnNlZEVabVp4eW5DMlJkZnBoMElrYV9Yd1BNY1c0N2NEWWs?oc=5",
+          "pubDate": "2026-10-27T08:05:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港から富良野への直行便！北海道バス「バスゴリライナーふらの」に早速乗車（宙船） - エキスパート - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNbXh4SnNya1NJMkRuWjFCN2hib3h1S0lGNExjYy1hejk5UmVVREZqWDJ5X0I0bnVWQjRtSDhhd0ltRmN4TGppZGdDWGpSMzVldHVYWDFrSGVwbTdyRm5LTUdhaWlWNTdxMXBhWVp4XzZFX2ItZE11RUozd1pqWU9DYWN4RnhOSUJw?oc=5",
+          "pubDate": "2026-08-23T07:00:00+00:00",
           "categories": []
         },
         {
@@ -609,9 +891,117 @@
           "categories": []
         },
         {
+          "title": "【世界の『航空業界トップ』集結】新千歳空港を舞台に国際会議スタート「約30か国・約400人」参加…前夜にはパーティー開催“北海道PR”も「国際線の路線拡充目指す」 - UHB 北海道文化放送",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBaUHZJd1EteWkxOFVER3hpVW9PRm5UZUp3Tk1uRmtaNVZOOG1YWVJIZTRXSXpPWk0tWFJNQ1gwc2dQRVk5eWQ5ZHI2NTM0dnFzVmw1VnI1aw?oc=5",
+          "pubDate": "2026-10-01T07:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "韓国発のプライベートジェット機が機体トラブルで新千歳空港に着陸 サンフランシスコに向かう途中…一時滑走路閉鎖 - TBS NEWS DIG",
           "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBxSkZYRy1uUkx5aFYxb05LZDdfSGpHSndIN2NEOENWWTRmUWJ0YThlLU5sY2V2Q1JLQ1RFaFBMQy1ka2duNkRuaXB1ZjcxTVBkV1l0YU1pYjVMbnJzVGJreVNibGtQWWM?oc=5",
           "pubDate": "2026-08-30T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳が国内有数の空港になるまで 相原秀起さん、100年の歩み一冊に - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE4yeXNYa3N1NlVoRzFWdVNocmpuenhvbWRkblpueUVBbzNjNmJsVGE0aFRPRUwwYk1JVUlzc2w3XzNwNnRKdDJRd0xpSXNhUWtBZ2NCV0U3ZW1xQQ?oc=5",
+          "pubDate": "2026-09-17T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【北海道】新千歳空港 王道グルメ31選 海鮮・ラーメン・スープカレー・スイーツまで盛りだくさん！ - るるぶWeb",
+          "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9QZXM1ZjFlSEdxVDBXQ3ozZTJEckJGdzVva3dFN2F2b3ZNa2FnOW9ocGZzZ2JtWllqSTdMSTJzRUlrZjd2WlJlRGlOamZDR1dQ?oc=5",
+          "pubDate": "2026-06-30T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "秘蔵映像たっぷり 千歳市に空港が誕生して１００年 大正から令和まで あの時の感動や賑わいをもう一度 - HTB 北海道テレビ",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5GYkR3b2kyMnJIdEdObTB2ZHJBdlJfMDRxS1d6dmlxNFBoa0g5WGVYRlUwRU42MUZrMTd2QVNKcEF4bkMxajZfUFZwR0pZd2VYdDNJUUZtTkszdw?oc=5",
+          "pubDate": "2026-09-22T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "「北九州＝新千歳」チャーター便の運航について - 北海道のホームページ",
+          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5Kck5FRld2bUllS1B5VkY5QjRvRjdwVDlLSW1QVXlIb21nNVpLMmNLbHhZZk5BWnlIeHBxUjh5aWhMWHBORjhQSlU0RFN3ZUJuVFc5NzZ1NTd3ckNLMGFj?oc=5",
+          "pubDate": "2026-07-01T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "感染性のある口蹄疫ウイルスが検出 新千歳空港で乗客が持ち込んだヤギ肉から - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9EWGNyaXJHbXY2enFkamdJbDZNXzRWcDVfNVgyQWVyMHBWN2V2TVIzNXp2T19yN215Q0dyNHppbDZEaTlHUGJtZWFhc2lKYTJiMmEwNWZRZw?oc=5",
+          "pubDate": "2026-09-10T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "アニメ新スポットに限定ソフト！『新千歳空港』が進化！「飛行機に乗らなくても遊び尽くし」“北米直行便”まもなく！ - SASARU",
+          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9nOWhQV3JKeV9LTTZRSEQzeS14Sk1iMzFiZ0w1YU9oSHBhTlphYW04dUN6S3JPS1dlZWduVXBaM2pKMzJCT2ptOWxHcmtSamt4dndmMTdZSEYtdHlBRUk0?oc=5",
+          "pubDate": "2026-09-20T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港でビート糖フェア わたあめやシュガースクラブで道産砂糖の魅力発信 - 十勝毎日新聞",
+          "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE82YmtaX3kyQzVFazhUUmZ6ZTVJc3hTNW14bVgzUXVYX0djYi0xR2tlSl9QamNNTjNPeEwzdV90QW5Hb3hVemZMZlFjY2xJMlpoajBhYWhTeldoU0ExSzlESTZtTTA?oc=5",
+          "pubDate": "2026-09-26T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "冬季限定 予約制直行バス｜定山渓温泉ライナーの運行について - ようこそさっぽろ",
+          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5raWxmb2NnajdNNUhDaG9DMnNHLVI2UjAxWDViS0lJcDBEV1hJaVdXZmdYakNyUUtVam8wVEludE9KUm15cEkwWDQzNTFUa2VVb25LVTFHcndFZUc1ZnVuMQ?oc=5",
+          "pubDate": "2026-10-02T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "＜社説＞千歳 空港100年 道内全域に効果波及を - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBWbHVDdHBIQ3JfNzRuM2dfMDYxZlIyQ2paLVBwanZjczhrc3BKcW1RVkthejdpQmtybHJvdW5OQVNVNE15Tm5NdVdhU0hQOUxvQ0VQcXllVGJfQQ?oc=5",
+          "pubDate": "2026-10-21T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "北九州－新千歳を結ぶチャーター便 12年ぶり運航 「定期運航を働きかけていきたい」 福岡 - 福岡TNCニュース",
+          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBkMDNmZVBnaGNJTGRMS2dncDVWbVZwRWRGVUhKaERCeE43UWgxWFlvRGlLZ2RvN3lRVDFnN3MzR0lqeURyRjFfWkhhSTAzWUl3V2d1cjlRM3JtcDdxQkVMY1Nrbw?oc=5",
+          "pubDate": "2026-09-01T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "立入禁止エリア進入で警報 国内空港で初導入のシステム 「デジタル安全バリア」とは 北海道・新千歳空港 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9WT192MEdlN1dQS05rMzgxdG52TVQ4VmZqTlJFS0VtcWYzVmM2OEFnQjkyeEpTUDA1OG5QeDk3ZFFKdmJNTlVITHVWS0I1TldKUDgwOElDaWhhQjlBZExKVFZZQUlpc216cGFVZ3Z0VjNjUmJReXZEaVhneGVuODQ?oc=5",
+          "pubDate": "2026-07-22T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "北海道：新千歳、案内カウンター制服一新…ＨＡＰ７空港の現場防寒着も ：地域ニュース - 読売新聞",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBPXzVFTGU4M3NkMkdmNC1XTW9raFU1UXJ1RTBpQTRmSVFVSDk1akZIQ3BDZlRnZG45VGh0bGF4MXFUdUtSRmtxVHR4cXJyVlh5Z3ZkY29iUk54c2lsbGhHSjJmcHBtNUJWeEVhVHk1RTFlNFpX?oc=5",
+          "pubDate": "2026-09-26T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "北米2路線に搭乗 新千歳空港の駐車場無料 HAP、北海道民の利用促す狙い - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9wMXIwb2lVZ2lwVlVjUWhBazRoMVd3UkNvRU9XbDBfcXB1N0d4WjNwQWNLMTFld3RCNkszZXptem1hdFpSVTd3NFZrZDd6U0xaazlLb2d1V3JKZw?oc=5",
+          "pubDate": "2026-08-29T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港、国内線施設料を引き上げ 10/25発券分から530円 - Aviation Wire",
+          "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1EWUpjOElsQ3VpU0hhX21iRF9uTTBmZFNHd1d1MnZEbDJqWkdORDhJWkdwVktGM1NFaUFlNjFINGlEc2xQV1ZJRVo2OEFmc2tFdlFZcDVB?oc=5",
+          "pubDate": "2026-07-31T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港のアンダーパスが冠水し通行できなくなる車も…快速エアポート39本を含む列車108本が運休…大雨に見舞われた北海道…札幌には初めてレベル4の「大雨危険警報」が発表 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQY0trb29Ec3NQMmQzNVliTlRfX3E4OXRySFFNVWQ5TktVanpNaHhwdG16QW1hYjd1NU1WYUJsWmZpMXRTWTF6b0Zkc0Y5dkpFNGkwSWViLXVPNmtPaTR6Y3gzdlU4b0xGZFRHNlcydnRGNnZqdmNDbVJYeFU4S0ZZZUc1aE5PeDMtVXRfS3N3?oc=5",
+          "pubDate": "2026-09-28T20:21:31+00:00",
+          "categories": []
+        },
+        {
+          "title": "感染性のある口蹄疫ウイルスが検出 新千歳空港で乗客が持ち込んだヤギ肉から - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPVXU1T1dYLVc1ZTJhUS1nYjZlUExuaUZLcHVXdmZ4NDZqWXlmX2dNamlINWgyZGhsTko5ckJVSFIyQWhuNlpLRzVzZV91YkQyT2pscFJQdGU2OEVhaEdRdloxRWFpUTRLYlRJMWpVdm1kcHA3eDJxRTYxdjJNRjN2SHVxZ1ozNWNkLW0xZA?oc=5",
+          "pubDate": "2026-09-10T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "札幌丘珠空港と新千歳空港間の交通利便性向上に向けたカーシェア乗り捨てサービスの実証実験を実施します! - 札幌市",
+          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1pYVNvVzBSOS1WQ05tUzJ6M3ZBQW0wNzk2ak9KbWxkMlNicGFqUFkzS1NSS05kR2d1NEdMa2w0ZDMtWTJrcWVaTGhyWWptLUJJNDNWZVhxelRrQmlFRm9hTGE3bw?oc=5",
+          "pubDate": "2026-06-19T07:00:00+00:00",
           "categories": []
         },
         {
@@ -621,209 +1011,89 @@
           "categories": []
         },
         {
-          "title": "【あつ森】『あつまれ どうぶつの森』新千歳空港にて国内空港初のポップアップイベントが7月25日より開催。8月にはたぬきち、とたけけも登場予定 - ファミ通",
-          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBSd1ctQXdkY2pHbkxhb2J4cm5YY3gzU05lSTRtbG5Md2FoX3AwRGJUZ19TUl9tdndwN2hNOUQzTm1naHloZ2lIbEdTSTRLRndfRGVIcGIxOA?oc=5",
-          "pubDate": "2026-06-23T07:00:00+00:00",
+          "title": "【新千歳空港のルーツは”鍬で地面をならした”滑走路】千歳に空港が誕生して100年＿芸能界きっての”飛行機好き”風間俊介さんは「お祝いのためすっ飛んできました！」〈北海道〉 - FNNプライムオンライン",
+          "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1ZYWhxMFdsVi1rQWZwekswM2s2UlJaU1RZcXNOZmw4amc0UEllT3BDSDZiRWZkY1BHdEt5QlJWc0VpUGt6MHNqRURlLTZ4QQ?oc=5",
+          "pubDate": "2026-10-22T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "「飛行機に乗らない客にも遊びに来てもらえる空港にしたい」新千歳空港に\"道内最大級のアニメがテーマの施設\"誕生へ―2027年夏完成予定―連絡通路を活用し集客強化＜北海道千歳市＞ - UHB 北海道文化放送",
-          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9tUGhReEZMNVFDbFFkeWNQRHpyOU5wcG9nYXNIVlBCc24wLUE3SnZpWU9CeVdpa0tBcVBPMlVHVkxnU2xyNVYxVE9tQ0d2UmFrbVdueUlEbw?oc=5",
-          "pubDate": "2026-06-23T21:10:26+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港の旅客、2年連続で過去最多 25年度2601万人 国際線の需要堅調 - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5iSXlmM0RUcGNUR2ZPWmR0OGtvUVJuOEF6NlRqN2tpclUzYmxKRVpLaEpxcTNnaGo0TzNEUXptSS05VzlDcGp2RFQ5NVU0YWFZMkNWcy1HWDZtdw?oc=5",
-          "pubDate": "2026-04-21T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "タクシー乗車、飛行機のそばで 東邦交通が新千歳で要人・富裕層向け事業 - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBVVjdkQ3lkZ3V5by1ZSGFoVmhwLWY4bjRRVFQ5dFVNcjJyRkNTTkFUVENBZ2ZoOVhrRzctSlBxUDdvQ25fS0pTRDIxWGtaSFRMS1o2TWVKOS1ldw?oc=5",
-          "pubDate": "2026-06-09T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "旅客数は２５００万人突破 進化する新千歳空港 北海道エアポート…売上過去最高も３８億円赤字 - 日テレNEWS NNN",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQWmh6NU1iUGp3N3ZIN09qamI1aXRUS3o2MWFXM3dhTFI3MHpscDhtMUM1M0JwcDBPVmVMQk5ZamRHbHc1Zm9Zc0VsdThUSi1MTHdnWDVoLS16bDNMd1RZRzE1YkUwYmw5OU9zS3pHRGhWdEtXYkJscEtfVlhtSjY0eEFFdG1QUjA?oc=5",
-          "pubDate": "2026-06-23T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "空港でやってみたい15の贅沢 - AIRDO",
-          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBLbFJsM1RKY2V4VGpGTWo5Y0tXMFEwQmRIbG1GZzRtMnN1RnQ4T2NwR2w3dGs4T19BNTduZXlOZDJLVmo4WXhXdkgzbFRtRTJWc0tZeW90MTYweWlpWnZKQQ?oc=5",
-          "pubDate": "2026-06-11T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港に足止め7千人、JRは1千本運休 石狩地方に記録的大雪 [北海道] - 朝日新聞",
-          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5LRENleTczeTRfZ2ozZ2s2Wk9ENmJDZnhlV1p2NE5JLTc5WEdGOGlKMXFJbl9vUVB4a0xXY0w5UllWQlQxVXgxNExIaGhmVjVsdFVuLUJaM2dmQ00wOGNRWFI1djdtWGM?oc=5",
-          "pubDate": "2026-01-27T08:00:00+00:00",
+          "title": "新千歳空港に8時14分到着できるのに…山線『前倒し廃止論』に始発列車で感じた大きな違和感（鉄道乗蔵） - エキスパート - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQcUlQMzVrdlVpdzVNSDVPdFBTNlN3bEpsSEVMRTZOM2ktbElzeEZjWFNLOXNzb1Ayc3N3OEZhVHN3YVJrU180OG8zM0pjdjBRUTNJd1JIczVwaWFrM2p6b1FIRGJaZC1uNXpqWkd6clhUV3lCaUNmOFVfbEhFZjNIbkN5VmJkWUJU?oc=5",
+          "pubDate": "2026-09-26T07:00:00+00:00",
           "categories": []
         },
         {
           "title": "手作り着陸場から100年「新千歳空港」の“新”に隠された4年間の記憶 空襲を免れた分厚い雲と住民の夢から始まった北の空の玄関口ストーリー - TBS NEWS DIG",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB0ZnhWVzFxdXpDVS1xQmhKUVV3Uy04RFhtdFU4NnZLQzQ4dFl3NkJJakhaOVhrdTdLaS13d3lsSlNNSmJkc0tXT2lEWkRBMkl1UlgzdEhhR0VPdw?oc=5",
+          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5QSF9YNUhCRjJ1ckwtLWxjZEV0THhhV1VQWVBRc2ZJOGZQRE1fMUJFVnVTUksySFllV3pJakhvUEJzZVJ4NHgyeXVXQUN0YzlOaV9BMmV0ZnA0UHdoVDd1dw?oc=5",
           "pubDate": "2026-07-19T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港に「ブルーポンド」 累計100万個超の菓子店が期間限定で - みんなの経済新聞ネットワーク",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1vWTdiV0k4eGY0Ync5cjJ2V0FvcDFrdENXaGQ5U3BaQjM2X1pKSlpTQ1IwMjBGZ1dMNEhSYlEyN2s4SkFQUkIxTUt6MUxHSEpONEVB?oc=5",
-          "pubDate": "2026-07-11T07:00:00+00:00",
+          "title": "新千歳で航空国際会議 国内初、30カ国から400人（苫小牧民報） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5kVl9jWG85bFlpQWpNMHZtSVlSZGc4dEJCQWotUlExdmZXVXdPZnA0cDl1blJDSUVWTHRwLVptOEdqa1NPZGRvcFloWHRaTnY4dEo1TWRJU1ZHbHZYbVdydXhxdzg4UWI4R1FYOTNKLVM4cE5HcENxQ3VWYllzcWc?oc=5",
+          "pubDate": "2026-10-01T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "「災害級、陸の孤島」大雪で北海道・新千歳空港から出られない人続出 - 毎日新聞",
-          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE4wUjRkUVdPLVUxZk14R0ZZS3M3dzN6NUZTU2c0R1lPdkVhazFuRzFSTzhOM1BoLW1lWW1zUXl0QlBLamMtM0hjakVJZzRlYUNuRy1ENklHc1lNQlo2MVVSY3hnMDF2TVM3?oc=5",
-          "pubDate": "2026-01-25T08:00:00+00:00",
+          "title": "新千歳空港 空港施設の耐震化事業 丨 現場クロスナレッジ - 国土交通省",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQa25LOUVkT20xNHdoT2NOWm5hYmdyaWNOR0ppMlZNNmJTNi1sdVZoemFyR3FpSUh5Rno1amNieGotdjZfLTZRNzF0TnpLTE1fSm5COFJVMktFdV9aZ2RFZWRNWG40OVF4aEpUdHFNOEJKbzR5UGRJR3lSTzJNZVJSQnJIMERWbk50d25QNXFvMFZYcWFLMzlzQl9Sa0I?oc=5",
+          "pubDate": "2026-03-17T09:15:27+00:00",
           "categories": []
         },
         {
-          "title": "【新千歳空港へのアクセス】JR「快速エアポート」利用客は1日6万5000人…混雑が日常化で輸送力はパンク寸前…国が打開策“複線化”や“ループ化”を検討 かつては“リニア”で8分で結ぶ構想も - UHB 北海道文化放送",
-          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBXYjVMZEgwUHpDN01ETVFpalFKQ1l0LWU1NDZWYXpKMjFGYzZzVE1WR1VwU01oQ0lDZEU4UmVFNnRCUTJVSzRWUWwxa204aGw0eW1XN3FOVQ?oc=5",
-          "pubDate": "2026-05-09T07:00:00+00:00",
+          "title": "新千歳空港のアンダーパスが冠水、引き返す車も…快速エアポートなど運休相次ぐ…北海道で局地的大雨_札幌市には運用後初のレベル4「大雨危険警報」老人ホームでは「道路と川が同じくらいの高さに」 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE8wR1R4TUM5S1d0d3JZWklTOFllalRUekJwNktMdXBYcTV2MVpNeVNtOWx2VThNUWhUUV92cS1leU1zVmZpM3liYmJuMGxTSUphbHlFVDNzRnNuMy1XbW5wNkR2ejcteFhLdDZrVXRxdkVxcGZoYkZ3di1oakRKN28?oc=5",
+          "pubDate": "2026-09-28T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "１万人滞留の新千歳空港、運営会社がＪＲ北海道に異例の抗議「列車再開の見通しが甘い」 - 読売新聞",
-          "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE8zSVpEb2ZDdnpYM1pBSGZVd3FyQmRWUjN6VElpT0w3eTNvWkFJb29DM210Yjl4M3JZRGxjT3FJaEFaVUtfVGdwVVFhVVpGMkVpV1ZBcWJ6OWg1Y1NqVk9EcXJFdDJnQQ?oc=5",
-          "pubDate": "2026-01-30T08:00:00+00:00",
+          "title": "【新千歳空港が進化】利用客2600万人で過去最多！空港がテーマパークに？飛行機に乗らない人も楽しめる場所へ「より便利に、楽しく」2027年夏にはアニメ施設など“約20店舗”誕生〈北海道〉 (北海道ニュースUHB) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNZVNxYXh5ZjZJTEt4SG9TYmNHdWZnYjE2dXJna0NwZnNfd0dFR2p5SWZPc1BOcEtUcm1YVFp1ZEdaN1lpakxILTV5V1pvOGxrd1NqZWtqSFdpMFA5WFBHT3MzTDZaeE9DbDhiZVJucENxbXNPU2RGOWVTZ0MySFNKQ1k5enl5R0FOVF9DckV3?oc=5",
+          "pubDate": "2026-08-30T02:21:13+00:00",
           "categories": []
         },
         {
-          "title": "JAL、羽田－札幌75周年で計100万マイル 抽選100人に1万マイル - Aviation Wire",
-          "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE12R25XRGY2NXJCeXN6UlhKWTBVLTVzS3hxakl4MTgxZS1NdXFwQ1MybG5ua1E4RlZUaGRMZjFtaTJrN3NXUTluaEtKYkdTWEpoR0xROURB?oc=5",
-          "pubDate": "2026-11-01T12:30:00+00:00",
+          "title": "新千歳空港で飛行機の事故を想定した大規模訓練 - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE80VjlWWlJTaGxoMmg3OGdYTG1MeGFtVE45OFRtMGhhbzFhUllsbkVkWU1JUEpzMGs0SzVzTUVpMTlkenBXSVNfVy1NRW8yXzNEMzZVS3RLZDdhdw?oc=5",
+          "pubDate": "2026-09-18T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "【4/1～】高速はこだて号「新千歳空港」経由便、運行開始 - はこぶら - 函館市公式観光サイト",
-          "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE5zVWtodjRpSUhSRVQzS053TVRYaTYySHhGV0lQV1Vaa2FPTlNtcElsSkhaelB6ZHB2eTdhVVVobFY0QnkxZVpn?oc=5",
-          "pubDate": "2026-03-06T08:00:00+00:00",
+          "title": "新千歳空港でプロレス初興行 開港100年記念、会場熱気 (共同通信) - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQRS0xSDl4X1VLTFBPZ1BfNVhHYVZNQ3pXOG5zS2lIOHVvVloydUUxSVNpVjdOc3hhTlFNR2oxRmpmVjhWek1wc2ZpVHlSWHNuaEFJS0JuLW5VY1A3TXNtdlhYSFVyZFh2TlJBNGFiTjBEX1BoaERielBTTGhTQVF6WjdfWTgzMHA2eDA0cHV3?oc=5",
+          "pubDate": "2026-09-18T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港で7000人が一夜過ごす 大雪影響、欠航相次ぐ 2夜連続でビル内開放 - 産経ニュース",
-          "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBxV0UzN0c4dFRtcXEwTzRwODQ0T1JjbTJMck5tVlZfRFRPcjNzcW9qWnlnVnkxTTAtangxdXVIaDBaVUM2NlZiMlhsdEx3a05uUV9BY0Nua0FBMm0tVWFtbUwtZ1p5QXNKWFBZNGh2Y1VNNlFDdlE?oc=5",
-          "pubDate": "2026-01-27T08:00:00+00:00",
+          "title": "【速報】新千歳空港で多数の乗客らが足止め…カミナリの影響で到着便が遅れて旅行客らがバスやタクシー乗り場に長い行列…空港で一夜を明かそうという人も＜北海道千歳市＞ - UHB 北海道文化放送",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5rQjlTaE1PZWF6c0hNeWRrZ2JlVHYxMzlidXUwcE9NQ2VFNk9iNEpDME5NQTZxZDg4VDY2c01Qai1PU3oyb3FiOHNkeFRhQ1ZmaHlYeURiTQ?oc=5",
+          "pubDate": "2026-08-28T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港42位から35位に 26年世界ランキング - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1zSGNodmtaQ0ZiNWNoN1otNmdQS3hUaDhYSnhWNXgtN2kxRE4wS1o1MWllZnA4ZzNJcnB0eVhFQTk1eXVmMVhUdUM5MGFxYWlNNl9hS0pGVEFEZw?oc=5",
-          "pubDate": "2026-04-10T07:00:00+00:00",
+          "title": "【新千歳空港】タイ行きのタイ・ライオン・エア機内でモバイルバッテリーから出火 乗客が落とした際に煙が吹き出る…一時騒然も乗客乗員122人にけがなし - TBS NEWS DIG",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5jMmdzRmZoYjVqajZXeGQ5NDFSMUtpN2ZWcXZGend5RGZITC00Ml9lUmtNRjhrbHFQMURsdVJCMC1KejhIUjQtc0R1bklHQWZITkV3R2V3UzBHZVRvZWZaNzB0LUFEY3M?oc=5",
+          "pubDate": "2026-07-10T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "北海道民の海外旅行を後押し 新千歳空港の駐車場代最大9990円引き 函館・旭川・帯広は無料 4～6月 - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFByaXpoMTJlUEVuMzBBS091S2c4cUdGeFJKaWl5OXROM3h1U1RPNFVtMjY1Rk1Za0U2SDVrcmx2cC1GSnBVMzRQaHAxdmdjX2VYOHFMcE1Za09udw?oc=5",
-          "pubDate": "2026-02-14T08:00:00+00:00",
+          "title": "台風の影響、11日に11便欠航 新千歳空港 - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA2ZkQzRmh5R1FrNzFWTTRpV29zdUdzNFU4MkFJTFE5QUhSdWRSa0hwRDl2dUJOeWw4M1E1aksxSEtFZkN2QlhtVVdUbzhDQlEtNFVzRm1Wd3dVUQ?oc=5",
+          "pubDate": "2026-08-12T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "新千歳空港が“孤立状態” 7000人残される - テレ朝NEWS",
-          "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE5Id0N5WDZtakw3YXEwb0JTdElselRFOGhPaGs2b3gtaHVVTjFxdWF0UGxBX3hhbUdLbWs3R0RELTlpTmQtZldQVjhSbV9MbkFfTjFzY09CWW5DSVlZYXE2N2xSN0t4TGh2SmRBUVQ3T205QQ?oc=5",
-          "pubDate": "2026-01-26T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "【独自】新千歳空港で航空関係者集う国際会議 HAPが国内初誘致 10月、30カ国400人参加 - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5fTzNETmhNLWNkdEhtX01XSjNqSExtNHdQNmg0a2tteWVnQVdUR0pJWTdTRkcyZ2hqcXBOMEFWS2NYTlM5SzRUTURfUDU0akZ1MUJTN2hqZEV6dw?oc=5",
-          "pubDate": "2026-01-03T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "「初」の取り組み 「新千歳空港から鉄道で出られない」問題に空港運営会社が”救いの一手” かなりの輸送本数…？ - 乗りものニュース",
-          "link": "https://news.google.com/rss/articles/CBMiSkFVX3lxTFBOZHpacGZJQzlJeDFLZGVNMFpUTGJydWFpZzJKRVZRWEVvdHYyVEdXbXlYNVBCYk5LcXdCM1JLT0NDeUNNajlDU0F3?oc=5",
-          "pubDate": "2026-01-29T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港、750人が一夜越す 足止め客、雪で欠航相次ぐ（共同通信） - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1qRk4yQmpOYnRSRHJualR6LVBZLUVpZF9sZWUzaGdYaXJzT1hLLU10aUxYRll2bEZIaFc4MGpNN051ODNPN3hNeVNtRGZGZkU5eFc1SXRiTE92N3hoQXhFd1FWeDFKemRTM05Zdy1xX3R5S3BBZ2V4ZUlFODl3MGc?oc=5",
-          "pubDate": "2025-12-13T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港滞留で検証指示 JR北海道に国交相 - 日本経済新聞",
-          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5JU25ic1hLU2dPVGNuZ3hJamtULVpOZy00aV9Pal9FQnJYWW8yRHNONTVvY0ZITG9hcUZZYVFkUVlESzlvWHdLV2pFeV94Q1M1NDQ5ZGJoMGVLa1VPZngwT0FsTkZranhEbGR4bQ?oc=5",
-          "pubDate": "2026-02-03T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港で3時間ステイ最強ガイド。搭乗時間まで無駄なく楽しむための３プラン - JAF Mate Online",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5uNHZYcTd2bE0zWW9nU0xBR0d5RFZiY01LcjlmY21WdEttRTBQaWgzMUx3OU9CN1ZiU2FIX3VuTWZGblMyU19IODlDOEVTNGstekk0?oc=5",
-          "pubDate": "2025-06-21T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "北海道グルメを2人1万円で満喫！ 甘党＆辛党別、新千歳空港食い倒れガイド - JAF Mate Online",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE80TXNoVjF3VHZfMUkweHFRbDhOYlZiQVJ0WEhROHJfQ29qSnp4eldkQ084NkZOVEJOd25jVE56RXJkWUkyZUFjRFFCWUs5MHRncHZz?oc=5",
-          "pubDate": "2025-06-14T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "「新千歳空港合同採用ホームページ」の開設について - 北海道のホームページ",
-          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE96Wm9HN252cGRSY0FtYmc5WlJ5TGY5T2JST2kyT2JZUTd3U2lLSVhQaWFRbkdmekM5R0tjOXktZVBMal9kNXRlMU5tUEZSQVFjcVM4UVN6ODV1d1ZjS3lZ?oc=5",
-          "pubDate": "2022-12-09T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港を中心とした地域における 水素利活用モデル構築に関する調査事業の実施について - Mitsubishi Corporation",
-          "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5CcGNQOGdqSlV0OEZTQU5jSTRqN0lVOVJxVE8wUUVldlBSdlJLcS1pU2J6R3hiNWk2cmRPOTFrWTFHRkJSR0o2b1R4clB1d1daS3NCU003X0czYUdsRndrREwwQkJ2UlRha1FyWXd0YTlubVZUc2tIQzFR?oc=5",
-          "pubDate": "2022-06-20T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港の天気予報(1時間・今日明日・週間) - ウェザーニュース",
-          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE96Vjd1cW1aelJtS18xTFNubmhGTC00US1BcHhQVEFJZ0M2Y1lMVU14OWYtUVN3ZlFmX1pTdndqWkdZbmFMMnV1QlVMaFlzZ3ZJdGphNXl0eWpGYlJtaGww?oc=5",
-          "pubDate": "2024-05-15T04:24:52+00:00",
-          "categories": []
-        },
-        {
-          "title": "いまの新千歳空港 ｜ ライブカメラ - ＳＴＶ札幌テレビ 放送",
-          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9xT0FsSWY0aU9sTmpWRU9Ld29BcDRSRmNWaElRbGMweXNWZHNtVVdQMjNLdTl6U01SVlhUSHh1OVAzUTRkSlhKLUg0YVJaOWFoSWd3Ti1xTzBDUFcyM0NWMjdCcw?oc=5",
-          "pubDate": "2021-11-26T05:22:20+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港周辺おすすめスポット｜観光・アクティビティ・ショッピング13選 - 北海道ボールパークFビレッジ",
-          "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5NRi1lOTdIXzhvbVp3aTJRQWlvUTMwTU5qQm50S1dYQ1NHQ0ZXcWItVnpsdXZtWjlfLWxNU01VcG5uY003QkhCS3lZZmh2enNR?oc=5",
-          "pubDate": "2025-08-19T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港国内線旅客ターミナル案内 - AIRDO",
-          "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5mb2NLaGFNcDhaQ0lodXJKcHRBUnA4WE1RMzNTdnB3bDRwQ2NPdXFMSUNfUl8xdGVNVWV5anlyekFPR2Rwbkw5VzZQTFRLQTZPZEdrNkQtQ2FFcWs?oc=5",
-          "pubDate": "2018-01-16T10:26:06+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港ターミナルビル ｜ ライブカメラ - ＳＴＶ札幌テレビ 放送",
-          "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBkWXp6d0w3OXdRZUpjSl8tb0NSSXBLUnVSYnJGQmhmdlpYdllNMHFpZE1RRjl6cWk1VFUzb1E0TnFPcEpGcHY4a1BCeFBJNm9BbXZmVW85blplWUQ1?oc=5",
-          "pubDate": "2016-05-18T01:52:52+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港 徹底ガイド | 就航都市・フライト情報・時刻表・エアライン・ターミナル - FlyTeam",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9rSzA4d0JiTk9HZ1pLZENLR3ZPcU1hZk9uUF9keHJqa3hKY3hiVkQ0VEs2M0o2ZGZXdUc0M09Ba01xbllPdG9mSjhiclROWVVPSElYZ2lKcjZ5QQ?oc=5",
-          "pubDate": "2012-10-18T19:19:35+00:00",
-          "categories": []
-        },
-        {
-          "title": "739系3000番台が新千歳空港駅に入線(E-3101/E-3201) - 湘南色の部屋",
-          "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOemdFTW5BZEdod09hdkdlcVpEUlF1Nzg2RjZxaDBPcy1DX2x5Q0N1TTJiUkJUWlV2YW1mcFdobUJHcElLQTgxN3RLZVhHdF95ZFNibXlINlhJb3BuVEdoRzlHb2NCSGNLVE9wNC1xV3MyblRZV3ZxbjZZa0U5aUpBeHA4aWhMMlNwazU3aWdndjdsWlhFUjJSSzN2c3l2dk1zcEwzbnRLZUMxSWdORGQ3MjVXU2dvekV0ZzV3eVlPOHhRNFpUZENWZ09oNW96Z0VQcWhUU3hGTl8?oc=5",
-          "pubDate": "2026-11-01T23:32:00+00:00",
+          "title": "【あつ森】『あつまれ どうぶつの森』新千歳空港にて国内空港初のポップアップイベントが7月25日より開催。8月にはたぬきち、とたけけも登場予定 - ファミ通",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBSd1ctQXdkY2pHbkxhb2J4cm5YY3gzU05lSTRtbG5Md2FoX3AwRGJUZ19TUl9tdndwN2hNOUQzTm1naHloZ2lIbEdTSTRLRndfRGVIcGIxOA?oc=5",
+          "pubDate": "2026-06-23T07:00:00+00:00",
           "categories": []
         }
       ]
     },
     "https://sapporo.keizai.biz/rss.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "札幌・二十四軒にパン店「ルーツアンドベーカリー」 カキザワの職人継承",
@@ -919,8 +1189,8 @@
     },
     "https://tomakomai.goguynet.jp/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "【苫小牧市】今日は文化の日！末広町の苫小牧市美術博物館で無料観覧日を実施します！コースター作りや縄文体験などイベントも開催",
@@ -1035,8 +1305,8 @@
     },
     "https://hre-net.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "「スシロー」が新さっぽろデュオに出店へ、「札幌パルコ店」に続くレストラン街店舗",
@@ -1122,8 +1392,8 @@
     },
     "https://biratori-shokokai.com/feed": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "2026年度 第2四半期・中小企業景況調査報告について",
@@ -1209,8 +1479,8 @@
     },
     "https://www.hi-mag.jp/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "11月の詩",
@@ -1328,8 +1598,8 @@
     },
     "https://hokkaidolikers.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "【旭川市】有効期限なし＆積立OK！ふるなびトラベルに「旭川市の旅行ポイント」が新登場",
@@ -1477,8 +1747,8 @@
     },
     "https://meshitabi-hokkaido.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "ドライブ途中で立ち寄りたい『砂川ハイウェイオアシス館』で食べる北海道グルメ/砂川市",
@@ -1673,8 +1943,8 @@
     },
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "サッポロ生ビール黒ラベル「沖縄環境保全応援デザイン」缶を限定発売。売上の一部を「一般財団法人沖縄美ら島財団」に寄付",
@@ -1860,8 +2130,8 @@
     },
     "https://hokkaido-nl.jp/index.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "元大相撲幕内矢後さん 引退後初の故郷凱旋【芽室】",
@@ -1927,8 +2197,8 @@
     },
     "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "長いもネバネバ、甘みも強く 「十勝川西」秋掘り開始 寒暖差で栄養たっぷり",
@@ -2342,8 +2612,8 @@
     },
     "https://kyoko-np.net/index.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "「筋書きあるドラマ」で安心感 野球に「メークシナリオ制」導入を提言",
@@ -2505,8 +2775,8 @@
     },
     "https://valorantnews.jp/feed": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "「VARREL」がVALORANT部門の全選手・コーチと契約終了を発表、2027シーズンも活動は継続",
@@ -2608,8 +2878,8 @@
     },
     "https://www.valorant4jp.com/rss.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "Team VitalityにJawgemoの加入が報道、Derkeの後任としてEMEAへ参戦か",
@@ -2816,8 +3086,8 @@
     },
     "https://news.google.com/rss/search?q=%E6%A0%AA%E4%B8%BB%E5%84%AA%E5%BE%85&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "【株主優待】必要投資額30万円台の“実力派”優待株の2銘柄！ 人気のお菓子などがもらえる｢明治HD｣と普段の食卓で使いやすい食品優待の｢理研ビタミン｣に注目 - ダイヤモンド・オンライン",
@@ -3108,12 +3378,6 @@
           "categories": []
         },
         {
-          "title": "海外勢も見直す株主優待、導入比率7年ぶり最高 侮れない個人の力 - 日本経済新聞",
-          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE51QzA1RHBvU2NQZDhjYVJqb2h3d0pKWXdfTmxhUDhIWE9OdGtFZzNQc2Z3eHVjaFRSaGZCa2F6WTBtb3ZMSklHTlRfdUxxby1Ydmg3b3p5bV9BOWo0dG9QSXRfSDRQOENsb1ZYZQ?oc=5",
-          "pubDate": "2026-07-08T07:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "〈2026年3月〉 株主優待 新設・拡充！ 銘柄表と注目3銘柄 - SBI証券",
           "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1CaDBIUVNqd0VUMlNGNzdib2ZoUXQxZzZYLWFnNXR6NWd4RUQ1Wjhmam9pdG1WZTZoYUNjTDV1bXA2Rm5xdXFJNDlhM3BQZWhadHpTMFd3NUVELTBONzkzNlhwNE9DM2ItNXgtSUJHRlFFWEdaZ0NKWWp5Y2VJQTQ?oc=5",
           "pubDate": "2026-04-10T07:00:00+00:00",
@@ -3240,6 +3504,12 @@
           "categories": []
         },
         {
+          "title": "株主優待ランキング ～月別・年代別 - 楽天証券",
+          "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5XTkdSSmlFUGVVMWZBMzlCRHp0ZGZxTXlIeUZ2SEgzbEJjdDBZZ2YxSEtKdFdieDI5bzJGbk14eDhPbWE4S3dXYjA1c0FuWVBfazJGbkk5R19Fc1E?oc=5",
+          "pubDate": "2025-07-24T08:02:52+00:00",
+          "categories": []
+        },
+        {
           "title": "人気の株主優待TOP10！ジャンル別・10万円以下・長期保有の銘柄ランキングを発表 - 楽天カード",
           "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQUkY1U2oxenRKZVRKRTRRWHFRbGFYNG1aeU5UU2lyNFFQaERmN0w3bkhMNlFDX3FHTWdjRXhodkJyUllwSWFfd19pU1N3em5GWmtDblE4Um1LbmNwdWx5LS1fZ0t4b2tXdVZvS2dqSE1Eakg3Ylk2U29LaGN0VVZNSVdId2lfUQ?oc=5",
           "pubDate": "2025-08-28T07:00:00+00:00",
@@ -3297,8 +3567,8 @@
     },
     "https://news.google.com/rss/search?q=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%81%93%E3%81%AE%E9%A7%85&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "items": [
         {
           "title": "道の駅あっさぶのレストラン「ASSAN」は11月10日（火）〜30日（月）臨時休業いたします。 - 北の道の駅",
@@ -3511,6 +3781,12 @@
           "categories": []
         },
         {
+          "title": "北海道「道の駅」ランキング2022で人気の道の駅はどこだ!? 道の駅ツウの評価に納得。 - KURU KURA",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBmb1ZWMUU3MTJ5ZGJHUHJjdWdvMkFrMzFLS09DZENiZy1BVnF5d1JNbTkwQVNrV3ZhSlhkeE92b1FEQ2RjbTdnaWJUU193T2RBOEpMVFMwOWNPZw?oc=5",
+          "pubDate": "2023-11-13T08:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "温泉同好会特別編 道の駅同好会｜世界の果てまでイッテQ！ - 日本テレビ",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1VZ0d2dWRJclhFS3I2aTBWUnZ1SEZlR0VPZENQMmFBcmhjLS10SnZCSFNOczJqWExGZnZaV2JnUWdkaEZhazkyUlY4ZGdiMUlOOHJFTnJURUpsZko1SEZhaG5aUFpFRmYx?oc=5",
           "pubDate": "2024-11-24T08:00:00+00:00",
@@ -3520,12 +3796,6 @@
           "title": "じゃらん全国道の駅グランプリ2024北海道総合1位！！ - 北の道の駅",
           "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9FdWZtVzNwR2xaNWdRTVhzMUlGcDdtZXV3bDBNSE9hclgwN1R1aHZnTENWakVlaVIwamYxQ2p3cjZrcmJaX3ZGYW1DLVQwZVM2RlRhelZEcXIyQ1FubGR3UHYyWFkxU0FSaXhnWg?oc=5",
           "pubDate": "2024-07-28T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "北海道「道の駅」ランキング2022で人気の道の駅はどこだ!? 道の駅ツウの評価に納得。 - KURU KURA",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBmb1ZWMUU3MTJ5ZGJHUHJjdWdvMkFrMzFLS09DZENiZy1BVnF5d1JNbTkwQVNrV3ZhSlhkeE92b1FEQ2RjbTdnaWJUU193T2RBOEpMVFMwOWNPZw?oc=5",
-          "pubDate": "2023-11-13T08:00:00+00:00",
           "categories": []
         },
         {
@@ -3607,39 +3877,42 @@
     "bear": {
       "status": "ok",
       "latest": "2026-10-29",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00"
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00"
     },
     "okuyami": {
       "status": "ok",
       "latest": "zenkoku-okuyami:1cabaf9085577ab5a5517080cf28af01226d1fc1dc8b74ce727523dda49fe415",
-      "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
+      "generatedAt": "2026-11-03T09:31:17.221019+00:00",
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
       "source": "全国お悔やみ欄（平取町）",
       "sourceUrl": "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/"
     }
   },
   "videos": {
     "btn-v1": {
-      "status": "ok",
+      "status": "error",
       "videoId": "tvgbZZYS4Nk",
       "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
-      "sourceUrl": "https://www.youtube.com/@HTBnews/live"
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
+      "sourceUrl": "https://www.youtube.com/@HTBnews/live",
+      "error": "live_video_missing"
     },
     "btn-stv": {
-      "status": "ok",
+      "status": "error",
       "videoId": "Wvqa1Csp5Vk",
       "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
-      "sourceUrl": "https://www.stv.jp/news/index.html"
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
+      "sourceUrl": "https://www.stv.jp/news/index.html",
+      "error": "video_unavailable"
     },
     "btn-custom-video": {
-      "status": "ok",
+      "status": "error",
       "videoId": "Y1uNv-JTJKg",
       "generatedAt": "2026-11-03T09:28:00.571038+00:00",
-      "checkedAt": "2026-11-03T09:28:00.571038+00:00",
-      "sourceUrl": "https://www.stv.jp/tv/dosanko_eve/index.html"
+      "checkedAt": "2026-11-03T09:31:17.221019+00:00",
+      "sourceUrl": "https://www.stv.jp/tv/dosanko_eve/index.html",
+      "error": "video_unavailable"
     }
   }
 }
