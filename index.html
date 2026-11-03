@@ -308,6 +308,8 @@ body[data-theme="wii"] {padding:15px;}
 /* Spacious layout and readable type across the dashboard. */
 body,body[data-theme="wii"] {font-size:18px;padding:24px 20px 40px;}
 .widgets {max-width:1680px;gap:22px;}
+.alert-row {display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;}
+@media(max-width:900px){.alert-row {grid-template-columns:1fr;}}
 .main-layout {grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;}
 .bottom-widgets {grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:18px;}
 .widget {min-width:0;}
@@ -492,6 +494,7 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
     </div>
   </div>
 
+<div class="alert-row">
 <section class="widget" id="jma-warning-widget" aria-labelledby="jma-warning-title" style="gap:8px;border:1px solid #b8d5e4">
   <h2 id="jma-warning-title" style="font-size:17px;margin:0">⚠️ 平取町の気象警報・注意報</h2>
   <div id="jma-warning-result" role="status" aria-live="polite" style="font-size:14px;line-height:1.6">気象庁の情報を確認しています…</div>
@@ -499,6 +502,18 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
   <p style="margin:0;font-size:12px;line-height:1.5">気象警報・注意報（河川氾濫・津波は対象外）。最新情報は気象庁で確認してください。</p>
   <a href="https://www.jma.go.jp/bosai/warning/#area_type=class20s&amp;area_code=0160200&amp;lang=ja" target="_blank" rel="noopener noreferrer" style="font-size:13px">気象庁で平取町の詳しい情報を見る ↗</a>
 </section>
+
+<section class="widget" id="bear-widget" aria-labelledby="bear-title" style="gap:8px;border:1px solid #b8d5e4">
+  <h2 id="bear-title" style="font-size:17px;margin:0">🐻 平取町のヒグマ出没情報</h2>
+  <div id="bear-result" role="status" aria-live="polite" style="font-size:14px;line-height:1.6">平取町の情報を確認しています…</div>
+  <p id="bear-time" style="margin:0;font-size:12px;color:#555">確認中</p>
+  <p style="margin:0;font-size:12px;line-height:1.5">出没情報がない場所が安全とは限りません。山に入る際は音を出すなど、十分注意してください。</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <a href="https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html" target="_blank" rel="noopener noreferrer" style="font-size:13px">平取町の公式情報を見る ↗</a>
+    <a id="bear-map-link" href="#" target="_blank" rel="noopener noreferrer" style="font-size:13px" hidden>出没マップ（Googleマイマップ）を見る ↗</a>
+  </div>
+</section>
+</div>
 
 <section class="widget" aria-labelledby="radio-title" style="gap:8px">
   <h2 id="radio-title" style="font-size:17px;margin:0">📻 今日の平取ラジオ</h2>
@@ -2272,6 +2287,60 @@ function parseBiratoriWarnings(reports) {
   refreshWarnings();
   setInterval(()=>{if(!document.hidden)refreshWarnings();},5*60*1000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden && Date.now()-lastChecked>=60000)refreshWarnings();});
+})();
+</script>
+
+<script>
+(() => {
+  const result = document.getElementById('bear-result');
+  const stamp = document.getElementById('bear-time');
+  const box = document.getElementById('bear-widget');
+  const mapLink = document.getElementById('bear-map-link');
+  const todayKey = () => new Date().toLocaleDateString('sv-SE', {timeZone:'Asia/Tokyo'});
+  const dayDiff = (a, b) => Math.round((Date.parse(a + 'T00:00:00Z') - Date.parse(b + 'T00:00:00Z')) / 86400000);
+  const formatDate = key => {
+    const d = new Date(key + 'T00:00:00+09:00');
+    return new Intl.DateTimeFormat('ja-JP', {timeZone:'Asia/Tokyo', month:'numeric', day:'numeric', weekday:'short'}).format(d);
+  };
+  const formatStamp = value => new Intl.DateTimeFormat('ja-JP', {timeZone:'Asia/Tokyo', month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'}).format(new Date(value));
+  async function loadBears() {
+    try {
+      const response = await fetch(new URL('./data/bear-sightings.json', location.href).href, {cache:'no-store'});
+      if (!response.ok) throw new Error('HTTP error');
+      const data = await response.json();
+      if (data?.status !== 'ok' || !Array.isArray(data.items) || !data.items.length ||
+          !data.items.every(item => item && /^\d{4}-\d{2}-\d{2}$/.test(item.date || '') && typeof item.place === 'string' && item.place)) throw new Error('Invalid bear data');
+      const items = [...data.items].sort((a, b) => b.date.localeCompare(a.date));
+      const latest = items[0], today = todayKey(), ago = dayDiff(today, latest.date);
+      const recent30 = items.filter(item => { const d = dayDiff(today, item.date); return d >= 0 && d <= 30; }).length;
+      result.replaceChildren();
+      const head = document.createElement('p');
+      head.style.cssText = 'margin:0 0 4px;font-weight:bold' + (ago <= 30 ? ';color:#b45309' : '');
+      head.textContent = '最新：' + formatDate(latest.date) + ' ' + (latest.time || '') + '・' + latest.place + (ago >= 0 ? '（' + (ago === 0 ? '今日' : ago + '日前') + '）' : '');
+      result.appendChild(head);
+      const list = document.createElement('ul');
+      list.style.cssText = 'margin:0;padding-left:1.4em';
+      for (const item of items.slice(0, 3)) {
+        const li = document.createElement('li');
+        li.textContent = formatDate(item.date) + ' ' + (item.time || '') + '・' + item.place;
+        list.appendChild(li);
+      }
+      result.appendChild(list);
+      const meta = document.createElement('p');
+      meta.style.cssText = 'margin:4px 0 0;font-size:13px';
+      meta.textContent = (data.fiscalYearLabel || '今年度') + 'の累計 ' + items.length + '件' + (recent30 ? '・直近30日で ' + recent30 + '件' : '・直近30日の出没なし');
+      result.appendChild(meta);
+      if (ago <= 30) { box.style.borderColor = '#d97706'; box.style.backgroundColor = '#fffbeb'; }
+      if (typeof data.mapUrl === 'string' && data.mapUrl.startsWith('https://www.google.com/maps/d/')) {
+        mapLink.href = data.mapUrl; mapLink.hidden = false;
+      }
+      stamp.textContent = (data.asOf ? '平取町発表：' + formatDate(data.asOf) + '現在｜' : '') + '取得：' + formatStamp(data.generatedAt || Date.now());
+    } catch (_) {
+      result.textContent = '情報を取得できませんでした。平取町の公式ページを確認してください。';
+      stamp.textContent = '取得失敗';
+    }
+  }
+  loadBears();
 })();
 </script>
 
