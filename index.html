@@ -571,13 +571,22 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
     </div>
   </div>
 
-<div class="alert-row">
 <section class="widget" id="jma-warning-widget" aria-labelledby="jma-warning-title" style="gap:8px;border:1px solid #b8d5e4">
   <h2 id="jma-warning-title" style="font-size:17px;margin:0">⚠️ 平取町の気象警報・注意報</h2>
   <div id="jma-warning-result" role="status" aria-live="polite" style="font-size:14px;line-height:1.6">気象庁の情報を確認しています…</div>
   <p id="jma-warning-time" style="margin:0;font-size:12px;color:#555">確認中</p>
   <p style="margin:0;font-size:12px;line-height:1.5">気象警報・注意報（河川氾濫・津波は対象外）。最新情報は気象庁で確認してください。</p>
   <a href="https://www.jma.go.jp/bosai/warning/#area_type=class20s&amp;area_code=0160200&amp;lang=ja" target="_blank" rel="noopener noreferrer" style="font-size:13px">気象庁で平取町の詳しい情報を見る ↗</a>
+</section>
+
+<div class="alert-row">
+<section class="widget" aria-labelledby="radio-title" style="gap:8px">
+  <h2 id="radio-title" style="font-size:17px;margin:0">📻 今日の平取ラジオ</h2>
+  <p style="margin:0;font-size:13px;line-height:1.5">北海道朝刊をずんだもんの声でお届けします。音声：VOICEVOX:ずんだもん</p>
+  <audio id="voicevox-radio" controls preload="none" style="width:100%" aria-label="VOICEVOX朝刊ラジオ"></audio>
+  <p id="voicevox-radio-status" role="status" style="margin:0;font-size:12px;color:#555">音声の更新状況を確認しています…</p>
+  <details id="radio-chapters-box" hidden><summary style="cursor:pointer;font-size:13px;font-weight:600">📑 チャプターを選ぶ</summary><div id="radio-chapters" style="display:flex;flex-direction:column;gap:5px;margin-top:8px"></div></details>
+
 </section>
 
 <section class="widget" id="bear-widget" aria-labelledby="bear-title" style="gap:8px;border:1px solid #b8d5e4">
@@ -590,15 +599,6 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   </div>
 </section>
 </div>
-
-<section class="widget" aria-labelledby="radio-title" style="gap:8px">
-  <h2 id="radio-title" style="font-size:17px;margin:0">📻 今日の平取ラジオ</h2>
-  <p style="margin:0;font-size:13px;line-height:1.5">北海道朝刊をずんだもんの声でお届けします。音声：VOICEVOX:ずんだもん</p>
-  <audio id="voicevox-radio" controls preload="none" style="width:100%" aria-label="VOICEVOX朝刊ラジオ"></audio>
-  <p id="voicevox-radio-status" role="status" style="margin:0;font-size:12px;color:#555">音声の更新状況を確認しています…</p>
-  <details id="radio-chapters-box" hidden><summary style="cursor:pointer;font-size:13px;font-weight:600">📑 チャプターを選ぶ</summary><div id="radio-chapters" style="display:flex;flex-direction:column;gap:5px;margin-top:8px"></div></details>
-
-</section>
 
 
   <section class="widget seasonal-widget" id="nearby-events-widget" aria-labelledby="seasonal-events-title">
