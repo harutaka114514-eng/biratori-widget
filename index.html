@@ -449,6 +449,72 @@ body[data-wallpaper="bing"][data-wallpaper-ready="true"] h1 {color:#fff;text-sha
 #wallpaper-credit[hidden] {display:none;}
 .wallpaper-switch {display:flex;flex-wrap:wrap;gap:8px;}
 #widget-settings .wallpaper-switch button[aria-pressed="true"] {outline:2px solid #0077b9;outline-offset:2px;}
+
+/* Shared panel palette for every dashboard section in the selected theme. */
+body {
+  --panel-surface:var(--glass);
+  --panel-edge:var(--edge);
+  --panel-edge-hover:var(--edge);
+  --panel-ink:#164666;
+  --panel-heading:#086b9d;
+  --panel-muted:#4e7184;
+  --panel-card:linear-gradient(120deg,#fffffff2,#edf9ffdf);
+  --panel-card-edge:#c3dfeb;
+  --panel-link:#066b9c;
+  --panel-badge:#dff3fc;
+  --panel-badge-ink:#225474;
+  --panel-control:linear-gradient(#fff 0%,#edfaff 47%,#cfe8f3 49%,#e7f7fc 100%);
+  --panel-control-ink:#25536d;
+}
+body[data-theme="wii"] {
+  --panel-surface:linear-gradient(#fff,#f9fafb);
+  --panel-edge:#b9c4cf;
+  --panel-edge-hover:#49bce8;
+  --panel-ink:#505861;
+  --panel-heading:#46768e;
+  --panel-muted:#6c7d87;
+  --panel-card:#f8fbfd;
+  --panel-card-edge:#dbe7ed;
+  --panel-link:#397695;
+  --panel-badge:#e7f8ff;
+  --panel-badge-ink:#27647f;
+  --panel-control:linear-gradient(#fff,#eef7fb);
+  --panel-control-ink:#557383;
+}
+body[data-theme="webcore"] {
+  --panel-surface:#c0c0c0;
+  --panel-edge:#fff #404040 #404040 #fff;
+  --panel-edge-hover:#fff #404040 #404040 #fff;
+  --panel-ink:#202020;
+  --panel-heading:#000080;
+  --panel-muted:#343434;
+  --panel-card:#fffef2;
+  --panel-card-edge:#808080 #fff #fff #808080;
+  --panel-link:#0000a8;
+  --panel-badge:#e8e8e8;
+  --panel-badge-ink:#000080;
+  --panel-control:#c0c0c0;
+  --panel-control-ink:#202020;
+}
+body .widgets .widget {
+  background:var(--panel-surface) !important;
+  border-color:var(--panel-edge) !important;
+  color:var(--panel-ink);
+}
+body .widgets .widget:hover {border-color:var(--panel-edge-hover) !important;}
+body .widgets .widget h2 {color:var(--panel-heading);}
+body .widgets :is(.seasonal-event-list li,.seasonal-list li) {
+  background:var(--panel-card);
+  border-color:var(--panel-card-edge);
+  color:var(--panel-ink);
+}
+body .widgets :is(.seasonal-heading span,.seasonal-event-meta,.seasonal-event-source,.seasonal-footer p,.seasonal-note-label) {color:var(--panel-muted);}
+body .widgets :is(.seasonal-event-list a,.seasonal-event-source a,.seasonal-footer a) {color:var(--panel-link);}
+body .widgets .seasonal-event-state {background:var(--panel-badge);color:var(--panel-badge-ink);}
+body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active) {
+  background:var(--panel-control) !important;
+  color:var(--panel-control-ink) !important;
+}
 </style>
 </head>
 <body data-theme="wii">
