@@ -1428,7 +1428,11 @@ function renderHidakaEvents(){
     const key=item.title.normalize('NFKC').replace(/\s/g,'')+'|'+item.startDate;
     if(item.endDate<today||seen.has(key))return false;seen.add(key);return true;
   }).sort((a,b)=>Number(a.startDate<today)-Number(b.startDate<today)||(a.startDate>=today?a.startDate.localeCompare(b.startDate):a.endDate.localeCompare(b.endDate))||a.title.localeCompare(b.title,'ja'));
-  const date=value=>{const [,month,day]=value.split('-');return Number(month)+'月'+Number(day)+'日';};
+  const date=value=>{
+    const [,month,day]=value.split('-');
+    const weekday=new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',weekday:'short'}).format(new Date(value+'T00:00:00+09:00'));
+    return Number(month)+'月'+Number(day)+'日（'+weekday+'）';
+  };
   list.innerHTML=items.map(item=>{
     const period=date(item.startDate)+'～'+date(item.endDate);
     const title=item.title.replace(/^【[^】]+】\s*/, '');
