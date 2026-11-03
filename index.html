@@ -1428,11 +1428,11 @@ function renderHidakaEvents(){
     const key=item.title.normalize('NFKC').replace(/\s/g,'')+'|'+item.startDate;
     if(item.endDate<today||seen.has(key))return false;seen.add(key);return true;
   }).sort((a,b)=>Number(a.startDate<today)-Number(b.startDate<today)||(a.startDate>=today?a.startDate.localeCompare(b.startDate):a.endDate.localeCompare(b.endDate))||a.title.localeCompare(b.title,'ja'));
-  const date=value=>value.replace(/-(0?)(\d+)/g,(_,zero,n)=>'/'+n);
+  const date=value=>{const [,month,day]=value.split('-');return Number(month)+'月'+Number(day)+'日';};
   list.innerHTML=items.map(item=>{
-    const period=item.startDate===item.endDate?date(item.startDate):date(item.startDate)+'〜'+date(item.endDate);
+    const period=date(item.startDate)+'～'+date(item.endDate);
     const title=item.title.replace(/^【[^】]+】\s*/, '');
-    const dates=item.dateLabel ? item.startDate.slice(0,4)+'年 '+item.dateLabel : period;
+    const dates='開催日；'+period;
     return '<li><a href="'+escapeWidgetHTML(item.link)+'" title="'+escapeWidgetHTML(title)+'" target="_blank" rel="noopener noreferrer">'+escapeWidgetHTML(title)+' ↗</a><p class="seasonal-event-meta">'+escapeWidgetHTML(dates)+'</p></li>';
   }).join('');
   const updates=[];
