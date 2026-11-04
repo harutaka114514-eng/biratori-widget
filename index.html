@@ -527,6 +527,15 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   text-overflow:ellipsis;
 }
 </style>
+<style>
+#road-widget .road-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#road-widget .road-links a{display:flex;flex-direction:column;gap:5px;padding:10px 12px;border:1px solid #b8d5e4;border-radius:10px;background:rgba(255,255,255,.8);color:inherit;text-decoration:none;min-width:0;overflow-wrap:anywhere}
+#road-widget .road-links a:hover{background:#e0f2fe}
+#road-widget .road-links a:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+#road-widget .road-links strong{font-size:13px}
+#road-widget .road-links span{font-size:11px;line-height:1.5}
+@media(max-width:600px){#road-widget .road-links{grid-template-columns:1fr}}
+</style>
 </head>
 <body data-theme="wii">
 
@@ -577,6 +586,27 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   <p id="jma-warning-time" style="margin:0;font-size:12px;color:#555">確認中</p>
   <p style="margin:0;font-size:12px;line-height:1.5">気象警報・注意報（河川氾濫・津波は対象外）。最新情報は気象庁で確認してください。</p>
   <a href="https://www.jma.go.jp/bosai/warning/#area_type=class20s&amp;area_code=0160200&amp;lang=ja" target="_blank" rel="noopener noreferrer" style="font-size:13px">気象庁で平取町の詳しい情報を見る ↗</a>
+</section>
+
+<!-- 平取周辺の道路情報：公式サイトで最新状況を確認 -->
+<section class="widget" id="road-widget" aria-labelledby="road-title">
+  <h2 id="road-title" style="font-size:17px;margin:0 0 8px">🚗 平取周辺の道路状況</h2>
+  <p style="margin:0 0 10px;font-size:13px;line-height:1.6">国道237号・235号／日高道／周辺道道の通行規制・道路カメラ</p>
+  <nav class="road-links" aria-label="道路状況の公式情報">
+    <a href="https://www.road-info-prvs.mlit.go.jp/roadinfo/pc/" target="_blank" rel="noopener noreferrer"><strong>通行止め・道路カメラ ↗</strong><span>国土交通省｜地図で平取・日高周辺を選択</span></a>
+    <a href="https://www.jartic.or.jp/map/?p=A01" target="_blank" rel="noopener noreferrer"><strong>日高道・道央道の規制・渋滞 ↗</strong><span>JARTIC｜北海道の高速道路情報</span></a>
+    <a href="https://northern-road.ceri.go.jp/navi/" target="_blank" rel="noopener noreferrer"><strong>北の道ナビ ↗</strong><span>道路情報・峠情報の総合案内</span></a>
+  </nav>
+  <details style="margin-top:10px;font-size:13px;line-height:1.7">
+    <summary style="cursor:pointer;font-weight:600">方面ごとに確認する道路</summary>
+    <ul style="margin:6px 0 0;padding-left:1.5em">
+      <li>富川・苫小牧方面：国道237号、235号、日高道</li>
+      <li>振内・日高市街方面：国道237号</li>
+      <li>千歳・札幌方面：国道237号、日高道、道央道</li>
+      <li>新冠・新ひだか方面：国道237号、235号、日高道</li>
+    </ul>
+  </details>
+  <p style="margin:8px 0 0;font-size:12px;color:#555;line-height:1.5">最新の規制・画像はリンク先で確認できます（別タブ）。この欄に規制状況の自動表示はありません。</p>
 </section>
 
 <div class="alert-row">
