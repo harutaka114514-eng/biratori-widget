@@ -536,6 +536,13 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
 #road-widget .road-links span{font-size:11px;line-height:1.5}
 @media(max-width:600px){#road-widget .road-links{grid-template-columns:1fr}}
 </style>
+<style>
+#news li.outing-card,#news-fullscreen-list li.outing-card{display:flex;flex-direction:column;align-items:stretch;gap:7px;flex-shrink:0}
+.outing-card p{margin:0;font-size:14px;line-height:1.7}
+.outing-card .outing-meta{font-size:12px;color:#586574}
+.outing-card a.outing-source{font-size:12px;font-weight:normal}
+.outing-card .refresh-btn{align-self:flex-start}
+</style>
 </head>
 <body data-theme="wii">
 
@@ -669,6 +676,8 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
       <div class="news-header">
         <div class="news-tabs">
           <button data-type="noon">☀️ 昼の更新</button>
+          <button data-type="weekend">🗓️ 今週末どこ行く？</button>
+          <button data-type="deals">🎫 無料・お得情報</button>
           <button data-type="x">X</button>
           <button data-type="links">🔗 リンク集</button>
           <button data-type="keizai" class="active">旅行</button>
@@ -733,6 +742,8 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
     <div id="news-fullscreen-header">
       <div id="news-fullscreen-tabs">
         <button data-type="noon">☀️ 昼の更新</button>
+          <button data-type="weekend">🗓️ 今週末どこ行く？</button>
+          <button data-type="deals">🎫 無料・お得情報</button>
         <button data-type="x">X</button>
           <button data-type="links">🔗 リンク集</button>
         <button data-type="keizai" class="active">旅行</button>
@@ -1081,7 +1092,7 @@ function mergeWidgetNews(items) {
 }
 function renderNewsStatus(type) {
   const el=document.getElementById('news-status');
-  if(type==='noon'||type==='morning'||type==='meshi'||type==='links'||type==='x'||type==='murash'){el.textContent='';return;}
+  if(type==='weekend'||type==='deals'||type==='noon'||type==='morning'||type==='meshi'||type==='links'||type==='x'||type==='murash'){el.textContent='';return;}
   const state=newsStates[type];
   el.replaceChildren();
   const message=document.createElement('span');
@@ -1311,10 +1322,79 @@ function renderNewsItems(type, ul) {
   }
 }
 
+
+// Weekend outings and purchase-free offers; dated items expire in Japan time.
+function outingToday() { return new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'}); }
+function outingDate(value) { return typeof value==='string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value+'T00:00:00+09:00')); }
+function outingURL(value) { try { return new URL(value).protocol==='https:'; } catch (_) { return false; } }
+function validOutingData(data) {
+  return data && Number.isFinite(Date.parse(data.updatedAt)) && outingDate(data.weekendStart) && outingDate(data.weekendEnd) && data.weekendStart<=data.weekendEnd &&
+    ['weekend','deals'].every(key=>Array.isArray(data[key]) && data[key].every(item=>item && typeof item.title==='string' && outingDate(item.startDate) && outingDate(item.endDate) && item.startDate<=item.endDate && outingURL(item.url)));
+}
+function outingState() { return loadOutingData.state || (loadOutingData.state={data:null,loading:false,attempt:0,error:false}); }
+async function loadOutingData(force=false) {
+  const state=outingState();
+  if(state.loading || (!force && Date.now()-state.attempt<600000)) return;
+  state.loading=true; state.attempt=Date.now();
+  try {
+    const response=await fetch('./data/weekend-deals.json?ts='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(15000)});
+    if(!response.ok) throw Error('HTTP');
+    const data=await response.json();
+    if(!validOutingData(data)) throw Error('invalid data');
+    state.data=data; state.error=false;
+  } catch (_) { state.error=true; }
+  finally {
+    state.loading=false;
+    if(['weekend','deals'].includes(newsCurrentType)) renderNews(newsCurrentType);
+    if(isNewsFullscreenOpen() && ['weekend','deals'].includes(fsCurrentType)) renderNewsFullscreen(fsCurrentType);
+  }
+}
+function renderOutingCards(type,list) {
+  const state=outingState(), data=state.data, today=outingToday();
+  list.replaceChildren();
+  const intro=document.createElement('li'); intro.className='outing-card';
+  const heading=document.createElement('strong'); heading.textContent=type==='weekend'?'🗓️ 今週末どこ行く？':'🎫 無料・お得情報'; intro.append(heading);
+  const detail=document.createElement('p'); detail.textContent=type==='weekend'?'平取から車で行きやすい週末のお出かけ案。移動時間は概算です。':'購入不要の食品クーポン・無料開放・無料観覧。会員登録などの条件は各項目に表示。'; intro.append(detail);
+  const status=document.createElement('p'); status.className='outing-meta';
+  status.textContent=data?'情報確認：'+new Date(data.updatedAt).toLocaleDateString('ja-JP',{timeZone:'Asia/Tokyo'}):state.error?'情報を取得できませんでした。':'情報を読み込み中…';
+  if(state.error && data) status.append('｜更新に失敗したため前回確認分を表示');
+  intro.append(status);
+  const retry=document.createElement('button');retry.type='button';retry.className='refresh-btn';retry.textContent='再取得';retry.disabled=state.loading;retry.onclick=()=>loadOutingData(true);intro.append(retry);
+  list.append(intro);
+  if(!data) return;
+  const items=data[type].filter(item=>item.endDate>=today && (type!=='weekend' || (data.weekendEnd>=today && item.startDate<=data.weekendEnd && item.endDate>=data.weekendStart)));
+  if(type==='weekend' && data.weekendEnd>=today) {
+    const period=document.createElement('li');period.className='outing-card';
+    period.textContent='対象の週末：'+data.weekendStart.replace(/-/g,'/')+' ～ '+data.weekendEnd.replace(/-/g,'/');list.append(period);
+  }
+  if(!items.length) {
+    const empty=document.createElement('li');empty.className='outing-card';empty.textContent=type==='weekend'?'今週末の確認済み候補はまだありません。':'現在、掲載できる確認済みの無料・お得情報はありません。';list.append(empty);
+  }
+  for(const item of items) {
+    const li=document.createElement('li');li.className='outing-card';
+    const title=document.createElement('a');title.href=item.url;title.target='_blank';title.rel='noopener noreferrer';title.textContent=item.title+' ↗';li.append(title);
+    const period=document.createElement('p');period.className='outing-meta';period.textContent=(item.startDate>today?'開催・利用予定：':'開催・利用期間：')+item.startDate.replace(/-/g,'/')+' ～ '+item.endDate.replace(/-/g,'/');li.append(period);
+    for(const [label,value] of [['場所',item.area],['車',item.travel],['料金・特典',item.price],['時間',item.hours],['条件',item.condition]]) {
+      if(!value) continue;const p=document.createElement('p');p.textContent=label+'：'+value;li.append(p);
+    }
+    if(item.description){const p=document.createElement('p');p.textContent=item.description;li.append(p);}
+    const source=document.createElement('a');source.href=item.url;source.target='_blank';source.rel='noopener noreferrer';source.className='outing-source';source.textContent='公式の詳細・条件を見る ↗';li.append(source);
+    list.append(li);
+  }
+}
+setInterval(()=>{
+  if(document.hidden) return;
+  for(const [type,fullscreen] of [[newsCurrentType,false],[fsCurrentType,true]]) {
+    if(['weekend','deals'].includes(type) && (!fullscreen || isNewsFullscreenOpen())) renderNewsView(type,fullscreen);
+  }
+},60000);
+
+
 function renderNewsView(type, fullscreen) {
   const { list, meshi } = updateNewsPanels(type, fullscreen);
   if (!fullscreen) renderNewsStatus(type);
   if (type === 'links') return;
+  if (type === 'weekend' || type === 'deals') { renderOutingCards(type, list); loadOutingData(); return; }
   if (type === 'noon') { renderNoonBriefing(list); loadNoonBriefing(); return; }
   if (type === 'morning') { renderMorningBriefing(list); loadMorningBriefing(); return; }
   if (type === 'murash') { renderMurashMatches(list); return; }
