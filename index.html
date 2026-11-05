@@ -595,25 +595,11 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   <a href="https://www.jma.go.jp/bosai/warning/#area_type=class20s&amp;area_code=0160200&amp;lang=ja" target="_blank" rel="noopener noreferrer" style="font-size:13px">気象庁で平取町の詳しい情報を見る ↗</a>
 </section>
 
-<!-- 平取周辺の道路情報：公式サイトで最新状況を確認 -->
+<!-- 日高道：新冠IC～沼ノ端西ICの規制のみ -->
 <section class="widget" id="road-widget" aria-labelledby="road-title">
-  <h2 id="road-title" style="font-size:17px;margin:0 0 8px">🚗 平取周辺の道路状況</h2>
-  <p style="margin:0 0 10px;font-size:13px;line-height:1.6">国道237号・235号／日高道／周辺道道の通行規制・道路カメラ</p>
-  <nav class="road-links" aria-label="道路状況の公式情報">
-    <a href="https://www.road-info-prvs.mlit.go.jp/roadinfo/pc/" target="_blank" rel="noopener noreferrer"><strong>通行止め・道路カメラ ↗</strong><span>国土交通省｜地図で平取・日高周辺を選択</span></a>
-    <a href="https://www.jartic.or.jp/map/?p=A01" target="_blank" rel="noopener noreferrer"><strong>日高道・道央道の規制・渋滞 ↗</strong><span>JARTIC｜北海道の高速道路情報</span></a>
-    <a href="https://northern-road.ceri.go.jp/navi/" target="_blank" rel="noopener noreferrer"><strong>北の道ナビ ↗</strong><span>道路情報・峠情報の総合案内</span></a>
-  </nav>
-  <details style="margin-top:10px;font-size:13px;line-height:1.7">
-    <summary style="cursor:pointer;font-weight:600">方面ごとに確認する道路</summary>
-    <ul style="margin:6px 0 0;padding-left:1.5em">
-      <li>富川・苫小牧方面：国道237号、235号、日高道</li>
-      <li>振内・日高市街方面：国道237号</li>
-      <li>千歳・札幌方面：国道237号、日高道、道央道</li>
-      <li>新冠・新ひだか方面：国道237号、235号、日高道</li>
-    </ul>
-  </details>
-  <p style="margin:8px 0 0;font-size:12px;color:#555;line-height:1.5">最新の規制・画像はリンク先で確認できます（別タブ）。この欄に規制状況の自動表示はありません。</p>
+  <h2 id="road-title" style="font-size:17px;margin:0 0 8px">🚗 日高道 新冠IC～沼ノ端西IC</h2>
+  <div id="road-result" role="status" style="font-size:14px;font-weight:600">規制状況を確認中…</div>
+  <p id="road-time" style="margin:6px 0 0;font-size:11px;color:#555"></p>
 </section>
 
 <div class="alert-row">
@@ -2644,6 +2630,42 @@ function parseBiratoriWarnings(reports) {
   loadBears();
   setInterval(() => { if (!document.hidden) loadBears(); }, 5 * 60 * 1000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) loadBears(); });
+})();
+</script>
+
+
+<script>
+(() => {
+  const result=document.getElementById('road-result'), stamp=document.getElementById('road-time');
+  let loading=false;
+  async function refreshRoad() {
+    if(loading)return;
+    loading=true;
+    try {
+      const response=await fetch('./data/hidaka-road.json?ts='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(12000)});
+      if(!response.ok)throw Error('http');
+      const data=await response.json(), age=Date.now()-Date.parse(data.sourceAt);
+      if(data.status!=='ok'||!Array.isArray(data.items)||!Number.isFinite(age)||age< -60000||age>30*60000)throw Error('unknown');
+      result.replaceChildren();
+      const title=document.createElement('p'); title.style.margin='0';
+      title.textContent=data.items.length?'規制あり':'規制なし（上下線）';
+      title.style.color=data.items.length?'#b45309':'#15803d';
+      result.append(title);
+      for(const item of data.items) {
+        if(!item||!['上り','下り'].includes(item.direction)||typeof item.section!=='string'||typeof item.restriction!=='string')throw Error('invalid');
+        const row=document.createElement('p');row.style.cssText='margin:6px 0 0;font-size:13px';
+        row.textContent=item.direction+'：'+item.section+'｜'+item.restriction;result.append(row);
+      }
+      stamp.textContent=new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(data.sourceAt))+'現在';
+    } catch(_) {
+      result.textContent='規制状況を確認できません';
+      const link=document.createElement('a');link.href='https://roadway.yahoo.co.jp/traffic/road/3100090/list';link.target='_blank';link.rel='noopener noreferrer';link.textContent='日高道の規制を確認 ↗';
+      stamp.replaceChildren(link);
+    } finally {loading=false;}
+  }
+  refreshRoad();
+  setInterval(()=>{if(!document.hidden)refreshRoad();},60000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshRoad();});
 })();
 </script>
 
