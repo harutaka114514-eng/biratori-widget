@@ -587,6 +587,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
     </div>
   </div>
 
+<div class="alert-row">
 <section class="widget" id="jma-warning-widget" aria-labelledby="jma-warning-title" style="gap:8px;border:1px solid #b8d5e4">
   <h2 id="jma-warning-title" style="font-size:17px;margin:0">⚠️ 平取町の気象警報・注意報</h2>
   <div id="jma-warning-result" role="status" aria-live="polite" style="font-size:14px;line-height:1.6">気象庁の情報を確認しています…</div>
@@ -601,6 +602,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   <div id="road-result" role="status" style="font-size:14px;font-weight:600">規制状況を確認中…</div>
   <p id="road-time" style="margin:6px 0 0;font-size:11px;color:#555"></p>
 </section>
+</div>
 
 <div class="alert-row">
 <section class="widget" aria-labelledby="radio-title" style="gap:8px">
@@ -2648,7 +2650,7 @@ function parseBiratoriWarnings(reports) {
       if(data.status!=='ok'||!Array.isArray(data.items)||!Number.isFinite(age)||age< -60000||age>30*60000)throw Error('unknown');
       result.replaceChildren();
       const title=document.createElement('p'); title.style.margin='0';
-      title.textContent=data.items.length?'規制あり':'規制なし（上下線）';
+      title.textContent=data.items.length?'規制あり':'規制はありません';
       title.style.color=data.items.length?'#b45309':'#15803d';
       result.append(title);
       for(const item of data.items) {
