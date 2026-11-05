@@ -663,7 +663,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
     <div class="widget" id="news-widget">
       <div class="news-header">
         <div class="news-tabs">
-          <button data-type="noon">☀️ 昼刊</button>
+          
           <button data-type="weekend">🗓️ 今週末どこ行く？</button>
           <button data-type="deals">🎫 無料・お得情報</button>
           <button data-type="x">X</button>
@@ -674,6 +674,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
           <button data-type="nl">道NL</button>
           <button data-type="hobby">趣味</button>
           <button data-type="morning">📰 北海道朝刊</button>
+        <button data-type="noon">☀️ 昼刊</button>
         <button data-type="murash">🎮 ムラッシュ</button>
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
@@ -729,7 +730,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
   <div id="news-fullscreen-inner">
     <div id="news-fullscreen-header">
       <div id="news-fullscreen-tabs">
-        <button data-type="noon">☀️ 昼刊</button>
+        
           <button data-type="weekend">🗓️ 今週末どこ行く？</button>
           <button data-type="deals">🎫 無料・お得情報</button>
         <button data-type="x">X</button>
@@ -740,6 +741,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
         <button data-type="nl">道NL</button>
         <button data-type="hobby">趣味</button>
         <button data-type="morning">📰 北海道朝刊</button>
+        <button data-type="noon">☀️ 昼刊</button>
         <button data-type="murash">🎮 ムラッシュ</button>
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
       </div>
@@ -1513,6 +1515,53 @@ async function loadNoonBriefing(force=false) {
   }
 }
 
+
+// 昼刊補助機能：既存の朝刊・昼刊本文は変更しない。
+const NOON_TRIVIA = [
+'北海道の地名にはアイヌ語に由来するものが数多くあります。',
+'沙流川は日高山脈から太平洋へ流れる川です。',
+'北海道のエゾシカはニホンジカの亜種です。',
+'日高地方は日本有数の競走馬生産地域です。',
+'シシャモは北海道の太平洋沿岸などに生息する魚です。',
+'二風谷にはアイヌ文化に関する博物館があります。',
+'北海道には国立公園と国定公園が数多くあります。'
+];
+function noonDateKey(){return new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});}
+function noonTrivia(){const key=noonDateKey();const n=Number(key.replace(/-/g,''));return NOON_TRIVIA[n%NOON_TRIVIA.length];}
+function noonNorm(value){return String(value||'').toLowerCase().normalize('NFKC').replace(/https?:\/\/\S+/g,'').replace(/[\s、。・「」『』（）()【】!！?？]/g,'');}
+function noonIsDuplicate(item){
+ if(!morningBriefing || !Array.isArray(morningBriefing.items))return false;
+ const title=noonNorm(item.title), url=String(item.url||'').split('?')[0];
+ return morningBriefing.items.some(m=>{
+   const mt=noonNorm(m.title),mu=String(m.url||'').split('?')[0];
+   return (url&&mu&&url===mu)||(title.length>=12&&mt.length>=12&&(title===mt||title.includes(mt)||mt.includes(title)));
+ });
+}
+let noonSpeech=null;
+function noonStopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();noonSpeech=null;}
+function noonAddFeatures(list){
+ if(!noonBriefing)return;
+ const li=document.createElement('li');li.style.cssText='display:block;line-height:1.6';
+ const heading=document.createElement('strong');heading.textContent='📻 お昼のAIラジオ';li.append(heading);
+ const buttons=document.createElement('div');buttons.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin:8px 0';
+ const play=document.createElement('button');play.type='button';play.textContent='▶ 読み上げ';
+ const stop=document.createElement('button');stop.type='button';stop.textContent='■ 停止';
+ const status=document.createElement('span');status.style.fontSize='12px';status.setAttribute('role','status');
+ play.onclick=()=>{
+   if(!('speechSynthesis' in window)){status.textContent='このブラウザは音声読み上げに対応していません。';return;}
+   noonStopSpeech();
+   const text='こんにちは。北海道お昼のニュースです。'+String(noonBriefing.radioScript||noonBriefing.reportMarkdown||'').replace(/!?\[[^\]]*\]\([^)]*\)/g,'').replace(/[#*|]/g,' ').slice(0,9000)+'。今日の豆知識。'+String(noonBriefing.trivia||noonTrivia());
+   const speech=new SpeechSynthesisUtterance(text);speech.lang='ja-JP';speech.rate=1;noonSpeech=speech;
+   speech.onstart=()=>status.textContent='読み上げ中';speech.onend=()=>status.textContent='再生終了';speech.onerror=()=>status.textContent='音声を再生できませんでした';
+   window.speechSynthesis.speak(speech);
+ };
+ stop.onclick=()=>{noonStopSpeech();status.textContent='停止しました';};
+ buttons.append(play,stop,status);li.append(buttons);
+ const trivia=document.createElement('p');trivia.textContent='💡 今日の雑学：'+String(noonBriefing.trivia||noonTrivia());li.append(trivia);
+ const note=document.createElement('small');note.textContent='午後の天気・警報はサイトの気象情報欄で随時確認できます。';li.append(note);
+ list.prepend(li);
+}
+
 function renderNoonBriefing(list) {
   list.replaceChildren();
   const intro=document.createElement('li'); intro.style.display='block';
@@ -1530,7 +1579,7 @@ function renderNoonBriefing(list) {
     intro.append(stamp);
     if(noonBriefing.updatedAt && updated.toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})!==new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})) {const stale=document.createElement('p');stale.textContent='前回の昼版です。掲載日時をご確認ください。';intro.append(stale);}
     renderBriefingMarkdown(intro,noonBriefing.reportMarkdown);
-    list.append(intro);return;
+    list.append(intro);noonAddFeatures(list);return;
   }
   const updated=new Date(noonBriefing.updatedAt);
   intro.textContent=(noonBriefing.title||'北海道昼版ブリーフィング')+'｜'+(Number.isNaN(updated.getTime())?'更新日時不明':updated.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}))+(noonError?'（更新できなかったため前回分を表示）':'');
@@ -1550,6 +1599,7 @@ function renderNoonBriefing(list) {
     list.append(li);
   }
 }
+// 昼刊の構造化記事がある場合は朝刊との同一URL・同一見出しを除外。
 setInterval(()=>{if(newsCurrentType==='noon'||(fsCurrentType==='noon'&&isNewsFullscreenOpen()))loadNoonBriefing(true);},10*60*1000);
 
 
