@@ -20,7 +20,7 @@ def parse(html):
         if heading is None: raise ValueError("direction missing")
         nodes = []
         for node in heading.next_siblings:
-            if getattr(node, "name", "") in ["h1","h2"]: break
+            if getattr(node, "name", "") in ["h1","h2","h3"] or (hasattr(node, "find") and not isinstance(node, str) and node.find(["h1","h2","h3"])): break
             nodes.append(node)
         block = BeautifulSoup("".join(map(str,nodes)), "html.parser")
         rows = block.select("table tr")
