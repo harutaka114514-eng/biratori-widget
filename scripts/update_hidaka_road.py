@@ -29,19 +29,21 @@ def parse(html):
             cells = [c.get_text(" ",strip=True) for c in row.find_all("td")]
             if not cells: continue
             found = True
-            route = cells[0]
+            section_cells = 2 if len(cells) >= 4 else 1
+            route = " ".join(cells[:section_cells])
             positions = [ICS.index(n) for n in ICS if n in route]
             if not positions: raise ValueError("unknown section")
             if max(positions) < 1: continue
-            items.append({"direction":direction,"section":route,"restriction":"／".join(cells[1:])})
+            items.append({"direction":direction,"section":route,"restriction":"／".join(cells[section_cells:])})
         if not found and "現在、通行止め・規制情報はありません。" not in block.get_text(): raise ValueError("unrecognized restrictions")
     return {"status":"ok","sourceAt":issued.isoformat(),"items":items}
 if __name__ == "__main__":
     try:
         request = urllib.request.Request(URL, headers={"User-Agent":"Mozilla/5.0"})
         with urllib.request.urlopen(request,timeout=30) as response: result = parse(response.read().decode("utf-8"))
-    except Exception:
-        result = {"status":"unknown","items":[]}
+    except Exception as error:
+        print(type(error).__name__, str(error))
+        result = {"status":"unknown","items":[],"error":str(error)}
     result.update(checkedAt=datetime.now(timezone.utc).isoformat(), source=URL)
     Path("data").mkdir(exist_ok=True)
     Path("data/hidaka-road.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
