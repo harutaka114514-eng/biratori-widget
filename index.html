@@ -675,7 +675,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
           <button data-type="hobby">趣味</button>
           <button data-type="morning">📰 北海道朝刊</button>
         <button data-type="noon">☀️ 昼刊</button>
-        <button data-type="murash">🎮 ムラッシュ</button>
+        
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
         </div>
         <button id="news-expand-btn" onclick="openNewsFullscreen()" title="全画面表示">⛶</button>
@@ -742,7 +742,7 @@ body :is(.news-tabs,#news-fullscreen-tabs) button[data-type="meshi"]:not(.active
         <button data-type="hobby">趣味</button>
         <button data-type="morning">📰 北海道朝刊</button>
         <button data-type="noon">☀️ 昼刊</button>
-        <button data-type="murash">🎮 ムラッシュ</button>
+        
 <button data-type="meshi" style="background:#dcfce7;color:#166534;">🍽️ 近所めし</button>
       </div>
       <button id="news-fullscreen-close" onclick="closeNewsFullscreen()">✕ 閉じる</button>
@@ -1539,6 +1539,21 @@ function noonIsDuplicate(item){
 }
 let noonSpeech=null;
 function noonStopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();noonSpeech=null;}
+function noonAddMatchDay(list){
+ const today=noonDateKey();
+ if(!murashLoaded||murashLoadError)return;
+ const matches=murashMatches.filter(m=>m.date===today&&['VALORANT','Overwatch','Shadowverse'].includes(m.game));
+ if(!matches.length)return;
+ const li=document.createElement('li');li.style.cssText='display:block;line-height:1.7';
+ const h=document.createElement('strong');h.textContent='🎮 今日のムラッシュゲーミング試合';li.append(h);
+ for(const m of matches){
+  const p=document.createElement('p');p.style.margin='6px 0';
+  p.append(document.createTextNode([m.game,m.time||'時刻未定',m.opponent?'対 '+m.opponent:'',m.tournament||''].filter(Boolean).join('｜')));
+  if(typeof m.url==='string'&&/^https:\/\//.test(m.url)){const a=document.createElement('a');a.href=m.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=' 公式日程';p.append(a);}
+  li.append(p);
+ }
+ list.append(li);
+}
 function noonAddFeatures(list){
  if(!noonBriefing)return;
  const li=document.createElement('li');li.style.cssText='display:block;line-height:1.6';
@@ -1579,7 +1594,7 @@ function renderNoonBriefing(list) {
     intro.append(stamp);
     if(noonBriefing.updatedAt && updated.toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})!==new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})) {const stale=document.createElement('p');stale.textContent='前回の昼版です。掲載日時をご確認ください。';intro.append(stale);}
     renderBriefingMarkdown(intro,noonBriefing.reportMarkdown);
-    list.append(intro);noonAddFeatures(list);return;
+    list.append(intro);noonAddFeatures(list);noonAddMatchDay(list);return;
   }
   const updated=new Date(noonBriefing.updatedAt);
   intro.textContent=(noonBriefing.title||'北海道昼版ブリーフィング')+'｜'+(Number.isNaN(updated.getTime())?'更新日時不明':updated.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}))+(noonError?'（更新できなかったため前回分を表示）':'');
@@ -1599,6 +1614,7 @@ function renderNoonBriefing(list) {
     list.append(li);
   }
   noonAddFeatures(list);
+  noonAddMatchDay(list);
 }
 // 昼刊の構造化記事がある場合は朝刊との同一URL・同一見出しを除外。
 setInterval(()=>{if(newsCurrentType==='noon'||(fsCurrentType==='noon'&&isNewsFullscreenOpen()))loadNoonBriefing(true);},10*60*1000);
