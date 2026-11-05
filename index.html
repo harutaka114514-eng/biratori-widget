@@ -1584,7 +1584,7 @@ function renderNoonBriefing(list) {
   const updated=new Date(noonBriefing.updatedAt);
   intro.textContent=(noonBriefing.title||'北海道昼版ブリーフィング')+'｜'+(Number.isNaN(updated.getTime())?'更新日時不明':updated.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}))+(noonError?'（更新できなかったため前回分を表示）':'');
   list.append(intro);
-  for(const item of noonBriefing.items) {
+  for(const item of [...noonBriefing.items].filter(item=>item.isUpdate||item.isBreaking||!noonIsDuplicate(item)).sort((a,b)=>Number(Boolean(b.isBreaking))-Number(Boolean(a.isBreaking))||Number(b.priority||0)-Number(a.priority||0))) {
     const li=document.createElement('li');li.style.display='block';
     const title=document.createElement('strong');title.textContent=String(item.title||'ニュース');li.append(title);
     if(typeof item.imageUrl==='string' && /^https:\/\//.test(item.imageUrl)) {
@@ -1598,6 +1598,7 @@ function renderNoonBriefing(list) {
     }
     list.append(li);
   }
+  noonAddFeatures(list);
 }
 // 昼刊の構造化記事がある場合は朝刊との同一URL・同一見出しを除外。
 setInterval(()=>{if(newsCurrentType==='noon'||(fsCurrentType==='noon'&&isNewsFullscreenOpen()))loadNoonBriefing(true);},10*60*1000);
