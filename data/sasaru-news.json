@@ -1,8 +1,18 @@
 {
   "status": "ok",
-  "generatedAt": "2026-11-07T00:31:08.829Z",
+  "generatedAt": "2026-11-07T09:26:32.419Z",
   "source": "SASARU公式カテゴリ一覧（ファッション除外）",
   "items": [
+    {
+      "title": "【豊平峡温泉】源泉かけ流しと名物グルメを満喫！本格インドカレー×十割そばの変わり種メニュー",
+      "link": "https://sasaru.media/article/gourmet/20261107_002/",
+      "pubDate": "2026-11-07T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "グルメ"
+      ],
+      "category": "gourmet"
+    },
     {
       "title": "「ホッキ貝のバッテラ」清流育ちの「ヤマベから揚げ」水揚げ日本一だからこそできる【苫小牧・日本橋】",
       "link": "https://sasaru.media/article/gourmet/20261107_001/",
@@ -12,6 +22,16 @@
         "グルメ"
       ],
       "category": "gourmet"
+    },
+    {
+      "title": "あえて小樽に泊まりたい！美食とお酒のご褒美ステイ…小樽の価値に感動！「短時間の観光じゃあもったいない」",
+      "link": "https://sasaru.media/article/weather/20261107_003/",
+      "pubDate": "2026-11-07T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "おでかけ"
+      ],
+      "category": "weather"
     },
     {
       "title": "クリスマスもお正月も“インターコンチで豪華に浸りたい”「純白のアフタヌーンティー」お得なビュッフェデ＆ケーキ予約チェック【札幌】",
@@ -294,16 +314,6 @@
       "category": "money"
     },
     {
-      "title": "人気店「らぁ麺Q」まもなくオープン！ランチがお得な絶品寿司！ランチスポットが話題満載【アーバンネット札幌リンクタワー】",
-      "link": "https://sasaru.media/article/gourmet/20261027_004/",
-      "pubDate": "2026-10-27T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "グルメ"
-      ],
-      "category": "gourmet"
-    },
-    {
       "title": "クレジットカードで現金が欲しい人の「現金化のリスク」“違法じゃないけれど規約違反”ブランド品や回数券の転売は要注意！クレカ個人情報流出の被害を防ぐ方法！",
       "link": "https://sasaru.media/article/money/20261027_002/",
       "pubDate": "2026-10-27T00:00:00+09:00",
@@ -537,16 +547,6 @@
       "title": "札幌のホテル全滅！？ライブ遠征組が泊まる「旭川・苫小牧・小樽」終電デッドライン＆移動の罠",
       "link": "https://sasaru.media/article/weather/20261005_001/",
       "pubDate": "2026-10-05T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "おでかけ"
-      ],
-      "category": "weather"
-    },
-    {
-      "title": "クラゲがオレンジ色に！水族館のハロウィンイベント！「AOAO SAPPORO」限定グルメも登場",
-      "link": "https://sasaru.media/article/weather/20261003_001/",
-      "pubDate": "2026-10-03T00:00:00+09:00",
       "author": "SASARU",
       "categories": [
         "おでかけ"
