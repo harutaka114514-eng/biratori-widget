@@ -1,7 +1,18 @@
 {
   "status": "ok",
-  "sourceAt": "2026-11-09T18:25:00+09:00",
-  "items": [],
-  "checkedAt": "2026-11-09T09:39:35.380633+00:00",
+  "sourceAt": "2026-11-10T04:45:00+09:00",
+  "items": [
+    {
+      "direction": "上り",
+      "section": "沼ノ端西IC →苫小牧東IC",
+      "restriction": "80キロ規制／凍結"
+    },
+    {
+      "direction": "下り",
+      "section": "苫小牧東IC →沼ノ端西IC",
+      "restriction": "80キロ規制／凍結"
+    }
+  ],
+  "checkedAt": "2026-11-09T20:05:36.326399+00:00",
   "source": "https://roadway.yahoo.co.jp/traffic/road/3100090/list"
 }
