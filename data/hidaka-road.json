@@ -1,7 +1,13 @@
 {
   "status": "ok",
-  "sourceAt": "2026-11-11T07:55:00+09:00",
-  "items": [],
-  "checkedAt": "2026-11-10T23:13:15.752086+00:00",
+  "sourceAt": "2026-11-11T11:35:00+09:00",
+  "items": [
+    {
+      "direction": "下り",
+      "section": "苫東中央IC →苫東中央IC付近",
+      "restriction": "1車線規制／工事"
+    }
+  ],
+  "checkedAt": "2026-11-11T02:50:13.012260+00:00",
   "source": "https://roadway.yahoo.co.jp/traffic/road/3100090/list"
 }
