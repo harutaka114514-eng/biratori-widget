@@ -1,12 +1,48 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-11T19:56:37.100240+00:00",
+  "generatedAt": "2026-11-11T21:48:10.932057+00:00",
   "feeds": {
     "https://travel.watch.impress.co.jp/data/rss/1.0/trw/feed.rdf": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
+        {
+          "title": "スプリング・ジャパン、新ロゴ・新塗装の機体をお披露目！ 「日本の春を連れてきて、お客さまも笑顔にしてくれる」デザインに",
+          "link": "https://travel.watch.impress.co.jp/docs/news/2155696.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "日本一のイルミネーションが16年ぶりに進化。長崎・ハウステンボスで、ヨーロッパのクリスマスを楽しんできた",
+          "link": "https://travel.watch.impress.co.jp/docs/news/2155683.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "JR東海、1日100円「休日乗り放題きっぷ」を静岡県小学生対象に発売。バス無料デーと連動",
+          "link": "https://travel.watch.impress.co.jp/docs/news/2155680.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "グランドメルキュール別府湾リゾート＆スパ、1泊2食ビュッフェが最大30％オフ。オールインクルーシブでラウンジや温泉楽しみ放題！",
+          "link": "https://travel.watch.impress.co.jp/docs/news/2155655.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "大江戸温泉物語Premium 伊東ホテルニュー岡部、1泊2食が最大30％オフ。伊豆の名湯に浸かり、金目鯛＆あわびも食べ放題",
+          "link": "https://travel.watch.impress.co.jp/docs/news/2155618.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "WILLER、高速バスが最大48％オフ「ブラックフライデー」11月18日から。ディズニー/USJ/富士急のチケット・宿泊セットもお得に",
+          "link": "https://travel.watch.impress.co.jp/docs/news/2155560.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
         {
           "title": "今年は25周年限定の青リンリンが登場。現地で見た「ディズニー・クリスマス」押さえドコロまとめ【シー編】",
           "link": "https://travel.watch.impress.co.jp/docs/news/2155669.html",
@@ -60,49 +96,13 @@
           "link": "https://travel.watch.impress.co.jp/docs/news/2155453.html",
           "pubDate": "2026-11-11T03:07:15+00:00",
           "categories": []
-        },
-        {
-          "title": "【ホテルスタッフだから知ってる地元の魅力】「ANAホリデイ・イン鳥栖」江口さんのオススメ",
-          "link": "https://travel.watch.impress.co.jp/docs/series/hotelstaff/2154865.html",
-          "pubDate": "2026-11-11T01:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "冬ディズニーは、和のあったかドリンク＆スープに熱視線。話題の1杯を味わってみた【ココア/コーヒー/抹茶/お茶漬け】",
-          "link": "https://travel.watch.impress.co.jp/docs/news/2155340.html",
-          "pubDate": "2026-11-10T21:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "クリスマス期間の「エレクトリカルパレード」はいつもとちょっと違うって知ってた？ 真相を確かめてきました",
-          "link": "https://travel.watch.impress.co.jp/docs/news/2155323.html",
-          "pubDate": "2026-11-10T21:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "ミッキーとサンタが夢の共演。ディズニーシーのハーバーショー、クリスマスver.の見どころをお届け",
-          "link": "https://travel.watch.impress.co.jp/docs/news/2155295.html",
-          "pubDate": "2026-11-10T11:47:41+00:00",
-          "categories": []
-        },
-        {
-          "title": "「ディズニー・クリスマス」ランドの昼パレード、ちょっとレアな雨バージョンを見てきた",
-          "link": "https://travel.watch.impress.co.jp/docs/news/2155281.html",
-          "pubDate": "2026-11-10T09:44:44+00:00",
-          "categories": []
-        },
-        {
-          "title": "ディズニーシーの新アトモス、アリエルやエリックと遊ぶ場面写真が公開。「ポッピン・ウェイビン・アンダー・ザ・シー」明日スタート",
-          "link": "https://travel.watch.impress.co.jp/docs/news/2155220.html",
-          "pubDate": "2026-11-10T08:01:12+00:00",
-          "categories": []
         }
       ]
     },
     "https://hokkaido-hidaka-kankonavi.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "乗り合い便ナナパカ号運行中！",
@@ -207,8 +207,8 @@
     },
     "https://news.google.com/rss/search?q=平取町&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "2026食の祭典 びらとり和牛・トマトまつり （平取町・沙流川） - かわたびほっかいどう",
@@ -280,12 +280,6 @@
           "title": "日本最大のすずらん群生地・北海道平取町と『雪ミク』がコラボ！ 地元飲食店とも連携！ - PR TIMES",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9kbnZ2WUpTZFZPUXlxd1pQTjd6SFoxb0dCOXI2c21jNTRITmtVWXpVYmJDN3llUlZQa1hmd1Y1RnBLN1IzRDU5VUNneGtRT2hlTEZtZkZ0U2l4R05QXzdqTHNwYXZBZW1nUGc?oc=5",
           "pubDate": "2026-04-23T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "アイヌ工芸・アットゥシ織り 黄川田担当相が工房を視察 関係団体と意見交換 北海道平取町 - 日テレNEWS NNN",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5aT05nX3p4MktyXzN6eTJOTHAtWTgzaUl0UlZGNDdRX0RzbE1mTnRaZ0pubWpEWmJUcjFKY1FqRWx4QU5zWDE1RGgxd1N5Z3oyNi12X0s2b2pRdnV6ZFAyLXB5Tnc5bTFuWWlHQXFIS1hSTjdVZERBQkRxNV82Rjg?oc=5",
-          "pubDate": "2026-08-06T07:00:00+00:00",
           "categories": []
         },
         {
@@ -496,8 +490,8 @@
     },
     "https://news.google.com/rss/search?q=新千歳空港&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "11月20～24日、新千歳空港国際アニメーション映画祭 ＡＩ時代、個性をより重視 - 北海道新聞デジタル",
@@ -548,15 +542,15 @@
           "categories": []
         },
         {
-          "title": "新千歳空港から6分、DHLが北海道・千歳に半導体物流拠点を開設 | TECH+（テックプラス） - マイナビニュース",
-          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFA3LXl4MFEzVTRSWmpXbTRVanhfZmE2akc1YlI1UzNwVXZSVVJFcFFzWmZjdzdMbk9rTEJXeGtrektQR0NXeEpPdGRHMGlweFZ6a3otckw3TnRGSzBJUUtiSTlKVkFYa3pP?oc=5",
-          "pubDate": "2026-11-06T07:27:57+00:00",
-          "categories": []
-        },
-        {
           "title": "新千歳で新日プロレス 空港開港100年記念 真壁選手ら 迫力の技に歓声 ／北海道 - 毎日新聞",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE95eXdiWG9iMElCdjRLNVQ3OHQ1ME0ydGh4LTMtN2xPYWkwTWl6dUFUYlBPdzFBbnByU1M4Q1B0TkJEMXY1VGZFRG9SNVF6N2QtZVFrVGFxQURuakp1WU5YUFpyTmF1WlVP?oc=5",
           "pubDate": "2026-10-09T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港から6分、DHLが北海道・千歳に半導体物流拠点を開設 | TECH+（テックプラス） - マイナビニュース",
+          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFA3LXl4MFEzVTRSWmpXbTRVanhfZmE2akc1YlI1UzNwVXZSVVJFcFFzWmZjdzdMbk9rTEJXeGtrektQR0NXeEpPdGRHMGlweFZ6a3otckw3TnRGSzBJUUtiSTlKVkFYa3pP?oc=5",
+          "pubDate": "2026-11-06T07:27:57+00:00",
           "categories": []
         },
         {
@@ -656,15 +650,15 @@
           "categories": []
         },
         {
-          "title": "新千歳空港の旅客、2年連続で過去最多 25年度2601万人 国際線の需要堅調 - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5iSXlmM0RUcGNUR2ZPWmR0OGtvUVJuOEF6NlRqN2tpclUzYmxKRVpLaEpxcTNnaGo0TzNEUXptSS05VzlDcGp2RFQ5NVU0YWFZMkNWcy1HWDZtdw?oc=5",
-          "pubDate": "2026-04-21T07:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "【一覧】ANA×ちいかわグッズ、既に多数の空港店舗で完売…想定超える需要で再販売と追加生産を検討（オタク総研） - Yahoo!ニュース",
           "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE04N0V3bU1WOEtLS01rSVFFQzlXQ2ZJcXpERUVlU3o4M2FLWE9VcWNnOTdMZmoxS0YxVjBZd1FVTDlOX053bjIzTFp6LXUwdnBvNjJKYm1HYVBFSHpoMUwzUnZvUjN5c1JuZXR6ZnN1SS1DbURsVEdwRjBjdzlGQ3M?oc=5",
           "pubDate": "2026-11-06T03:02:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港の旅客、2年連続で過去最多 25年度2601万人 国際線の需要堅調 - 北海道新聞デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5iSXlmM0RUcGNUR2ZPWmR0OGtvUVJuOEF6NlRqN2tpclUzYmxKRVpLaEpxcTNnaGo0TzNEUXptSS05VzlDcGp2RFQ5NVU0YWFZMkNWcy1HWDZtdw?oc=5",
+          "pubDate": "2026-04-21T07:00:00+00:00",
           "categories": []
         },
         {
@@ -677,12 +671,6 @@
           "title": "タクシー乗車、飛行機のそばで 東邦交通が新千歳で要人・富裕層向け事業 - 北海道新聞デジタル",
           "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBVVjdkQ3lkZ3V5by1ZSGFoVmhwLWY4bjRRVFQ5dFVNcjJyRkNTTkFUVENBZ2ZoOVhrRzctSlBxUDdvQ25fS0pTRDIxWGtaSFRMS1o2TWVKOS1ldw?oc=5",
           "pubDate": "2026-06-09T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港に足止め7千人、JRは1千本運休 石狩地方に記録的大雪 [北海道] - 朝日新聞",
-          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5LRENleTczeTRfZ2ozZ2s2Wk9ENmJDZnhlV1p2NE5JLTc5WEdGOGlKMXFJbl9vUVB4a0xXY0w5UllWQlQxVXgxNExIaGhmVjVsdFVuLUJaM2dmQ00wOGNRWFI1djdtWGM?oc=5",
-          "pubDate": "2026-01-27T08:00:00+00:00",
           "categories": []
         },
         {
@@ -701,6 +689,18 @@
           "title": "「災害級、陸の孤島」大雪で北海道・新千歳空港から出られない人続出 - 毎日新聞",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE4wUjRkUVdPLVUxZk14R0ZZS3M3dzN6NUZTU2c0R1lPdkVhazFuRzFSTzhOM1BoLW1lWW1zUXl0QlBLamMtM0hjakVJZzRlYUNuRy1ENklHc1lNQlo2MVVSY3hnMDF2TVM3?oc=5",
           "pubDate": "2026-01-25T08:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【新千歳空港へのアクセス】JR「快速エアポート」利用客は1日6万5000人…混雑が日常化で輸送力はパンク寸前…国が打開策“複線化”や“ループ化”を検討 かつては“リニア”で8分で結ぶ構想も - UHB 北海道文化放送",
+          "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBXYjVMZEgwUHpDN01ETVFpalFKQ1l0LWU1NDZWYXpKMjFGYzZzVE1WR1VwU01oQ0lDZEU4UmVFNnRCUTJVSzRWUWwxa204aGw0eW1XN3FOVQ?oc=5",
+          "pubDate": "2026-05-09T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "新千歳空港に足止め7千人、JRは1千本運休 石狩地方に記録的大雪 [北海道] - 朝日新聞",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5LRENleTczeTRfZ2ozZ2s2Wk9ENmJDZnhlV1p2NE5JLTc5WEdGOGlKMXFJbl9vUVB4a0xXY0w5UllWQlQxVXgxNExIaGhmVjVsdFVuLUJaM2dmQ00wOGNRWFI1djdtWGM?oc=5",
+          "pubDate": "2026-01-27T08:00:00+00:00",
           "categories": []
         },
         {
@@ -725,12 +725,6 @@
           "title": "新千歳空港で7000人が一夜過ごす 大雪影響、欠航相次ぐ 2夜連続でビル内開放 - 産経ニュース",
           "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBxV0UzN0c4dFRtcXEwTzRwODQ0T1JjbTJMck5tVlZfRFRPcjNzcW9qWnlnVnkxTTAtangxdXVIaDBaVUM2NlZiMlhsdEx3a05uUV9BY0Nua0FBMm0tVWFtbUwtZ1p5QXNKWFBZNGh2Y1VNNlFDdlE?oc=5",
           "pubDate": "2026-01-27T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "新千歳空港のアクセス増強、国交省が調査費1千万円 JR千歳線改修の検討進める - 北海道新聞デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE04RHowUzEzN1pTRG1veVY3MmNHVFdQYmtxMFNNV1B5SWNacVc3clUxWUc4cC1DNk1FQTJDbHpRSlQyMXBxcFBvbVh0TVl2MXR2R1h6X196dHpyQQ?oc=5",
-          "pubDate": "2026-04-07T07:00:00+00:00",
           "categories": []
         },
         {
@@ -785,6 +779,12 @@
           "title": "新千歳空港で3時間ステイ最強ガイド。搭乗時間まで無駄なく楽しむための３プラン - JAF Mate Online",
           "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5uNHZYcTd2bE0zWW9nU0xBR0d5RFZiY01LcjlmY21WdEttRTBQaWgzMUx3OU9CN1ZiU2FIX3VuTWZGblMyU19IODlDOEVTNGstekk0?oc=5",
           "pubDate": "2025-06-21T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "北海道グルメを2人1万円で満喫！ 甘党＆辛党別、新千歳空港食い倒れガイド - JAF Mate Online",
+          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE80TXNoVjF3VHZfMUkweHFRbDhOYlZiQVJ0WEhROHJfQ29qSnp4eldkQ084NkZOVEJOd25jVE56RXJkWUkyZUFjRFFCWUs5MHRncHZz?oc=5",
+          "pubDate": "2025-06-14T07:00:00+00:00",
           "categories": []
         },
         {
@@ -851,8 +851,8 @@
     },
     "https://sapporo.keizai.biz/rss.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "北広島・ファイターズが「しゃけまるサーモン」養殖開始 2027年に出荷へ",
@@ -948,8 +948,8 @@
     },
     "https://tomakomai.goguynet.jp/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "【苫小牧市】日新町に「ナビ個別指導学院 苫小牧日新町校」が11月17日開校へ！日新MSTビル2階に新しい個別学習塾です",
@@ -1064,8 +1064,8 @@
     },
     "https://hre-net.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "「びっくりドンキー清田店」、実験店舗の役割終え標準店舗にリニューアル",
@@ -1151,8 +1151,8 @@
     },
     "https://biratori-shokokai.com/feed": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "「事業承継個別相談会」の開催について",
@@ -1238,8 +1238,8 @@
     },
     "https://www.hi-mag.jp/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "いま、日高にいます（84）",
@@ -1362,8 +1362,8 @@
     },
     "https://hokkaidolikers.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "北海道の「ばんえい十勝フェア」が京都に！老舗料亭「下鴨茶寮」×十勝「どろぶた」の限定肉巻きおにぎりが特別登場",
@@ -1514,8 +1514,8 @@
     },
     "https://meshitabi-hokkaido.com/feed/": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "絶品ガレットと無水カレー、食事からスイーツまでいただける大人の隠れ家カフェ『MAYA CAFE』/札幌市北区",
@@ -1705,9 +1705,21 @@
     },
     "https://gourmet.watch.impress.co.jp/data/rss/1.0/grw/feed.rdf": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
+        {
+          "title": "サントリー“100円”で3種のボジョレーが試飲できる「旬感ひとくちヌーヴォー」を渋谷スクランブルスクエアで実施",
+          "link": "https://gourmet.watch.impress.co.jp/docs/news/2155504.html",
+          "pubDate": "2026-11-11T21:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "Suicaのペンギンが駅弁になった！「Suicaのペンギンの推し寿し」第8弾を発売。エコバッグ/キーホルダーなども登場",
+          "link": "https://gourmet.watch.impress.co.jp/docs/news/2155625.html",
+          "pubDate": "2026-11-11T20:00:00+00:00",
+          "categories": []
+        },
         {
           "title": "ゴディバ、Blackデニム風トートがセットの「2026 ブラックフライデー ハッピーバッグ」いよいよ発売！",
           "link": "https://gourmet.watch.impress.co.jp/docs/news/2155629.html",
@@ -1875,25 +1887,13 @@
           "link": "https://gourmet.watch.impress.co.jp/docs/news/2155300.html",
           "pubDate": "2026-11-11T02:00:00+00:00",
           "categories": []
-        },
-        {
-          "title": "銀座コージーコーナー「アップルパイ」を「ごろっと林檎のアップルパイ」に名称変更！ キャラメルりんごケーキも登場",
-          "link": "https://gourmet.watch.impress.co.jp/docs/news/2155373.html",
-          "pubDate": "2026-11-11T01:49:13+00:00",
-          "categories": []
-        },
-        {
-          "title": "UCC上島珈琲「コーヒー福袋2027」全6種を発売。特典はオリジナル豆皿とめじるしガチャマスコット",
-          "link": "https://gourmet.watch.impress.co.jp/docs/news/fukubukuro/2155388.html",
-          "pubDate": "2026-11-11T01:44:51+00:00",
-          "categories": []
         }
       ]
     },
     "https://hokkaido-nl.jp/index.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "「ドローン楽しい」～タナカコンサルタントが「こども月間」で測量体験イベント～【苫小牧】",
@@ -1959,9 +1959,41 @@
     },
     "https://www.hokkaido-np.co.jp/output/7/free/index.ad.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
+        {
+          "title": "駐米ロシア大使が死亡 ダルチエフ氏",
+          "link": "https://www.hokkaido-np.co.jp/article/1406871/",
+          "pubDate": "2026-11-11T21:36:18+00:00",
+          "categories": [
+            "全国・海外"
+          ]
+        },
+        {
+          "title": "フジモリ大統領の訪日を承認 ペルー上院、就任後初",
+          "link": "https://www.hokkaido-np.co.jp/article/1406870/",
+          "pubDate": "2026-11-11T21:33:12+00:00",
+          "categories": [
+            "全国・海外"
+          ]
+        },
+        {
+          "title": "米特使ら、ロシア大統領と会談へ 捕虜釈放へ最終調整",
+          "link": "https://www.hokkaido-np.co.jp/article/1406869/",
+          "pubDate": "2026-11-11T21:28:12+00:00",
+          "categories": [
+            "全国・海外"
+          ]
+        },
+        {
+          "title": "【独自】弟の背中に複数の切り傷 札幌の兄弟転落死 室内に血痕付いた刃物や争った跡",
+          "link": "https://www.hokkaido-np.co.jp/article/1406545/",
+          "pubDate": "2026-11-11T20:00:04+00:00",
+          "categories": [
+            "主要ニュース"
+          ]
+        },
         {
           "title": "消費減税、公明・国民民主の取り込み鍵 参院審議入り 与党、造反を警戒",
           "link": "https://www.hokkaido-np.co.jp/article/1406547/",
@@ -2019,14 +2051,6 @@
           ]
         },
         {
-          "title": "最大規模の捕虜釈放合意 ウクライナ米ロシア高官協議",
-          "link": "https://www.hokkaido-np.co.jp/article/1406538/",
-          "pubDate": "2026-11-11T13:36:43+00:00",
-          "categories": [
-            "全国・海外"
-          ]
-        },
-        {
           "title": "カメラマン報酬問題、武部氏らを告発 公選法違反などの疑い 大学教授",
           "link": "https://www.hokkaido-np.co.jp/article/1406537/",
           "pubDate": "2026-11-11T15:45:23+00:00",
@@ -2078,22 +2102,6 @@
           "title": "ルヴァン杯、鹿島や柏などが先勝 Jリーグ、準々決勝第1戦",
           "link": "https://www.hokkaido-np.co.jp/article/1406523/",
           "pubDate": "2026-11-11T12:42:32+00:00",
-          "categories": [
-            "全国・海外"
-          ]
-        },
-        {
-          "title": "スパイ容疑で米軍人逮捕 英警察、ロシアに関連",
-          "link": "https://www.hokkaido-np.co.jp/article/1406520/",
-          "pubDate": "2026-11-11T12:03:41+00:00",
-          "categories": [
-            "全国・海外"
-          ]
-        },
-        {
-          "title": "反イランのイラク議員死亡 レバノンで、殺人容疑捜査",
-          "link": "https://www.hokkaido-np.co.jp/article/1406517/",
-          "pubDate": "2026-11-11T11:54:42+00:00",
           "categories": [
             "全国・海外"
           ]
@@ -2184,14 +2192,6 @@
           "pubDate": "2026-11-11T10:31:15+00:00",
           "categories": [
             "田口谷優子"
-          ]
-        },
-        {
-          "title": "【独自】伴氏が自民党幹部に早期の推薦要望 札幌市長選 11月後半にも決定",
-          "link": "https://www.hokkaido-np.co.jp/article/1406484/",
-          "pubDate": "2026-11-11T10:42:13+00:00",
-          "categories": [
-            "三島今日子"
           ]
         },
         {
@@ -2366,8 +2366,8 @@
     },
     "https://kyoko-np.net/index.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "「筋書きあるドラマ」で安心感 野球に「メークシナリオ制」導入を提言",
@@ -2529,8 +2529,8 @@
     },
     "https://valorantnews.jp/feed": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "「Team Vitality」がJawgemoの加入を発表 ─ 2023年世界王者がG2からEMEAへ移籍、Derkeの後任として新ロスターが完成",
@@ -2632,8 +2632,8 @@
     },
     "https://www.valorant4jp.com/rss.xml": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "Bilibili GamingにSmoggyの加入が発表、約4年在籍したEDward Gamingから移籍へ",
@@ -2841,55 +2841,25 @@
     },
     "https://news.google.com/rss/search?q=%E6%A0%AA%E4%B8%BB%E5%84%AA%E5%BE%85&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
-          "title": "アビスト[6087]：2027年9月期の株主優待制度（予定）に関するお知らせ 2026年11月11日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBabW5sZlJpMjJfdXBJUFdrSTd1a1VTRWpraXJEdVdpTXhYNjdNSUZGQXhPdlBjUnhydmppbmw3bXZlbXZKOEFwUWVzQzRUM3Frb1liaHoxbFFYQjAxNXpKWDlrUmt3RnU0anc?oc=5",
-          "pubDate": "2026-11-11T07:00:00+00:00",
+          "title": "JKホールディングス、株主優待を再開して配当＋優待利回り＝5％超に！ 2027年3月末に100株以上を保有すると1000～2000円分の｢QUOカード｣がもらえる！ - ダイヤモンド・オンライン",
+          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9XTWMtaTNheF95NGp0bGtRVTJadDdOVFU4bE1yMC1aQUdqdTVwMFZhQWtTNlZaMGxiRkJoRjVYam94bUk2dkZTaUpRNUJhUmRFRE5B?oc=5",
+          "pubDate": "2026-11-09T13:21:00+00:00",
           "categories": []
         },
         {
-          "title": "日清オイリオG、株主優待を変更！ 1株⇒3株の分割後に100株で500円分の｢QUOカード｣がもらえるようになったほか、一部の配布区分で長期保優遇制度を導入 - ダイヤモンド・オンライン",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5TUnlVSG1oSGFuQXdEWFNhS0ExVldyUXAzNzR1dDdmTEZHc2YxLUdOX3dsZlJEaXRqVEJUUmF3cFRpRTNjM0lmNzhBSmZjY1NRckxB?oc=5",
-          "pubDate": "2026-11-09T15:04:00+00:00",
+          "title": "投資で家計のインフレ対策 ファミリーは株主優待、シニアは高配当 - 日本経済新聞",
+          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5KU3ZsSUlpZ05GZ1kyQ3A5amppcURnampFalNCS3A1T2swSDZ6VlhJRHNwb2dlVlRxTjlibWdwMkxhY1hxa05EQUdIcng5RzkyeXJHZFhnc0FOc3p4LUJwOGNWZFNMS3doZmJJYg?oc=5",
+          "pubDate": "2026-11-10T19:00:00+00:00",
           "categories": []
         },
         {
-          "title": "投資家の桐谷さん、含み損の株を明かす「プラスになるまでは売りません」（オリコン） - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9JMXowS1lUU1Vhak82X3FMSm5OUjh0R0J2bTN1aU9udEYxaldCYUVESTg0cTNNLUk4Si1YbWMtOTBwQXM0eHUydFljeGI1bmlMQXpjSi15aWVGYTZrbTF1UkZrY2U0bTFQdWs0dmRCaURYckFEUl9XZGt2R0JOcUU?oc=5",
-          "pubDate": "2026-11-11T02:40:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "イー・ガーディアン---株主優待制度を廃止、累進配当を基本とする株主還元方針へ変更 - 株探",
-          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE13NTBQcElodWVDbjhTMzRfVldhUnNEaHNtY0hGWjJtWnl4UzczVFVWOGVmMlNLTWVyOU5FM09nVGNZSUZfcGJfVVVwYnRyNzlqdmpOdnhGdUpHTzJqNUFBWg?oc=5",
-          "pubDate": "2026-11-11T04:13:36+00:00",
-          "categories": []
-        },
-        {
-          "title": "サーラコーポレーションの選べる株主優待品が決定！ - アットエス",
-          "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1Jb2pOYk5IcGlRX3lhMEs2U21FbWJfYjdaV1ZSZE91U1oxWUF6UTV2Z3BsY3QzdlU2WVZmRzBaZkhEdmpEZVYyMnVqUUdKY1k0R1pLLTI0SlY5V1FrTE93d2FOd0R0Zw?oc=5",
-          "pubDate": "2026-11-11T04:30:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "“総資産7億円”桐谷さん、またも株主優待が期限切れ…「有効期限が10月31日」と“号泣” - ｄメニューニュース",
-          "link": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxOaFNZRHBoSjBSSldFUGVhOWljdk02NFh6VlhSUU4xVDM3bTBUcUd3d1FuQ2lLVWEzVzVyQ1lwYjRLYi0zcGptRmFwUm5pclJOQnJnVnU5TDRMcWpPVXFvNDQ5Xzh5a2FYREtjNFBRelVlTmo1bGV5ZjdGclZ0Qmctb25zVk9ZOGJBcFppN05yMWp6QmVRVVhBZy1NWUZkbHNieVpJRmc2V2hyeDRHWFNNOF9IaFhoRkZMLVU5Zlh5UU8yYnhMaGJSN1VZTVVzVnBQWjhVaTJUSnN5dGpVQVZzWDE5UW5WYlJhZTB2atIBnAFBVV95cUxPY2hONzlUY0RCSEdMMWZIVE1VS0R2Szg0a1RVS3E1NVRhckRfSkQyeVRJMC1jUmRrRkRfd3ZPcGhvUTJ5d0lJaFFqeGVGY010NWZ6SVNlb3pkc20xX0RJUlpvNldqdzd6UDBNbzZvVExjU3l2NzRxNlRDSjE5ZUpRRE5KWW9ZMFlnRFFPRTRYc2ZuVVFLbXFhZU9TeTA?oc=5",
-          "pubDate": "2026-11-11T06:20:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "【株主優待に関する調査】「自分に合ったものを選びたい」―選べる「ポイント型」に約1.7倍の支持 - オリコンニュース",
-          "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE14VTAwek9vaXBySjV0VVIwdHpKSVNjWkRhM1JiaXpmVGZEUllZQmZTd0xpdnVfT1FBU0pFOEdXeEJpc2pwZ29TejgzNUJzMVF3TjNNRVhNRlA?oc=5",
-          "pubDate": "2026-11-11T03:16:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "ウェルス・マネジメント株式会社にプレミアム優待倶楽部を導入 - Excite エキサイト",
-          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE0wamM4Y3JoaU5HQ3kwN0tBTXFPVzlUM2FuV1ZMUVR1X3UxUUI1WnZwM2Vxdk0tU3JrV3Z4TElDaXpkYk96TEIzd2JnckRKNEd0RGhRc010cWZrTWJSVmNDYTB3c01WSXIzenAxSTdPTWx2eHhC?oc=5",
-          "pubDate": "2026-11-11T18:10:00+00:00",
+          "title": "東亜建設工業、｢プレミアム優待倶楽部｣の株主優待を新設して配当＋優待利回り＝4％超に！ 300株以上で株数に応じて1500～1万7500ポイントがもらえる！（ダイヤモンド・ザイ） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5WTGFSOW5lcTVJd1o4bVR3Zk1JaEViXzlZQTEtYXdvLS1hYkNwTC1pZGtUd1d0d3pyTEhnRVl5aFh0OTlYRjN5RENFN3BPbHdLYUlvUWtwVFVjdDU2dXdURUhBdzhFRS1iMUhFVFR1dGo0a2c3MlFQOWRQUF9fMUk?oc=5",
+          "pubDate": "2026-11-10T08:00:00+00:00",
           "categories": []
         },
         {
@@ -2899,15 +2869,45 @@
           "categories": []
         },
         {
+          "title": "“総資産7億円”桐谷さん、またも株主優待が期限切れ…「有効期限が10月31日」と“号泣” - スポニチ Sponichi Annex",
+          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPbDBsSjlEY2I0bFZLSExJSjdOLWhHYlU2eE1pMDlSMWJNVlRRbFVaY3BiUHBFLVI0UkpTbmVsSGFhTnI1RFZaSHV4UGVRNFBIMVNYRkFPRlFqV0N4YmhtbVZrWFh0Mkdjcm41MllrOGFzS0xwdXVzbDJLNzRtXzdIa2owSUVqa1NVM1J4RXhKR2FjVUc2VGc?oc=5",
+          "pubDate": "2026-11-11T06:17:00+00:00",
+          "categories": []
+        },
+        {
           "title": "【2026年11月】株主優待5選！ 約10万円から狙える、年4回のデジタルギフトや串カツ田中の食事券も - Infoseek",
           "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9kQ21kNVFYSTFYRW1yYzZDdnd6SmRoMVpyS1J4bF9BV2lHVkxYQjVwdGctN0dHc3hjczRTWk5ZSWo4WllRVmZqMzRYLUwwanRybGg4bjIxTm5rbkh6SFZNSQ?oc=5",
           "pubDate": "2026-11-11T08:30:00+00:00",
           "categories": []
         },
         {
-          "title": "めぶきフィナンシャルグループ[7167]：株主優待制度の変更（拡充）に関するお知らせ 2026年11月11日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1HU3V5S2NfOVVkVUR1M21lYWlUU01WSjRZMlJmaW1PTmtfckJ5dm9ZVm1HMUZlWmNJcDBHakJNWi1rY3BKRGdFVWthX1o1dUdzaDdabV8zdFZwTkphT0xyN09qbFlVRXAzWmc?oc=5",
-          "pubDate": "2026-11-11T03:00:00+00:00",
+          "title": "【株主優待に関する調査】「自分に合ったものを選びたい」―選べる「ポイント型」に約1.7倍の支持 - PR TIMES",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1MRkF5OEdpTWhpcHZXNGNtaG1UYy1oMUVXX3JhQTYwdzZ4WUxrYkxCMTlTRWl4ZDBFa3lKZHl1NEExbWVOaGE3OHJjZkU0VUdmVTQtekhtWVpTQlA3dmdDbmg4dnhmbkFlMGc?oc=5",
+          "pubDate": "2026-11-11T01:13:47+00:00",
+          "categories": []
+        },
+        {
+          "title": "「10％引きで買い物。店員さんから株主様と言われる」64歳男性が10年以上持つ百貨店優待 - All About（オールアバウト）",
+          "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE5QSHpMNXo4cUs5MjBFanl3akxQdDhyYUVQSVdFMkRKcEZ6Rm1BZ0ZJaGNxeVM1VU94WVJKY1NoQXpBTHM1Y0NjdkxFMkQ?oc=5",
+          "pubDate": "2026-11-11T10:30:06+00:00",
+          "categories": []
+        },
+        {
+          "title": "【福岡開催 無料セミナー】『株主優待の魅力 注意点と最新トレンド -メリットを最大限に活かす秘訣と注意点-』 - valuepress",
+          "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5CbVhjWlhrNkkzQXZrbWVDQWdlakhkNWt6dkFGYk01SXB3eHBJVVVURzVjTmpFdVNUbHJmemxYNlBlandwUENaNGk3ck5JSTRoekpsRlQ5OHJ4NjA?oc=5",
+          "pubDate": "2026-11-11T02:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "12月末が権利確定日の株主優待、2026年は「12月28日（月）」までに買う。29日に買うと受渡しが1月4日になり対象外 - LIMO | くらしとお金の経済メディア",
+          "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFAxajV3WnBiWkNDT3ZUQ2NydTI5RHRGOTZESENKQ0RBbDlINk1MWV9DV0lpaFFZVmQwcV9uOXRjb29kWWNUYVBXTzBVQ3g?oc=5",
+          "pubDate": "2026-11-11T09:43:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "アビスト[6087]：2027年9月期の株主優待制度（予定）に関するお知らせ 2026年11月11日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBabW5sZlJpMjJfdXBJUFdrSTd1a1VTRWpraXJEdVdpTXhYNjdNSUZGQXhPdlBjUnhydmppbmw3bXZlbXZKOEFwUWVzQzRUM3Frb1liaHoxbFFYQjAxNXpKWDlrUmt3RnU0anc?oc=5",
+          "pubDate": "2026-11-11T07:00:00+00:00",
           "categories": []
         },
         {
@@ -2917,15 +2917,15 @@
           "categories": []
         },
         {
-          "title": "【11月株主優待】配当利回り3.78%＋3,000円分のカタログギフトと「ダブルでうれしい」銘柄も…優待マニアまる子さん厳選〈お宝6銘柄〉 - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE91Y2libjFvVVF6U0FHWUVONU9TSzJMSHFub2RlQWJFYU1xQUtRRUp0M3VuZkFfb2dPT2djd3BVbWFhektER1RGSHhONENnRjVqTDllaFNYcHU5Zw?oc=5",
-          "pubDate": "2026-11-09T01:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "【実例】12月の株主優待：個人投資家ペンギンさんセレクト5銘柄 - マネクリ",
           "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBFeEU3bl8xTTFzZzBvS2Nyb05GYXFPOHczQzg4ZmgzemR6bVJOV3UzSzhJMFNVZUV6dW00RXBZTFdocTZNYy12Ql9nZHFGMEhLSUY1WtIBV0FVX3lxTFAwd21rbDFhNVdoeW9aRDlzS01nZUVaRGtSTHhpVHRnbWpuMDZmbDZ2WWhhZmF2OEdGM0lxYVNfSWJqUkF4Mk4tdjRBaWZqOHhRTm9EenVJcw?oc=5",
           "pubDate": "2026-10-29T09:16:15+00:00",
+          "categories": []
+        },
+        {
+          "title": "【11月株主優待】配当利回り3.78%＋3,000円分のカタログギフトと「ダブルでうれしい」銘柄も…優待マニアまる子さん厳選〈お宝6銘柄〉 - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE91Y2libjFvVVF6U0FHWUVONU9TSzJMSHFub2RlQWJFYU1xQUtRRUp0M3VuZkFfb2dPT2djd3BVbWFhektER1RGSHhONENnRjVqTDllaFNYcHU5Zw?oc=5",
+          "pubDate": "2026-11-09T01:00:00+00:00",
           "categories": []
         },
         {
@@ -2941,27 +2941,21 @@
           "categories": []
         },
         {
-          "title": "本日の【株主優待】情報 (11日 発表分)(株探ニュース) - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOb1JpOHdDc21oWV9YcUs0NW5XNFhlQXRwbGF1bURvd3h6U0VLaVNtUXF3TmM1ZEZmVE5iWkRQbkc3QWNOTnBkYUlxV0UtbUJCQ2d3ZE90T2cwSlZXVTdNUjEyNjJGdTA0cmtCZG9IdWlKVlh3NHdzdEVQdG1FT1FlUHJQb05FQzQ?oc=5",
-          "pubDate": "2026-11-11T10:51:31+00:00",
-          "categories": []
-        },
-        {
           "title": "メック[4971]：株式分割および株式分割に伴う定款の一部変更ならびに株主優待制度の変更に関するお知らせ 2026年11月11日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5PZHBsVS1wQnhQUGI5aVdNQ05VRzRJMGpPOFVrY0dKVGF4UDhFS0lqVUVVUDdsbVhNanNIRmktTXlTUkJlbG5IY3BTMUs1d19ZMDMwR1RxN0c4NFBaMTd2QjBYQzRXWnVCSGc?oc=5",
           "pubDate": "2026-11-11T06:30:00+00:00",
           "categories": []
         },
         {
-          "title": "【12月の株主優待】2026年は28日までに買う。優待2000円相当なら5万円で利回り6.0％、30万円で約2.7％（LIMO） - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBMYlZvR2RJNHpUeGEtTUpKT0xDdTM2MkdDMmk3b00zY1VrdWFBejkzMEoxWUk0TEh1NGNaUzZ3WnVxMkZ5NF9ZMjI0WVl1eWhQckE3bDhkREltMXdiZjRkRnYzUERia3ZSOEQtd2FWX2VWb0lvdS1MUlhZb3JyZDQ?oc=5",
-          "pubDate": "2026-11-11T09:46:01+00:00",
+          "title": "本日の【株主優待】情報 (11日 発表分)(株探ニュース) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOb1JpOHdDc21oWV9YcUs0NW5XNFhlQXRwbGF1bURvd3h6U0VLaVNtUXF3TmM1ZEZmVE5iWkRQbkc3QWNOTnBkYUlxV0UtbUJCQ2d3ZE90T2cwSlZXVTdNUjEyNjJGdTA0cmtCZG9IdWlKVlh3NHdzdEVQdG1FT1FlUHJQb05FQzQ?oc=5",
+          "pubDate": "2026-11-11T10:51:31+00:00",
           "categories": []
         },
         {
-          "title": "【株主優待】10万円未満の｢コスパ抜群の株主優待株｣の2銘柄を紹介！ お得に買い物ができる｢ヤマダHD｣、｢パン･パシフィック･インターナショナルHD｣に注目！ - ダイヤモンド・オンライン",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE03TjZucDBndVI0MVVFM1YxNkRueVRVRHJmNGZiNFdpXzd5T2toNXFsdUhITHEyMFZpTF8yYXNyZHBnS0pGUzJBRHRrcFJqaExlU3Zv?oc=5",
-          "pubDate": "2026-10-25T07:00:00+00:00",
+          "title": "日清オイリオG、株主優待を変更！ 1株⇒3株の分割後に100株で500円分の｢QUOカード｣がもらえるようになったほか、一部の配布区分で長期保優遇制度を導入 - ダイヤモンド・オンライン",
+          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5TUnlVSG1oSGFuQXdEWFNhS0ExVldyUXAzNzR1dDdmTEZHc2YxLUdOX3dsZlJEaXRqVEJUUmF3cFRpRTNjM0lmNzhBSmZjY1NRckxB?oc=5",
+          "pubDate": "2026-11-09T15:04:00+00:00",
           "categories": []
         },
         {
@@ -2971,15 +2965,27 @@
           "categories": []
         },
         {
-          "title": "LINEヤフーが株主優待新設、5000株以上でヤフショ商品券。中間期は売上過去最高、通期上方修正・増配で株価上昇 - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9IbFA0RUs4SzkyTzJRS1lNWDVUZ2FQR0hqVGRnbGVPSTdYVkRnM01CSjRZWXk2RVRWcy1TYWw5RVRHaFE2TEh0b1NfSTJoQ0tBSGwxV0gtYjBPbC1aTERlZjZqN3VUMXRIdHJCOS1sTmtQMHhmMTVwdlg3VXI4V0k?oc=5",
-          "pubDate": "2026-11-10T08:50:02+00:00",
+          "title": "本日注目の【株主優待】情報 (11日引け後 発表分)(株探ニュース) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPOTQ2QlJqb0lKTjVpUk1LQmhGVlBraXdhajlNX2g0cHA2OHRsdU1hNVVnbXpvQllZN2NBcmhfMlM0empINVZKMGdjWjBLWHlReHBNazNCd1RyTDhUTWhjU250QUtzWTBrVlNZWHNNYmY2QmhLS1hjY2pHU3VJTWdoaHRkTlhSeWc?oc=5",
+          "pubDate": "2026-11-11T21:30:31+00:00",
           "categories": []
         },
         {
-          "title": "JKホールディングス、株主優待を再開して配当＋優待利回り＝5％超に！ 2027年3月末に100株以上を保有すると1000～2000円分の｢QUOカード｣がもらえる！ - ダイヤモンド・オンライン",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9XTWMtaTNheF95NGp0bGtRVTJadDdOVFU4bE1yMC1aQUdqdTVwMFZhQWtTNlZaMGxiRkJoRjVYam94bUk2dkZTaUpRNUJhUmRFRE5B?oc=5",
-          "pubDate": "2026-11-09T13:21:00+00:00",
+          "title": "【株主優待】10万円未満の｢コスパ抜群の株主優待株｣の2銘柄を紹介！ お得に買い物ができる｢ヤマダHD｣、｢パン･パシフィック･インターナショナルHD｣に注目！ - ダイヤモンド・オンライン",
+          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE03TjZucDBndVI0MVVFM1YxNkRueVRVRHJmNGZiNFdpXzd5T2toNXFsdUhITHEyMFZpTF8yYXNyZHBnS0pGUzJBRHRrcFJqaExlU3Zv?oc=5",
+          "pubDate": "2026-10-25T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "ウイルテック[7087]：株式分割に伴う定款の一部変更および配当予想の修正ならびに株主優待制度の変更（拡充）に関するお知らせ 2026年11月11日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1ObkdHRUpDYzdOSE9YbGthM1VJRl93LWtaNDZuUXpqM2tLVjZkRDNMNXJNakVoWW9mVEItdW51aGV5Z3Zpa0d5SFJ3MjZ5dE5ndm5jRVdKWlRDTU5fRm1jV0E1eGtXWXppZHc?oc=5",
+          "pubDate": "2026-11-11T08:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "LINEヤフーが株主優待新設、5000株以上でヤフショ商品券。中間期は売上過去最高、通期上方修正・増配で株価上昇 - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9IbFA0RUs4SzkyTzJRS1lNWDVUZ2FQR0hqVGRnbGVPSTdYVkRnM01CSjRZWXk2RVRWcy1TYWw5RVRHaFE2TEh0b1NfSTJoQ0tBSGwxV0gtYjBPbC1aTERlZjZqN3VUMXRIdHJCOS1sTmtQMHhmMTVwdlg3VXI4V0k?oc=5",
+          "pubDate": "2026-11-10T08:50:02+00:00",
           "categories": []
         },
         {
@@ -2995,33 +3001,15 @@
           "categories": []
         },
         {
-          "title": "ウイルテック[7087]：株式分割に伴う定款の一部変更および配当予想の修正ならびに株主優待制度の変更（拡充）に関するお知らせ 2026年11月11日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1ObkdHRUpDYzdOSE9YbGthM1VJRl93LWtaNDZuUXpqM2tLVjZkRDNMNXJNakVoWW9mVEItdW51aGV5Z3Zpa0d5SFJ3MjZ5dE5ndm5jRVdKWlRDTU5fRm1jV0E1eGtXWXppZHc?oc=5",
-          "pubDate": "2026-11-11T08:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "イー・ガーディアン---株主優待制度を廃止、累進配当を基本とする株主還元方針へ変更(フィスコ) - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPWFktdlZCYXRJajdHWmtGamxCZlpSQ2NWNFFHUEhRcFFxeVJDUUdFN3d2RFBqM3dHTFBBOVZFamNlejFyQ1VBTE1yam4xMFFnVTI5NXhlbzJVQUlVLTBpYWRIRnpyWU0tWm5wVnlvbEhNWHN4blRQMG95ZWV0bXdMU0hrWkFHa2s?oc=5",
-          "pubDate": "2026-11-11T04:13:36+00:00",
-          "categories": []
-        },
-        {
           "title": "ウェルス・マネジメント[3772]：株主優待の電子化に関するお知らせ 2026年11月10日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5NUDdLV2pzbkhVLWpFWVJFNDJXMnJjbUtTaHhhVHpMQXNDN1JJWEgtQlp3eU9adzBWR2pVSmdUdVEzTzgzQ1JYMTZvb2RYbmd1Vk9hWGN1cXFORGpRVklhU05YS2RwWnBEQ0E?oc=5",
           "pubDate": "2026-11-10T03:00:00+00:00",
           "categories": []
         },
         {
-          "title": "オーケストラが大幅３日続伸、上場１０周年記念株主優待を増額 - 株探",
-          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9tMUJSdDYtWVp2SDFZRl84eWJCamlicFhQQUdwcVZaNFBjMzZndmtDUTdGcWFydi14Z1dRclR3d1FvOFZlSmowZmNKZWRMVmJEZ1JzT0I1d193RVZGUlN5WA?oc=5",
-          "pubDate": "2026-11-11T00:14:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "投資で家計のインフレ対策 ファミリーは株主優待、シニアは高配当 - 日本経済新聞",
-          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5KU3ZsSUlpZ05GZ1kyQ3A5amppcURnampFalNCS3A1T2swSDZ6VlhJRHNwb2dlVlRxTjlibWdwMkxhY1hxa05EQUdIcng5RzkyeXJHZFhnc0FOc3p4LUJwOGNWZFNMS3doZmJJYg?oc=5",
-          "pubDate": "2026-11-10T19:00:00+00:00",
+          "title": "ＪＫホールディングス[9896]：株主優待制度の再導入に関するお知らせ 2026年11月9日(適時開示) ：日経会社情報DIGITAL - 日本経済新聞",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9qYjRhdmFnNnBoRVB5eTBmVVdpNm04YTQ4RjF4dE5tXzRWbVdJX1g4V2dEY3MySWg2Sy0xTGtQemVNekRDTG9KS2xNOTdOWXpFbnkydUtsbW40dXVJZC1IM2VRMG9nSGpmN2c?oc=5",
+          "pubDate": "2026-11-09T02:30:00+00:00",
           "categories": []
         },
         {
@@ -3031,33 +3019,33 @@
           "categories": []
         },
         {
+          "title": "イー・ガーディアン---株主優待制度を廃止、累進配当を基本とする株主還元方針へ変更(フィスコ) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPWFktdlZCYXRJajdHWmtGamxCZlpSQ2NWNFFHUEhRcFFxeVJDUUdFN3d2RFBqM3dHTFBBOVZFamNlejFyQ1VBTE1yam4xMFFnVTI5NXhlbzJVQUlVLTBpYWRIRnpyWU0tWm5wVnlvbEhNWHN4blRQMG95ZWV0bXdMU0hrWkFHa2s?oc=5",
+          "pubDate": "2026-11-11T04:13:36+00:00",
+          "categories": []
+        },
+        {
+          "title": "オーケストラが大幅３日続伸、上場１０周年記念株主優待を増額 - 株探",
+          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9tMUJSdDYtWVp2SDFZRl84eWJCamlicFhQQUdwcVZaNFBjMzZndmtDUTdGcWFydi14Z1dRclR3d1FvOFZlSmowZmNKZWRMVmJEZ1JzT0I1d193RVZGUlN5WA?oc=5",
+          "pubDate": "2026-11-11T00:14:00+00:00",
+          "categories": []
+        },
+        {
           "title": "めぶきＦＧ－3日続伸 株主優待制度を拡充 長期保有を優遇(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
           "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQQTkxRWJ5d3FzNFoxMjJJSlpvNHZHSVM0ejN6eHRaTURhbXFxSWtQc2dEbVQ4cGdKdzBKU1dibk9jVjF1TGRPNnFGMnB3LXpTY3lNMnFaWGJWcjBld1BGbkd0bGZZV2RaYVNhbWh3LVNPRE9NQXRlTEh6alAxWUJ2d3ZicmlOeE0?oc=5",
           "pubDate": "2026-11-11T03:32:03+00:00",
           "categories": []
         },
         {
-          "title": "東亜建設工業、｢プレミアム優待倶楽部｣の株主優待を新設して配当＋優待利回り＝4％超に！ 300株以上で株数に応じて1500～1万7500ポイントがもらえる！（ダイヤモンド・ザイ） - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5WTGFSOW5lcTVJd1o4bVR3Zk1JaEViXzlZQTEtYXdvLS1hYkNwTC1pZGtUd1d0d3pyTEhnRVl5aFh0OTlYRjN5RENFN3BPbHdLYUlvUWtwVFVjdDU2dXdURUhBdzhFRS1iMUhFVFR1dGo0a2c3MlFQOWRQUF9fMUk?oc=5",
-          "pubDate": "2026-11-10T08:00:00+00:00",
+          "title": "サーラコーポレーションの選べる株主優待品が決定！ - アットエス",
+          "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1Jb2pOYk5IcGlRX3lhMEs2U21FbWJfYjdaV1ZSZE91U1oxWUF6UTV2Z3BsY3QzdlU2WVZmRzBaZkhEdmpEZVYyMnVqUUdKY1k0R1pLLTI0SlY5V1FrTE93d2FOd0R0Zw?oc=5",
+          "pubDate": "2026-11-11T04:30:00+00:00",
           "categories": []
         },
         {
-          "title": "プレスリリース：株主優待の電子化に関するお知らせ（PR TIMES） - 毎日新聞",
-          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5VT2x6Rnp5Smt5Ukw2czRKTURBREF4NE10ZUo0NjQ0ZzV3N3NsWmdlUEVtSmRvbzNXbTNBblJnSmFrdmRmTDRpSmdfYzgtc3ZHdnlETVA3eHZXemw4bS03ckN2cTFoa1hz?oc=5",
-          "pubDate": "2026-11-09T09:52:46+00:00",
-          "categories": []
-        },
-        {
-          "title": "オーケストラＨＤ－急騰 上場10周年記念株主優待を増額(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQM3dLc0k5VjNFVnV6a0NtbnFDMW9MS214ZlFQaF9yTHNCWTN5aXZocjRPVjV2RW9IWHRkTTJ2N2k0VjF1YWZHVHhaNGJHTUlQZENncWVmY3RZNlpwRUFjMWF2c0VRLVVGREw3R2p5ZW9MQk5ic1pLQzNONTU1SHdYQm1faVdUeXM?oc=5",
-          "pubDate": "2026-11-11T00:11:02+00:00",
-          "categories": []
-        },
-        {
-          "title": "本日注目の【株主優待】情報 (10日引け後 発表分)(株探ニュース) - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPYVRnSGhtNTFZS0N3VS05czQyRHhXY3kyemh5MmJXOGp0TkRzRVppbFBmaDI1eVl2MldXTUlWdXV6cHZpY1JFbEtVOTJDMzFMV0lsU29WR0hVcVVWaVV6Qld6ZHI5ZFUxcHpYRkZlaGlTeUNsc1htc0JCWlpoZmIxOVdXNzJTYUE?oc=5",
-          "pubDate": "2026-11-10T21:30:39+00:00",
+          "title": "投資家の桐谷さん、含み損の株を明かす「プラスになるまでは売りません」（オリコン） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9JMXowS1lUU1Vhak82X3FMSm5OUjh0R0J2bTN1aU9udEYxaldCYUVESTg0cTNNLUk4Si1YbWMtOTBwQXM0eHUydFljeGI1bmlMQXpjSi15aWVGYTZrbTF1UkZrY2U0bTFQdWs0dmRCaURYckFEUl9XZGt2R0JOcUU?oc=5",
+          "pubDate": "2026-11-11T02:40:00+00:00",
           "categories": []
         },
         {
@@ -3067,21 +3055,9 @@
           "categories": []
         },
         {
-          "title": "【福岡開催 無料セミナー】『株主優待の魅力 注意点と最新トレンド -メリットを最大限に活かす秘訣と注意点-』 - valuepress",
-          "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5CbVhjWlhrNkkzQXZrbWVDQWdlakhkNWt6dkFGYk01SXB3eHBJVVVURzVjTmpFdVNUbHJmemxYNlBlandwUENaNGk3ck5JSTRoekpsRlQ5OHJ4NjA?oc=5",
-          "pubDate": "2026-11-11T02:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "日清オイリオグループの株主優待はどう変わる？変更前・変更後の一覧表。株主優待100株でQUOカード500円分を新設へ - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1NLUl2OTRIVlpWZzhadjBvMlhkd185d281LWJqRFZwTk9VbnNpYlZHZGxmbXY4bzliRmNHV2lDMzhya21STVRNWVNqZGUyWjZiTDZlVmdyRVppcGR4Wlk0VHM0NzUzZUR5c2VOdW9rNmEza3k2ZGFURmJ3ZmVsUUU?oc=5",
-          "pubDate": "2026-11-10T11:21:21+00:00",
-          "categories": []
-        },
-        {
-          "title": "本日の【株主優待】情報 (10日 発表分)(株探ニュース) - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQb1VVbkQ2RDA4V2hoQ0R3cnBtQU42THRCOEVIZHZxQnVHMXVCSy1VNnV0Tkxxb0lDdHRZRFRxSjlzRXhmY2d3QnpSRTNFZV9pazVHSkVvczlqUnI3UDZJYVNCNXhhbUQ5X1VLMktsaWRYNXFCd3pJcFZPbWZYZ0VKakhYRVZ5dGM?oc=5",
-          "pubDate": "2026-11-10T11:03:32+00:00",
+          "title": "プレスリリース：株主優待の電子化に関するお知らせ（PR TIMES） - 毎日新聞",
+          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5VT2x6Rnp5Smt5Ukw2czRKTURBREF4NE10ZUo0NjQ0ZzV3N3NsWmdlUEVtSmRvbzNXbTNBblJnSmFrdmRmTDRpSmdfYzgtc3ZHdnlETVA3eHZXemw4bS03ckN2cTFoa1hz?oc=5",
+          "pubDate": "2026-11-09T09:52:46+00:00",
           "categories": []
         },
         {
@@ -3091,15 +3067,45 @@
           "categories": []
         },
         {
+          "title": "日清オイリオが優待拡充、100株から・5年以上で上乗せ。4〜9月期営業益75%増、株価は年初来高値（ハフポスト日本版） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFA2cl9mYk1ESnhGcV9kRmprZVlUYkZQalUteDdIbkgzY2pRYkxQR3pSVU1WbFVjaFdjdjRlOS14UmpyWG5DTUU0RzFDQTd6OHNvWEpTZnlZSU1PRVY0dG5CYU9pWFZzYnJSa1c1cUNkcnZTRWNNTTdzWkNzZTRCV0E?oc=5",
+          "pubDate": "2026-11-10T09:02:36+00:00",
+          "categories": []
+        },
+        {
+          "title": "オーケストラＨＤ－急騰 上場10周年記念株主優待を増額(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQM3dLc0k5VjNFVnV6a0NtbnFDMW9MS214ZlFQaF9yTHNCWTN5aXZocjRPVjV2RW9IWHRkTTJ2N2k0VjF1YWZHVHhaNGJHTUlQZENncWVmY3RZNlpwRUFjMWF2c0VRLVVGREw3R2p5ZW9MQk5ic1pLQzNONTU1SHdYQm1faVdUeXM?oc=5",
+          "pubDate": "2026-11-11T00:11:02+00:00",
+          "categories": []
+        },
+        {
+          "title": "本日の【株主優待】情報 (10日 発表分)(株探ニュース) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQb1VVbkQ2RDA4V2hoQ0R3cnBtQU42THRCOEVIZHZxQnVHMXVCSy1VNnV0Tkxxb0lDdHRZRFRxSjlzRXhmY2d3QnpSRTNFZV9pazVHSkVvczlqUnI3UDZJYVNCNXhhbUQ5X1VLMktsaWRYNXFCd3pJcFZPbWZYZ0VKakhYRVZ5dGM?oc=5",
+          "pubDate": "2026-11-10T11:03:32+00:00",
+          "categories": []
+        },
+        {
+          "title": "日清オイリオグループの株主優待はどう変わる？変更前・変更後の一覧表。株主優待100株でQUOカード500円分を新設へ - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1NLUl2OTRIVlpWZzhadjBvMlhkd185d281LWJqRFZwTk9VbnNpYlZHZGxmbXY4bzliRmNHV2lDMzhya21STVRNWVNqZGUyWjZiTDZlVmdyRVppcGR4Wlk0VHM0NzUzZUR5c2VOdW9rNmEza3k2ZGFURmJ3ZmVsUUU?oc=5",
+          "pubDate": "2026-11-10T11:21:21+00:00",
+          "categories": []
+        },
+        {
+          "title": "本日注目の【株主優待】情報 (10日引け後 発表分)(株探ニュース) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPYVRnSGhtNTFZS0N3VS05czQyRHhXY3kyemh5MmJXOGp0TkRzRVppbFBmaDI1eVl2MldXTUlWdXV6cHZpY1JFbEtVOTJDMzFMV0lsU29WR0hVcVVWaVV6Qld6ZHI5ZFUxcHpYRkZlaGlTeUNsc1htc0JCWlpoZmIxOVdXNzJTYUE?oc=5",
+          "pubDate": "2026-11-10T21:30:39+00:00",
+          "categories": []
+        },
+        {
           "title": "【2026年11月】株主優待5選！ 約10万円から狙える、年4回のデジタルギフトや串カツ田中の食事券も - マイナビニュース",
           "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1uVWc0TzAzek1sSFM2cXRveDJCRmdkbjZSZW8talFCZUlvU19EV0pNcmZadUpnWXVpYm9UWE9Jc2dqcURRNk9nWHU3cV9NUTUzZDd5OGhnWkthNm1ld1lOTklhWlVpUGs?oc=5",
           "pubDate": "2026-11-11T08:30:00+00:00",
           "categories": []
         },
         {
-          "title": "日清オイリオが優待拡充、100株から・5年以上で上乗せ。4〜9月期営業益75%増、株価は年初来高値（ハフポスト日本版） - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFA2cl9mYk1ESnhGcV9kRmprZVlUYkZQalUteDdIbkgzY2pRYkxQR3pSVU1WbFVjaFdjdjRlOS14UmpyWG5DTUU0RzFDQTd6OHNvWEpTZnlZSU1PRVY0dG5CYU9pWFZzYnJSa1c1cUNkcnZTRWNNTTdzWkNzZTRCV0E?oc=5",
-          "pubDate": "2026-11-10T09:02:36+00:00",
+          "title": "【12月の株主優待】2026年は28日までに買う。優待2000円相当なら5万円で利回り6.0％、30万円で約2.7％（LIMO） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBMYlZvR2RJNHpUeGEtTUpKT0xDdTM2MkdDMmk3b00zY1VrdWFBejkzMEoxWUk0TEh1NGNaUzZ3WnVxMkZ5NF9ZMjI0WVl1eWhQckE3bDhkREltMXdiZjRkRnYzUERia3ZSOEQtd2FWX2VWb0lvdS1MUlhZb3JyZDQ?oc=5",
+          "pubDate": "2026-11-11T09:46:01+00:00",
           "categories": []
         },
         {
@@ -3109,15 +3115,15 @@
           "categories": []
         },
         {
-          "title": "【12月株主優待】配当利回り3.83%の銘柄も…優待マニアまる子さんが厳選！2026年を締めくくる「お宝6銘柄」 - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE11SDJnN093c3E5LVZnMDNsZlZpR2JfekxJSGlSWlYzZ0p3dWs5d05oUDV2NnBkRWRGSF9KdmJ4WFA3WlJ2SHNfbzhuZ3VNdTVndXJyRVlyb01pUQ?oc=5",
-          "pubDate": "2026-10-28T07:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "東亜建設－後場上げ幅拡大 株主優待制度を導入 300株以上の保有株主が対象(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
           "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQT0NiYTZrSl9mVV91YjdObGVhWGdPbnBsY2ltRE9MVnRDNUF2VENsU2dKUktsamVDTWEyd2I3aFNaMFVRSzJ1OVNaeFN4UmRoaUJrS0NEREVybDhuTk9NV0RNNzRXazN4ZXhkZ01XSnN2U1piaFc5VnRIWTE2YUpUdHRNX0VQblk?oc=5",
           "pubDate": "2026-11-10T04:16:03+00:00",
+          "categories": []
+        },
+        {
+          "title": "【12月株主優待】配当利回り3.83%の銘柄も…優待マニアまる子さんが厳選！2026年を締めくくる「お宝6銘柄」 - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE11SDJnN093c3E5LVZnMDNsZlZpR2JfekxJSGlSWlYzZ0p3dWs5d05oUDV2NnBkRWRGSF9KdmJ4WFA3WlJ2SHNfbzhuZ3VNdTVndXJyRVlyb01pUQ?oc=5",
+          "pubDate": "2026-10-28T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3139,15 +3145,63 @@
           "categories": []
         },
         {
+          "title": "マーケット混乱期だからこそインカムゲインの選択肢 「日経累進高配当株指数」の採用銘柄は？ - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB3U2FhWkVZMVZJUjFOMER1RkFabHg2OXJPd05oWWp0RERBWFY4SXhYS0JhMzNtMndiTk5mcy11WHdxSEdBQlkzN250aTZZbE15SDNMT000N0xmZw?oc=5",
+          "pubDate": "2026-11-10T02:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "ＪＫＨＤ－後場買い気配 株主優待制度を再導入 100株以上にQUOカード(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNYlc2c3JqUUoxNFhJUi1kbVVUOFNUZ0JqZFBmU2RfekowSnhFRzhReVBuQWhVU052SkpyOGpOSVpxc0lnazl3azRVdzFZWWtFR25aaUlwcDN5WlduYmdDdzJ0SVlLUXJMQ3MteFJ4Z2dJTlBFVTV3Y2Exd3doNm1DNnNwTm5wVms?oc=5",
+          "pubDate": "2026-11-09T03:32:02+00:00",
+          "categories": []
+        },
+        {
+          "title": "ウェルス・マネジメント株式会社にプレミアム優待倶楽部を導入 - Excite エキサイト",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE0wamM4Y3JoaU5HQ3kwN0tBTXFPVzlUM2FuV1ZMUVR1X3UxUUI1WnZwM2Vxdk0tU3JrV3Z4TElDaXpkYk96TEIzd2JnckRKNEd0RGhRc010cWZrTWJSVmNDYTB3c01WSXIzenAxSTdPTWx2eHhC?oc=5",
+          "pubDate": "2026-11-11T18:10:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "NISAで中小型株 時価総額で500億円以上、今期業績が増収、最終増益予想の14銘柄 - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9oMkpXejJENDEwZXo1SmZST25uanl5dzRhUmQxcmZRNFh6ODMtXzM0Y3JITGdLOEVNMHhWM2JIMG9feXhhc0Z2TlNab1hRM2RaOV8zVmI1aV9yQQ?oc=5",
+          "pubDate": "2026-11-09T22:30:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "話題株ピックアップ【夕刊】（1）：ユニチカ、カーバイド、ＳＢＧ - 株探",
+          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1tUWMxN2VVeVB0dHY3bnE2U0tkaFZFelJjUGtOS3pYam11QUZQV2VjYXJrSjlEenhHVVlqVUhUVjQ0Ul8wX25INk11UFBQVHVFbVBBZzdyYXY3ZWwxcThGbA?oc=5",
+          "pubDate": "2026-11-10T06:45:42+00:00",
+          "categories": []
+        },
+        {
+          "title": "ユー・エス・エス、27期連続の「増配」を発表して、配当利回り3.0％に！ 配当額は27年で343倍に増加、2027年3月期は前期比2.5円増の｢1株あたり57.2円｣ - ダイヤモンド・オンライン",
+          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9JbmNlNXlHZGFGSjdzM1BMNnNkQnRDc3hFYm1hVDcwUHhzaDhOa2poSmtndU9JN29QeGVjVzlFcDFHcWlQTjlhRHFQV3E4LWxjWFU0?oc=5",
+          "pubDate": "2026-11-10T12:48:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "トヨタが前週比8.7%高！AI株暴落でも配当利回り9.9%の銘柄など好業績・高還元株が急騰。今週は決算発表ピークで年末相場に向けて仕込み時？ - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE14eFliQ0FRY2xOSmFHS1huajJBRTg1YUxscWk5TW00dVR5YVNpcVljQkdCOVc1UnJfRjE0RzZGVnc1cGFURWJLWWR0bzQ3Z3NtekxvZUVXUnR2UQ?oc=5",
+          "pubDate": "2026-11-09T07:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "今週の【株主優待】発表の銘柄一覧 (10月19日～23日)(株探ニュース) - Yahoo!ファイナンス",
           "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPdUNmblNPRWNVMzdtbDN0Qm5UUDMyekNQY19uUkFCT21Sd0xGWEhIWHN0YnNqNF9CY0ZrazVjXzBXNzlENEREMzgyeDFuVHp2dGVIZ1ljYXA4TTRYV1ZHcGlXM0RnaHFkR0pGTmh1RGdWWEQwd2ZKSnZleTI2YU12emg3ZUM2T2c?oc=5",
           "pubDate": "2026-10-24T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "12月末が権利確定日の株主優待、2026年は「12月28日（月）」までに買う。29日に買うと受渡しが1月4日になり対象外 - LIMO | くらしとお金の経済メディア",
-          "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFAxajV3WnBiWkNDT3ZUQ2NydTI5RHRGOTZESENKQ0RBbDlINk1MWV9DV0lpaFFZVmQwcV9uOXRjb29kWWNUYVBXTzBVQ3g?oc=5",
-          "pubDate": "2026-11-11T09:43:00+00:00",
+          "title": "半導体関連株は買っていい？ブームと不況をくり返す「シリコン・サイクル」をどう乗りこなす？（窪田真之） - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE93OTViTllmNXhtNXMwUFVmb1dvMUh5YWF2djJ6NWxhRFNHOW82X3hLNzVxcnNTRDhVVE9uZFZyNE1DMlBVSTRNa1BKRE1MZzBPbzlEdlFRbUJKZw?oc=5",
+          "pubDate": "2026-11-09T23:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "ＪＫＨＤが後場急伸、４－９月大幅増益と株主優待再導入を好感(ウエルスアドバイザー) - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPMTlZMVpLQndiRDZFWjRtRWgwbF9ZRGNoQ0dpcEhCZEJ3V2tCR2poVHI4Q2pYR1pWRWZmMTFxQUl2dm50bTh4RExwX3NVMnlHMHlVMVVTc0NvQy05YWFxRWp4ODdOT0w4NG9kejdkdWZ0dmxRNXhCMWJFMHFwd28wR0ktakEwUXM?oc=5",
+          "pubDate": "2026-11-09T03:53:02+00:00",
           "categories": []
         },
         {
@@ -3157,9 +3211,15 @@
           "categories": []
         },
         {
-          "title": "マーケット混乱期だからこそインカムゲインの選択肢 「日経累進高配当株指数」の採用銘柄は？ - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB3U2FhWkVZMVZJUjFOMER1RkFabHg2OXJPd05oWWp0RERBWFY4SXhYS0JhMzNtMndiTk5mcy11WHdxSEdBQlkzN250aTZZbE15SDNMT000N0xmZw?oc=5",
-          "pubDate": "2026-11-10T02:00:00+00:00",
+          "title": "AI関連株の当面の見方（AI関連企業の選別が始まる？キオクシア株は大底圏に達したか） - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1BX1Z0WS00MlZ2RFBtcDE3TU5WbjNhYVM1ZjVncnUxQmltVWp2R3QwSHR4SzNuZXpRT0w2T1RKVjRRRG4ycFJBOFRuU2F1RnJwbmJjWlUzSVFzdw?oc=5",
+          "pubDate": "2026-11-09T07:45:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "コナミグループ vs カプコン AI・半導体株を売ったお金が流入？ 買われたゲーム関連株で業績好調な2社 どちらが気になる？ - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE0yT05tVURWQlkwUFJfLWZYWWo1dUdFWVlOUXFBZXhRcFRTb2hYSzhiVUlIX0h0eEdzNDE0MEhZWkdEV2cwbEV5UFFCWlc1OVk2TmVpb3BTRGVuQQ?oc=5",
+          "pubDate": "2026-11-10T04:29:00+00:00",
           "categories": []
         },
         {
@@ -3169,9 +3229,9 @@
           "categories": []
         },
         {
-          "title": "「10％引きで買い物。店員さんから株主様と言われる」64歳男性が10年以上持つ百貨店優待 - All About（オールアバウト）",
-          "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE5QSHpMNXo4cUs5MjBFanl3akxQdDhyYUVQSVdFMkRKcEZ6Rm1BZ0ZJaGNxeVM1VU94WVJKY1NoQXpBTHM1Y0NjdkxFMkQ?oc=5",
-          "pubDate": "2026-11-11T10:30:06+00:00",
+          "title": "サーラコーポレーションの選べる株主優待品が決定！：時事ドットコム - 時事ドットコム",
+          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5qalppTld4V19kcXNwMGtWUXd6TS1BMmZHbDB1UGtYRjZwSHJadEs5NUFHbk5vSnBsV0V1ZlNzZGFVanRVc2IyWFNRbjRoX1FTMy1qc1ljNk5qdU9JbDZHckZIODRlNFp2bGRZ?oc=5",
+          "pubDate": "2026-11-11T01:46:00+00:00",
           "categories": []
         },
         {
@@ -3187,27 +3247,9 @@
           "categories": []
         },
         {
-          "title": "NISAで中小型株 時価総額で500億円以上、今期業績が増収、最終増益予想の14銘柄 - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9oMkpXejJENDEwZXo1SmZST25uanl5dzRhUmQxcmZRNFh6ODMtXzM0Y3JITGdLOEVNMHhWM2JIMG9feXhhc0Z2TlNab1hRM2RaOV8zVmI1aV9yQQ?oc=5",
-          "pubDate": "2026-11-09T22:30:00+00:00",
-          "categories": []
-        },
-        {
           "title": "株主優待おすすめ情報[2026年] - ダイヤモンド・オンライン",
           "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE10NThaNUtScmRRNFJVOHdEMjBWdi1aOHAtakdYLUZ0ZkxWZEI3X2Z6YkhjRVRaY3g2UlBuOGpBdlp4M0R0OWRzRThMY29PdFZNWE1kaC1tbkhEZw?oc=5",
           "pubDate": "2026-10-28T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "トヨタが前週比8.7%高！AI株暴落でも配当利回り9.9%の銘柄など好業績・高還元株が急騰。今週は決算発表ピークで年末相場に向けて仕込み時？ - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE14eFliQ0FRY2xOSmFHS1huajJBRTg1YUxscWk5TW00dVR5YVNpcVljQkdCOVc1UnJfRjE0RzZGVnc1cGFURWJLWWR0bzQ3Z3NtekxvZUVXUnR2UQ?oc=5",
-          "pubDate": "2026-11-09T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "配当利回り4.8%のタマホームが2位！11月の株主優待「人気銘柄ランキングTOP10」…優待再開で注目度増す銘柄も - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE0yVGdackJ3aXpDOWlHUWhrNE00ZTBhb3dmOERqT3JFVk9oMVplVWNaNXBvU0IyS2FlWFU5Yk5OWWpxX1QxR05OMFhSek9ZbWhoVkhTLUQydVVyUQ?oc=5",
-          "pubDate": "2026-10-12T02:06:12+00:00",
           "categories": []
         },
         {
@@ -3217,15 +3259,9 @@
           "categories": []
         },
         {
-          "title": "半導体関連株は買っていい？ブームと不況をくり返す「シリコン・サイクル」をどう乗りこなす？（窪田真之） - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE93OTViTllmNXhtNXMwUFVmb1dvMUh5YWF2djJ6NWxhRFNHOW82X3hLNzVxcnNTRDhVVE9uZFZyNE1DMlBVSTRNa1BKRE1MZzBPbzlEdlFRbUJKZw?oc=5",
-          "pubDate": "2026-11-09T23:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "話題株ピックアップ【夕刊】（1）：ユニチカ、カーバイド、ＳＢＧ - 株探",
-          "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1tUWMxN2VVeVB0dHY3bnE2U0tkaFZFelJjUGtOS3pYam11QUZQV2VjYXJrSjlEenhHVVlqVUhUVjQ0Ul8wX25INk11UFBQVHVFbVBBZzdyYXY3ZWwxcThGbA?oc=5",
-          "pubDate": "2026-11-10T06:45:42+00:00",
+          "title": "配当利回り4.8%のタマホームが2位！11月の株主優待「人気銘柄ランキングTOP10」…優待再開で注目度増す銘柄も - トウシル",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE0yVGdackJ3aXpDOWlHUWhrNE00ZTBhb3dmOERqT3JFVk9oMVplVWNaNXBvU0IyS2FlWFU5Yk5OWWpxX1QxR05OMFhSek9ZbWhoVkhTLUQydVVyUQ?oc=5",
+          "pubDate": "2026-10-12T02:06:12+00:00",
           "categories": []
         },
         {
@@ -3235,27 +3271,15 @@
           "categories": []
         },
         {
-          "title": "ユー・エス・エス、27期連続の「増配」を発表して、配当利回り3.0％に！ 配当額は27年で343倍に増加、2027年3月期は前期比2.5円増の｢1株あたり57.2円｣ - ダイヤモンド・オンライン",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9JbmNlNXlHZGFGSjdzM1BMNnNkQnRDc3hFYm1hVDcwUHhzaDhOa2poSmtndU9JN29QeGVjVzlFcDFHcWlQTjlhRHFQV3E4LWxjWFU0?oc=5",
-          "pubDate": "2026-11-10T12:48:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "コナミグループ vs カプコン AI・半導体株を売ったお金が流入？ 買われたゲーム関連株で業績好調な2社 どちらが気になる？ - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE0yT05tVURWQlkwUFJfLWZYWWo1dUdFWVlOUXFBZXhRcFRTb2hYSzhiVUlIX0h0eEdzNDE0MEhZWkdEV2cwbEV5UFFCWlc1OVk2TmVpb3BTRGVuQQ?oc=5",
-          "pubDate": "2026-11-10T04:29:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "AI関連株の当面の見方（AI関連企業の選別が始まる？キオクシア株は大底圏に達したか） - トウシル",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1BX1Z0WS00MlZ2RFBtcDE3TU5WbjNhYVM1ZjVncnUxQmltVWp2R3QwSHR4SzNuZXpRT0w2T1RKVjRRRG4ycFJBOFRuU2F1RnJwbmJjWlUzSVFzdw?oc=5",
-          "pubDate": "2026-11-09T07:45:00+00:00",
-          "categories": []
-        },
-        {
           "title": "【実例】11月の株主優待：個人投資家ペンギンさんセレクト5銘柄 - マネクリ",
           "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE52dF9OQ1laYmpjYXViN2d6UE5lM2U1R1JkdnpKUXJoNGNmUUhwY1hBVzJHQl9lempGYnZGVnVIUXNJc25SV2ZKX1R5Z0RNalRCSk9kMNIBV0FVX3lxTE14Yzgyam82elFKTGJielk0SmJEY3AzdTZIOFhHSm11S2o5MF9BU1ZfVkJvR0g4d0JIeUoxLTV5V0c4Z2pJcEdsNkpBUG96SFNqT2R4MDBGRQ?oc=5",
           "pubDate": "2026-10-02T01:01:38+00:00",
+          "categories": []
+        },
+        {
+          "title": "投資家の桐谷さん、保有株を紹介「1000株保有で4000円のクオカード」（オリコン） - Yahoo!ニュース",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5qcndXS2VnSTZUR2ZSVzF3VGJSdXFnSG5VdjdocUgySWkwa3dobTc3d2ZhT2ZWb2twZGRWWnR3SUFQUzFycmlNWjNJaTNVdzhVZEMxSmwwTk5zTjJlY2Z1bHlWeGotVHJ5UUxEUnBaNnRjd3JURlA4aUc2YU1XRDQ?oc=5",
+          "pubDate": "2026-11-10T06:44:45+00:00",
           "categories": []
         },
         {
@@ -3277,33 +3301,21 @@
           "categories": []
         },
         {
-          "title": "投資家の桐谷さん、保有株を紹介「1000株保有で4000円のクオカード」（オリコン） - Yahoo!ニュース",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5qcndXS2VnSTZUR2ZSVzF3VGJSdXFnSG5VdjdocUgySWkwa3dobTc3d2ZhT2ZWb2twZGRWWnR3SUFQUzFycmlNWjNJaTNVdzhVZEMxSmwwTk5zTjJlY2Z1bHlWeGotVHJ5UUxEUnBaNnRjd3JURlA4aUc2YU1XRDQ?oc=5",
-          "pubDate": "2026-11-10T06:44:45+00:00",
-          "categories": []
-        },
-        {
-          "title": "【株主優待に関する調査】「自分に合ったものを選びたい」―選べる「ポイント型」に約1.7倍の支持 - PR TIMES",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1MRkF5OEdpTWhpcHZXNGNtaG1UYy1oMUVXX3JhQTYwdzZ4WUxrYkxCMTlTRWl4ZDBFa3lKZHl1NEExbWVOaGE3OHJjZkU0VUdmVTQtekhtWVpTQlA3dmdDbmg4dnhmbkFlMGc?oc=5",
-          "pubDate": "2026-11-11T01:13:47+00:00",
-          "categories": []
-        },
-        {
           "title": "6月権利確定の株主優待8銘柄 - SBI証券",
           "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBTN2lnVDh3aURvdHdVdXdNaS1qbDJIX2E5T1g3N0ZvNE9JMzZtTmwyYVp1M0E2bE1nOUk4T3EzOVJmQmpqbmJ3NlNnbHlEdUV6YTNOSjZHdUJ6SnFMYW5TWVlhcXlJSjVELUdfV3NlUS1rOTI3Z24yZmxNdUV5Vnc?oc=5",
           "pubDate": "2026-06-05T07:00:00+00:00",
           "categories": []
         },
         {
-          "title": "【9月の株主優待の内容＆利回りを調査(2026年版)】記念優待も実施するオリエンタルランドや学研、優待を拡充する丸大食品、ANAのほか、お得な金券優待も - ダイヤモンド・オンライン",
-          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBQVGFyVGk1S1dsOWl5ZXJOZnR5eE9ITVNENDkwUm5xZlhhREp0Vmh2QVZOdzZwMTF3U3R2T0ltUklrc2I3SXRuUEpfaTdGV2NUR2dj?oc=5",
-          "pubDate": "2026-08-27T07:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "海外勢も見直す株主優待、導入比率7年ぶり最高 侮れない個人の力 - 日本経済新聞",
           "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE51QzA1RHBvU2NQZDhjYVJqb2h3d0pKWXdfTmxhUDhIWE9OdGtFZzNQc2Z3eHVjaFRSaGZCa2F6WTBtb3ZMSklHTlRfdUxxby1Ydmg3b3p5bV9BOWo0dG9QSXRfSDRQOENsb1ZYZQ?oc=5",
           "pubDate": "2026-07-08T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【9月の株主優待の内容＆利回りを調査(2026年版)】記念優待も実施するオリエンタルランドや学研、優待を拡充する丸大食品、ANAのほか、お得な金券優待も - ダイヤモンド・オンライン",
+          "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBQVGFyVGk1S1dsOWl5ZXJOZnR5eE9ITVNENDkwUm5xZlhhREp0Vmh2QVZOdzZwMTF3U3R2T0ltUklrc2I3SXRuUEpfaTdGV2NUR2dj?oc=5",
+          "pubDate": "2026-08-27T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3325,27 +3337,27 @@
           "categories": []
         },
         {
-          "title": "【2月権利確定】20万円以下で買える株主優待＆好配当期待8選 - SBI証券",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE94X1hlaEE3YWZxWnpUWXNXNjVhT1piVXhJMFhaWHlFQ1NuRE12QklyZ3E1YkFwNW1zVEhvclhwc1l1dUlHLUM3TEg5QVVXdURFR09HRjNLWGpuakNDcThFZnZTeWdJMUctc2xRdkRWaXdLd0RnS2R1Z3lvd3BXRTg?oc=5",
-          "pubDate": "2026-02-06T08:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "3月権利確定で長期投資に向く株主優待銘柄は？ カギは「DOE」と売上高 - 野村證券",
           "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFB2d08xcGxFTTFjWTZJOW14V3JGMFoyak5peEstMGszeVowY0IyTFYzSk0yd1c0OFc3WXJQRHhuWHB6WG9CSTc3blppWV9xNTFEVjRMUWdlVEZacjA3YXk4?oc=5",
           "pubDate": "2026-02-26T08:00:00+00:00",
           "categories": []
         },
         {
-          "title": "株主優待がもっと魅力的に（2026年3月末基準日から）| 東急株式会社 - 東急・東急電鉄公式サイト",
-          "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1GOHR2WVpPNEc1MG5lQjZUZGRRYjFQWUN4ZkE0bWZ1eExjTjR2VDRSZG51UGh2Y2ZDR3hReGRqMzV4S2hiTjlZNXlOeFhJb2xoeE9ZdWdROGtVbG95ZWc?oc=5",
-          "pubDate": "2026-01-28T07:12:49+00:00",
+          "title": "【2月権利確定】20万円以下で買える株主優待＆好配当期待8選 - SBI証券",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE94X1hlaEE3YWZxWnpUWXNXNjVhT1piVXhJMFhaWHlFQ1NuRE12QklyZ3E1YkFwNW1zVEhvclhwc1l1dUlHLUM3TEg5QVVXdURFR09HRjNLWGpuakNDcThFZnZTeWdJMUctc2xRdkRWaXdLd0RnS2R1Z3lvd3BXRTg?oc=5",
+          "pubDate": "2026-02-06T08:00:00+00:00",
           "categories": []
         },
         {
           "title": "東亜建設工業株式会社がプレミアム優待倶楽部を導入 株主様との対話強化・株主管理ＤＸの促進へ - PR TIMES",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1jRmdEUXZaTjlONmhVSEdvclFMOS1ScDZGWHhlR2RtTlMtWE1yWkdvd1k3X3kwbmFvbnJ5c0U5aEZ4eWVoU1EwWjB5WlZ4RF9DM1U0V0s1VXJkMGNjdU40TU5KV19PY3pEc2c?oc=5",
           "pubDate": "2026-11-10T04:06:30+00:00",
+          "categories": []
+        },
+        {
+          "title": "株主優待がもっと魅力的に（2026年3月末基準日から）| 東急株式会社 - 東急・東急電鉄公式サイト",
+          "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1GOHR2WVpPNEc1MG5lQjZUZGRRYjFQWUN4ZkE0bWZ1eExjTjR2VDRSZG51UGh2Y2ZDR3hReGRqMzV4S2hiTjlZNXlOeFhJb2xoeE9ZdWdROGtVbG95ZWc?oc=5",
+          "pubDate": "2026-01-28T07:12:49+00:00",
           "categories": []
         },
         {
@@ -3391,15 +3403,15 @@
           "categories": []
         },
         {
-          "title": "人気の株主優待TOP10！ジャンル別・10万円以下・長期保有の銘柄ランキングを発表 - 楽天カード",
-          "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQUkY1U2oxenRKZVRKRTRRWHFRbGFYNG1aeU5UU2lyNFFQaERmN0w3bkhMNlFDX3FHTWdjRXhodkJyUllwSWFfd19pU1N3em5GWmtDblE4Um1LbmNwdWx5LS1fZ0t4b2tXdVZvS2dqSE1Eakg3Ylk2U29LaGN0VVZNSVdId2lfUQ?oc=5",
-          "pubDate": "2025-08-28T07:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "株主優待ランキング ～月別・年代別 - 楽天証券",
           "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5XTkdSSmlFUGVVMWZBMzlCRHp0ZGZxTXlIeUZ2SEgzbEJjdDBZZ2YxSEtKdFdieDI5bzJGbk14eDhPbWE4S3dXYjA1c0FuWVBfazJGbkk5R19Fc1E?oc=5",
           "pubDate": "2025-07-24T08:02:52+00:00",
+          "categories": []
+        },
+        {
+          "title": "人気の株主優待TOP10！ジャンル別・10万円以下・長期保有の銘柄ランキングを発表 - 楽天カード",
+          "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQUkY1U2oxenRKZVRKRTRRWHFRbGFYNG1aeU5UU2lyNFFQaERmN0w3bkhMNlFDX3FHTWdjRXhodkJyUllwSWFfd19pU1N3em5GWmtDblE4Um1LbmNwdWx5LS1fZ0t4b2tXdVZvS2dqSE1Eakg3Ylk2U29LaGN0VVZNSVdId2lfUQ?oc=5",
+          "pubDate": "2025-08-28T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3409,15 +3421,15 @@
           "categories": []
         },
         {
-          "title": "買い物券・プリペイドカードカテゴリーの株主優待人気ランキング【年間】 - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE14blVNV0dyTVFzdGh3RFVlTHNWY19yTjZqNmFjVUpHRWlaeWFaeHpqS1h1WW1XLXpKNkZJeGJ1ZFBvTzJqV2hDUE1LbTRCLUNhbzBheDZVMV8xa0x5QWs2Y3dSUDFyRUk1d2Q3OGFYeHVPbGMzQVVWeg?oc=5",
-          "pubDate": "2024-06-19T11:46:27+00:00",
-          "categories": []
-        },
-        {
           "title": "食事（割引）券カテゴリーの株主優待人気ランキング【年間】 - Yahoo!ファイナンス",
           "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1DeUVjb2VEZUpUdFF0N0FXaU13dDRqdExxVXBNNVlBMWFLQnFobWZYSHdHeHBCRW40WlRvOERLMGcwS1hCNkxZdDIwbUlrdUpkcmE4aDN2MVk3Q04zWXdBdmZId2VGQW42REZaS0RKeWl6enM?oc=5",
           "pubDate": "2024-06-19T09:11:39+00:00",
+          "categories": []
+        },
+        {
+          "title": "買い物券・プリペイドカードカテゴリーの株主優待人気ランキング【年間】 - Yahoo!ファイナンス",
+          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE14blVNV0dyTVFzdGh3RFVlTHNWY19yTjZqNmFjVUpHRWlaeWFaeHpqS1h1WW1XLXpKNkZJeGJ1ZFBvTzJqV2hDUE1LbTRCLUNhbzBheDZVMV8xa0x5QWs2Y3dSUDFyRUk1d2Q3OGFYeHVPbGMzQVVWeg?oc=5",
+          "pubDate": "2024-06-19T11:46:27+00:00",
           "categories": []
         },
         {
@@ -3431,25 +3443,13 @@
           "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE10cGpEM0pZYTRCLTBKUXNhQ0JkQkhhTDdxOTV4dlZaUVVUUHJnMndPenptT1JsOEhQMVltc2pzbW5FYjRRODJwVThpZ3ZRbTZYRmU4dVhoTlNBYXBNZ2ZxNF9YdlM?oc=5",
           "pubDate": "2023-12-05T02:57:27+00:00",
           "categories": []
-        },
-        {
-          "title": "大和ハウス工業(株)【1925】：株主優待 - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1TVjJXX0w0M2RsRGVKZlFDWGg5bXM5Q3Q1ZV9LdUtBczJwQTVfeUdOQklYaXdLNkhmT2dLMFY0Zm05Q0tTVWVxVGI2amJfV0dGLVpFTWU3dEhMUjdpeTg4?oc=5",
-          "pubDate": "2021-03-17T04:19:09+00:00",
-          "categories": []
-        },
-        {
-          "title": "日清食品ホールディングス(株)【2897】：株主優待 - Yahoo!ファイナンス",
-          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFA5OHhwVUtPRUFWTTJfMnVMaFFmcFhPbkFUaXlqZXI3S2dtUEFHWHFMWWZUOEZ5REl6LWtqdjRGSndwcktNamJYbjU2bkhBc0VhNHJjOFNub0JUOEl1WXA4?oc=5",
-          "pubDate": "2021-03-16T18:26:04+00:00",
-          "categories": []
         }
       ]
     },
     "https://news.google.com/rss/search?q=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%81%93%E3%81%AE%E9%A7%85&hl=ja&gl=JP&ceid=JP:ja": {
       "status": "ok",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "items": [
         {
           "title": "北海道・道東の旅【Part2】1日に2000個売れる道の駅「クマヤキ」は「たい焼きよりモチ、フワっ」?阿寒湖アイヌコタンから巡る旅 - Yahoo!ニュース",
@@ -3458,9 +3458,15 @@
           "categories": []
         },
         {
-          "title": "１８日まで北海道フェア 道の駅国見 秋の収穫祭第２弾も - 福島民報デジタル",
-          "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE01YjdBUGgxYmJzVUIyN0pSaVZUWC1GQ1ZhTDBVeEd3NGZrZ2E0R1Z4UHIxUk1rcF8yWFMyTXRDUUN6RFYwR19fUndoRWpTVkk?oc=5",
-          "pubDate": "2026-11-09T03:19:00+00:00",
+          "title": "１８日まで秋の北海道フェア 国見の道の駅 - 福島民報デジタル",
+          "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFB5TjNteHhMSERxRmdpSEV0MXRhVDczQVBheEU3WXdvYkQtbEptMVh4TmtiS3dmMWMwY2g2U0FEUzFoWE53MWptT0xfamJ3bkU?oc=5",
+          "pubDate": "2026-11-10T20:28:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【浦臼】道の駅つるぬま移転新築、27年5月に指名競争入札／主体など4分割で - e-kensin.net",
+          "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFAyNXptWjNpTUhZR190R013cU04ckhiSDdTUW9kaVB3NUhhMGNXUi1CRlZMNFN5QWU1VER4QWlPNUdVbVY3RTJ4dmRjQTY?oc=5",
+          "pubDate": "2026-11-11T20:00:00+00:00",
           "categories": []
         },
         {
@@ -3485,12 +3491,6 @@
           "title": "【北海道】道の駅の絶品「500円以下」グルメ5選！鉄道旅でも立ち寄りやすい駅近スポットも｜グルメとフード - 旅とおでかけ 鉄道チャンネル",
           "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE56bHotN2dHT2xHTlpKVkl6ck1BNzVLaXNvTGVrU1B4b3F5RnFIbjM1Y3BLcDBfNE5YazEzQWlCRHh0clBoTk5nNnJicjc?oc=5",
           "pubDate": "2026-08-28T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "シーニックバイウェイ北海道×「ファイターズコラボ道の駅」今年も実施 - 北海道日本ハムファイターズ",
-          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE4tLVl6RHVWSUZBekNQVlRQS1h0V1p1Y29Ja3REd1RrbnlYUTZLVndHYkFac2ZFUHI1OUxtdTdkM25aNkJPQVE3R05BQlZ4a21oS1V2Ym9yTVozRHR2WUFpV3Y2eHdCejg?oc=5",
-          "pubDate": "2026-04-16T05:01:06+00:00",
           "categories": []
         },
         {
@@ -3524,6 +3524,12 @@
           "categories": []
         },
         {
+          "title": "北海道：赤井川村の道の駅「あかいがわ」管理者不在で閉鎖、来月以降で村議会が議案否決：地域ニュース - 読売新聞",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE56R1R6R2Vyc2dPZEJIeGMxY1R3RkpOTXd0VGJkVW41TFoyUWZsSld4MG5oRUhyQmNweXZXYWp0QVVMX0ZuUkdMQnVaMW03c1BsNnd1VEJnUjdmQVpMNE1ENlY5Y2tQdjAyNFNfdFN6YXVMWVdN?oc=5",
+          "pubDate": "2026-03-18T07:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "みち・レ・ポ-北海道「道の駅」デジタルスタンプラリー - 北の道の駅",
           "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5DQ04xMWU0dFZMbHNucFJJMmdPQ2NTZ0otN2V0bXZublNkZU5RaVlVZDh4SWxINHYwa1dQYWVTN1pBS3NtbUZfelJ2WXdCdjJFbGx1Rk1SSQ?oc=5",
           "pubDate": "2026-04-17T07:13:03+00:00",
@@ -3536,21 +3542,9 @@
           "categories": []
         },
         {
-          "title": "「北海道・道の駅」ランキングTOP10！ 第1位は「道の駅 おとふけ（音更町）」【2026年最新調査結果】 | 北海道 ねとらぼリサーチ - ねとらぼ",
-          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFB1QTF2NXczd1F4eTRnLVNEZllBVW53bm93aVI5aExaMklTZkdaQk5MZndvZVFMWXNHbnZuUjc5MjlKcDdwLWtxWWxSNVpVeG5OcnFlaUdialRiVmFZOFd3eG92ONIBaEFVX3lxTE5YbUNlaUduLTRZSlBldmZ2UUc4OHRhUE0yb3d3X2ZsUldoUmE4WXZYTXFhN2NacGZseXprNGFNdjY5RmxrQXRJSFV3Q3YyeXJQOGhvR1RpdmRtay1tdHozaFl4c3JLdC1D?oc=5",
-          "pubDate": "2026-03-25T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "「道の駅あかいがわ」の管理者候補、新設の合同会社に決定…赤井川村、８月再開目指す - 読売新聞",
-          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1FcjUwTVJtcEFGVlhhZnJ1MFVuemVIXzZUNldCWElnT2ZON3NyZElmT0dzMVY2ZXl2WFA1YVNSQVFJQmFIU2Y0RWtqaTRseE1Rdk00YkwtdGs1dHBNcVdOeVlHNTY4Znc1T1gtY0lnWWs4SUhJ?oc=5",
-          "pubDate": "2026-06-20T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "【2年連続】北海道じゃらん「道の駅ランキング2026」で、道の駅おとふけが1位、道の駅ガーデンスパ十勝川温泉が5位を獲得しました - 音更町",
-          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPSy1WbE9fT0JHV0xXcGVDUWJjX2VJVnBJei1NWUZaOTlJMExBc3NRMi1zdk9yVHoxMnVheFdENHVmaExXWkpydGkteVl1QXJEdE9hckZ4SUNwVlV0WHczZmYtcTc3YVRrYm1vT2Q0MTBSYXFlTFlVMGh0RUtmN0EwLUNoZU8?oc=5",
-          "pubDate": "2026-03-26T11:04:12+00:00",
+          "title": "道の駅で「車両火災です」トラックの運転席など燃える 約30分後に鎮火…出火原因調査 深川市 - au Webポータル",
+          "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5qeV82UjU2eC14dWdhbmRFS010RU5WZTZsTWhrZkxPR1llMm1jTDJPRDJFZUZNaXNpNFJNS25YNERYRGxZV3psQkozT2Q0Z2JYRWZySnFGNVRBUlI2Z2M0U3dxV0U2dUNUVmxqeU5R?oc=5",
+          "pubDate": "2026-11-09T09:27:29+00:00",
           "categories": []
         },
         {
@@ -3560,9 +3554,27 @@
           "categories": []
         },
         {
+          "title": "【2年連続】北海道じゃらん「道の駅ランキング2026」で、道の駅おとふけが1位、道の駅ガーデンスパ十勝川温泉が5位を獲得しました - 音更町",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPSy1WbE9fT0JHV0xXcGVDUWJjX2VJVnBJei1NWUZaOTlJMExBc3NRMi1zdk9yVHoxMnVheFdENHVmaExXWkpydGkteVl1QXJEdE9hckZ4SUNwVlV0WHczZmYtcTc3YVRrYm1vT2Q0MTBSYXFlTFlVMGh0RUtmN0EwLUNoZU8?oc=5",
+          "pubDate": "2026-03-26T11:04:12+00:00",
+          "categories": []
+        },
+        {
           "title": "「道の駅あっさぶ」リニューアルオープン＆イベント開催のお知らせ - 北の道の駅",
           "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE8zZjAzN3VmemhBQVJkbE9CRW5PeFpORW1QNHNhcnotQVdlLVVLMERNRUJ6RFhSOWVDR2t3V2UyekR4cUl6TFYzVzJTUmxCbm9pblFsX2JVWE01V2tYTTVXWEliLTEzWkRSU2tjMUxR?oc=5",
           "pubDate": "2026-09-18T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "「北海道・道の駅」ランキングTOP10！ 第1位は「道の駅 おとふけ（音更町）」【2026年最新調査結果】 | 北海道 ねとらぼリサーチ - ねとらぼ",
+          "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFB1QTF2NXczd1F4eTRnLVNEZllBVW53bm93aVI5aExaMklTZkdaQk5MZndvZVFMWXNHbnZuUjc5MjlKcDdwLWtxWWxSNVpVeG5OcnFlaUdialRiVmFZOFd3eG92ONIBaEFVX3lxTE5YbUNlaUduLTRZSlBldmZ2UUc4OHRhUE0yb3d3X2ZsUldoUmE4WXZYTXFhN2NacGZseXprNGFNdjY5RmxrQXRJSFV3Q3YyeXJQOGhvR1RpdmRtay1tdHozaFl4c3JLdC1D?oc=5",
+          "pubDate": "2026-03-25T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "「道の駅あかいがわ」の管理者候補、新設の合同会社に決定…赤井川村、８月再開目指す - 読売新聞",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1FcjUwTVJtcEFGVlhhZnJ1MFVuemVIXzZUNldCWElnT2ZON3NyZElmT0dzMVY2ZXl2WFA1YVNSQVFJQmFIU2Y0RWtqaTRseE1Rdk00YkwtdGs1dHBNcVdOeVlHNTY4Znc1T1gtY0lnWWs4SUhJ?oc=5",
+          "pubDate": "2026-06-20T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3608,15 +3620,15 @@
           "categories": []
         },
         {
-          "title": "道の駅 あしょろ銀河ホール21 - www.town.ashoro.hokkaido.jp",
-          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tdDVINXBWbjNRSWxlTUhPMWhaRTRwNGFrbnQ4ZGh1SFRCd3Ixek1sSGlzcEpTMGV5d3FubVM2S01jQ200d3pZX3Z1UE81VEpmbHhvWUJQanB5WGd6dkJmejV1MzJ4dlJET0lr?oc=5",
-          "pubDate": "2025-04-10T07:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "北海道「道の駅」スタンプラリー - 北の道の駅",
           "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1JYk5ISmpyc3ZBNTFiTzgybjBHZDJVYnF1WnM4ZWp6Ymt2OVJPUnJtMWNmVGFXbmo5ei12VWlwUWRES1ZpSWx3QnhpRV9XU2xqYTJMbEdndUs?oc=5",
           "pubDate": "2022-04-20T01:25:40+00:00",
+          "categories": []
+        },
+        {
+          "title": "道の駅 あしょろ銀河ホール21 - www.town.ashoro.hokkaido.jp",
+          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tdDVINXBWbjNRSWxlTUhPMWhaRTRwNGFrbnQ4ZGh1SFRCd3Ixek1sSGlzcEpTMGV5d3FubVM2S01jQ200d3pZX3Z1UE81VEpmbHhvWUJQanB5WGd6dkJmejV1MzJ4dlJET0lr?oc=5",
+          "pubDate": "2025-04-10T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3662,15 +3674,15 @@
           "categories": []
         },
         {
-          "title": "北海道の「道の駅」を応用し、南米パラグアイに「道の駅」がオープンしました！ ｜ 日本国内での取り組み - JICA - 国際協力機構",
-          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQaWx3OXlROXJhTGg3UDY3aVNXUVBTOHdkUWZPbFZGb1hSZDEyZW5uMVZJdE1INUNnbjh5T3M3blE0dFVuSlktY0Y0WWhCOXYtV2Y2UDlzeEFhNnVhX2xXTHRZYWFpYjkzQUpwNmtEbW14dHRKekNic3hSWUJ2blA2OEJNZThNT3hPVWc?oc=5",
-          "pubDate": "2025-02-18T08:00:00+00:00",
-          "categories": []
-        },
-        {
           "title": "何より道民が好き！車で立ち寄り必須 評判の道の駅7選 - www.visit-hokkaido.jp",
           "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE11MkVpLUJvVnVqMjRSRUF5eERSU0RJSHRHZGU2U1NiM2RnaVNyZ1ZKRHRIeV9PMDV0ZUlTQmdnZ2VDUmc4QURMUUVSdXhBQV9iVHZOWWtkVmtnMTFW?oc=5",
           "pubDate": "2022-08-31T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "北海道の「道の駅」を応用し、南米パラグアイに「道の駅」がオープンしました！ ｜ 日本国内での取り組み - JICA - 国際協力機構",
+          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQaWx3OXlROXJhTGg3UDY3aVNXUVBTOHdkUWZPbFZGb1hSZDEyZW5uMVZJdE1INUNnbjh5T3M3blE0dFVuSlktY0Y0WWhCOXYtV2Y2UDlzeEFhNnVhX2xXTHRZYWFpYjkzQUpwNmtEbW14dHRKekNic3hSWUJ2blA2OEJNZThNT3hPVWc?oc=5",
+          "pubDate": "2025-02-18T08:00:00+00:00",
           "categories": []
         },
         {
@@ -3683,18 +3695,6 @@
           "title": "じゃらん「北海道・道の駅ランキング2025」を発表 1位はおとふけ - 観光経済新聞",
           "link": "https://news.google.com/rss/articles/CBMixAJBVV95cUxNYlpIYlV2Tk1kNTFfcjVhM1VGSTBkN0tXSkVzbzlEWG5FQUE2eFpBQmVFRVNVSDduVUhwSnRBNWxOWWNjZEE0ZGp3VVNJM0ZweVFzeWxnaTJydmx1WjJwOWp6Mm50d3luMVZ5ZFRGX3FUUEV6dXR5ZldIUmkybk9uM1dDY0w4NXJxWVRQN2tvQTBXMkVEU2o0ZVlhQkowOVY2ZTVMb3BJQU0wY0lmUGFGclJINWJkd0g5NGtZS0FZdWJPV0xIQlNLRGJ6MWp1U1gyQ0hRYVB2SExTeTRwRHZJek5TV056bkJCT0I0d0dIUDFpb1lDOVNvUDliWjJKeUJlaFpSZ2U2V2RuT1I5LXIxZjJnLWpGekZUYXc5VzhQRU9hQUZtV2JEWXA5aFZIUXE2S3J6QTBCcGtxZjR0Rl84dkplcko?oc=5",
           "pubDate": "2025-04-11T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "北海道「道の駅」ランキング2020発表。グルメや滞在体験で「厚岸グルメパーク」の人気継続 - トラベル Watch",
-          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE13bWFUZ1BKZnhJVlppdVEyRm8yU3FLOUsxQW5zNkdPaW1PMVVlRU9BSVMzZE01YjJhQVJfWnEzcWNySXZSQUFTUVUtS01SVElZTHlWMU9jNTlsT2RTTjZ1VkZhVTh3dVl3?oc=5",
-          "pubDate": "2021-11-04T07:00:00+00:00",
-          "categories": []
-        },
-        {
-          "title": "北海道の道の駅を８割巡った私が選ぶNo. 1 - LEE",
-          "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBHWHBHYzdCYWZzMXNVSUJTck02b3BPZEFIa2wwNUFTelA3LURXOE9DRERrdk9YQjNlTUlrNDNCUDVQNXAwbFEteTN2VGROOVJNV0E?oc=5",
-          "pubDate": "2024-09-05T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3722,6 +3722,12 @@
           "categories": []
         },
         {
+          "title": "北海道「道の駅」ランキング2020発表。グルメや滞在体験で「厚岸グルメパーク」の人気継続 - トラベル Watch",
+          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE13bWFUZ1BKZnhJVlppdVEyRm8yU3FLOUsxQW5zNkdPaW1PMVVlRU9BSVMzZE01YjJhQVJfWnEzcWNySXZSQUFTUVUtS01SVElZTHlWMU9jNTlsT2RTTjZ1VkZhVTh3dVl3?oc=5",
+          "pubDate": "2021-11-04T07:00:00+00:00",
+          "categories": []
+        },
+        {
           "title": "道の駅 みそぎの郷 きこない - はこぶら - 函館市公式観光サイト",
           "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFA1YVlzQWJ1bWM3dXNiaHc4d2s1NXgtVGF4MHl5akpjNEhvalBHZnNiUHhVNlZseUtfMkNhaHhSalRCQ3BBZ2RsMQ?oc=5",
           "pubDate": "2023-03-14T19:19:48+00:00",
@@ -3743,6 +3749,12 @@
           "title": "国交省、北海道「道の駅」ランキング2019発表。景観や快適さ、グルメなど6部門 - トラベル Watch",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9RcHE2dHVnclpQVndXTDhhZTBDLWZEZFdDYkFMYld1Ym5ELVB2dVhvYlFFcVRhVnFaNW51TW5yZXl1bFVCS2t0RGZOVGx2TEp2UUZrMzB5dUxqQzVuTkNmRU8zb1p0ZjA5?oc=5",
           "pubDate": "2020-09-16T07:00:00+00:00",
+          "categories": []
+        },
+        {
+          "title": "【北海道開発局調べ・道の駅ランキング】「うとろ・シリエトク」が3年連続1位 - 建設通信新聞Digital",
+          "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1MNmk4R3FFYWRTd01MU0I2ZDFhSXhjS2FMQ3hTb1dlZFdsby0tVDRYWlgtaTZ2Ty1lU3JhTXAtYm8tc005VWI3OElIMVR2YWhrYmNNZHlR?oc=5",
+          "pubDate": "2022-10-27T07:00:00+00:00",
           "categories": []
         },
         {
@@ -3800,14 +3812,14 @@
     "bear": {
       "status": "ok",
       "latest": "2026-10-29",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00"
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00"
     },
     "okuyami": {
       "status": "ok",
       "latest": "zenkoku-okuyami:a3d3bf9abd115860e261e07c52be6fe036e133d546ff643d8fbce1f4b15993ed",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "source": "全国お悔やみ欄（平取町）",
       "sourceUrl": "https://zenkoku-okuyami.com/obituary/hokkaido/biratoricho/"
     }
@@ -3816,24 +3828,24 @@
     "btn-v1": {
       "status": "ok",
       "videoId": "tvgbZZYS4Nk",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "sourceUrl": "https://www.htb.co.jp/",
       "verification": "official_live_listing"
     },
     "btn-stv": {
       "status": "ok",
       "videoId": "Wvqa1Csp5Vk",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "sourceUrl": "https://www.stv.jp/news/index.html",
       "verification": "official_live_listing"
     },
     "btn-custom-video": {
       "status": "ok",
       "videoId": "Y1uNv-JTJKg",
-      "generatedAt": "2026-11-11T19:56:37.100240+00:00",
-      "checkedAt": "2026-11-11T19:56:37.100240+00:00",
+      "generatedAt": "2026-11-11T21:48:10.932057+00:00",
+      "checkedAt": "2026-11-11T21:48:10.932057+00:00",
       "sourceUrl": "https://www.stv.jp/tv/dosanko_eve/index.html",
       "verification": "official_live_listing"
     }
