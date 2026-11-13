@@ -1,7 +1,18 @@
 {
   "status": "ok",
-  "sourceAt": "2026-11-14T01:25:00+09:00",
-  "items": [],
-  "checkedAt": "2026-11-13T16:43:24.510138+00:00",
+  "sourceAt": "2026-11-14T06:55:00+09:00",
+  "items": [
+    {
+      "direction": "上り",
+      "section": "日高富川IC →鵡川IC",
+      "restriction": "[!] 通行止／事故"
+    },
+    {
+      "direction": "下り",
+      "section": "鵡川IC →日高富川IC",
+      "restriction": "50キロ規制／事故"
+    }
+  ],
+  "checkedAt": "2026-11-13T22:13:45.755450+00:00",
   "source": "https://roadway.yahoo.co.jp/traffic/road/3100090/list"
 }
