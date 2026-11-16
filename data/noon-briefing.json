@@ -1,22 +1,40 @@
 {
   "title": "昼刊",
-  "updatedAt": "2026-11-15T02:57:45.000Z",
+  "updatedAt": "2026-11-16T03:05:21.000Z",
   "items": [
     {
-      "title": "石狩市の港で男性が死亡",
-      "url": "https://www.uhb.jp/news/single.html?id=63634",
-      "summary": "14日夜に石狩市の港で61歳の男性が救助され、搬送先で死亡が確認されました。警察は釣り中に転落した可能性を調べています。UHBが15日9時22分に報じました。",
+      "title": "旭川の交差点で女性がはねられ死亡",
+      "url": "https://www.htb.co.jp/news/archives_40488.html",
+      "summary": "15日午後、旭川市豊岡の交差点で道路を渡ろうとした高齢の女性が乗用車にはねられ、搬送先で死亡。警察は77歳の運転手を現行犯逮捕し、原因を調べています。",
       "analysis": "",
       "priority": 1,
       "isBreaking": false,
       "isUpdate": false
+    },
+    {
+      "title": "道などが米国産生ジャガイモの輸入協議で国に緊急要請",
+      "url": "https://www.htb.co.jp/news/archives_40489.html",
+      "summary": "道と農業団体などが農林水産相に、病害虫の侵入を防ぐ厳格な対応と道内の生産体制強化への支援を求めました。",
+      "analysis": "現段階で確認できたのは緊急要請と国の協議です。輸入解禁の決定は確認されていません。",
+      "priority": 2,
+      "isBreaking": false,
+      "isUpdate": false
+    },
+    {
+      "title": "札幌市北区で歩行者がはねられ重傷",
+      "url": "https://www.htb.co.jp/news/archives_40486.html",
+      "summary": "札幌市北区の交差点で23歳の男性が軽自動車にはねられ、重傷です。",
+      "analysis": "",
+      "priority": 3,
+      "isBreaking": false,
+      "isUpdate": false
     }
   ],
-  "reportMarkdown": "## 昼刊｜2026年11月15日（日）\n\n### 午前の新着\n\n**石狩市の港で男性が死亡。** 14日夜に石狩市の港で61歳の男性が救助され、搬送先で死亡が確認されました。警察は釣り中に転落した可能性を調べています。UHBが15日9時22分に報じました。 [北海道文化放送](https://www.uhb.jp/news/single.html?id=63634)\n\n### 平取の午後の天気\n\n**15日11:57取得。** 役場周辺の9時08分更新予報では、15時は雨で8℃、北の風2m/s。18時も雨で5℃、北東の風2m/s。両時刻とも降水量1mmで、帰宅時間帯には3℃下がる見通しです。0時08分更新の役場周辺の予報では15時は曇りでした。 [9時08分更新](https://www.mapion.co.jp/weather/spot/20130394884/)／[0時08分更新](https://www.mapion.co.jp/weather/spot/ILSP0000001175_ipclm/)\n\n**警報・注意報**　同時刻に取得した10時05分発表の一覧では平取町は発表なし。その後の追加発表は未確認です。 [道南の警報・注意報](https://typhoon.yahoo.co.jp/weather/jp/warn/1d/)\n\n**日高道の続報**　前日の昼刊で掲載した下りの通行止めは、15日11時35分の道路情報には掲載がなく、上下線とも規制情報なしでした。解除時刻は未確認です。 [JARTIC提供の道路情報](https://roadway.yahoo.co.jp/traffic/pref/1/list)\n\n町の9時32分取得の熊情報と町公式の新着一覧には、午前の新着掲載はありませんでした。一般道の規制と日高線・バスの最新の運休情報は未確認です。 [熊出没情報](https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html)／[町の新着一覧](https://www.town.biratori.hokkaido.jp/news.html)／[運輸局の運行情報案内](https://wwwtb.mlit.go.jp/hokkaido/unkoujouhou/index.html)\n\n### 今日このあと\n\n二風谷コタン周辺のゴールデンカムイの謎解きと、町内参加店舗のカードラリーは11月23日まで。確認した地域の案内では、今日が申込締切の催しは見当たりませんでした。 [日高振興局の案内](https://hokkaido-hidaka-kankonavi.com/information/11155/)\n\n### 今日の小話\n\nチプサンケはアイヌ語で「舟おろし」。平取町二風谷の沙流川では、伝統の技法で造った舟に魂を入れる儀式が行われます。 [日高振興局](https://www.hidaka.pref.hokkaido.lg.jp/hk/kks/ainuculture/biratori/single_ainu_biratori_chipusanke.html)\n",
+  "reportMarkdown": "## 昼刊｜2026年11月16日（月）\n\n### 朝刊以降のニュース\n\n**旭川の交差点で女性がはねられ死亡。** 15日午後、旭川市豊岡の交差点で道路を渡ろうとした高齢の女性が乗用車にはねられ、搬送先で死亡。警察は77歳の運転手を現行犯逮捕し、原因を調べています。 [HTB・11時45分報道](https://www.htb.co.jp/news/archives_40488.html)\n\n**道などが米国産生ジャガイモの輸入協議で国に緊急要請。** 道と農業団体などが農林水産相に、病害虫の侵入を防ぐ厳格な対応と道内の生産体制強化への支援を求めました。 [HTB・11時45分報道](https://www.htb.co.jp/news/archives_40489.html)\n\n**読み解き**　現段階で確認できたのは緊急要請と国の協議です。輸入解禁の決定は確認されていません。\n\n**札幌市北区で歩行者がはねられ重傷。** 札幌市北区の交差点で23歳の男性が軽自動車にはねられ、重傷です。 [HTB・10時20分報道](https://www.htb.co.jp/news/archives_40486.html)\n\n### 平取の午後の天気\n\n**16日12:05取得。** 役場周辺の9時08分更新予報では、15時は曇りで6℃、北北西の風5m/s。18時は晴れで2℃、北西の風4m/s。両時刻とも雨・雪の予想はなく、夕方までに4℃下がる見通しです。0時08分更新の役場周辺の予報より、18時は1℃低くなっています。 [9時08分更新の予報](https://www.mapion.co.jp/weather/spot/20130394884/)／[0時08分更新の予報](https://www.mapion.co.jp/weather/spot/ILSP0000001175_ipclm/)\n\n**警報・注意報**　同時刻に取得した10時09分発表の一覧では、早朝に濃霧注意報が出ていた平取町は「発表なし」。その後の追加発表は未確認です。 [道南の警報・注意報](https://typhoon.yahoo.co.jp/weather/jp/warn/1d/)\n\n日高道は11時35分の一覧で上下線とも規制情報なし。9時33分取得の町の熊情報と町の新着一覧に新規掲載はありませんでした。周辺一般道の規制と日高線・バスの最新の運休は未確認です。 [JARTIC提供の道路情報](https://roadway.yahoo.co.jp/traffic/pref/1/list)／[町の熊情報](https://www.town.biratori.hokkaido.jp/soshikikarasagasu/chominka/seikatsukankyokakari/1/1/2/323.html)／[町の新着](https://www.town.biratori.hokkaido.jp/news.html)／[公共交通の運行情報案内](https://wwwtb.mlit.go.jp/hokkaido/unkoujouhou/index.html)\n\n### 今日このあと\n\n二風谷コタン周辺のゴールデンカムイの謎解きと町内のカードラリーは11月23日まで。確認した地域の案内では、本日締切の申込みは見当たりませんでした。 [びらとり観光協会](https://biratori-kanko.jp/golden-kamui-event2026/)\n\n### 今日の小話\n\n旧国鉄富内線の振内駅跡にある鉄道記念館には、当時の鉄道用具や、振内駅構内を再現した模型があります。 [平取町](https://www.town.biratori.hokkaido.jp/soshikikarasagasu/kankoshokoka/kankoshokokakari/1/3/3/518.html)\n",
   "trivia": {
-    "title": "沙流川のチプサンケ",
-    "text": "チプサンケはアイヌ語で「舟おろし」。平取町二風谷の沙流川では、伝統の技法で造った舟に魂を入れる儀式が行われます。",
-    "url": "https://www.hidaka.pref.hokkaido.lg.jp/hk/kks/ainuculture/biratori/single_ainu_biratori_chipusanke.html"
+    "title": "旧振内駅に残る富内線の記憶",
+    "text": "旧国鉄富内線の振内駅跡にある鉄道記念館には、当時の鉄道用具や、振内駅構内を再現した模型があります。",
+    "url": "https://www.town.biratori.hokkaido.jp/soshikikarasagasu/kankoshokoka/kankoshokokakari/1/3/3/518.html"
   },
-  "radioScript": "2026年11月15日、日曜日の昼刊です。昨夜、石狩市の港で61歳の男性が救助され、搬送先の病院で死亡が確認されました。警察は釣りをしているときに転落した可能性を調べています。びらとりの午後は、午前9時過ぎに更新された予報では、午後3時に雨で8度、夕方6時も雨で5度です。風は北寄りで、風速は毎秒2メートルです。午前10時5分の発表では町内に警報や注意報はありませんでした。その後の発表は未確認です。きのう通行止めが出ていた日高道は、今日の午前11時35分の情報では上下線とも規制情報はありません。二風谷では、ゴールデンカムイの謎解きとカードラリーが開催中です。最後に、びらとりの小話です。チプサンケはアイヌ語で舟おろしのこと。二風谷の沙流川では、昔からの技法で造った舟に魂を入れる儀式が行われます。"
+  "radioScript": "2026年11月16日、月曜日の昼刊です。旭川市の交差点で、きのう、道路を渡ろうとした女性が車にはねられ、亡くなりました。札幌市北区でも、交差点で歩行者の男性が軽自動車にはねられ、重傷です。道と農業団体などは、アメリカ産の生のジャガイモをめぐる輸入協議について、病害虫の侵入を防ぐ厳格な対応を国に求めました。びらとりは午後3時が曇りで6度、夕方6時は晴れで2度の予報です。北西寄りの風が毎秒4メートルから5メートル吹く見通しです。午前10時9分の発表では、町内に警報や注意報は出ていませんでした。その後の発表は未確認です。日高道は午前11時35分の一覧で、上下線とも規制情報はありませんでした。二風谷ではゴールデンカムイの謎解きとカードラリーが23日まで開催されています。今日の小話です。旧国鉄富内線の振内駅跡には鉄道記念館があり、当時の鉄道用具や、駅構内を再現した模型が展示されています。"
 }
