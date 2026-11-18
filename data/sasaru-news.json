@@ -1,17 +1,27 @@
 {
   "status": "ok",
-  "generatedAt": "2026-11-17T21:43:10.181Z",
+  "generatedAt": "2026-11-18T10:54:40.251Z",
   "source": "SASARU公式カテゴリ一覧（ファッション除外）",
   "items": [
     {
-      "title": "話題騒然！顔より遙かに大きな『本物の巨大ガーベラ』SNSで話題！札幌が人気発祥地？生花の入手方法",
-      "link": "https://sasaru.media/article/money/20261118_001/",
+      "title": "ハンバーグランチ1400円！お肉ゴロゴロ“ビーフストロガノフ”も人気！コスパ最強「老舗洋食店」【札幌・プチレストラン煮込みハウス】",
+      "link": "https://sasaru.media/article/gourmet/20261118_004/",
       "pubDate": "2026-11-18T00:00:00+09:00",
       "author": "SASARU",
       "categories": [
-        "ライフスタイル"
+        "グルメ"
       ],
-      "category": "money"
+      "category": "gourmet"
+    },
+    {
+      "title": "大丸地下の話題はここ！札幌初出店「メゾンカカオ」大盛況！冬限定“生チョコ＆とろける生ガトーショコラ”登場",
+      "link": "https://sasaru.media/article/gourmet/20261118_002/",
+      "pubDate": "2026-11-18T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "グルメ"
+      ],
+      "category": "gourmet"
     },
     {
       "title": "札幌に実在する居酒屋が舞台『やさしい居酒屋 今日も、札幌ひとり飲み』心温まる漫画＋酒場ガイド",
@@ -294,16 +304,6 @@
       "category": "gourmet"
     },
     {
-      "title": "「ホッキ貝のバッテラ」清流育ちの「ヤマベから揚げ」水揚げ日本一だからこそできる【苫小牧・日本橋】",
-      "link": "https://sasaru.media/article/gourmet/20261107_001/",
-      "pubDate": "2026-11-07T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "グルメ"
-      ],
-      "category": "gourmet"
-    },
-    {
       "title": "あえて小樽に泊まりたい！美食とお酒のご褒美ステイ…小樽の価値に感動！「短時間の観光じゃあもったいない」",
       "link": "https://sasaru.media/article/weather/20261107_003/",
       "pubDate": "2026-11-07T00:00:00+09:00",
@@ -312,16 +312,6 @@
         "おでかけ"
       ],
       "category": "weather"
-    },
-    {
-      "title": "クリスマスもお正月も“インターコンチで豪華に浸りたい”「純白のアフタヌーンティー」お得なビュッフェデ＆ケーキ予約チェック【札幌】",
-      "link": "https://sasaru.media/article/gourmet/20261106_003/",
-      "pubDate": "2026-11-06T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "グルメ"
-      ],
-      "category": "gourmet"
     },
     {
       "title": "毎年3万人が訪れる『Sapporo珈琲マルシェ2026』31の名店集合！限定豆や“ゲイシャ”ソフトクリーム…日本一のバリスタと話して味わう一杯【丸井今井札幌】",
@@ -507,6 +497,16 @@
       "title": "ベーコン1kg近く入って1,640円！？曜日ごとの特売やお楽しみ袋がお得！工場直売店で人気の【さっぽろ西町ハム工房】",
       "link": "https://sasaru.media/article/money/20261023_001/",
       "pubDate": "2026-10-23T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "ライフスタイル"
+      ],
+      "category": "money"
+    },
+    {
+      "title": "ラーメン1玉100円の「試作麺」チャーシュー切り落とし500g1700円！お得商品ばかり～世界に名だたる「札幌ラーメン」製麺直売所【西山製麺直売所】",
+      "link": "https://sasaru.media/article/money/20261022_002/",
+      "pubDate": "2026-10-22T00:00:00+09:00",
       "author": "SASARU",
       "categories": [
         "ライフスタイル"
