@@ -1,7 +1,18 @@
 {
   "status": "ok",
-  "sourceAt": "2026-11-20T02:15:00+09:00",
-  "items": [],
-  "checkedAt": "2026-11-19T17:37:01.101226+00:00",
+  "sourceAt": "2026-11-20T08:25:00+09:00",
+  "items": [
+    {
+      "direction": "上り",
+      "section": "日高厚賀IC →日高門別IC",
+      "restriction": "[!] 通行止／事故"
+    },
+    {
+      "direction": "下り",
+      "section": "日高門別IC →日高厚賀IC",
+      "restriction": "[!] 通行止／事故"
+    }
+  ],
+  "checkedAt": "2026-11-19T23:46:43.009315+00:00",
   "source": "https://roadway.yahoo.co.jp/traffic/road/3100090/list"
 }
