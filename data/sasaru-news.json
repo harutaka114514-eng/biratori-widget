@@ -1,8 +1,18 @@
 {
   "status": "ok",
-  "generatedAt": "2026-11-19T21:14:39.309Z",
+  "generatedAt": "2026-11-20T10:45:06.153Z",
   "source": "SASARU公式カテゴリ一覧（ファッション除外）",
   "items": [
+    {
+      "title": "ふわふわドーナツが絶品！「家族みんなが大満足」岩見沢で見つけた「Be Donut」",
+      "link": "https://sasaru.media/article/gourmet/20261120_004/",
+      "pubDate": "2026-11-20T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "グルメ"
+      ],
+      "category": "gourmet"
+    },
     {
       "title": "「新千歳空港〜札幌」冬の北海道はハプニング多発！JR・バス・タクシー賢い“乗り分けガイド”と“地元民おすすめルート”",
       "link": "https://sasaru.media/article/money/20261120_001/",
@@ -12,6 +22,16 @@
         "ライフスタイル"
       ],
       "category": "money"
+    },
+    {
+      "title": "札幌からグルメドライブのすすめ『4400円の本格フレンチ』『「農園カフェ』【由仁町】",
+      "link": "https://sasaru.media/article/weather/20261120_002/",
+      "pubDate": "2026-11-20T00:00:00+09:00",
+      "author": "SASARU",
+      "categories": [
+        "おでかけ"
+      ],
+      "category": "weather"
     },
     {
       "title": "「スコーン＆TEAパーティー」全国の絶品スコーン55店が集結！『まるでケーキ』ワインに合う“チーズ・スパイス”生かした大人スコーンも【札幌・丸井今井】",
@@ -304,16 +324,6 @@
       "category": "gourmet"
     },
     {
-      "title": "世界3大炊き込みご飯「ビリヤニ」スパイス香る隠れ家カフェ！“ヨーグルトソース”で想像以上の味変！？【苫小牧】",
-      "link": "https://sasaru.media/article/gourmet/20261108_002/",
-      "pubDate": "2026-11-08T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "グルメ"
-      ],
-      "category": "gourmet"
-    },
-    {
       "title": "焼きいも無料で配るって！期間中は毎日配布！先着50名に\"ブランドおいも”さっぽろ羊ヶ丘展望台「焼きいもまつり」",
       "link": "https://sasaru.media/article/weather/20261108_001/",
       "pubDate": "2026-11-08T00:00:00+09:00",
@@ -527,16 +537,6 @@
       "title": "サッポロファクトリー「ツリー点灯式」は11月3日！高さ15mツリーに5万個の光…ひと足早くクリスマス",
       "link": "https://sasaru.media/article/weather/20261019_004/",
       "pubDate": "2026-10-19T00:00:00+09:00",
-      "author": "SASARU",
-      "categories": [
-        "おでかけ"
-      ],
-      "category": "weather"
-    },
-    {
-      "title": "SNSで大人気！“ミニチュアブーム”話題「MINIATURE LIFE展2」見どころと人気ぶり",
-      "link": "https://sasaru.media/article/weather/20261017_002/",
-      "pubDate": "2026-10-17T00:00:00+09:00",
       "author": "SASARU",
       "categories": [
         "おでかけ"
