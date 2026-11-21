@@ -1,15 +1,15 @@
 {
   "status": "ok",
-  "sourceAt": "2026-11-21T11:25:00+09:00",
+  "sourceAt": "2026-11-21T18:55:00+09:00",
   "items": [
     {
       "direction": "上り",
-      "section": "新冠IC入口(沼ノ端西IC方面)",
+      "section": "新冠IC →沼ノ端西IC",
       "restriction": "50キロ規制／凍結"
     },
     {
       "direction": "上り",
-      "section": "新冠IC →沼ノ端西IC",
+      "section": "新冠IC入口(沼ノ端西IC方面)",
       "restriction": "50キロ規制／凍結"
     },
     {
@@ -23,6 +23,6 @@
       "restriction": "50キロ規制／凍結"
     }
   ],
-  "checkedAt": "2026-11-21T02:39:52.946380+00:00",
+  "checkedAt": "2026-11-21T10:13:17.501711+00:00",
   "source": "https://roadway.yahoo.co.jp/traffic/road/3100090/list"
 }
