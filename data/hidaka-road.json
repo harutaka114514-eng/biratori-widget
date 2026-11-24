@@ -1,7 +1,18 @@
 {
   "status": "ok",
-  "sourceAt": "2026-11-23T22:05:00+09:00",
-  "items": [],
-  "checkedAt": "2026-11-23T13:26:43.152635+00:00",
+  "sourceAt": "2026-11-24T09:55:00+09:00",
+  "items": [
+    {
+      "direction": "上り",
+      "section": "厚真IC →苫東中央IC",
+      "restriction": "[!] 通行止／事故"
+    },
+    {
+      "direction": "下り",
+      "section": "苫東中央IC →厚真IC",
+      "restriction": "[!] 通行止／事故"
+    }
+  ],
+  "checkedAt": "2026-11-24T01:07:38.451966+00:00",
   "source": "https://roadway.yahoo.co.jp/traffic/road/3100090/list"
 }
