@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generatedAt": "2026-11-26T03:19:00.771Z",
+  "generatedAt": "2026-11-26T18:43:39.582Z",
   "source": "北海道ひだか観光ナビ",
   "sourceUrl": "https://hokkaido-hidaka-kankonavi.com/feed/",
   "items": [
@@ -19,6 +19,14 @@
       "endDate": "2026-11-27",
       "location": "浦河町",
       "publishedAt": "2026-11-10T04:06:51.000Z"
+    },
+    {
+      "title": "【11/29(日)】あがた森魚コンサート 開催!",
+      "link": "https://hokkaido-hidaka-kankonavi.com/information/11872/",
+      "startDate": "2026-11-29",
+      "endDate": "2026-11-29",
+      "location": "浦河町総合文化会館 4階 文化ホール",
+      "publishedAt": "2026-11-26T07:18:31.000Z"
     },
     {
       "title": "【11/29(日)】富川複合施設『とみくる』でクリスマスマーケット 開催!!",
