@@ -1,25 +1,9 @@
 {
   "status": "ok",
-  "generatedAt": "2026-11-27T03:23:26.409Z",
+  "generatedAt": "2026-11-27T18:35:30.218Z",
   "source": "北海道ひだか観光ナビ",
   "sourceUrl": "https://hokkaido-hidaka-kankonavi.com/feed/",
   "items": [
-    {
-      "title": "【11/27(金)~29(日)】ひだかフェアinどさんこプラザ有楽町店 開催!!",
-      "link": "https://hokkaido-hidaka-kankonavi.com/information/11775/",
-      "startDate": "2026-11-27",
-      "endDate": "2026-11-29",
-      "location": "どさんこプラザ有楽町店 東京都千代田区有楽町2-10-1 東京交通会館1階",
-      "publishedAt": "2026-11-25T00:42:01.000Z"
-    },
-    {
-      "title": "【2回目 11/27(金)】2026年度 うらかわ観光協会 観光まちおこし・ひとづくりワーキンググループ",
-      "link": "https://hokkaido-hidaka-kankonavi.com/information/9158/",
-      "startDate": "2026-11-27",
-      "endDate": "2026-11-27",
-      "location": "浦河町",
-      "publishedAt": "2026-11-10T04:06:51.000Z"
-    },
     {
       "title": "【11/29(日)】あがた森魚コンサート 開催!",
       "link": "https://hokkaido-hidaka-kankonavi.com/information/11872/",
@@ -35,6 +19,14 @@
       "endDate": "2026-11-29",
       "location": "富川複合施設とみくる(日高町富川北3丁目3番16号) 入場料 無料",
       "publishedAt": "2026-11-10T06:33:30.000Z"
+    },
+    {
+      "title": "【11/27(金)~29(日)】ひだかフェアinどさんこプラザ有楽町店 開催!!",
+      "link": "https://hokkaido-hidaka-kankonavi.com/information/11775/",
+      "startDate": "2026-11-27",
+      "endDate": "2026-11-29",
+      "location": "どさんこプラザ有楽町店 東京都千代田区有楽町2-10-1 東京交通会館1階",
+      "publishedAt": "2026-11-25T00:42:01.000Z"
     },
     {
       "title": "【9月1日(火)からスタート!】オールひだかスタンプラリー&ホースカード うま旅キャンペーン",
